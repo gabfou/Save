@@ -1,0 +1,304 @@
+[16.06.2016 12:15:42] -- begin install ----------------------------------
+[16.06.2016 12:15:55] -- installation finished without error ------------
+[16.06.2016 12:16:08] login: admin as user
+[16.06.2016 12:16:09] Global role 1 gave true for adminPanel_extension-access.
+[16.06.2016 12:16:09] Global role 1 gave true for ki_budget-access.
+[16.06.2016 12:16:09] Global role 1 gave true for ki_expenses-access.
+[16.06.2016 12:16:09] Global role 1 gave true for ki_export-access.
+[16.06.2016 12:16:09] Global role 1 gave true for ki_invoice-access.
+[16.06.2016 12:16:09] Global role 1 gave true for ki_timesheet-access.
+[16.06.2016 12:16:09] Global role 1 gave true for core-user-otherGroup-view.
+[16.06.2016 12:16:09] Global role 1 gave true for core-customer-otherGroup-add.
+[16.06.2016 12:16:09] Global role 1 gave true for core-customer-otherGroup-edit.
+[16.06.2016 12:16:09] Global role 1 gave true for core-project-otherGroup-add.
+[16.06.2016 12:16:09] Global role 1 gave true for core-project-otherGroup-edit.
+[16.06.2016 12:16:09] Global role 1 gave true for core-activity-otherGroup-add.
+[16.06.2016 12:16:09] Global role 1 gave true for core-activity-otherGroup-edit.
+[16.06.2016 12:16:11] KSPI axAction (admin): securityWarning
+[16.06.2016 12:16:11] Global role 1 gave true for ki_timesheets-showRates.
+[16.06.2016 12:16:29] KSPI axAction (admin): credits
+[16.06.2016 12:16:31] KSPI axAction (admin): prefs
+[16.06.2016 12:16:49] KSPI axAction (admin): editPrefs
+[16.06.2016 12:16:50] Global role 1 gave true for adminPanel_extension-access.
+[16.06.2016 12:16:50] Global role 1 gave true for ki_budget-access.
+[16.06.2016 12:16:50] Global role 1 gave true for ki_expenses-access.
+[16.06.2016 12:16:50] Global role 1 gave true for ki_export-access.
+[16.06.2016 12:16:50] Global role 1 gave true for ki_invoice-access.
+[16.06.2016 12:16:50] Global role 1 gave true for ki_timesheet-access.
+[16.06.2016 12:16:50] Global role 1 gave true for core-user-otherGroup-view.
+[16.06.2016 12:16:50] Global role 1 gave true for core-customer-otherGroup-add.
+[16.06.2016 12:16:50] Global role 1 gave true for core-customer-otherGroup-edit.
+[16.06.2016 12:16:50] Global role 1 gave true for core-project-otherGroup-add.
+[16.06.2016 12:16:50] Global role 1 gave true for core-project-otherGroup-edit.
+[16.06.2016 12:16:50] Global role 1 gave true for core-activity-otherGroup-add.
+[16.06.2016 12:16:50] Global role 1 gave true for core-activity-otherGroup-edit.
+[16.06.2016 12:16:50] KSPI axAction (admin): securityWarning
+[16.06.2016 12:16:50] Global role 1 gave true for ki_timesheets-showRates.
+[16.06.2016 12:16:59] Global role 1 gave true for core-group-otherGroup-view.
+[16.06.2016 12:16:59] Global role 1 gave true for core-customer-otherGroup-view.
+[16.06.2016 12:16:59] KSPI axAction (admin): refreshSubtab
+[16.06.2016 12:16:59] Global role 1 gave true for core-group-otherGroup-view.
+[16.06.2016 12:16:59] Global role 1 gave true for core-user-otherGroup-view.
+[16.06.2016 12:16:59] Global role 1 gave true for core-project-otherGroup-view.
+[16.06.2016 12:16:59] Global role 1 gave true for core-group-otherGroup-view.
+[16.06.2016 12:16:59] Global role 1 gave true for core-customer-otherGroup-view.
+[16.06.2016 12:16:59] Global role 1 gave true for core-activity-otherGroup-view.
+[16.06.2016 12:16:59] KSPI axAction (admin): refreshSubtab
+[16.06.2016 12:16:59] KSPI axAction (admin): refreshSubtab
+[16.06.2016 12:16:59] Global role 1 gave true for core-group-otherGroup-view.
+[16.06.2016 12:16:59] Global role 1 gave true for core-user-otherGroup-view.
+[16.06.2016 12:16:59] Global role 1 gave true for core-group-otherGroup-view.
+[16.06.2016 12:16:59] Global role 1 gave true for core-user-otherGroup-view.
+[16.06.2016 12:16:59] Global role 1 gave true for core-group-otherGroup-view.
+[16.06.2016 12:16:59] Global role 1 gave true for core-activity-otherGroup-view.
+[16.06.2016 12:16:59] Global role 1 gave true for core-group-otherGroup-view.
+[16.06.2016 12:16:59] Global role 1 gave true for core-project-otherGroup-view.
+[16.06.2016 12:16:59] Global role 1 gave true for core-group-otherGroup-view.
+[16.06.2016 12:16:59] Global role 1 gave true for core-user-otherGroup-view.
+[16.06.2016 12:16:59] Global role 1 gave true for adminPanel_extension-editAdvanced.
+[16.06.2016 12:17:01] KSPI axAction (admin): reload
+[16.06.2016 12:17:01] E_NOTICE Undefined offset: 3 @C:\wamp2\www\kimai\extensions\ki_budget\processor.php line 53
+[16.06.2016 12:17:03] KSPI axAction (admin): reload
+[16.06.2016 12:17:03] KSPI axAction (admin): reload
+[16.06.2016 12:17:05] KSPI axAction (admin): refreshSubtab
+[16.06.2016 12:17:05] KSPI axAction (admin): refreshSubtab
+[16.06.2016 12:17:05] Global role 1 gave true for core-group-otherGroup-view.
+[16.06.2016 12:17:05] Global role 1 gave true for core-group-otherGroup-view.
+[16.06.2016 12:17:05] KSPI axAction (admin): refreshSubtab
+[16.06.2016 12:17:05] Global role 1 gave true for core-user-otherGroup-view.
+[16.06.2016 12:17:05] Global role 1 gave true for core-user-otherGroup-view.
+[16.06.2016 12:17:05] Global role 1 gave true for core-group-otherGroup-view.
+[16.06.2016 12:17:05] Global role 1 gave true for core-user-otherGroup-view.
+[16.06.2016 12:17:05] Global role 1 gave true for core-group-otherGroup-view.
+[16.06.2016 12:17:05] Global role 1 gave true for core-group-otherGroup-view.
+[16.06.2016 12:17:05] Global role 1 gave true for core-activity-otherGroup-view.
+[16.06.2016 12:17:05] Global role 1 gave true for core-customer-otherGroup-view.
+[16.06.2016 12:17:05] Global role 1 gave true for core-group-otherGroup-view.
+[16.06.2016 12:17:05] Global role 1 gave true for core-project-otherGroup-view.
+[16.06.2016 12:17:11] KSPI axAction (admin): refreshSubtab
+[16.06.2016 12:17:11] Global role 1 gave true for core-group-otherGroup-view.
+[16.06.2016 12:17:11] Global role 1 gave true for core-user-otherGroup-view.
+[16.06.2016 12:17:11] Global role 1 gave true for core-group-otherGroup-view.
+[16.06.2016 12:17:11] Global role 1 gave true for core-project-otherGroup-view.
+[16.06.2016 12:17:11] KSPI axAction (admin): refreshSubtab
+[16.06.2016 12:17:11] Global role 1 gave true for core-group-otherGroup-view.
+[16.06.2016 12:17:11] Global role 1 gave true for core-user-otherGroup-view.
+[16.06.2016 12:17:11] KSPI axAction (admin): refreshSubtab
+[16.06.2016 12:17:11] Global role 1 gave true for core-group-otherGroup-view.
+[16.06.2016 12:17:11] Global role 1 gave true for core-group-otherGroup-view.
+[16.06.2016 12:17:11] Global role 1 gave true for core-user-otherGroup-view.
+[16.06.2016 12:17:11] Global role 1 gave true for core-activity-otherGroup-view.
+[16.06.2016 12:17:11] Global role 1 gave true for core-group-otherGroup-view.
+[16.06.2016 12:17:11] Global role 1 gave true for core-customer-otherGroup-view.
+[16.06.2016 12:17:20] KSPI axAction (admin): createUser
+[16.06.2016 12:17:20] KSPI axAction (admin): refreshSubtab
+[16.06.2016 12:17:20] Global role 1 gave true for core-group-otherGroup-view.
+[16.06.2016 12:17:20] Global role 1 gave true for core-user-otherGroup-view.
+[16.06.2016 12:17:20] KSPI axAction (admin): editUser
+[16.06.2016 12:17:20] Global role 1 gave true for core-group-otherGroup-view.
+[16.06.2016 12:17:31] KSPI axAction (admin): sendEditUser
+[16.06.2016 12:17:31] KSPI axAction (admin): reload_users
+[16.06.2016 12:17:31] KSPI axAction (admin): refreshSubtab
+[16.06.2016 12:17:31] Global role 1 gave true for core-user-otherGroup-view.
+[16.06.2016 12:17:32] Global role 1 gave true for core-group-otherGroup-view.
+[16.06.2016 12:17:32] Global role 1 gave true for core-user-otherGroup-view.
+[16.06.2016 12:17:32] KSPI axAction (admin): refreshSubtab
+[16.06.2016 12:17:32] Global role 1 gave true for core-group-otherGroup-view.
+[16.06.2016 12:17:32] Global role 1 gave true for core-user-otherGroup-view.
+[16.06.2016 12:17:34] KSPI axAction (admin): editUser
+[16.06.2016 12:17:34] Global role 1 gave true for core-group-otherGroup-view.
+[16.06.2016 12:17:37] KSPI axAction (admin): sendEditUser
+[16.06.2016 12:17:37] KSPI axAction (admin): reload_users
+[16.06.2016 12:17:37] Global role 1 gave true for core-user-otherGroup-view.
+[16.06.2016 12:17:37] KSPI axAction (admin): refreshSubtab
+[16.06.2016 12:17:37] Global role 1 gave true for core-group-otherGroup-view.
+[16.06.2016 12:17:37] Global role 1 gave true for core-user-otherGroup-view.
+[16.06.2016 12:17:37] KSPI axAction (admin): refreshSubtab
+[16.06.2016 12:17:37] Global role 1 gave true for core-group-otherGroup-view.
+[16.06.2016 12:17:37] Global role 1 gave true for core-user-otherGroup-view.
+[16.06.2016 12:18:06] KSPI axAction (admin): reload
+[16.06.2016 12:18:08] KSPI axAction (admin): add_edit_timeSheetEntry
+[16.06.2016 12:18:08] Global role 1 gave true for ki_timesheets-otherEntry-otherGroup-add.
+[16.06.2016 12:18:08] Global role 1 gave true for ki_timesheets-ownEntry-add.
+[16.06.2016 12:18:08] Global role 1 gave true for ki_timesheets-editRates.
+[16.06.2016 12:18:09] KSPI axAction (admin): reload_activities_options
+[16.06.2016 12:18:09] KSPI axAction (admin): bestFittingRates
+[16.06.2016 12:18:09] Global role 1 gave true for ki_timesheets-showRates.
+[16.06.2016 12:18:24] KSPI axAction (admin): add_edit_timeSheetEntry
+[16.06.2016 12:18:24] Global role 1 gave true for ki_timesheets-editRates.
+[16.06.2016 12:18:24]  iconv_set_encoding(): Use of iconv.internal_encoding is deprecated @C:\wamp2\www\kimai\libraries\Zend\Locale\Format.php line 782
+[16.06.2016 12:18:25]  iconv_set_encoding(): Use of iconv.internal_encoding is deprecated @C:\wamp2\www\kimai\libraries\Zend\Locale\Format.php line 1048
+[16.06.2016 12:18:25]  iconv_set_encoding(): Use of iconv.internal_encoding is deprecated @C:\wamp2\www\kimai\libraries\Zend\Locale\Format.php line 782
+[16.06.2016 12:18:25]  iconv_set_encoding(): Use of iconv.internal_encoding is deprecated @C:\wamp2\www\kimai\libraries\Zend\Locale\Format.php line 1048
+[16.06.2016 12:18:25]  iconv_set_encoding(): Use of iconv.internal_encoding is deprecated @C:\wamp2\www\kimai\libraries\Zend\Locale\Format.php line 782
+[16.06.2016 12:18:25]  iconv_set_encoding(): Use of iconv.internal_encoding is deprecated @C:\wamp2\www\kimai\libraries\Zend\Locale\Format.php line 1048
+[16.06.2016 12:18:25]  iconv_set_encoding(): Use of iconv.internal_encoding is deprecated @C:\wamp2\www\kimai\libraries\Zend\Locale\Format.php line 782
+[16.06.2016 12:18:25]  iconv_set_encoding(): Use of iconv.internal_encoding is deprecated @C:\wamp2\www\kimai\libraries\Zend\Locale\Format.php line 1048
+[16.06.2016 12:18:25]  iconv_set_encoding(): Use of iconv.internal_encoding is deprecated @C:\wamp2\www\kimai\libraries\Zend\Locale\Format.php line 782
+[16.06.2016 12:18:25]  iconv_set_encoding(): Use of iconv.internal_encoding is deprecated @C:\wamp2\www\kimai\libraries\Zend\Locale\Format.php line 1048
+[16.06.2016 12:18:25]  iconv_set_encoding(): Use of iconv.internal_encoding is deprecated @C:\wamp2\www\kimai\libraries\Zend\Locale\Format.php line 782
+[16.06.2016 12:18:25]  iconv_set_encoding(): Use of iconv.internal_encoding is deprecated @C:\wamp2\www\kimai\libraries\Zend\Locale\Format.php line 1048
+[16.06.2016 12:18:25]  iconv_set_encoding(): Use of iconv.internal_encoding is deprecated @C:\wamp2\www\kimai\libraries\Zend\Locale\Format.php line 782
+[16.06.2016 12:18:25]  iconv_set_encoding(): Use of iconv.internal_encoding is deprecated @C:\wamp2\www\kimai\libraries\Zend\Locale\Format.php line 1048
+[16.06.2016 12:18:25]  iconv_set_encoding(): Use of iconv.internal_encoding is deprecated @C:\wamp2\www\kimai\libraries\Zend\Locale\Format.php line 782
+[16.06.2016 12:18:25]  iconv_set_encoding(): Use of iconv.internal_encoding is deprecated @C:\wamp2\www\kimai\libraries\Zend\Locale\Format.php line 1048
+[16.06.2016 12:18:25] Global role 1 gave true for ki_timesheets-ownEntry-add.
+[16.06.2016 12:18:25] timeEntry_create
+[16.06.2016 12:18:25] KSPI axAction (admin): reload_timeSheet
+[16.06.2016 12:18:25] Global role 1 gave true for ki_timesheets-showRates.
+[16.06.2016 12:18:43] KSPI axAction (admin): add_edit_customer
+[16.06.2016 12:18:43] Global role 1 gave true for core-group-otherGroup-view.
+[16.06.2016 12:23:45] KSPI axAction (admin): reload_activities
+tion
+[16.06.2016 12:23:45] Global role 1 gave true for core-activity-otherGroup-edit.
+[16.06.2016 12:23:57] KSPI axAction (admin): add_edit_customer
+[16.06.2016 12:23:57] Global role 1 gave true for core-group-otherGroup-view.
+[16.06.2016 12:24:54] KSPI axAction (admin): reload_exp
+[16.06.2016 12:24:54] KSPI axAction (admin): reload_timeSheet
+[16.06.2016 12:24:54] KSPI axAction (admin): reload
+[16.06.2016 12:24:54] Global role 1 gave true for ki_timesheets-showRates.
+[16.06.2016 12:24:54] E_NOTICE Undefined offset: 3 @C:\wamp2\www\kimai\extensions\ki_budget\processor.php line 53
+[16.06.2016 12:24:54] KSPI axAction (admin): reload
+[16.06.2016 12:24:55] KSPI axAction (admin): reload
+[16.06.2016 12:24:55] E_NOTICE Undefined offset: 3 @C:\wamp2\www\kimai\extensions\ki_budget\processor.php line 53
+[16.06.2016 12:24:55] KSPI axAction (admin): reload_exp
+[16.06.2016 12:24:55] KSPI axAction (admin): reload_timeSheet
+[16.06.2016 12:24:55] KSPI axAction (admin): reload
+[16.06.2016 12:24:55] Global role 1 gave true for ki_timesheets-showRates.
+[16.06.2016 12:24:56] KSPI axAction (admin): reload
+[16.06.2016 12:24:56] E_NOTICE Undefined offset: 3 @C:\wamp2\www\kimai\extensions\ki_budget\processor.php line 53
+[16.06.2016 12:24:56] KSPI axAction (admin): reload_timeSheet
+[16.06.2016 12:24:56] KSPI axAction (admin): reload
+[16.06.2016 12:24:56] KSPI axAction (admin): reload_exp
+[16.06.2016 12:24:56] Global role 1 gave true for ki_timesheets-showRates.
+[16.06.2016 12:24:57] KSPI axAction (admin): add_edit_customer
+[16.06.2016 12:24:57] Global role 1 gave true for core-group-otherGroup-view.
+[16.06.2016 12:25:16] KSPI axAction (admin): add_edit_timeSheetEntry
+[16.06.2016 12:25:16] Global role 1 gave true for ki_timesheets-ownEntry-edit.
+[16.06.2016 12:25:16] Global role 1 gave true for ki_timesheets-otherEntry-otherGroup-edit.
+[16.06.2016 12:25:16] Global role 1 gave true for ki_timesheets-editRates.
+[16.06.2016 12:25:17] KSPI axAction (admin): reload_activities_options
+[16.06.2016 12:25:25] KSPI axAction (admin): add_edit_timeSheetEntry
+[16.06.2016 12:25:25] Global role 1 gave true for ki_timesheets-ownEntry-edit.
+[16.06.2016 12:25:25] Global role 1 gave true for ki_timesheets-editRates.
+[16.06.2016 12:25:26]  iconv_set_encoding(): Use of iconv.internal_encoding is deprecated @C:\wamp2\www\kimai\libraries\Zend\Locale\Format.php line 782
+[16.06.2016 12:25:26]  iconv_set_encoding(): Use of iconv.internal_encoding is deprecated @C:\wamp2\www\kimai\libraries\Zend\Locale\Format.php line 1048
+[16.06.2016 12:25:26]  iconv_set_encoding(): Use of iconv.internal_encoding is deprecated @C:\wamp2\www\kimai\libraries\Zend\Locale\Format.php line 782
+[16.06.2016 12:25:26]  iconv_set_encoding(): Use of iconv.internal_encoding is deprecated @C:\wamp2\www\kimai\libraries\Zend\Locale\Format.php line 1048
+[16.06.2016 12:25:26]  iconv_set_encoding(): Use of iconv.internal_encoding is deprecated @C:\wamp2\www\kimai\libraries\Zend\Locale\Format.php line 782
+[16.06.2016 12:25:26]  iconv_set_encoding(): Use of iconv.internal_encoding is deprecated @C:\wamp2\www\kimai\libraries\Zend\Locale\Format.php line 1048
+[16.06.2016 12:25:26]  iconv_set_encoding(): Use of iconv.internal_encoding is deprecated @C:\wamp2\www\kimai\libraries\Zend\Locale\Format.php line 782
+[16.06.2016 12:25:26]  iconv_set_encoding(): Use of iconv.internal_encoding is deprecated @C:\wamp2\www\kimai\libraries\Zend\Locale\Format.php line 1048
+[16.06.2016 12:25:26]  iconv_set_encoding(): Use of iconv.internal_encoding is deprecated @C:\wamp2\www\kimai\libraries\Zend\Locale\Format.php line 782
+[16.06.2016 12:25:26]  iconv_set_encoding(): Use of iconv.internal_encoding is deprecated @C:\wamp2\www\kimai\libraries\Zend\Locale\Format.php line 1048
+[16.06.2016 12:25:26]  iconv_set_encoding(): Use of iconv.internal_encoding is deprecated @C:\wamp2\www\kimai\libraries\Zend\Locale\Format.php line 782
+[16.06.2016 12:25:26]  iconv_set_encoding(): Use of iconv.internal_encoding is deprecated @C:\wamp2\www\kimai\libraries\Zend\Locale\Format.php line 1048
+[16.06.2016 12:25:26]  iconv_set_encoding(): Use of iconv.internal_encoding is deprecated @C:\wamp2\www\kimai\libraries\Zend\Locale\Format.php line 782
+[16.06.2016 12:25:26]  iconv_set_encoding(): Use of iconv.internal_encoding is deprecated @C:\wamp2\www\kimai\libraries\Zend\Locale\Format.php line 1048
+[16.06.2016 12:25:26]  iconv_set_encoding(): Use of iconv.internal_encoding is deprecated @C:\wamp2\www\kimai\libraries\Zend\Locale\Format.php line 782
+[16.06.2016 12:25:26]  iconv_set_encoding(): Use of iconv.internal_encoding is deprecated @C:\wamp2\www\kimai\libraries\Zend\Locale\Format.php line 1048
+[16.06.2016 12:25:26] Global role 1 gave true for ki_timesheets-ownEntry-edit.
+[16.06.2016 12:25:26] timeEntry_edit: 1
+[16.06.2016 12:25:26] KSPI axAction (admin): reload_timeSheet
+[16.06.2016 12:25:26] Global role 1 gave true for ki_timesheets-showRates.
+[16.06.2016 12:25:26] KSPI axAction (admin): add_edit_timeSheetEntry
+[16.06.2016 12:25:26] Global role 1 gave true for ki_timesheets-ownEntry-edit.
+[16.06.2016 12:25:26] Global role 1 gave true for ki_timesheets-editRates.
+[16.06.2016 12:25:27]  iconv_set_encoding(): Use of iconv.internal_encoding is deprecated @C:\wamp2\www\kimai\libraries\Zend\Locale\Format.php line 782
+[16.06.2016 12:25:27]  iconv_set_encoding(): Use of iconv.internal_encoding is deprecated @C:\wamp2\www\kimai\libraries\Zend\Locale\Format.php line 1048
+[16.06.2016 12:25:27]  iconv_set_encoding(): Use of iconv.internal_encoding is deprecated @C:\wamp2\www\kimai\libraries\Zend\Locale\Format.php line 782
+[16.06.2016 12:25:27]  iconv_set_encoding(): Use of iconv.internal_encoding is deprecated @C:\wamp2\www\kimai\libraries\Zend\Locale\Format.php line 1048
+[16.06.2016 12:25:27]  iconv_set_encoding(): Use of iconv.internal_encoding is deprecated @C:\wamp2\www\kimai\libraries\Zend\Locale\Format.php line 782
+[16.06.2016 12:25:27]  iconv_set_encoding(): Use of iconv.internal_encoding is deprecated @C:\wamp2\www\kimai\libraries\Zend\Locale\Format.php line 1048
+[16.06.2016 12:25:27]  iconv_set_encoding(): Use of iconv.internal_encoding is deprecated @C:\wamp2\www\kimai\libraries\Zend\Locale\Format.php line 782
+[16.06.2016 12:25:27]  iconv_set_encoding(): Use of iconv.internal_encoding is deprecated @C:\wamp2\www\kimai\libraries\Zend\Locale\Format.php line 1048
+[16.06.2016 12:25:27]  iconv_set_encoding(): Use of iconv.internal_encoding is deprecated @C:\wamp2\www\kimai\libraries\Zend\Locale\Format.php line 782
+[16.06.2016 12:25:27]  iconv_set_encoding(): Use of iconv.internal_encoding is deprecated @C:\wamp2\www\kimai\libraries\Zend\Locale\Format.php line 1048
+[16.06.2016 12:25:27]  iconv_set_encoding(): Use of iconv.internal_encoding is deprecated @C:\wamp2\www\kimai\libraries\Zend\Locale\Format.php line 782
+[16.06.2016 12:25:27]  iconv_set_encoding(): Use of iconv.internal_encoding is deprecated @C:\wamp2\www\kimai\libraries\Zend\Locale\Format.php line 1048
+[16.06.2016 12:25:27]  iconv_set_encoding(): Use of iconv.internal_encoding is deprecated @C:\wamp2\www\kimai\libraries\Zend\Locale\Format.php line 782
+[16.06.2016 12:25:27]  iconv_set_encoding(): Use of iconv.internal_encoding is deprecated @C:\wamp2\www\kimai\libraries\Zend\Locale\Format.php line 1048
+[16.06.2016 12:25:27]  iconv_set_encoding(): Use of iconv.internal_encoding is deprecated @C:\wamp2\www\kimai\libraries\Zend\Locale\Format.php line 782
+[16.06.2016 12:25:27]  iconv_set_encoding(): Use of iconv.internal_encoding is deprecated @C:\wamp2\www\kimai\libraries\Zend\Locale\Format.php line 1048
+[16.06.2016 12:25:27] Global role 1 gave true for ki_timesheets-ownEntry-edit.
+[16.06.2016 12:25:27] timeEntry_edit: 1
+[16.06.2016 12:25:27] KSPI axAction (admin): reload_timeSheet
+[16.06.2016 12:25:27] Global role 1 gave true for ki_timesheets-showRates.
+[16.06.2016 12:25:29] KSPI axAction (admin): record
+[16.06.2016 12:25:29] Global role 1 gave true for ki_timesheets-ownEntry-edit.
+[16.06.2016 12:25:29] KSPI axAction (admin): reload_timeSheet
+[16.06.2016 12:25:29] KSPI axAction (admin): reload_activities
+[16.06.2016 12:25:29] Global role 1 gave true for ki_timesheets-showRates.
+[16.06.2016 12:25:29] Global role 1 gave true for core-activity-otherGroup-edit.
+[16.06.2016 12:25:29] KSPI axAction (admin): saveBuzzerPreselection
+[16.06.2016 12:25:29] KSPI axAction (admin): saveBuzzerPreselection
+[16.06.2016 12:25:43] KSPI axAction (admin): refreshSubtab
+[16.06.2016 12:25:43] Global role 1 gave true for core-group-otherGroup-view.
+[16.06.2016 12:25:43] Global role 1 gave true for core-user-otherGroup-view.
+[16.06.2016 12:25:43] Global role 1 gave true for core-group-otherGroup-view.
+[16.06.2016 12:25:43] Global role 1 gave true for core-activity-otherGroup-view.
+[16.06.2016 12:25:44] KSPI axAction (admin): refreshSubtab
+[16.06.2016 12:25:44] Global role 1 gave true for core-group-otherGroup-view.
+[16.06.2016 12:25:44] Global role 1 gave true for core-user-otherGroup-view.
+[16.06.2016 12:25:44] Global role 1 gave true for core-group-otherGroup-view.
+[16.06.2016 12:25:44] Global role 1 gave true for core-project-otherGroup-view.
+[16.06.2016 12:25:44] KSPI axAction (admin): refreshSubtab
+[16.06.2016 12:25:44] Global role 1 gave true for core-group-otherGroup-view.
+[16.06.2016 12:25:44] Global role 1 gave true for core-user-otherGroup-view.
+[16.06.2016 12:25:44] Global role 1 gave true for core-group-otherGroup-view.
+[16.06.2016 12:25:44] Global role 1 gave true for core-customer-otherGroup-view.
+[16.06.2016 12:25:52] KSPI axAction (admin): reload
+[16.06.2016 12:26:06] KSPI axAction (admin): add_edit_timeSheetEntry
+[16.06.2016 12:26:06] Global role 1 gave true for ki_timesheets-ownEntry-edit.
+[16.06.2016 12:26:06] Global role 1 gave true for ki_timesheets-otherEntry-otherGroup-edit.
+[16.06.2016 12:26:06] Global role 1 gave true for ki_timesheets-editRates.
+[16.06.2016 12:26:06] KSPI axAction (admin): reload_activities_options
+[16.06.2016 12:26:19] KSPI axAction (admin): add_edit_timeSheetEntry
+[16.06.2016 12:26:19] Global role 1 gave true for ki_timesheets-ownEntry-edit.
+[16.06.2016 12:26:19] Global role 1 gave true for ki_timesheets-editRates.
+[16.06.2016 12:26:19]  iconv_set_encoding(): Use of iconv.internal_encoding is deprecated @C:\wamp2\www\kimai\libraries\Zend\Locale\Format.php line 782
+[16.06.2016 12:26:19]  iconv_set_encoding(): Use of iconv.internal_encoding is deprecated @C:\wamp2\www\kimai\libraries\Zend\Locale\Format.php line 1048
+[16.06.2016 12:26:19]  iconv_set_encoding(): Use of iconv.internal_encoding is deprecated @C:\wamp2\www\kimai\libraries\Zend\Locale\Format.php line 782
+[16.06.2016 12:26:19]  iconv_set_encoding(): Use of iconv.internal_encoding is deprecated @C:\wamp2\www\kimai\libraries\Zend\Locale\Format.php line 1048
+[16.06.2016 12:26:19]  iconv_set_encoding(): Use of iconv.internal_encoding is deprecated @C:\wamp2\www\kimai\libraries\Zend\Locale\Format.php line 782
+[16.06.2016 12:26:19]  iconv_set_encoding(): Use of iconv.internal_encoding is deprecated @C:\wamp2\www\kimai\libraries\Zend\Locale\Format.php line 1048
+[16.06.2016 12:26:19]  iconv_set_encoding(): Use of iconv.internal_encoding is deprecated @C:\wamp2\www\kimai\libraries\Zend\Locale\Format.php line 782
+[16.06.2016 12:26:19]  iconv_set_encoding(): Use of iconv.internal_encoding is deprecated @C:\wamp2\www\kimai\libraries\Zend\Locale\Format.php line 1048
+[16.06.2016 12:26:19]  iconv_set_encoding(): Use of iconv.internal_encoding is deprecated @C:\wamp2\www\kimai\libraries\Zend\Locale\Format.php line 782
+[16.06.2016 12:26:19]  iconv_set_encoding(): Use of iconv.internal_encoding is deprecated @C:\wamp2\www\kimai\libraries\Zend\Locale\Format.php line 1048
+[16.06.2016 12:26:19]  iconv_set_encoding(): Use of iconv.internal_encoding is deprecated @C:\wamp2\www\kimai\libraries\Zend\Locale\Format.php line 782
+[16.06.2016 12:26:19]  iconv_set_encoding(): Use of iconv.internal_encoding is deprecated @C:\wamp2\www\kimai\libraries\Zend\Locale\Format.php line 1048
+[16.06.2016 12:26:19]  iconv_set_encoding(): Use of iconv.internal_encoding is deprecated @C:\wamp2\www\kimai\libraries\Zend\Locale\Format.php line 782
+[16.06.2016 12:26:19]  iconv_set_encoding(): Use of iconv.internal_encoding is deprecated @C:\wamp2\www\kimai\libraries\Zend\Locale\Format.php line 1048
+[16.06.2016 12:26:19]  iconv_set_encoding(): Use of iconv.internal_encoding is deprecated @C:\wamp2\www\kimai\libraries\Zend\Locale\Format.php line 782
+[16.06.2016 12:26:19]  iconv_set_encoding(): Use of iconv.internal_encoding is deprecated @C:\wamp2\www\kimai\libraries\Zend\Locale\Format.php line 1048
+[16.06.2016 12:26:19]  iconv_set_encoding(): Use of iconv.internal_encoding is deprecated @C:\wamp2\www\kimai\libraries\Zend\Locale\Format.php line 782
+[16.06.2016 12:26:19]  iconv_set_encoding(): Use of iconv.internal_encoding is deprecated @C:\wamp2\www\kimai\libraries\Zend\Locale\Format.php line 1048
+[16.06.2016 12:26:19]  iconv_set_encoding(): Use of iconv.internal_encoding is deprecated @C:\wamp2\www\kimai\libraries\Zend\Locale\Format.php line 782
+[16.06.2016 12:26:19]  iconv_set_encoding(): Use of iconv.internal_encoding is deprecated @C:\wamp2\www\kimai\libraries\Zend\Locale\Format.php line 1048
+[16.06.2016 12:26:19] Global role 1 gave true for ki_timesheets-ownEntry-edit.
+[16.06.2016 12:26:19] timeEntry_edit: 1
+[16.06.2016 12:26:19] KSPI axAction (admin): reload_timeSheet
+[16.06.2016 12:26:19] Global role 1 gave true for ki_timesheets-showRates.
+[16.06.2016 12:26:22] KSPI axAction (admin): stopRecord
+[16.06.2016 12:26:22] KSPI axAction (admin): record
+[16.06.2016 12:26:22] Global role 1 gave true for ki_timesheets-ownEntry-edit.
+[16.06.2016 12:26:23] KSPI axAction (admin): reload_timeSheet
+[16.06.2016 12:26:23] Global role 1 gave true for ki_timesheets-showRates.
+[16.06.2016 12:26:23] KSPI axAction (admin): reload_timeSheet
+[16.06.2016 12:26:23] KSPI axAction (admin): saveBuzzerPreselection
+[16.06.2016 12:26:23] Global role 1 gave true for ki_timesheets-showRates.
+[16.06.2016 12:26:23] KSPI axAction (admin): saveBuzzerPreselection
+[16.06.2016 12:26:23] KSPI axAction (admin): reload_activities
+[16.06.2016 12:26:23] Global role 1 gave true for core-activity-otherGroup-edit.
+[16.06.2016 12:26:35] KSPI axAction (admin): stopRecord
+[16.06.2016 12:26:36] KSPI axAction (admin): record
+[16.06.2016 12:26:36] Global role 1 gave true for ki_timesheets-ownEntry-edit.
+[16.06.2016 12:26:36] KSPI axAction (admin): reload_timeSheet
+[16.06.2016 12:26:36] Global role 1 gave true for ki_timesheets-showRates.
+[16.06.2016 12:26:36] KSPI axAction (admin): reload_timeSheet
+[16.06.2016 12:26:36] KSPI axAction (admin): saveBuzzerPreselection
+[16.06.2016 12:26:36] KSPI axAction (admin): reload_activities
+[16.06.2016 12:26:36] Global role 1 gave true for core-activity-otherGroup-edit.
+[16.06.2016 12:26:36] Global role 1 gave true for ki_timesheets-showRates.
+[16.06.2016 12:26:36] KSPI axAction (admin): saveBuzzerPreselection
