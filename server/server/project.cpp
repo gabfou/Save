@@ -263,7 +263,6 @@ void	project::projectshow(MainWindow *main, QTableWidget *gbox, int grefid)
 	int i = (main->showmod == 1) ? 1 : 0;
 	i+= this->nbgeneration;
 	int k = i;
-	int j = -1;
 
 	//gbox->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
 	if (this->listp.empty() || this->listquestion.empty())

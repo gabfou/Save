@@ -75,8 +75,8 @@ MainWindow::MainWindow(QWidget *parent) :
 	QObject::connect(send_ref, SIGNAL(triggered()), this, SLOT(sendproject_ref()));
 
 	QToolBar *toolBarFichier = addToolBar("Fichier");
-   //toolBarFichier->addAction(&Quitter);
-
+    QAction *screenshoot = toolBarFichier->addAction("&Imprimer écran");
+    QObject::connect(screenshoot, SIGNAL(triggered()), this, SLOT(screenshootcurrent()));
 
 	//setLayout(parent);
 }
@@ -564,3 +564,20 @@ void	MainWindow::showbarchartref()
 }
 
 void	MainWindow::configproject(){menuconfigproject *m = new menuconfigproject(this->namecurrent);}
+
+void    MainWindow::screenshootcurrent()
+{
+    // - Shoot the screen
+    QScreen *screen = QGuiApplication::primaryScreen();
+    if (const QWindow *window = windowHandle())
+        screen = window->screen();
+    if (!screen)
+        qDebug() << "screen init fail";
+    QPixmap pixmap = QPixmap();
+    pixmap = screen->grabWindow(this->centralWidget()->winId());
+
+    // - Save this picture
+    QString format = "png";
+    QString filePath = QDir::currentPath()+"/myscreen."+format;
+    pixmap.save(filePath, format.toStdString().c_str());
+}

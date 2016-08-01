@@ -50,6 +50,7 @@
 #include <QRadioButton>
 #include <QTabWidget>
 #include <QHeaderView>
+#include <QScreen>
 
 # define BUFF_SIZE 4096
 # define PATH "../../server/server/TextFile1.txt"
@@ -77,6 +78,7 @@ t_groupref syntheselistgroup(QList<t_groupref> listg, vector<question> questionl
 void gen_random(char *s, const int len);
 void sendmail(QString mail, QString body);
 void    addgroup(QString nameproject, QString name, int groupparent);
+void    supgroup(QString nameproject, int id);
 
 //global
 extern bool g_ref;

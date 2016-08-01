@@ -49,7 +49,7 @@ void sqldatatable::sqlupdateitem(QTableWidgetItem* item)
     sqltableitem *tmp = dynamic_cast<sqltableitem *>(item);
     if (!tmp)
     {
-        qDebug() << "dinamic cast fail";
+        qDebug() << "dinamic cast fail sqlupdateitem";
         return ;
     }
     QSqlQuery query;

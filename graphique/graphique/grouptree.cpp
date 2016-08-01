@@ -11,19 +11,24 @@ grouptree::grouptree()
 
 grouptree::grouptree(MainWindow *m, vector<group> & g) : m(m)
 {
-	int i = -1;
 	if (g.empty())
 		this->addTopLevelItem(new QTreeWidgetItem((QTreeWidget*)0, QStringList(QString("aucun projet ouvertt"))));
 	this->addTopLevelItem(new grouptreeitem(QStringList(QString(g[0].getName().c_str())), g, 0, (QTreeWidget*)0));
+
+    // action sur clic droit
     this->setContextMenuPolicy(Qt::ActionsContextMenu);
-    QAction *newg = new QAction(QString("nouveaux groupe"), this);
+
+    QAction *newg = new QAction(QString("Nouveaux"), this);
     this->addAction(newg);
     connect(newg, SIGNAL(triggered()), this, SLOT(addgroupintree()));
+
+    QAction *supg = new QAction(QString("Suprimer"), this);
+    this->addAction(supg);
+    connect(supg, SIGNAL(triggered()), this, SLOT(supgroupintree()));
 }
 
 // void	grouptree::projectgroupshow(MainWindow *main, QTableWidget *gbox, int k, int id, int *i)
 // new grouptreeitem(QStringList(QString(listgroup[*listpg].getName().c_str())), listgroup, *listpg, (QTreeWidget*)0)
-
 
 void    grouptree::addgroupintree()
 {
@@ -47,13 +52,20 @@ void    grouptree::addgroupintree2(QTreeWidgetItem *item, int column)
 {
     qDebug() << item->text(0);
     addgroup(m->namecurrent, item->text(0), tmpid);
-//    delete item;
-//    item = NULL;
+    delete item;
+    item = NULL;
     qDebug() << "upadte ?";
-//    m->updateproject(); actualisation necessaire mais detruit cette classe
+    //m->updateproject();// actualisation necessaire mais detruit cette classe
     qDebug() << "upadte";
 }
 
+void    grouptree::supgroupintree()
+{
+    supgroup(m->namecurrent, dynamic_cast<grouptreeitem*>(this->currentItem())->getId());
+    QTreeWidgetItem *item = this->currentItem();
+    delete item;
+    item = NULL;
+}
 
 grouptree::~grouptree()
 {

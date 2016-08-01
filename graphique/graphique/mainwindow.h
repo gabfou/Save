@@ -30,7 +30,8 @@ public:
     QString namecurrent;
     QDockWidget *groupdock = NULL;
 public slots:
-        void updateproject();
+    void updateproject();
+    void screenshootcurrent();
 private slots:
     void showproject();
     void sendproject();

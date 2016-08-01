@@ -19,3 +19,16 @@ void    addgroup(QString nameproject, QString name, int groupparent)
         qDebug() << "groupe insert success!";
     }
 }
+
+void    supgroup(QString nameproject, int id)
+{
+    QSqlQuery qry;
+    qry.prepare( "DELETE FROM project_" + nameproject + "_groupe WHERE id=?;" );
+    qry.addBindValue(id);
+    if( !qry.exec() )
+        qDebug() << qry.lastError();
+    else
+    {
+        qDebug() << "groupe delete success!";
+    }
+}

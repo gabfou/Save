@@ -18,6 +18,8 @@ public:
     ~grouptree();
     MainWindow *m = NULL;
     grouptree(MainWindow *m, vector<group> &g);
+public slots:
+    void supgroupintree();
 private slots:
     void addgroupintree();
     void addgroupintree2(QTreeWidgetItem *item, int column);
