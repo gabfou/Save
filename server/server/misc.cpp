@@ -7,7 +7,6 @@ t_groupref syntheselistgroup(QList<t_groupref> listg, vector<question> questionl
 {
     t_groupref ret;
     QList<t_groupref>::iterator  tmp;
-    vector<question>::iterator tmp2;
     int tabi[questionlist.size() + 1];
     int tabl[questionlist.size() + 1];
     QList<QString>::iterator tmp4;
@@ -38,11 +37,16 @@ t_groupref syntheselistgroup(QList<t_groupref> listg, vector<question> questionl
         m++;
         tmp++;
     }
+    ret.total = 0;
     i = -1;
     while(++i < questionlist.size() + 1)
     {
         if (tabl[i] != 0)
-            ret.list += QString::number(tabi[i] / tabl[i]);
+        {
+            int tmp37 = tabi[i] / tabl[i];
+            ret.total += tmp37;
+            ret.list += QString::number(tmp37);
+        }
         else
             ret.list += QString::number(0);
     }

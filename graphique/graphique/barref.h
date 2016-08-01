@@ -4,6 +4,7 @@
 #include "le.h"
 
 class QwtPlotMultiBarChart;
+class QwtPlotHistogram;
 class project;
 
 class barref: public QwtPlot
@@ -20,7 +21,7 @@ public Q_SLOTS:
 private:
     void populate(project *p);
 
-    QwtPlotMultiBarChart *d_barrefItem;
+     QwtPlotMultiBarChart *d_barrefItem;
 };
 
 #endif // BARREF_H

@@ -4,9 +4,9 @@
 #
 #-------------------------------------------------
 
-QT       += core gui sql
+greaterThan(QT_MAJOR_VERSION, 4):QT       += core gui sql widgets
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+greaterThan(QT_MAJOR_VERSION, 4)
 
 QTPLUGIN += qsqlmysql
 
@@ -15,6 +15,7 @@ TEMPLATE = app
 QMAKE_CXXFLAGS += -std=c++0x
 QT += network
 CONFIG += qwt
+
 include(QtXlsx/src/xlsx/qtxlsx.pri)
 
 SOURCES += main.cpp\

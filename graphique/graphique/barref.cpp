@@ -20,7 +20,7 @@ barref::barref(QWidget *parent, project *p):
     //d_barrefItem->setSpacing( 20 );
     //d_barrefItem->
     d_barrefItem->setMargin( 3 );
-    d_barrefItem->setStyle( QwtPlotMultiBarChart::Grouped );
+    d_barrefItem->setStyle( QwtPlotMultiBarChart::Stacked );
 
     d_barrefItem->attach( this );
 
@@ -34,17 +34,16 @@ barref::barref(QWidget *parent, project *p):
 
 void barref::populate(project *p)
 {
-    static const char *colors[] = { "DarkOrchid", "SteelBlue"};
+    static const char *colors[] = { "White", "Cyan"};
 
     t_groupref listg = syntheselistgroup(p->getgrouplist("ALL"), p->getListquestion());
-    t_groupref listref = syntheselistgroup(p->getgrouplistref("ALL"), p->getListquestion());
+    //t_groupref listref = syntheselistgroup(p->getgrouplistref("ALL"), p->getListquestion());
     QList<QString>::iterator tmp;
-    QList<QString>::iterator tmp2;
 
     vector<question> listq = p->getListquestion();
     vector<question>::iterator tmp3;
 
-    const int numSamples = listq.size() + 1;
+    const int numSamples = listq.size() + 2;
     const int numBars = 2;
 
     QList<QwtText> titles;
@@ -57,7 +56,7 @@ void barref::populate(project *p)
     }*/
     titles += QString("reel");
     titles += QString("declaratif");
-    d_barrefItem->setBarTitles(titles);
+//    d_barrefItem->setBarTitles(titles);
     d_barrefItem->setLegendIconSize( QSize( 10, 14 ) );
 
     for ( int i = 0; i < numBars; i++ )
@@ -69,22 +68,20 @@ void barref::populate(project *p)
 
         d_barrefItem->setSymbol( i, symbol );
     }
-
     QVector< QVector<double> > series;
     tmp = listg.list.begin();
-    tmp2 = listref.list.begin();
     tmp3 = listq.begin();
+    int tmp37 = listg.total;
     while (tmp3 != listq.end())
     {
         QVector<double> values;
+        tmp37 -= (*tmp).toInt();
+        values += tmp37;
         values += (*tmp).toInt();
-        values += (*tmp2).toInt();
         series += values;
         qDebug() << (*tmp).toInt();
-        qDebug() << (*tmp2).toInt();
         tmp3++;
         tmp++;
-        tmp2++;
     }
 
     d_barrefItem->setSamples( series );
@@ -94,11 +91,11 @@ void barref::setMode( int mode )
 {
  //   if ( mode == 0 )
 //    {
-        d_barrefItem->setStyle( QwtPlotMultiBarChart::Grouped );
+//        d_barrefItem->setStyle( QwtPlotMultiBarChart::Grouped );
 //    }
 //    else
 //    {
-//        d_barrefItem->setStyle( QwtPlotMultiBarChart::Stacked );
+        d_barrefItem->setStyle( QwtPlotMultiBarChart::Stacked );
 //    }
 }
 

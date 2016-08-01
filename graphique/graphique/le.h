@@ -19,7 +19,8 @@
 #include <QSqlerror>
 #include <QString>
 #include <QPushButton>
-#include <QMessageBox>
+#include <QTWidgets/QMessageBox>
+//#include <QtGui/QMessageBox>
 #include <QDialog>
 #include <iostream>
 #include <string>
@@ -39,6 +40,7 @@
 #include <qwt_plot_canvas.h>
 #include <qwt_plot_multi_barchart.h>
 #include <qwt_column_symbol.h>
+#include <qwt_plot_histogram.h>
 #include <qwt_plot_layout.h>
 #include <qwt_legend.h>
 #include <qwt_scale_draw.h>
@@ -51,6 +53,11 @@
 #include <QTabWidget>
 #include <QHeaderView>
 #include <QScreen>
+#include <QByteArray>
+#include <QImageWriter>
+#include <Qlabel>
+#include <QMainWindow>
+#include <QWindow>
 
 # define BUFF_SIZE 4096
 # define PATH "../../server/server/TextFile1.txt"
@@ -61,6 +68,7 @@ typedef struct  s_groupref
 {
     QString         name;
     QList<QString>  list;
+    int             total = 0;
 }               t_groupref;
 
 using namespace std;

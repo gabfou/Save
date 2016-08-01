@@ -1,10 +1,8 @@
 #pragma once
 
 #include "ui_mainwindow.h"
-#include <QMainWindow>
-#include <QWindow>
 #include "le.h"
-#include <Qlabel>
+
 #include "grouptree.h"
 
 class barref;

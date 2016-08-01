@@ -577,7 +577,28 @@ void    MainWindow::screenshootcurrent()
     pixmap = screen->grabWindow(this->centralWidget()->winId());
 
     // - Save this picture
-    QString format = "png";
-    QString filePath = QDir::currentPath()+"/myscreen."+format;
-    pixmap.save(filePath, format.toStdString().c_str());
+    const QString format = "png";
+        QString initialPath = QStandardPaths::writableLocation(QStandardPaths::PicturesLocation);
+        if (initialPath.isEmpty())
+            initialPath = QDir::currentPath();
+        initialPath += tr("/untitled.") + format;
+
+        QFileDialog fileDialog(this, tr("Save As"), initialPath);
+        fileDialog.setAcceptMode(QFileDialog::AcceptSave);
+        fileDialog.setFileMode(QFileDialog::AnyFile);
+        fileDialog.setDirectory(initialPath);
+        QStringList mimeTypes;
+        foreach (const QByteArray &bf, QImageWriter::supportedMimeTypes())
+            mimeTypes.append(QLatin1String(bf));
+        fileDialog.setMimeTypeFilters(mimeTypes);
+        fileDialog.selectMimeTypeFilter("image/" + format);
+        fileDialog.setDefaultSuffix(format);
+        if (fileDialog.exec() != QDialog::Accepted)
+            return;
+        const QString fileName = fileDialog.selectedFiles().first();
+        if (!pixmap.save(fileName)) {
+        //    QMessageBox::warning(this, tr("Save Error"), tr("The image could not be saved to \"%1\".")
+        //                         .arg(QDir::toNativeSeparators(fileName)));
+            qDebug() << tr("The image could not be saved to \"%1\".").arg(QDir::toNativeSeparators(fileName));
+        }
 }
