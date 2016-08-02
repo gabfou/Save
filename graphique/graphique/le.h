@@ -58,6 +58,7 @@
 #include <Qlabel>
 #include <QMainWindow>
 #include <QWindow>
+#include <QPainter>
 
 # define BUFF_SIZE 4096
 # define PATH "../../server/server/TextFile1.txt"

@@ -41,7 +41,9 @@ SOURCES += main.cpp\
     tableclass/argtableitem.tpp \
     tableclass/headeredit.cpp \
     sqloperation.cpp \
-    dockgroup.cpp
+    dockgroup.cpp \
+    graph/bargraph.cpp \
+    overview.cpp
 
 HEADERS  += mainwindow.h \
     ../../server/server/fact.h \
@@ -63,7 +65,9 @@ HEADERS  += mainwindow.h \
     tableclass/tableshow.h \
     tableclass/itemtable.h \
     tableclass/headeredit.h \
-    dockgroup.h
+    dockgroup.h \
+    graph/bargraph.h \
+    overview.h
    
 FORMS    += mainwindow.ui 
 QT		+= network
