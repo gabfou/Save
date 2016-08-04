@@ -11,14 +11,11 @@ greaterThan(QT_MAJOR_VERSION, 4)
 QTPLUGIN += qsqlmysql
 
 TARGET = graphique
-TEMPLATE = app
 CONFIG += c++11
 #QMAKE_CXXFLAGS += -std=c++0x
 QT += network
-CONFIG += qwt
-#QTPLUGIN += QSQLMYSQ
-#LIBS+=libmysql.dll
-#include(./libmysql.dll)
+#LIBS+= -L. libmysql.lib #mysqlclient.lib
+include(./libmysql.dll)
 
 include(QtXlsx/src/xlsx/qtxlsx.pri)
 

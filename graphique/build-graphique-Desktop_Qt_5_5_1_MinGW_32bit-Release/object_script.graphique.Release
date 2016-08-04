@@ -41,7 +41,6 @@ INPUT(
 ./release\xlsx_common_operation.o
 ./release\group.o
 ./release\table_common_operation.o
-./release\barref.o
 ./release\menuconfigproject.o
 ./release\sqldatatable.o
 ./release\sqltableitem.o
@@ -53,10 +52,11 @@ INPUT(
 ./release\headeredit.o
 ./release\sqloperation.o
 ./release\dockgroup.o
+./release\bargraph.o
+./release\overview.o
 ./release\moc_xlsxdocument.o
 ./release\moc_mainwindow.o
 ./release\moc_smtp.o
-./release\moc_barref.o
 ./release\moc_sqldatatable.o
 ./release\moc_grouptree.o
 ./release\moc_tableshow.o

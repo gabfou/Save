@@ -22,7 +22,7 @@ string	replacespace(string name)
     return (name);
 }
 
-#ifdef Q_WS_WIN
+/*#ifdef Q_WS_WIN
 void createConnection()
 {
     QSqlDatabase db = QSqlDatabase::addDatabase("QODBC");
@@ -39,7 +39,7 @@ void createConnection()
         qDebug("conection sql set");
     }
 }
-#endif
+#endif*/
 
 //#ifdef Q_WS_MAC
 void createConnection()

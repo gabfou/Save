@@ -41,7 +41,6 @@ INPUT(
 ./debug\xlsx_common_operation.o
 ./debug\group.o
 ./debug\table_common_operation.o
-./debug\barref.o
 ./debug\menuconfigproject.o
 ./debug\sqldatatable.o
 ./debug\sqltableitem.o
@@ -53,10 +52,11 @@ INPUT(
 ./debug\headeredit.o
 ./debug\sqloperation.o
 ./debug\dockgroup.o
+./debug\bargraph.o
+./debug\overview.o
 ./debug\moc_xlsxdocument.o
 ./debug\moc_mainwindow.o
 ./debug\moc_smtp.o
-./debug\moc_barref.o
 ./debug\moc_sqldatatable.o
 ./debug\moc_grouptree.o
 ./debug\moc_tableshow.o

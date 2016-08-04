@@ -1,6 +1,7 @@
 #ifndef LE_H
 #define LE_H
 
+#include <QtSql>
 #include <QDockWidget>
 #include <Qstring>
 #include <QLineEdit>
