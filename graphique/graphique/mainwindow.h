@@ -5,7 +5,7 @@
 
 #include "grouptree.h"
 
-class barref;
+//class barref;
 class tableshow;
 class overview;
 
@@ -63,7 +63,7 @@ private:
     QLineEdit *emailtmp;
     tableshow *table = NULL;
     grouptree *groupboxtmp;
-    barref *d_chart;
+//    barref *d_chart;
     int currentgref = 0;
     QRadioButton *radiobuttontmp;
     overview *ov = NULL;
@@ -72,3 +72,4 @@ private:
     void addock();
 };
 
+    

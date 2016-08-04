@@ -12,9 +12,13 @@ QTPLUGIN += qsqlmysql
 
 TARGET = graphique
 TEMPLATE = app
-QMAKE_CXXFLAGS += -std=c++0x
+CONFIG += c++11
+#QMAKE_CXXFLAGS += -std=c++0x
 QT += network
 CONFIG += qwt
+#QTPLUGIN += QSQLMYSQ
+#LIBS+=libmysql.dll
+#include(./libmysql.dll)
 
 include(QtXlsx/src/xlsx/qtxlsx.pri)
 
@@ -29,7 +33,6 @@ SOURCES += main.cpp\
     xlsx_common_operation.cpp \
     ../../server/server/group.cpp \
     table_common_operation.cpp \
-    barref.cpp \
     menuconfigproject.cpp \
     sqldatatable.cpp \
     sqltableitem.cpp \
@@ -55,7 +58,6 @@ HEADERS  += mainwindow.h \
     smtp.h \
     le.h \
     ../../server/server/group.h \
-    barref.h \
     menuconfigproject.h \
     sqldatatable.h \
     sqltableitem.h \
@@ -71,11 +73,11 @@ HEADERS  += mainwindow.h \
    
 FORMS    += mainwindow.ui 
 QT		+= network
-QT       += webkit webkitwidgets
+#QT       += webkit webkitwidgets
 
-win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../server/server/ -llibcurl
-else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../server/server/ -llibcurl
-else:unix: LIBS += -L$$PWD/../../server/server/ -llibcurl
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../../server/server/ #-llibcurl
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../../server/server/ #-llibcurl
+else:unix: LIBS += -L$$PWD/../../server/server/ #-llibcurl
 
 INCLUDEPATH += $$PWD/../../server/server
 DEPENDPATH += $$PWD/../../server/server

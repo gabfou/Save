@@ -1,4 +1,4 @@
-#ifndef BARREF_H
+/*#ifndef BARREF_H
 #define BARREF_H
 
 #include "le.h"
@@ -25,3 +25,4 @@ private:
 };
 
 #endif // BARREF_H
+*/

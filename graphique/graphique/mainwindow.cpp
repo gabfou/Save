@@ -3,7 +3,7 @@
 #include <QMessageBox>
 #include "project.h"
 #include "grouptree.h"
-#include "barref.h"
+//#include "barref.h"
 #include "menuconfigproject.h"
 #include "grouptreeitem.h"
 #include "tableclass/tableshow.h"
@@ -297,13 +297,14 @@ void MainWindow::openproject()
 	QListWidget *listWidget = new QListWidget();
 
 
-	if(qry.exec("SELECT table_name FROM INFORMATION_SCHEMA.TABLES WHERE table_name LIKE 'project_%_project'"))
+    if(qry.exec("SELECT table_name FROM INFORMATION_SCHEMA.TABLES WHERE table_name LIKE 'project_%_project'"))
 	{
 		while(qry.next())
 		{
 			listWidget->addItem(name_recuperator(qry.value(0).toString()));
 		}
 	}
+    else
 	QObject::connect(listWidget, SIGNAL(itemClicked(QListWidgetItem *)),
 						 this, SLOT(openproject2(QListWidgetItem *)));
 	QObject::connect(listWidget, SIGNAL(itemClicked(QListWidgetItem *)),
@@ -572,8 +573,8 @@ void	MainWindow::changescope2()
 
 void	MainWindow::showbarchartref()
 {
-	d_chart = new barref(NULL, this->current);
-	d_chart->show();
+//	d_chart = new barref(NULL, this->current);
+//	d_chart->show();
 }
 
 void	MainWindow::configproject(){menuconfigproject *m = new menuconfigproject(this->namecurrent);}

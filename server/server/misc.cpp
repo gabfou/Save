@@ -1,5 +1,5 @@
 #include "le.h"
-#include <windows.h> 
+//#include <windows.h>
 #include "question.h"
 #include "smtp.h"
 
@@ -56,7 +56,7 @@ t_groupref syntheselistgroup(QList<t_groupref> listg, vector<question> questionl
 void ft_error(string error)
 {
 	cout << error;
-	Sleep(10000);
+//	Sleep(10000);
 	exit(-1);
 }
 
