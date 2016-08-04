@@ -4,10 +4,14 @@
 
 #include "le.h"
 
-class overview : public QTableWidget
+class project;
+
+class overview : public QWidget
 {
+    project *p;
 public:
-    overview();
+    overview(project *p, int group);
+    void updateov(int group);
 };
 
 #endif // OVERVIEW_H

@@ -9,10 +9,11 @@ public:
     bargraph(t_groupref g, vector<question> q, QWidget *parent = 0);
 protected:
     void paintEvent(QPaintEvent *event);
-    void drawgraph(t_groupref &g);
+    void  drawgraph(QPainter *qp);
 private:
     t_groupref g;
     vector<question> q;
+    QString name = "non défini";
 };
 
 #endif // BARGRAPH_H

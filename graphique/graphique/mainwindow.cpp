@@ -7,6 +7,7 @@
 #include "menuconfigproject.h"
 #include "grouptreeitem.h"
 #include "tableclass/tableshow.h"
+#include "overview.h"
 
 MainWindow::MainWindow(QWidget *parent) :
 	QMainWindow(parent),
@@ -14,8 +15,9 @@ MainWindow::MainWindow(QWidget *parent) :
 {
 	string comande;
 
-	cout << "running\n";
 	ui->setupUi(this);
+    this->cw = new QTabWidget();
+    this->setCentralWidget(cw);
 	this->current = new project;
 //    this->table = new QTableWidget(this);
 	// default display
@@ -79,6 +81,8 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(screenshoot, SIGNAL(triggered()), this, SLOT(screenshootcurrent()));
 
 	//setLayout(parent);
+
+    //ajout table
 }
 
 
@@ -316,7 +320,7 @@ void MainWindow::openproject2(QListWidgetItem *item)
 	this->current->initoroject(item->text().toStdString());
 	this->currentgref = 0;
 //	this->current->projectshow(this, this->table, this->currentgref);
-	this->namecurrent = item->text();
+    this->namecurrent = item->text();
     this->addock();
 }
 
@@ -413,9 +417,18 @@ void MainWindow::addperson2()
 
 void MainWindow::showproject()
 {
+    if (this->ov == NULL)
+    {
+        this->ov = new overview(this->current, this->currentgref), "overview";
+        this->cw->addTab(this->ov, "resumé");
+    }
     if (this->table == NULL)
+    {
         this->table = new tableshow((this->current), this);
+        this->cw->addTab(this->table, "tableaux");
+    }
     this->table->showtable(this, 0, this->currentgref, 0);
+
     //this->current->projectshow(this, this->table, this->currentgref);
 }
 

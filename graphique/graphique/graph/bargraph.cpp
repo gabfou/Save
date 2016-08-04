@@ -1,42 +1,57 @@
 #include "bargraph.h"
+#include "question.h"
 
 bargraph::bargraph(t_groupref  g, vector<question> q, QWidget *parent) : QWidget(parent), g(g), q(q)
 {
+     setMinimumWidth(300);
 }
 
-bargraph::paintEvent(QPaintEvent *event)
+void bargraph::paintEvent(QPaintEvent *event)
 {
     QPainter qp(this);
-    drawgraph(&qp);
+    this->drawgraph(&qp);
 }
 
 //    t_groupref listg = syntheselistgroup(p->getgrouplist("ALL"), p->getListquestion());
 
-
-bargraph::drawgraph(QPainter *qp)
+void bargraph::drawgraph(QPainter *qp)
 {
-    int x = 10;
-    int d = this->g.total;
+    float incr = this->width() / ((q.size() + 2) * 2);
+    float x = incr;
+    float d = this->g.total;
+    float h120 = this->height() / 120;
+    float tmp37 = 20;
 
-    if (d == 0)
+    if (d == 0 || h120 == 0)
+    {
+        qDebug() << "drawgraph nop";
         return ;
+    }
     d /= 100;
+    qDebug() << "debut" << x <<  10 * h120 << incr << 100 * h120 << this->width() << this->height();
+    qp->drawText(0, 0, this->width(), 10 * h120, Qt::AlignCenter, this->name);
     qp->setBrush(QBrush(Qt::cyan));
-    qp->drawRect(x, 10, 10, 100);
-
+    qp->drawRect(x, tmp37 * h120 , incr, 100 * h120);
     QList<QString>::iterator tmp;
-    vector<question> listq = p->getListquestion();
+    vector<question> listq = q;
     vector<question>::iterator tmp3;
 
     tmp = g.list.begin();
     tmp3 = listq.begin();
-    int tmp37 = g.total;
-    while (tmp3 != listq.end())
+    while (tmp3 != listq.end() && tmp != g.list.end())
     {
-        QVector<double> values;
-        tmp37 -= (*tmp).toInt();
-        qp->drawRect(x, 10 + g.total - tmp37, 10, (*tmp).toInt() / d);
+        if ((*tmp).compare("NA") == 0)
+        {
+            tmp3++;
+            tmp++;
+            continue ;
+        }
+        x +=  incr + incr;
+        qDebug() << "boucle" << x <<  tmp37 << (*tmp).toFloat() / d;
+        qp->drawRect(x, tmp37 * h120, incr, ((*tmp).toFloat() / d) * h120);
+        tmp37 += ((*tmp).toInt() / d);
         tmp3++;
         tmp++;
     }
+    this->show();
 }

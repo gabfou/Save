@@ -36,7 +36,7 @@ void barref::populate(project *p)
 {
     static const char *colors[] = { "White", "Cyan"};
 
-    t_groupref listg = syntheselistgroup(p->getgrouplist("ALL"), p->getListquestion());
+    t_groupref listg = syntheselistgroup(p->getgrouplist(0), p->getListquestion());
     //t_groupref listref = syntheselistgroup(p->getgrouplistref("ALL"), p->getListquestion());
     QList<QString>::iterator tmp;
 

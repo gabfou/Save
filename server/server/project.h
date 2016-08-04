@@ -46,8 +46,8 @@ public:
     vector<group> getListgroup() const;
     void setListgroup(const vector<group> &value);
     void projectgroupshow(MainWindow *qMain, QTableWidget *gbox, int k, int id, int *i);
-    QList<t_groupref> getgrouplist(char *parent);
-    QList<t_groupref> getgrouplistref(char *parent);
+    QList<t_groupref> getgrouplist(int id);
+    QList<t_groupref> getgrouplistref(int id);
     vector<question> getListquestion() const;
     list<person> getListp() const;
     int getNbperson() const;

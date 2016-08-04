@@ -9,7 +9,6 @@ class question;
 class group
 {
 private:
-    string name;
     int parentid;
     int generation = 0;
     std::list<person> listp;
@@ -45,6 +44,7 @@ public:
     t_groupref groupnamerep(const vector<question> & questionlist, int ref) const;
     QString grouprep(question tmp2, int ref) const;
     int id;
+    string name;
 };
 
 #endif // GROUP_H

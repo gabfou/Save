@@ -7,6 +7,7 @@
 
 class barref;
 class tableshow;
+class overview;
 
 #include "project.h"
 
@@ -27,6 +28,7 @@ public:
     int showmod = 0;
     QString namecurrent;
     QDockWidget *groupdock = NULL;
+    QTabWidget *cw;
 public slots:
     void updateproject();
     void screenshootcurrent();
@@ -64,6 +66,7 @@ private:
     barref *d_chart;
     int currentgref = 0;
     QRadioButton *radiobuttontmp;
+    overview *ov = NULL;
 
     void sendprojectauxi(QString str);
     void addock();

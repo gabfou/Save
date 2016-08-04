@@ -296,26 +296,35 @@ void	project::projectshow(MainWindow *main, QTableWidget *gbox, int grefid)
 	this->projectgroupshow(main, gbox, k, grefid, &i);
 }
 
-QList<t_groupref> project::getgrouplist(char *parent)
+QList<t_groupref> project::getgrouplist(int id)
 {
     QList<t_groupref> ret;
-    int j = -1;
+    QList<int> listchild;
+    QList<int>::iterator i;
 
-	while (++j < this->listgroup.size())
+    groupchild(id, listchild);
+    i = listchild.begin();
+    while (i != listchild.end())
 	{
-		ret << this->listgroup[j].groupnamerep(this->listquestion, 0);
+        ret << this->listgroup[*i].groupnamerep(this->listquestion, 0);
+        i++;
 	}
 	return ret;
 }
 
-QList<t_groupref> project::getgrouplistref(char *parent)
+QList<t_groupref> project::getgrouplistref(int id)
 {
-	QList<t_groupref> ret;
-	int j = -1;
+    QList<t_groupref> ret;
+    QList<int> listchild;
+    QList<int>::iterator i;
 
-	while (++j < this->listgroup.size())
+
+    groupchild(id, listchild);
+    i = listchild.begin();
+    while (i != listchild.end())
 	{
-		ret << this->listgroup[j].groupnamerep(this->listquestion, 1);
+        ret << this->listgroup[*i].groupnamerep(this->listquestion, 1);
+        i++;
 	}
 	return ret;
 }
