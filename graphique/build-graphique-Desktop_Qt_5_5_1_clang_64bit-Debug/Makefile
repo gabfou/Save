@@ -878,6 +878,22 @@ moc_xlsxdocument.cpp: ../graphique/QtXlsx/src/xlsx/xlsxglobal.h \
 
 moc_mainwindow.cpp: ui_mainwindow.h \
 		../graphique/le.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/QtSql \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsql.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqldatabase.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqldriver.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqldriverplugin.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlerror.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlfield.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlindex.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlquery.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlrecord.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlresult.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlquerymodel.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlrelationaldelegate.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlrelationaltablemodel.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqltablemodel.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qtsqlversion.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QDockWidget \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qdockwidget.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtCore.framework/Headers/Qstring \
@@ -938,9 +954,7 @@ moc_mainwindow.cpp: ui_mainwindow.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QScrollArea \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qscrollarea.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/QSqlQuery \
-		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlquery.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/QSqlerror \
-		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlerror.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtCore.framework/Headers/QString \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QDialog \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qdialog.h \
@@ -1032,6 +1046,22 @@ moc_smtp.cpp: /goinfre/Qt/5.5/clang_64/lib/QtCore.framework/Headers/QString \
 	/goinfre/Qt/5.5/clang_64/bin/moc $(DEFINES) -D__APPLE__ -D__GNUC__=4 -D__APPLE_CC__ -I/goinfre/Qt/5.5/clang_64/mkspecs/macx-clang -I/nfs/2014/g/gfournie/murano/graphique/graphique -I/nfs/2014/g/gfournie/murano/graphique/graphique/QtXlsx/src/xlsx -I/nfs/2014/g/gfournie/murano/server/server -I/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers -I/goinfre/Qt/5.5/clang_64/lib/QtGui.framework/Headers -I/goinfre/Qt/5.5/clang_64/lib/QtGui.framework/Headers/5.5.1 -I/goinfre/Qt/5.5/clang_64/lib/QtGui.framework/Headers/5.5.1/QtGui -I/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers -I/goinfre/Qt/5.5/clang_64/lib/QtNetwork.framework/Headers -I/goinfre/Qt/5.5/clang_64/lib/QtCore.framework/Headers -I. -F/goinfre/Qt/5.5/clang_64/lib ../graphique/smtp.h -o moc_smtp.cpp
 
 moc_sqldatatable.cpp: ../graphique/le.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/QtSql \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsql.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqldatabase.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqldriver.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqldriverplugin.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlerror.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlfield.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlindex.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlquery.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlrecord.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlresult.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlquerymodel.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlrelationaldelegate.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlrelationaltablemodel.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqltablemodel.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qtsqlversion.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QDockWidget \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qdockwidget.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtCore.framework/Headers/Qstring \
@@ -1092,9 +1122,7 @@ moc_sqldatatable.cpp: ../graphique/le.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QScrollArea \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qscrollarea.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/QSqlQuery \
-		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlquery.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/QSqlerror \
-		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlerror.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtCore.framework/Headers/QString \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QDialog \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qdialog.h \
@@ -1161,6 +1189,22 @@ moc_sqldatatable.cpp: ../graphique/le.h \
 	/goinfre/Qt/5.5/clang_64/bin/moc $(DEFINES) -D__APPLE__ -D__GNUC__=4 -D__APPLE_CC__ -I/goinfre/Qt/5.5/clang_64/mkspecs/macx-clang -I/nfs/2014/g/gfournie/murano/graphique/graphique -I/nfs/2014/g/gfournie/murano/graphique/graphique/QtXlsx/src/xlsx -I/nfs/2014/g/gfournie/murano/server/server -I/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers -I/goinfre/Qt/5.5/clang_64/lib/QtGui.framework/Headers -I/goinfre/Qt/5.5/clang_64/lib/QtGui.framework/Headers/5.5.1 -I/goinfre/Qt/5.5/clang_64/lib/QtGui.framework/Headers/5.5.1/QtGui -I/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers -I/goinfre/Qt/5.5/clang_64/lib/QtNetwork.framework/Headers -I/goinfre/Qt/5.5/clang_64/lib/QtCore.framework/Headers -I. -F/goinfre/Qt/5.5/clang_64/lib ../graphique/sqldatatable.h -o moc_sqldatatable.cpp
 
 moc_grouptree.cpp: ../graphique/le.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/QtSql \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsql.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqldatabase.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqldriver.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqldriverplugin.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlerror.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlfield.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlindex.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlquery.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlrecord.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlresult.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlquerymodel.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlrelationaldelegate.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlrelationaltablemodel.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqltablemodel.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qtsqlversion.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QDockWidget \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qdockwidget.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtCore.framework/Headers/Qstring \
@@ -1221,9 +1265,7 @@ moc_grouptree.cpp: ../graphique/le.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QScrollArea \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qscrollarea.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/QSqlQuery \
-		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlquery.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/QSqlerror \
-		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlerror.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtCore.framework/Headers/QString \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QDialog \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qdialog.h \
@@ -1290,6 +1332,22 @@ moc_grouptree.cpp: ../graphique/le.h \
 	/goinfre/Qt/5.5/clang_64/bin/moc $(DEFINES) -D__APPLE__ -D__GNUC__=4 -D__APPLE_CC__ -I/goinfre/Qt/5.5/clang_64/mkspecs/macx-clang -I/nfs/2014/g/gfournie/murano/graphique/graphique -I/nfs/2014/g/gfournie/murano/graphique/graphique/QtXlsx/src/xlsx -I/nfs/2014/g/gfournie/murano/server/server -I/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers -I/goinfre/Qt/5.5/clang_64/lib/QtGui.framework/Headers -I/goinfre/Qt/5.5/clang_64/lib/QtGui.framework/Headers/5.5.1 -I/goinfre/Qt/5.5/clang_64/lib/QtGui.framework/Headers/5.5.1/QtGui -I/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers -I/goinfre/Qt/5.5/clang_64/lib/QtNetwork.framework/Headers -I/goinfre/Qt/5.5/clang_64/lib/QtCore.framework/Headers -I. -F/goinfre/Qt/5.5/clang_64/lib ../graphique/grouptree.h -o moc_grouptree.cpp
 
 moc_tableshow.cpp: ../graphique/le.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/QtSql \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsql.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqldatabase.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqldriver.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqldriverplugin.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlerror.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlfield.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlindex.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlquery.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlrecord.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlresult.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlquerymodel.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlrelationaldelegate.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlrelationaltablemodel.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqltablemodel.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qtsqlversion.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QDockWidget \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qdockwidget.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtCore.framework/Headers/Qstring \
@@ -1350,9 +1408,7 @@ moc_tableshow.cpp: ../graphique/le.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QScrollArea \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qscrollarea.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/QSqlQuery \
-		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlquery.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/QSqlerror \
-		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlerror.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtCore.framework/Headers/QString \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QDialog \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qdialog.h \
@@ -2415,6 +2471,22 @@ xlsxcellformula.o: ../graphique/QtXlsx/src/xlsx/xlsxcellformula.cpp ../graphique
 main.o: ../graphique/main.cpp ../graphique/mainwindow.h \
 		ui_mainwindow.h \
 		../graphique/le.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/QtSql \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsql.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqldatabase.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqldriver.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqldriverplugin.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlerror.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlfield.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlindex.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlquery.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlrecord.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlresult.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlquerymodel.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlrelationaldelegate.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlrelationaltablemodel.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqltablemodel.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qtsqlversion.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QDockWidget \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qdockwidget.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtCore.framework/Headers/Qstring \
@@ -2475,9 +2547,7 @@ main.o: ../graphique/main.cpp ../graphique/mainwindow.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QScrollArea \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qscrollarea.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/QSqlQuery \
-		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlquery.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/QSqlerror \
-		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlerror.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtCore.framework/Headers/QString \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QDialog \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qdialog.h \
@@ -2562,6 +2632,22 @@ main.o: ../graphique/main.cpp ../graphique/mainwindow.h \
 mainwindow.o: ../graphique/mainwindow.cpp ../graphique/mainwindow.h \
 		ui_mainwindow.h \
 		../graphique/le.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/QtSql \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsql.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqldatabase.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqldriver.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqldriverplugin.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlerror.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlfield.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlindex.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlquery.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlrecord.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlresult.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlquerymodel.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlrelationaldelegate.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlrelationaltablemodel.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqltablemodel.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qtsqlversion.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QDockWidget \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qdockwidget.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtCore.framework/Headers/Qstring \
@@ -2622,9 +2708,7 @@ mainwindow.o: ../graphique/mainwindow.cpp ../graphique/mainwindow.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QScrollArea \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qscrollarea.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/QSqlQuery \
-		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlquery.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/QSqlerror \
-		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlerror.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtCore.framework/Headers/QString \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QDialog \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qdialog.h \
@@ -2711,6 +2795,22 @@ mainwindow.o: ../graphique/mainwindow.cpp ../graphique/mainwindow.h \
 
 fact.o: ../../server/server/fact.cpp ../../server/server/fact.h \
 		../graphique/le.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/QtSql \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsql.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqldatabase.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqldriver.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqldriverplugin.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlerror.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlfield.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlindex.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlquery.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlrecord.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlresult.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlquerymodel.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlrelationaldelegate.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlrelationaltablemodel.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqltablemodel.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qtsqlversion.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QDockWidget \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qdockwidget.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtCore.framework/Headers/Qstring \
@@ -2771,9 +2871,7 @@ fact.o: ../../server/server/fact.cpp ../../server/server/fact.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QScrollArea \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qscrollarea.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/QSqlQuery \
-		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlquery.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/QSqlerror \
-		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlerror.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtCore.framework/Headers/QString \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QDialog \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qdialog.h \
@@ -2844,6 +2942,22 @@ fact.o: ../../server/server/fact.cpp ../../server/server/fact.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o fact.o ../../server/server/fact.cpp
 
 misc.o: ../../server/server/misc.cpp ../graphique/le.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/QtSql \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsql.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqldatabase.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqldriver.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqldriverplugin.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlerror.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlfield.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlindex.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlquery.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlrecord.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlresult.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlquerymodel.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlrelationaldelegate.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlrelationaltablemodel.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqltablemodel.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qtsqlversion.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QDockWidget \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qdockwidget.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtCore.framework/Headers/Qstring \
@@ -2904,9 +3018,7 @@ misc.o: ../../server/server/misc.cpp ../graphique/le.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QScrollArea \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qscrollarea.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/QSqlQuery \
-		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlquery.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/QSqlerror \
-		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlerror.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtCore.framework/Headers/QString \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QDialog \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qdialog.h \
@@ -2979,6 +3091,22 @@ misc.o: ../../server/server/misc.cpp ../graphique/le.h \
 
 person.o: ../../server/server/person.cpp ../../server/server/person.h \
 		../graphique/le.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/QtSql \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsql.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqldatabase.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqldriver.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqldriverplugin.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlerror.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlfield.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlindex.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlquery.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlrecord.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlresult.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlquerymodel.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlrelationaldelegate.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlrelationaltablemodel.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqltablemodel.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qtsqlversion.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QDockWidget \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qdockwidget.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtCore.framework/Headers/Qstring \
@@ -3039,9 +3167,7 @@ person.o: ../../server/server/person.cpp ../../server/server/person.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QScrollArea \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qscrollarea.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/QSqlQuery \
-		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlquery.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/QSqlerror \
-		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlerror.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtCore.framework/Headers/QString \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QDialog \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qdialog.h \
@@ -3120,6 +3246,22 @@ person.o: ../../server/server/person.cpp ../../server/server/person.h \
 project.o: ../../server/server/project.cpp ../../server/server/server.h \
 		../../server/server/project.h \
 		../graphique/le.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/QtSql \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsql.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqldatabase.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqldriver.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqldriverplugin.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlerror.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlfield.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlindex.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlquery.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlrecord.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlresult.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlquerymodel.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlrelationaldelegate.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlrelationaltablemodel.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqltablemodel.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qtsqlversion.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QDockWidget \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qdockwidget.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtCore.framework/Headers/Qstring \
@@ -3180,9 +3322,7 @@ project.o: ../../server/server/project.cpp ../../server/server/server.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QScrollArea \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qscrollarea.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/QSqlQuery \
-		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlquery.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/QSqlerror \
-		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlerror.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtCore.framework/Headers/QString \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QDialog \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qdialog.h \
@@ -3267,6 +3407,22 @@ project.o: ../../server/server/project.cpp ../../server/server/server.h \
 
 question.o: ../../server/server/question.cpp ../../server/server/question.h \
 		../graphique/le.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/QtSql \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsql.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqldatabase.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqldriver.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqldriverplugin.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlerror.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlfield.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlindex.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlquery.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlrecord.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlresult.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlquerymodel.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlrelationaldelegate.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlrelationaltablemodel.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqltablemodel.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qtsqlversion.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QDockWidget \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qdockwidget.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtCore.framework/Headers/Qstring \
@@ -3327,9 +3483,7 @@ question.o: ../../server/server/question.cpp ../../server/server/question.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QScrollArea \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qscrollarea.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/QSqlQuery \
-		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlquery.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/QSqlerror \
-		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlerror.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtCore.framework/Headers/QString \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QDialog \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qdialog.h \
@@ -3406,6 +3560,22 @@ smtp.o: ../graphique/smtp.cpp ../graphique/smtp.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o smtp.o ../graphique/smtp.cpp
 
 xlsx_common_operation.o: ../graphique/xlsx_common_operation.cpp ../graphique/le.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/QtSql \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsql.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqldatabase.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqldriver.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqldriverplugin.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlerror.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlfield.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlindex.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlquery.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlrecord.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlresult.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlquerymodel.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlrelationaldelegate.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlrelationaltablemodel.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqltablemodel.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qtsqlversion.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QDockWidget \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qdockwidget.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtCore.framework/Headers/Qstring \
@@ -3466,9 +3636,7 @@ xlsx_common_operation.o: ../graphique/xlsx_common_operation.cpp ../graphique/le.
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QScrollArea \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qscrollarea.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/QSqlQuery \
-		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlquery.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/QSqlerror \
-		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlerror.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtCore.framework/Headers/QString \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QDialog \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qdialog.h \
@@ -3535,6 +3703,22 @@ xlsx_common_operation.o: ../graphique/xlsx_common_operation.cpp ../graphique/le.
 
 group.o: ../../server/server/group.cpp ../../server/server/group.h \
 		../graphique/le.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/QtSql \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsql.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqldatabase.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqldriver.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqldriverplugin.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlerror.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlfield.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlindex.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlquery.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlrecord.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlresult.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlquerymodel.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlrelationaldelegate.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlrelationaltablemodel.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqltablemodel.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qtsqlversion.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QDockWidget \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qdockwidget.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtCore.framework/Headers/Qstring \
@@ -3595,9 +3779,7 @@ group.o: ../../server/server/group.cpp ../../server/server/group.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QScrollArea \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qscrollarea.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/QSqlQuery \
-		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlquery.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/QSqlerror \
-		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlerror.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtCore.framework/Headers/QString \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QDialog \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qdialog.h \
@@ -3674,6 +3856,22 @@ group.o: ../../server/server/group.cpp ../../server/server/group.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o group.o ../../server/server/group.cpp
 
 table_common_operation.o: ../graphique/table_common_operation.cpp ../graphique/le.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/QtSql \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsql.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqldatabase.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqldriver.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqldriverplugin.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlerror.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlfield.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlindex.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlquery.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlrecord.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlresult.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlquerymodel.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlrelationaldelegate.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlrelationaltablemodel.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqltablemodel.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qtsqlversion.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QDockWidget \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qdockwidget.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtCore.framework/Headers/Qstring \
@@ -3734,9 +3932,7 @@ table_common_operation.o: ../graphique/table_common_operation.cpp ../graphique/l
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QScrollArea \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qscrollarea.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/QSqlQuery \
-		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlquery.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/QSqlerror \
-		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlerror.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtCore.framework/Headers/QString \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QDialog \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qdialog.h \
@@ -3803,6 +3999,22 @@ table_common_operation.o: ../graphique/table_common_operation.cpp ../graphique/l
 
 menuconfigproject.o: ../graphique/menuconfigproject.cpp ../graphique/menuconfigproject.h \
 		../graphique/le.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/QtSql \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsql.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqldatabase.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqldriver.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqldriverplugin.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlerror.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlfield.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlindex.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlquery.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlrecord.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlresult.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlquerymodel.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlrelationaldelegate.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlrelationaltablemodel.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqltablemodel.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qtsqlversion.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QDockWidget \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qdockwidget.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtCore.framework/Headers/Qstring \
@@ -3863,9 +4075,7 @@ menuconfigproject.o: ../graphique/menuconfigproject.cpp ../graphique/menuconfigp
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QScrollArea \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qscrollarea.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/QSqlQuery \
-		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlquery.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/QSqlerror \
-		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlerror.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtCore.framework/Headers/QString \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QDialog \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qdialog.h \
@@ -3933,6 +4143,22 @@ menuconfigproject.o: ../graphique/menuconfigproject.cpp ../graphique/menuconfigp
 
 sqldatatable.o: ../graphique/sqldatatable.cpp ../graphique/sqldatatable.h \
 		../graphique/le.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/QtSql \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsql.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqldatabase.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqldriver.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqldriverplugin.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlerror.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlfield.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlindex.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlquery.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlrecord.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlresult.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlquerymodel.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlrelationaldelegate.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlrelationaltablemodel.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqltablemodel.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qtsqlversion.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QDockWidget \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qdockwidget.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtCore.framework/Headers/Qstring \
@@ -3993,9 +4219,7 @@ sqldatatable.o: ../graphique/sqldatatable.cpp ../graphique/sqldatatable.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QScrollArea \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qscrollarea.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/QSqlQuery \
-		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlquery.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/QSqlerror \
-		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlerror.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtCore.framework/Headers/QString \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QDialog \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qdialog.h \
@@ -4063,6 +4287,22 @@ sqldatatable.o: ../graphique/sqldatatable.cpp ../graphique/sqldatatable.h \
 
 sqltableitem.o: ../graphique/sqltableitem.cpp ../graphique/sqltableitem.h \
 		../graphique/le.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/QtSql \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsql.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqldatabase.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqldriver.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqldriverplugin.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlerror.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlfield.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlindex.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlquery.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlrecord.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlresult.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlquerymodel.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlrelationaldelegate.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlrelationaltablemodel.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqltablemodel.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qtsqlversion.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QDockWidget \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qdockwidget.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtCore.framework/Headers/Qstring \
@@ -4123,9 +4363,7 @@ sqltableitem.o: ../graphique/sqltableitem.cpp ../graphique/sqltableitem.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QScrollArea \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qscrollarea.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/QSqlQuery \
-		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlquery.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/QSqlerror \
-		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlerror.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtCore.framework/Headers/QString \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QDialog \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qdialog.h \
@@ -4192,6 +4430,22 @@ sqltableitem.o: ../graphique/sqltableitem.cpp ../graphique/sqltableitem.h \
 
 grouptree.o: ../graphique/grouptree.cpp ../graphique/grouptree.h \
 		../graphique/le.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/QtSql \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsql.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqldatabase.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqldriver.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqldriverplugin.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlerror.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlfield.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlindex.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlquery.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlrecord.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlresult.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlquerymodel.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlrelationaldelegate.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlrelationaltablemodel.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqltablemodel.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qtsqlversion.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QDockWidget \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qdockwidget.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtCore.framework/Headers/Qstring \
@@ -4252,9 +4506,7 @@ grouptree.o: ../graphique/grouptree.cpp ../graphique/grouptree.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QScrollArea \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qscrollarea.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/QSqlQuery \
-		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlquery.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/QSqlerror \
-		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlerror.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtCore.framework/Headers/QString \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QDialog \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qdialog.h \
@@ -4337,6 +4589,22 @@ grouptree.o: ../graphique/grouptree.cpp ../graphique/grouptree.h \
 
 grouptreeitem.o: ../graphique/grouptreeitem.cpp ../graphique/grouptreeitem.h \
 		../graphique/le.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/QtSql \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsql.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqldatabase.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqldriver.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqldriverplugin.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlerror.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlfield.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlindex.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlquery.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlrecord.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlresult.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlquerymodel.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlrelationaldelegate.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlrelationaltablemodel.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqltablemodel.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qtsqlversion.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QDockWidget \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qdockwidget.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtCore.framework/Headers/Qstring \
@@ -4397,9 +4665,7 @@ grouptreeitem.o: ../graphique/grouptreeitem.cpp ../graphique/grouptreeitem.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QScrollArea \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qscrollarea.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/QSqlQuery \
-		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlquery.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/QSqlerror \
-		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlerror.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtCore.framework/Headers/QString \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QDialog \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qdialog.h \
@@ -4467,6 +4733,22 @@ grouptreeitem.o: ../graphique/grouptreeitem.cpp ../graphique/grouptreeitem.h \
 
 headertableitem.o: ../graphique/tableclass/headertableitem.cpp ../graphique/tableclass/headertableitem.h \
 		../graphique/le.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/QtSql \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsql.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqldatabase.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqldriver.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqldriverplugin.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlerror.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlfield.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlindex.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlquery.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlrecord.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlresult.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlquerymodel.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlrelationaldelegate.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlrelationaltablemodel.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqltablemodel.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qtsqlversion.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QDockWidget \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qdockwidget.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtCore.framework/Headers/Qstring \
@@ -4527,9 +4809,7 @@ headertableitem.o: ../graphique/tableclass/headertableitem.cpp ../graphique/tabl
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QScrollArea \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qscrollarea.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/QSqlQuery \
-		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlquery.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/QSqlerror \
-		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlerror.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtCore.framework/Headers/QString \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QDialog \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qdialog.h \
@@ -4608,6 +4888,22 @@ headertableitem.o: ../graphique/tableclass/headertableitem.cpp ../graphique/tabl
 
 tableshow.o: ../graphique/tableclass/tableshow.cpp ../graphique/tableclass/tableshow.h \
 		../graphique/le.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/QtSql \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsql.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqldatabase.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqldriver.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqldriverplugin.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlerror.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlfield.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlindex.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlquery.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlrecord.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlresult.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlquerymodel.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlrelationaldelegate.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlrelationaltablemodel.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqltablemodel.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qtsqlversion.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QDockWidget \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qdockwidget.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtCore.framework/Headers/Qstring \
@@ -4668,9 +4964,7 @@ tableshow.o: ../graphique/tableclass/tableshow.cpp ../graphique/tableclass/table
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QScrollArea \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qscrollarea.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/QSqlQuery \
-		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlquery.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/QSqlerror \
-		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlerror.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtCore.framework/Headers/QString \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QDialog \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qdialog.h \
@@ -4757,6 +5051,22 @@ tableshow.o: ../graphique/tableclass/tableshow.cpp ../graphique/tableclass/table
 
 itemtable.o: ../graphique/tableclass/itemtable.cpp ../graphique/tableclass/itemtable.h \
 		../graphique/le.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/QtSql \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsql.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqldatabase.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqldriver.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqldriverplugin.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlerror.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlfield.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlindex.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlquery.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlrecord.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlresult.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlquerymodel.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlrelationaldelegate.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlrelationaltablemodel.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqltablemodel.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qtsqlversion.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QDockWidget \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qdockwidget.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtCore.framework/Headers/Qstring \
@@ -4817,9 +5127,7 @@ itemtable.o: ../graphique/tableclass/itemtable.cpp ../graphique/tableclass/itemt
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QScrollArea \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qscrollarea.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/QSqlQuery \
-		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlquery.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/QSqlerror \
-		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlerror.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtCore.framework/Headers/QString \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QDialog \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qdialog.h \
@@ -4903,6 +5211,22 @@ itemtable.o: ../graphique/tableclass/itemtable.cpp ../graphique/tableclass/itemt
 
 headeredit.o: ../graphique/tableclass/headeredit.cpp ../graphique/tableclass/headeredit.h \
 		../graphique/le.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/QtSql \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsql.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqldatabase.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqldriver.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqldriverplugin.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlerror.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlfield.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlindex.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlquery.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlrecord.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlresult.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlquerymodel.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlrelationaldelegate.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlrelationaltablemodel.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqltablemodel.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qtsqlversion.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QDockWidget \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qdockwidget.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtCore.framework/Headers/Qstring \
@@ -4963,9 +5287,7 @@ headeredit.o: ../graphique/tableclass/headeredit.cpp ../graphique/tableclass/hea
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QScrollArea \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qscrollarea.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/QSqlQuery \
-		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlquery.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/QSqlerror \
-		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlerror.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtCore.framework/Headers/QString \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QDialog \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qdialog.h \
@@ -5031,6 +5353,22 @@ headeredit.o: ../graphique/tableclass/headeredit.cpp ../graphique/tableclass/hea
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o headeredit.o ../graphique/tableclass/headeredit.cpp
 
 sqloperation.o: ../graphique/sqloperation.cpp ../graphique/le.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/QtSql \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsql.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqldatabase.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqldriver.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqldriverplugin.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlerror.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlfield.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlindex.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlquery.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlrecord.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlresult.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlquerymodel.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlrelationaldelegate.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlrelationaltablemodel.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqltablemodel.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qtsqlversion.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QDockWidget \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qdockwidget.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtCore.framework/Headers/Qstring \
@@ -5091,9 +5429,7 @@ sqloperation.o: ../graphique/sqloperation.cpp ../graphique/le.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QScrollArea \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qscrollarea.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/QSqlQuery \
-		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlquery.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/QSqlerror \
-		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlerror.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtCore.framework/Headers/QString \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QDialog \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qdialog.h \
@@ -5163,6 +5499,22 @@ dockgroup.o: ../graphique/dockgroup.cpp ../graphique/dockgroup.h
 
 bargraph.o: ../graphique/graph/bargraph.cpp ../graphique/graph/bargraph.h \
 		../graphique/le.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/QtSql \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsql.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqldatabase.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqldriver.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqldriverplugin.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlerror.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlfield.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlindex.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlquery.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlrecord.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlresult.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlquerymodel.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlrelationaldelegate.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlrelationaltablemodel.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqltablemodel.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qtsqlversion.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QDockWidget \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qdockwidget.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtCore.framework/Headers/Qstring \
@@ -5223,9 +5575,7 @@ bargraph.o: ../graphique/graph/bargraph.cpp ../graphique/graph/bargraph.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QScrollArea \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qscrollarea.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/QSqlQuery \
-		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlquery.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/QSqlerror \
-		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlerror.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtCore.framework/Headers/QString \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QDialog \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qdialog.h \
@@ -5293,6 +5643,22 @@ bargraph.o: ../graphique/graph/bargraph.cpp ../graphique/graph/bargraph.h \
 
 overview.o: ../graphique/overview.cpp ../graphique/overview.h \
 		../graphique/le.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/QtSql \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsql.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqldatabase.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqldriver.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqldriverplugin.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlerror.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlfield.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlindex.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlquery.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlrecord.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlresult.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlquerymodel.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlrelationaldelegate.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlrelationaltablemodel.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqltablemodel.h \
+		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qtsqlversion.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QDockWidget \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qdockwidget.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtCore.framework/Headers/Qstring \
@@ -5353,9 +5719,7 @@ overview.o: ../graphique/overview.cpp ../graphique/overview.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QScrollArea \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qscrollarea.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/QSqlQuery \
-		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlquery.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/QSqlerror \
-		/goinfre/Qt/5.5/clang_64/lib/QtSql.framework/Headers/qsqlerror.h \
 		/goinfre/Qt/5.5/clang_64/lib/QtCore.framework/Headers/QString \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QDialog \
 		/goinfre/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qdialog.h \

@@ -205,7 +205,7 @@ void MainWindow::addquestion2()
 {
 	QSqlQuery qry;
 
-    qry.prepare( "CREATE TABLE IF NOT EXISTS project_" + this->namecurrent + "_question (id INTEGER UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT, question VARCHAR(30), groupid INTEGER, type VARCHAR(30), note BOOLEAN DEFAULT 1, sujet VARCHAR(30), qgroupid INT DEFAULT 0)" );
+    qry.prepare( "CREATE TABLE IF NOT EXISTS project_" + this->namecurrent + "_question (id INTEGER UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT, question VARCHAR(30), groupid INTEGER, type VARCHAR(30), note BOOLEAN DEFAULT 1, sujet VARCHAR(30), qgroupid INT DEFAULT 0, type INT DEFAULT 0)" );
 	if( !qry.exec() )
 		qDebug() << qry.lastError();
 	else

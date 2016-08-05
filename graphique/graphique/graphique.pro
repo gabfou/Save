@@ -8,14 +8,14 @@ greaterThan(QT_MAJOR_VERSION, 4):QT       += core gui sql widgets
 
 greaterThan(QT_MAJOR_VERSION, 4)
 
-QTPLUGIN += qsqlmysql
+#QTPLUGIN += qsqlmysql
 
 TARGET = graphique
 CONFIG += c++11
 #QMAKE_CXXFLAGS += -std=c++0x
 QT += network
 #LIBS+= -L. libmysql.lib #mysqlclient.lib
-include(./libmysql.dll)
+#include(./libmysql.dll)
 
 include(QtXlsx/src/xlsx/qtxlsx.pri)
 
