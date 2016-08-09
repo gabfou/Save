@@ -16,6 +16,9 @@ class grouptree : public QTreeWidget
     vector<group> &g;
     QAction *newg;
     QAction *supg;
+    QAction *newq;
+    QAction *supq;
+    int i;
 public:
     grouptree();
     ~grouptree();
@@ -27,6 +30,8 @@ public slots:
 private slots:
     void addgroupintree();
     void addgroupintree2(QTreeWidgetItem *item, int column);
+    void addquestintree2(QTreeWidgetItem *item, int column);
+    void addquestintree();
 };
 
 #endif // GROUPTREE_H

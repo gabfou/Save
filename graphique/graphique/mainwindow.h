@@ -9,7 +9,7 @@
 class tableshow;
 class overview;
 
-#include "project.h"
+#include "data/project.h"
 
 //class grouptree;
 

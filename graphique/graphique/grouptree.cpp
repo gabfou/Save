@@ -1,10 +1,11 @@
 #include "grouptree.h"
-#include "project.h"
-#include "group.h"
+#include "data/project.h"
+#include "data/group.h"
 #include "grouptreeitem.h"
 #include "mainwindow.h"
+#include "questiontreeitem.h"
 
-grouptree::grouptree(MainWindow *m, vector<group> & g, int i) : m(m) , g(g)
+grouptree::grouptree(MainWindow *m, vector<group> & g, int i) : m(m) , g(g), i(i)
 {
 	if (g.empty())
         this->addTopLevelItem(new QTreeWidgetItem((QTreeWidget*)0, QStringList(QString("Aucun projet ouvert"))));
@@ -21,6 +22,16 @@ grouptree::grouptree(MainWindow *m, vector<group> & g, int i) : m(m) , g(g)
     this->addAction(supg);
     connect(supg, SIGNAL(triggered()), this, SLOT(supgroupintree()));
 
+
+    newq = new QAction(QString("Nouvelle question"), this);
+    this->addAction(newq);
+    connect(newq, SIGNAL(triggered()), this, SLOT(addquestintree()));
+
+
+    supq = new QAction(QString("Suprimer question"), this);
+    this->addAction(supq);
+    connect(supq, SIGNAL(triggered()), this, SLOT(supquestintree())); // pas fini
+
     connect(this, SIGNAL(itemSelectionChanged()), this, SLOT(contextmenuselect()));
 }
 
@@ -30,13 +41,23 @@ grouptree::grouptree(MainWindow *m, vector<group> & g, int i) : m(m) , g(g)
 void    grouptree::contextmenuselect()
 {
     grouptreeitem *tmp = dynamic_cast<grouptreeitem*>(this->currentItem());
+    questiontreeitem *tmp2 = dynamic_cast<questiontreeitem*>(this->currentItem());
 
     newg->setVisible(false); // opti
     supg->setVisible(false);
+    newq->setVisible(false);
+    supq->setVisible(false);
     if (tmp)
     {
         newg->setVisible(true);
         supg->setVisible(true);
+        if (g[0].type == 1)
+            newq->setVisible(true);
+        return ;
+    }
+    if (tmp2)
+    {
+        supq->setVisible(true);
         return ;
     }
 }
@@ -63,6 +84,35 @@ void    grouptree::addgroupintree2(QTreeWidgetItem *item, int column)
 {
     qDebug() << item->text(0);
     addgroup(m->namecurrent, item->text(0), tmpid, g[tmpid].type);
+    delete item;
+    item = NULL;
+    qDebug() << "upadte ?";
+    //m->updateproject();// actualisation necessaire mais detruit cette classe
+    qDebug() << "upadte";
+}
+
+void    grouptree::addquestintree()
+{
+    //QWidget *win = new QWidget();
+    this->tmp = new QTreeWidgetItem((QTreeWidget*)0);
+    this->currentItem()->addChild(this->tmp);
+    this->openPersistentEditor(this->tmp);
+    this->tmpid = dynamic_cast<grouptreeitem*>(this->currentItem())->getId();
+    this->setCurrentItem(this->tmp);
+    connect(this, SIGNAL(itemChanged(QTreeWidgetItem *, int)), this, SLOT(addquestintree2(QTreeWidgetItem *, int)));
+    /*if (this->nametmp != NULL)
+        delete this->nametmp;
+    this->nametmp = new QLineEdit();
+
+    connect(this->nametmp, SIGNAL(returnPressed()), this, SLOT(addgroupintree2()));
+    connect(this->nametmp, SIGNAL(returnPressed()),  this->nametmp, SLOT(close()));
+    this->nametmp->show();*/
+}
+
+void    grouptree::addquestintree2(QTreeWidgetItem *item, int column)
+{
+    qDebug() << item->text(0);
+    item->parent()->addChild(new questiontreeitem(QStringList(item->text(0)) ,-1, (QTreeWidget*)0));
     delete item;
     item = NULL;
     qDebug() << "upadte ?";

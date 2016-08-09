@@ -1,10 +1,16 @@
 #include "bargraph.h"
-#include "question.h"
+#include "data/question.h"
 
 bargraph::bargraph(t_groupref  g, vector<question> q, QWidget *parent) : QWidget(parent), g(g), q(q)
 {
      setMinimumWidth(300);
 }
+
+void bargraph::updateg(t_groupref g)
+{
+    this->g = g;
+}
+
 
 void bargraph::paintEvent(QPaintEvent *event)
 {

@@ -1,7 +1,7 @@
 #include "menuconfigproject.h"
-#include "sqldatatable.h"
+#include "sql/sqldatatable.h"
 #include "menuconfigquestion.h"
-#include "project.h"
+#include "data/project.h"
 
 menuconfigproject::menuconfigproject(QString name, project *p, MainWindow *m) : name(name)
 {

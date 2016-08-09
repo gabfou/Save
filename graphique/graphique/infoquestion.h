@@ -24,6 +24,7 @@ private:
     QSpinBox *value;
     project *p;
     question *q = NULL;
+    int init;
 
 };
 

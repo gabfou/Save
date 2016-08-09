@@ -1,10 +1,10 @@
 #include "itemtable.h"
 #include "headertableitem.h"
 #include "argtableitem.tpp"
-#include "person.h"
-#include "question.h"
+#include "data/person.h"
+#include "data/question.h"
 #include "tableshow.h"
-#include "project.h"
+#include "data/project.h"
 
 itemtable::itemtable(QString placeholder, project *p, QString form) : placeholder(placeholder), form(form), p(p)
 {

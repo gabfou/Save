@@ -1,7 +1,7 @@
 #include "grouptreeitem.h"
-#include "group.h"
-#include "question.h"
-#include "project.h"
+#include "data/group.h"
+#include "data/question.h"
+#include "data/project.h"
 #include "questiontreeitem.h"
 
 grouptreeitem::grouptreeitem()

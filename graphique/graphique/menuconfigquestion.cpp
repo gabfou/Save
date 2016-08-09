@@ -1,6 +1,6 @@
 #include "menuconfigquestion.h"
 #include "grouptree.h"
-#include "project.h"
+#include "data/project.h"
 #include "infoquestion.h"
 
 menuconfigquestion::menuconfigquestion(project *p, MainWindow *m) : p(p)

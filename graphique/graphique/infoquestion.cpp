@@ -1,6 +1,6 @@
 #include "infoquestion.h"
-#include "question.h"
-#include "project.h"
+#include "data/question.h"
+#include "data/project.h"
 #include "questiontreeitem.h"
 #include "grouptreeitem.h"
 
@@ -9,6 +9,7 @@ infoquestion::infoquestion(project *p) : p(p)
     QVBoxLayout *vbox = new QVBoxLayout();
     type = new QComboBox();
     type->addItem("Nombre");
+    type->addItem("Radio");
     name = new QLineEdit();
     description = new QLineEdit();
     unit = new QLineEdit();
@@ -42,6 +43,11 @@ void infoquestion::updateib(QTreeWidgetItem * item)
         qDebug() << "infoquestion updateib dynamic cast fail";
         return ;
     }
+    if (tmp->id == -1)
+    {
+        init = 0;
+        return ;
+    }
     this->q = new question(p->getquestion(tmp->id));
 
     type->setCurrentIndex(q->type);
@@ -53,18 +59,36 @@ void infoquestion::updateib(QTreeWidgetItem * item)
 
 void infoquestion::updatebdd()
 {
-    if (!q)
+    if (!q && init)
     {
         QLabel *warning = new QLabel("Aucun objet selectioné");
         warning->show();
         return ;
     }
     QSqlQuery query;
-    query.prepare(("UPDATE project_" + p->name + "_question Set question=?, type=?, description=? WHERE id=?;").c_str());
+    if (init)
+        query.prepare(("UPDATE project_" + p->name + "_question Set question=?, type=?, note, sujet=?, typef=? , groupid=? WHERE id=?;").c_str());
+    else
+    {
+        query.prepare( ("CREATE TABLE IF NOT EXISTS project_" + p->name + "_question (id INTEGER UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT, question VARCHAR(30), groupid INTEGER, type VARCHAR(30), note BOOLEAN DEFAULT 1, sujet VARCHAR(30), qgroupid INT DEFAULT 0, typef INT DEFAULT 0)").c_str() );
+        if( !query.exec() )
+            qDebug() << query.lastError();
+        query.prepare( ("INSERT INTO project_" + p->name + "_question (question , type , note , sujet , typef, groupid ) VALUES ( ? , ? , ? , ? , ? , ?);").c_str() );
+    }
     query.addBindValue(name->text());
     query.addBindValue(unit->text());
+    query.addBindValue("0");
     query.addBindValue(description->text());
-    query.addBindValue(q->id);
+    query.addBindValue(type->currentIndex());
+    query.addBindValue("0");
+    if (init)
+        query.addBindValue(q->id);
+    else
+    {
+        // fonctione pas
+        p->addquestion(name->text().toStdString(), 0, query.lastInsertId().toInt(), type->currentIndex(), description->text(), unit->text());
+
+    }
     if (!(query.exec()))
         qDebug() << query.lastError();
 }

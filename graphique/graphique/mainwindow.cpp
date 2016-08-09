@@ -1,7 +1,7 @@
 #include "mainwindow.h"
 #include "smtp.h"
 #include <QMessageBox>
-#include "project.h"
+#include "data/project.h"
 #include "grouptree.h"
 //#include "barref.h"
 #include "menuconfigproject.h"
@@ -204,11 +204,9 @@ void MainWindow::addquestion2()
 {
 	QSqlQuery qry;
 
-    qry.prepare( "CREATE TABLE IF NOT EXISTS project_" + this->namecurrent + "_question (id INTEGER UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT, question VARCHAR(30), groupid INTEGER, type VARCHAR(30), note BOOLEAN DEFAULT 1, sujet VARCHAR(30), qgroupid INT DEFAULT 0, type INT DEFAULT 0)" );
+    qry.prepare( "CREATE TABLE IF NOT EXISTS project_" + this->namecurrent + "_question (id INTEGER UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT, question VARCHAR(30), groupid INTEGER, type VARCHAR(30), note BOOLEAN DEFAULT 1, sujet VARCHAR(30), qgroupid INT DEFAULT 0, typef INT DEFAULT 0)" );
 	if( !qry.exec() )
 		qDebug() << qry.lastError();
-	else
-		qDebug() << "question Table created!";
 	qry.prepare( "INSERT INTO project_" + this->namecurrent + "_question (question , groupid , type , note , sujet ) VALUES ( ? , ? , ? , ? , ? );" );
     qry.addBindValue(this->nametmp->text());
     qry.addBindValue(QString::number(dynamic_cast<grouptreeitem*>(this->groupboxtmp->currentItem())->getId()));
@@ -421,6 +419,10 @@ void MainWindow::showproject()
     {
         this->ov = new overview(this->current, this->currentgref), "overview";
         this->cw->addTab(this->ov, "resumé");
+    }
+    else
+    {
+        this->ov->updateov(this->currentgref); //opti
     }
     if (this->table == NULL)
     {

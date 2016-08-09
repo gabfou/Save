@@ -7,6 +7,8 @@ class bargraph : public QWidget
 {
 public:
     bargraph(t_groupref g, vector<question> q, QWidget *parent = 0);
+    void updateg(t_groupref g);
+    void redraw();
 protected:
     void paintEvent(QPaintEvent *event);
     void  drawgraph(QPainter *qp);
