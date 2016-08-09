@@ -12,6 +12,7 @@ private:
     int parentid;
     int generation = 0;
     std::list<person> listp;
+    std::list<question> listq;
     std::list<int> listfils;
     QColor color;
     //    std::list<fact> listf;
@@ -23,10 +24,10 @@ public:
     group();
     virtual ~group();
 
-    group(string name, int parentid, int id, vector<group> &listgroup);
+    group(string name, int parentid, int id, vector<group> &listgroup, int type);
     void addperson(person p);
     string getName() const;
-
+    void addqfils(int id);
     bool visible = true;
     list<person> getListp();
     void debug();
@@ -45,6 +46,10 @@ public:
     QString grouprep(question tmp2, int ref) const;
     int id;
     string name;
+    int type = -1;
+    std::list<int> getListqfils() const;
+    void addquestion(question q);
+    std::list<question> getListq() const;
 };
 
 #endif // GROUP_H

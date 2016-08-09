@@ -2,6 +2,14 @@
 #include "person.h"
 #include "question.h"
 
+
+std::list<question> group::getListq() const{return listq;}
+
+group::group()
+{
+
+}
+
 QColor panelgcolor[5] = {Qt::cyan, Qt::magenta, Qt::yellow, Qt::blue, Qt::darkGreen};
 
 string group::getName() const{return this->name;}
@@ -21,12 +29,8 @@ void    group::addfils(int id)
     this->listfils.push_back(dafuq);
 }
 
-group::group()
-{
 
-}
-
-group::group(string name, int parentid, int id, vector<group> & listgroup)
+group::group(string name, int parentid, int id, vector<group> & listgroup, int type) : type(type)
 {
     this->name = name;
     this->parentid = parentid;
@@ -53,16 +57,23 @@ void group::addperson(person p)
 	qDebug() << p2.getName().c_str();
 }
 
+void group::addquestion(question q)
+{
+    question q2(q);
+    this->listq.push_back(q2);
+    qDebug() << q2.name.c_str();
+}
+
 void group::debug()
 {
 	list<person>::iterator tmp;
-		tmp = this->listp.begin();
-		while (tmp != this->listp.end())
-		{
-			//this->listgroup[tmp->getGroupid()].addperson(*tmp);
-            qDebug() << tmp->getName().c_str();
-            tmp++;
-		}
+    tmp = this->listp.begin();
+    while (tmp != this->listp.end())
+    {
+        //this->listgroup[tmp->getGroupid()].addperson(*tmp);
+        qDebug() << tmp->getName().c_str();
+        tmp++;
+    }
 }
 
 std::list<int> group::getListfils() const

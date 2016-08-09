@@ -3,10 +3,13 @@
 
 #include "le.h"
 
+class project;
+class MainWindow;
+
 class menuconfigproject : public QTabWidget
 {
 public:
-    menuconfigproject(QString name);
+    menuconfigproject(QString name, project *p, MainWindow *m);
 private:
     QTabWidget *tab;
     void configeneral();

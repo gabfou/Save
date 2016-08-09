@@ -29,6 +29,7 @@ public:
     QString namecurrent;
     QDockWidget *groupdock = NULL;
     QTabWidget *cw;
+    project *current;
 public slots:
     void updateproject();
     void screenshootcurrent();
@@ -56,7 +57,6 @@ private slots:
     void configproject();
 private:
     Ui::MainWindow *ui;
-    project *current;
     QWindow *addprojectwindow;
     QLineEdit *nametmp;
     QLineEdit *prenametmp;

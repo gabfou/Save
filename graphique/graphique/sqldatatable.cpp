@@ -9,7 +9,7 @@ sqldatatable::sqldatatable(QString column , QString table, int nbcolumn)
     query.prepare("SELECT id, " + column + " FROM " + table + ";");
     if (!(query.exec()))
         qDebug() << query.lastError();
-    this->setRowCount(query.numRowsAffected());
+    this->setRowCount(query.size());
     this->setColumnCount(nbcolumn);
     this->verticalHeader()->hide();
     int row = 0;
@@ -27,6 +27,7 @@ sqldatatable::sqldatatable(QString column , QString table, int nbcolumn)
         {
             tmpv = query.value(col + 1);
             tmpv.convert(QVariant::String);
+      //      qDebug() << "niark" << tmpv.toString() << table << this->tabcolumn[col].toString() << id;
             tmpItem = new sqltableitem((tmpv.toString()), table, this->tabcolumn[col].toString(), id);
             this->setItem(row, col, tmpItem);
         }

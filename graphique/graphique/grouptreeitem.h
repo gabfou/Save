@@ -3,13 +3,13 @@
 
 #include "le.h"
 
-class group;
+class project;
 
 class grouptreeitem : public QTreeWidgetItem
 {
 public:
 	grouptreeitem();
-    grouptreeitem(QStringList str, vector<group> & listgroup, int id, QTreeWidget *parent = 0);
+    grouptreeitem(QStringList str, project *p, int id, int type = 0, int mod = 0, QTreeWidget *parent = 0);
     int getId() const;
 
 private:

@@ -49,4 +49,3 @@ public:
     int personrefshowcase(string qname) const;
     std::list<fact> getFreflist() const;
 };
-

@@ -4,31 +4,42 @@
 #include "grouptreeitem.h"
 #include "mainwindow.h"
 
-grouptree::grouptree()
-{
-
-}
-
-grouptree::grouptree(MainWindow *m, vector<group> & g) : m(m)
+grouptree::grouptree(MainWindow *m, vector<group> & g, int i) : m(m) , g(g)
 {
 	if (g.empty())
-		this->addTopLevelItem(new QTreeWidgetItem((QTreeWidget*)0, QStringList(QString("aucun projet ouvertt"))));
-	this->addTopLevelItem(new grouptreeitem(QStringList(QString(g[0].getName().c_str())), g, 0, (QTreeWidget*)0));
+        this->addTopLevelItem(new QTreeWidgetItem((QTreeWidget*)0, QStringList(QString("Aucun projet ouvert"))));
+    this->addTopLevelItem(new grouptreeitem(QStringList(QString(g[0].getName().c_str())), m->current, 0, g[0].type, i, (QTreeWidget*)0));
 
     // action sur clic droit
     this->setContextMenuPolicy(Qt::ActionsContextMenu);
 
-    QAction *newg = new QAction(QString("Nouveaux"), this);
+    newg = new QAction(QString("Nouveaux"), this);
     this->addAction(newg);
     connect(newg, SIGNAL(triggered()), this, SLOT(addgroupintree()));
 
-    QAction *supg = new QAction(QString("Suprimer"), this);
+    supg = new QAction(QString("Suprimer"), this);
     this->addAction(supg);
     connect(supg, SIGNAL(triggered()), this, SLOT(supgroupintree()));
+
+    connect(this, SIGNAL(itemSelectionChanged()), this, SLOT(contextmenuselect()));
 }
 
 // void	grouptree::projectgroupshow(MainWindow *main, QTableWidget *gbox, int k, int id, int *i)
 // new grouptreeitem(QStringList(QString(listgroup[*listpg].getName().c_str())), listgroup, *listpg, (QTreeWidget*)0)
+
+void    grouptree::contextmenuselect()
+{
+    grouptreeitem *tmp = dynamic_cast<grouptreeitem*>(this->currentItem());
+
+    newg->setVisible(false); // opti
+    supg->setVisible(false);
+    if (tmp)
+    {
+        newg->setVisible(true);
+        supg->setVisible(true);
+        return ;
+    }
+}
 
 void    grouptree::addgroupintree()
 {
@@ -51,7 +62,7 @@ void    grouptree::addgroupintree()
 void    grouptree::addgroupintree2(QTreeWidgetItem *item, int column)
 {
     qDebug() << item->text(0);
-    addgroup(m->namecurrent, item->text(0), tmpid);
+    addgroup(m->namecurrent, item->text(0), tmpid, g[tmpid].type);
     delete item;
     item = NULL;
     qDebug() << "upadte ?";
@@ -61,7 +72,7 @@ void    grouptree::addgroupintree2(QTreeWidgetItem *item, int column)
 
 void    grouptree::supgroupintree()
 {
-    supgroup(m->namecurrent, dynamic_cast<grouptreeitem*>(this->currentItem())->getId());
+    supgroup(m->namecurrent, dynamic_cast<grouptreeitem*>(this->currentItem())->getId(), g);
     QTreeWidgetItem *item = this->currentItem();
     delete item;
     item = NULL;

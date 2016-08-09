@@ -19,9 +19,9 @@ private:
     int nbquestion = 0;
     int nbgroup = 0;
     int nbgeneration = 0;
-    string name;
-    void addquestion(string name, int group, int id, int qgroupid);
+    void addquestion(string name, int group, int id, int qgroupid, QString sujet, QString unit);
 public:
+    string name;
     list<person> listp;
     vector<question> listquestion;
     vector<group> listgroup;
@@ -57,5 +57,7 @@ public:
     int getNbgeneration() const;
     void groupchild(int id, QList<int> &ret) const;
     void groupqchild(int id, QList<int> &ret) const;
+    void groupchild(int id, QList<int> & ret, vector<group> &g) const;
+    question *getquestion(int id);
 };
 

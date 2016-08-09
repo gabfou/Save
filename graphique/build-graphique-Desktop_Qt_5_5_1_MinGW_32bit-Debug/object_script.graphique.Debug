@@ -54,10 +54,14 @@ INPUT(
 ./debug\dockgroup.o
 ./debug\bargraph.o
 ./debug\overview.o
+./debug\menuconfigquestion.o
+./debug\questiontreeitem.o
+./debug\infoquestion.o
 ./debug\moc_xlsxdocument.o
 ./debug\moc_mainwindow.o
 ./debug\moc_smtp.o
 ./debug\moc_sqldatatable.o
 ./debug\moc_grouptree.o
 ./debug\moc_tableshow.o
+./debug\moc_infoquestion.o
 );

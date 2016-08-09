@@ -141,9 +141,8 @@ void MainWindow::addgroupe()
 
 void MainWindow::addgroupe2()
 {
-    addgroup(this->namecurrent, this->nametmp->text(),dynamic_cast<grouptreeitem*>(this->groupboxtmp->currentItem())->getId());
+    addgroup(this->namecurrent, this->nametmp->text(),dynamic_cast<grouptreeitem*>(this->groupboxtmp->currentItem())->getId(), 0);
 }
-
 
 // ajout de question
 
@@ -228,7 +227,7 @@ void MainWindow::addquestion2()
 
 void MainWindow::addproject() // empecher charactere speciaux
 {
-	QLabel *description = new QLabel("Le noms du nouveuax projet ne peux pas contenir d'espace, de ; et '");
+    QLabel *description = new QLabel("Le nom du nouveau projet ne peux pas contenir d'espace, de ; et '");
 	QWidget *win = new QWidget();
 	QLabel *Labeljeu = new QLabel("Name :");
 	this->nametmp = new QLineEdit;
@@ -304,7 +303,6 @@ void MainWindow::openproject()
 			listWidget->addItem(name_recuperator(qry.value(0).toString()));
 		}
 	}
-    else
 	QObject::connect(listWidget, SIGNAL(itemClicked(QListWidgetItem *)),
 						 this, SLOT(openproject2(QListWidgetItem *)));
 	QObject::connect(listWidget, SIGNAL(itemClicked(QListWidgetItem *)),
@@ -322,7 +320,8 @@ void MainWindow::openproject2(QListWidgetItem *item)
 	this->currentgref = 0;
 //	this->current->projectshow(this, this->table, this->currentgref);
     this->namecurrent = item->text();
-    this->addock();
+    this->updateproject();
+    //this->addock();
 }
 
 void MainWindow::addock()
@@ -497,7 +496,8 @@ void MainWindow::updateproject()
 	this->current->initoroject(this->namecurrent.toStdString());
     delete this->table;
     this->table = new tableshow((this->current), this);
-    this->table->showtable(this, 0, 0, 0);
+    this->table->showtable(this, 0, this->currentgref, 0);
+    this->cw->addTab(table, "tableaux");
     this->addock();
 }
 
@@ -577,11 +577,11 @@ void	MainWindow::showbarchartref()
 //	d_chart->show();
 }
 
-void	MainWindow::configproject(){menuconfigproject *m = new menuconfigproject(this->namecurrent);}
+void	MainWindow::configproject(){menuconfigproject *m = new menuconfigproject(this->namecurrent, this->current, this);}
 
 void    MainWindow::screenshootcurrent()
 {
-    // - Shoot the screen
+    // Shoot the screen
     QScreen *screen = QGuiApplication::primaryScreen();
     if (const QWindow *window = windowHandle())
         screen = window->screen();

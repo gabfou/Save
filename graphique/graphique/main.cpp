@@ -65,8 +65,6 @@ int main(int argc, char *argv[])
     //send_mail();
     srand(time(NULL));
     QApplication a(argc, argv);
-    qDebug() << qApp->libraryPaths();
-    qDebug() << QSqlDatabase::drivers();
     createConnection();
     MainWindow w;
     w.show();

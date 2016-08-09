@@ -102,6 +102,7 @@ void    tableshow::setverticalheader(vector<question> &q, int id)
     int i = -1;
     QList<int>::const_iterator listpg;
     QList<int> listint;
+    group * gtmp = NULL;
     //listint << id;
     p->groupqchild(id, listint);
 
@@ -109,16 +110,29 @@ void    tableshow::setverticalheader(vector<question> &q, int id)
     qDebug() << "questionheader";
     while (listpg != listint.end())
     {
-        group * gtmp = &(p->listqgroup[(q[(*listpg)]).qgroupid]);
-        if (p->listp.empty() == true)
-            return ;
-        while (gtmp->getGeneration() > 0)
+        qDebug() << "niark2" << *listpg;
+        list<question> listq37 = p->listqgroup[*listpg].getListq();
+        list<question>::iterator listqtmp = listq37.begin();
+        while (listqtmp != listq37.end())
         {
-            this->setItem(i, gtmp->getGeneration() - 1, new QTableWidgetItem(gtmp->getName().c_str()));
-            //gbox->item(*i, gtmp->getGeneration() - 1)->setBackgroundColor(Qt::red);
-            gtmp = &(p->listqgroup[gtmp->getParentid()]);
+            qDebug() << "niark3" <<(*listqtmp).qgroupid;
+            gtmp = &(p->listqgroup[((*listqtmp).qgroupid)]);
+            if (gtmp == NULL || gtmp->type == -1)
+            {
+                qDebug() << "setvertical question group fail idgroup=" << *listpg;
+                continue ;
+            }
+            if (p->listp.empty() == true)
+                return ;
+            while (gtmp->getGeneration() > 0)
+            {
+                this->setItem(i, gtmp->getGeneration() - 1, new QTableWidgetItem(gtmp->getName().c_str()));
+                //gbox->item(*i, gtmp->getGeneration() - 1)->setBackgroundColor(Qt::red);
+                gtmp = &(p->listqgroup[gtmp->getParentid()]);
+            }
+            this->setVerticalHeaderItem(i++, new headertableitem(gtmp->getName().c_str(), *listqtmp));
+            listqtmp++;
         }
-        this->setVerticalHeaderItem(i++, new headertableitem(gtmp->getName().c_str(), (q[(*listpg)])));
         listpg++;
         //gbox->verticalHeaderItem(i)->setBackgroundColor(gtmp->getColor());
     }
@@ -130,7 +144,7 @@ void    tableshow::setverticalheader(vector<group> &g, int id)
     int i = -1;
     QList<int>::const_iterator listpg;
     QList<int> listint;
-    //listint << id;
+    qDebug() << id;
     p->groupchild(id, listint);
 
     listpg = listint.begin();

@@ -43,7 +43,10 @@ SOURCES += main.cpp\
     sqloperation.cpp \
     dockgroup.cpp \
     graph/bargraph.cpp \
-    overview.cpp
+    overview.cpp \
+    menuconfigquestion.cpp \
+    questiontreeitem.cpp \
+    infoquestion.cpp
 
 HEADERS  += mainwindow.h \
     ../../server/server/fact.h \
@@ -66,7 +69,10 @@ HEADERS  += mainwindow.h \
     tableclass/headeredit.h \
     dockgroup.h \
     graph/bargraph.h \
-    overview.h
+    overview.h \
+    menuconfigquestion.h \
+    questiontreeitem.h \
+    infoquestion.h
    
 FORMS    += mainwindow.ui 
 QT		+= network

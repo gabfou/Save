@@ -37,6 +37,7 @@
 #include "xlsxcellrange.h"
 #include "xlsxworksheet.h"
 #include <QColor>
+#include <QSpinBox>
 //#include <qwt_plot_renderer.h>
 //#include <qwt_plot_canvas.h>
 //#include <qwt_plot_multi_barchart.h>
@@ -65,6 +66,7 @@
 # define PATH "../../server/server/TextFile1.txt"
 
 class question;
+class group;
 
 typedef struct  s_groupref
 {
@@ -87,8 +89,8 @@ void warning(QString error);
 t_groupref syntheselistgroup(QList<t_groupref> listg, vector<question> questionlist);
 void gen_random(char *s, const int len);
 void sendmail(QString mail, QString body);
-void    addgroup(QString nameproject, QString name, int groupparent);
-void    supgroup(QString nameproject, int id);
+void    addgroup(QString nameproject, QString name, int groupparent, int type);
+void    supgroup(QString nameproject, int id, vector<group> &g);
 
 //global
 extern bool g_ref;

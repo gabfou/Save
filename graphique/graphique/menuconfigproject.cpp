@@ -1,7 +1,9 @@
 #include "menuconfigproject.h"
 #include "sqldatatable.h"
+#include "menuconfigquestion.h"
+#include "project.h"
 
-menuconfigproject::menuconfigproject(QString name) : name(name)
+menuconfigproject::menuconfigproject(QString name, project *p, MainWindow *m) : name(name)
 {
     //QLabel *Labelgroup = new QLabel("group :");
     //this->groupboxtmp = new grouptree(this->current);
@@ -9,9 +11,12 @@ menuconfigproject::menuconfigproject(QString name) : name(name)
 
     //Boutons
     //this->tab = new QTabWidget(this);
+    if (name.isEmpty())
+        return ;
     this->configeneral();
     this->addTab(new sqldatatable(QString("groupname, groupparent, type"), "project_" + this->name + "_groupe", 3), "groupe");
     this->addTab(new sqldatatable(QString("lastname, firstname, email, groupid"), "project_" + this->name + "_project", 4), "personne");
+    this->addTab(new menuconfigquestion(p, m), "question");
     this->addTab(new sqldatatable(QString("question, groupid, type, note, sujet"), "project_" + this->name + "_question", 5), "question");
     this->show();
 }
