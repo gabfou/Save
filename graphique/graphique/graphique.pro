@@ -21,18 +21,10 @@ include(QtXlsx/src/xlsx/qtxlsx.pri)
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    ../../server/server/fact.cpp \
-    ../../server/server/misc.cpp \
-    ../../server/server/person.cpp \
-    ../../server/server/project.cpp \
-    ../../server/server/question.cpp \
     smtp.cpp \
     xlsx_common_operation.cpp \
-    ../../server/server/group.cpp \
     table_common_operation.cpp \
     menuconfigproject.cpp \
-    sqldatatable.cpp \
-    sqltableitem.cpp \
     grouptree.cpp \
     grouptreeitem.cpp \
     tableclass/headertableitem.cpp \
@@ -40,27 +32,28 @@ SOURCES += main.cpp\
     tableclass/itemtable.cpp \
     tableclass/argtableitem.tpp \
     tableclass/headeredit.cpp \
-    sqloperation.cpp \
     dockgroup.cpp \
     graph/bargraph.cpp \
     overview.cpp \
     menuconfigquestion.cpp \
     questiontreeitem.cpp \
-    infoquestion.cpp
+    infoquestion.cpp \
+    sql/sqldatatable.cpp \
+    sql/sqloperation.cpp \
+    sql/sqltableitem.cpp \
+    data/fact.cpp \
+    data/group.cpp \
+    data/person.cpp \
+    data/project.cpp \
+    data/question.cpp \
+    misc.cpp
 
 HEADERS  += mainwindow.h \
-    ../../server/server/fact.h \
-    ../../server/server/person.h \
-    ../../server/server/project.h \
-    ../../server/server/question.h \
-    ../../server/server/server.h \
     define.h \
     smtp.h \
     le.h \
     ../../server/server/group.h \
     menuconfigproject.h \
-    sqldatatable.h \
-    sqltableitem.h \
     grouptree.h \
     grouptreeitem.h \
     tableclass/headertableitem.h \
@@ -72,7 +65,14 @@ HEADERS  += mainwindow.h \
     overview.h \
     menuconfigquestion.h \
     questiontreeitem.h \
-    infoquestion.h
+    infoquestion.h \
+    sql/sqldatatable.h \
+    sql/sqltableitem.h \
+    data/fact.h \
+    data/group.h \
+    data/person.h \
+    data/project.h \
+    data/question.h
    
 FORMS    += mainwindow.ui 
 QT		+= network

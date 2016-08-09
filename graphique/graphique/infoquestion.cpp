@@ -36,24 +36,13 @@ infoquestion::infoquestion(project *p) : p(p)
 
 void infoquestion::updateib(QTreeWidgetItem * item)
 {
-    if (item == NULL)
-    {
-        qDebug() << "dsqd";
-    }
-    else
-        qDebug() << item->text(0);
     questiontreeitem *tmp = dynamic_cast<questiontreeitem*>(item);
-    grouptreeitem *tmp2 = dynamic_cast<grouptreeitem*>(item);
-    if (tmp2)
-        qDebug() << "wtf";
     if (tmp == NULL)
-        return ;
-    else
     {
         qDebug() << "infoquestion updateib dynamic cast fail";
         return ;
     }
-    this->q = (p->getquestion(tmp->id));
+    this->q = new question(p->getquestion(tmp->id));
 
     type->setCurrentIndex(q->type);
     name->setText(q->name.c_str());
