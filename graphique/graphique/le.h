@@ -67,6 +67,7 @@
 
 class question;
 class group;
+class project;
 
 typedef struct  s_groupref
 {
@@ -89,9 +90,10 @@ void warning(QString error);
 t_groupref syntheselistgroup(QList<t_groupref> listg, vector<question> questionlist);
 void gen_random(char *s, const int len);
 void sendmail(QString mail, QString body);
-void    addgroup(QString nameproject, QString name, int groupparent, int type);
+int addgroup(QString nameproject, QString name, int groupparent, int type, project *p);
 void    supgroup(QString nameproject, int id, vector<group> &g);
-
+void    supquest(QString nameproject, int id);
+int    addquestion(project *p, QString name, int groupid, QString type, int note, QString description, int qgroupid);
 //global
 extern bool g_ref;
 #endif // LE_H

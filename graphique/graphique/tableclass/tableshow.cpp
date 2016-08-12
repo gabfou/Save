@@ -15,8 +15,14 @@ tableshow::tableshow (project *p, int ref) : p(p)
     this->updateall();
 }
 
-tableshow::tableshow(project * p, MainWindow *mainp) : p(p)
+tableshow::tableshow(project * p, MainWindow *mainp)
 {
+    reinit(p, mainp);
+}
+
+void tableshow::reinit(project * p, MainWindow *mainp)
+{
+    this->p = p;
     int i = (mainp->showmod == 0) ? 0 : 1;
     i+= p->getNbgeneration();
     int k = i;

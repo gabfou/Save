@@ -5,8 +5,10 @@
 
 
 overview::overview(project *p, int group) : p(p)
-{    bar = new bargraph(syntheselistgroup(p->getgrouplist(group), p->getListquestion()), p->getListquestion());
-     barref = new bargraph(syntheselistgroup(p->getgrouplistref(group), p->getListquestion()), p->getListquestion());
+{    bar = new bargraph(syntheselistgroup(p->getgrouplist(group), p->getListquestion()), p);
+     barref = new bargraph(syntheselistgroup(p->getgrouplistref(group), p->getListquestion()), p);
+     bar->setName("Reel");
+     barref->setName("Escompté");
      tableshow *table = new tableshow(p, group);
      QHBoxLayout *hb = new QHBoxLayout(this);
      QGridLayout *gl = new QGridLayout(this);

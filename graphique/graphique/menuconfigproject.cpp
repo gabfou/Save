@@ -17,7 +17,6 @@ menuconfigproject::menuconfigproject(QString name, project *p, MainWindow *m) : 
     this->addTab(new sqldatatable(QString("groupname, groupparent, type"), "project_" + this->name + "_groupe", 3), "groupe");
     this->addTab(new sqldatatable(QString("lastname, firstname, email, groupid"), "project_" + this->name + "_project", 4), "personne");
     this->addTab(new menuconfigquestion(p, m), "question");
-    this->addTab(new sqldatatable(QString("question, groupid, type, note, sujet"), "project_" + this->name + "_question", 5), "question");
     this->show();
 }
 

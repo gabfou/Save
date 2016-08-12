@@ -141,7 +141,7 @@ void MainWindow::addgroupe()
 
 void MainWindow::addgroupe2()
 {
-    addgroup(this->namecurrent, this->nametmp->text(),dynamic_cast<grouptreeitem*>(this->groupboxtmp->currentItem())->getId(), 0);
+    addgroup(this->namecurrent, this->nametmp->text(),dynamic_cast<grouptreeitem*>(this->groupboxtmp->currentItem())->getId(), 0, current);
 }
 
 // ajout de question

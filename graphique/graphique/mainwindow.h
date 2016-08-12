@@ -30,6 +30,8 @@ public:
     QDockWidget *groupdock = NULL;
     QTabWidget *cw;
     project *current;
+    tableshow *table = NULL;
+    int currentgref = 0;
 public slots:
     void updateproject();
     void screenshootcurrent();
@@ -61,10 +63,9 @@ private:
     QLineEdit *nametmp;
     QLineEdit *prenametmp;
     QLineEdit *emailtmp;
-    tableshow *table = NULL;
+
     grouptree *groupboxtmp;
 //    barref *d_chart;
-    int currentgref = 0;
     QRadioButton *radiobuttontmp;
     overview *ov = NULL;
 

@@ -1,7 +1,8 @@
 #include "bargraph.h"
 #include "data/question.h"
+#include "data/project.h"
 
-bargraph::bargraph(t_groupref  g, vector<question> q, QWidget *parent) : QWidget(parent), g(g), q(q)
+bargraph::bargraph(t_groupref  g, project *p, QWidget *parent) : QWidget(parent), g(g), p(p)
 {
      setMinimumWidth(300);
 }
@@ -22,7 +23,7 @@ void bargraph::paintEvent(QPaintEvent *event)
 
 void bargraph::drawgraph(QPainter *qp)
 {
-    float incr = this->width() / ((q.size() + 2) * 2);
+    float incr = this->width() / ((p->listquestion.size() + 2) * 2);
     float x = incr;
     float d = this->g.total;
     float h120 = this->height() / 120;
@@ -39,7 +40,7 @@ void bargraph::drawgraph(QPainter *qp)
     qp->setBrush(QBrush(Qt::cyan));
     qp->drawRect(x, tmp37 * h120 , incr, 100 * h120);
     QList<QString>::iterator tmp;
-    vector<question> listq = q;
+    vector<question> listq = p->listquestion;
     vector<question>::iterator tmp3;
 
     tmp = g.list.begin();
@@ -60,4 +61,14 @@ void bargraph::drawgraph(QPainter *qp)
         tmp++;
     }
     this->show();
+}
+
+QString bargraph::getName() const
+{
+    return name;
+}
+
+void bargraph::setName(const QString &value)
+{
+    name = value;
 }

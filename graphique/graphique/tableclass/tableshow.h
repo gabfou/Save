@@ -23,6 +23,7 @@ public:
     void setverticalheader(vector<question> &q, int id);
     void setverticalheader(vector<group> &g, int id);
     tableshow(project *p, int ref);
+    void reinit(project *p, MainWindow *mainp);
 private:
     project * p;
     //const T & curentarg;

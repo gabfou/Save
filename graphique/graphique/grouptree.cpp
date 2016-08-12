@@ -4,6 +4,7 @@
 #include "grouptreeitem.h"
 #include "mainwindow.h"
 #include "questiontreeitem.h"
+#include "tableclass/tableshow.h"
 
 grouptree::grouptree(MainWindow *m, vector<group> & g, int i) : m(m) , g(g), i(i)
 {
@@ -83,10 +84,13 @@ void    grouptree::addgroupintree()
 void    grouptree::addgroupintree2(QTreeWidgetItem *item, int column)
 {
     qDebug() << item->text(0);
-    addgroup(m->namecurrent, item->text(0), tmpid, g[tmpid].type);
+    int niark = addgroup(m->namecurrent, item->text(0), tmpid, g[tmpid].type, m->current);
+    item->parent()->addChild(new grouptreeitem(QStringList(QString(g[niark].getName().c_str())), m->current, niark, g[niark].type, i, (QTreeWidget*)0));
     delete item;
     item = NULL;
     qDebug() << "upadte ?";
+    m->table->reinit((m->current), m);
+    m->table->showtable(m, 0, m->currentgref, 0);
     //m->updateproject();// actualisation necessaire mais detruit cette classe
     qDebug() << "upadte";
 }
@@ -112,12 +116,12 @@ void    grouptree::addquestintree()
 void    grouptree::addquestintree2(QTreeWidgetItem *item, int column)
 {
     qDebug() << item->text(0);
-    item->parent()->addChild(new questiontreeitem(QStringList(item->text(0)) ,-1, (QTreeWidget*)0));
+    item->parent()->addChild(new questiontreeitem(QStringList(item->text(0)) , -1, (QTreeWidget*)0));
     delete item;
     item = NULL;
-    qDebug() << "upadte ?";
-    //m->updateproject();// actualisation necessaire mais detruit cette classe
-    qDebug() << "upadte";
+
+    m->table->reinit((m->current), m);
+    m->table->showtable(m, 0, m->currentgref, 0);
 }
 
 void    grouptree::supgroupintree()
@@ -126,6 +130,18 @@ void    grouptree::supgroupintree()
     QTreeWidgetItem *item = this->currentItem();
     delete item;
     item = NULL;
+    m->table->reinit((m->current), m);
+    m->table->showtable(m, 0, m->currentgref, 0);
+}
+
+void    grouptree::supquestintree()
+{
+    supquest(m->namecurrent, dynamic_cast<questiontreeitem*>(this->currentItem())->id);
+    QTreeWidgetItem *item = this->currentItem();
+    delete item;
+    item = NULL;
+    m->table->reinit((m->current), m);
+    m->table->showtable(m, 0, m->currentgref, 0);
 }
 
 grouptree::~grouptree()
