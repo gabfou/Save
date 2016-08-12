@@ -3,9 +3,9 @@
 
 #include "le.h"
 
-#include "group.h"
-#include "person.h"
-#include "question.h"
+#include "data/group.h"
+#include "data/person.h"
+#include "data/question.h"
 
 class headertableitem : public QTableWidgetItem
 {

@@ -22,6 +22,7 @@ string	replacespace(string name)
     return (name);
 }
 
+/*#ifdef Q_WS_WIN
 void createConnection()
 {
     QSqlDatabase db = QSqlDatabase::addDatabase("QODBC");
@@ -38,6 +39,26 @@ void createConnection()
         qDebug("conection sql set");
     }
 }
+#endif*/
+
+//#ifdef Q_WS_MAC
+void createConnection()
+{
+    QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
+    db.setHostName("mysql-johann.alwaysdata.net");
+    db.setDatabaseName("johann_project");
+    db.setUserName("johann");
+    db.setPassword("t4x5akda");
+    if (!db.open())
+    {
+        qDebug() << db.lastError().text();
+    }
+    else
+    {
+        qDebug("conection sql set");
+    }
+}
+//#endif
 
 int main(int argc, char *argv[])
 {

@@ -1,12 +1,13 @@
 #include "mainwindow.h"
 #include "smtp.h"
 #include <QMessageBox>
-#include "project.h"
+#include "data/project.h"
 #include "grouptree.h"
-#include "barref.h"
+//#include "barref.h"
 #include "menuconfigproject.h"
 #include "grouptreeitem.h"
 #include "tableclass/tableshow.h"
+#include "overview.h"
 
 MainWindow::MainWindow(QWidget *parent) :
 	QMainWindow(parent),
@@ -14,8 +15,9 @@ MainWindow::MainWindow(QWidget *parent) :
 {
 	string comande;
 
-	cout << "running\n";
 	ui->setupUi(this);
+    this->cw = new QTabWidget();
+    this->setCentralWidget(cw);
 	this->current = new project;
 //    this->table = new QTableWidget(this);
 	// default display
@@ -75,10 +77,12 @@ MainWindow::MainWindow(QWidget *parent) :
 	QObject::connect(send_ref, SIGNAL(triggered()), this, SLOT(sendproject_ref()));
 
 	QToolBar *toolBarFichier = addToolBar("Fichier");
-   //toolBarFichier->addAction(&Quitter);
-
+    QAction *screenshoot = toolBarFichier->addAction("&Imprimer écran");
+    QObject::connect(screenshoot, SIGNAL(triggered()), this, SLOT(screenshootcurrent()));
 
 	//setLayout(parent);
+
+    //ajout table
 }
 
 
@@ -137,9 +141,8 @@ void MainWindow::addgroupe()
 
 void MainWindow::addgroupe2()
 {
-    addgroup(this->namecurrent, this->nametmp->text(),dynamic_cast<grouptreeitem*>(this->groupboxtmp->currentItem())->getId());
+    addgroup(this->namecurrent, this->nametmp->text(),dynamic_cast<grouptreeitem*>(this->groupboxtmp->currentItem())->getId(), 0);
 }
-
 
 // ajout de question
 
@@ -201,11 +204,9 @@ void MainWindow::addquestion2()
 {
 	QSqlQuery qry;
 
-    qry.prepare( "CREATE TABLE IF NOT EXISTS project_" + this->namecurrent + "_question (id INTEGER UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT, question VARCHAR(30), groupid INTEGER, type VARCHAR(30), note BOOLEAN DEFAULT 1, sujet VARCHAR(30), qgroupid INT DEFAULT 0)" );
+    qry.prepare( "CREATE TABLE IF NOT EXISTS project_" + this->namecurrent + "_question (id INTEGER UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT, question VARCHAR(30), groupid INTEGER, type VARCHAR(30), note BOOLEAN DEFAULT 1, sujet VARCHAR(30), qgroupid INT DEFAULT 0, typef INT DEFAULT 0)" );
 	if( !qry.exec() )
 		qDebug() << qry.lastError();
-	else
-		qDebug() << "question Table created!";
 	qry.prepare( "INSERT INTO project_" + this->namecurrent + "_question (question , groupid , type , note , sujet ) VALUES ( ? , ? , ? , ? , ? );" );
     qry.addBindValue(this->nametmp->text());
     qry.addBindValue(QString::number(dynamic_cast<grouptreeitem*>(this->groupboxtmp->currentItem())->getId()));
@@ -224,7 +225,7 @@ void MainWindow::addquestion2()
 
 void MainWindow::addproject() // empecher charactere speciaux
 {
-	QLabel *description = new QLabel("Le noms du nouveuax projet ne peux pas contenir d'espace, de ; et '");
+    QLabel *description = new QLabel("Le nom du nouveau projet ne peux pas contenir d'espace, de ; et '");
 	QWidget *win = new QWidget();
 	QLabel *Labeljeu = new QLabel("Name :");
 	this->nametmp = new QLineEdit;
@@ -293,7 +294,7 @@ void MainWindow::openproject()
 	QListWidget *listWidget = new QListWidget();
 
 
-	if(qry.exec("SELECT table_name FROM INFORMATION_SCHEMA.TABLES WHERE table_name LIKE 'project_%_project'"))
+    if(qry.exec("SELECT table_name FROM INFORMATION_SCHEMA.TABLES WHERE table_name LIKE 'project_%_project'"))
 	{
 		while(qry.next())
 		{
@@ -316,8 +317,9 @@ void MainWindow::openproject2(QListWidgetItem *item)
 	this->current->initoroject(item->text().toStdString());
 	this->currentgref = 0;
 //	this->current->projectshow(this, this->table, this->currentgref);
-	this->namecurrent = item->text();
-    this->addock();
+    this->namecurrent = item->text();
+    this->updateproject();
+    //this->addock();
 }
 
 void MainWindow::addock()
@@ -413,9 +415,22 @@ void MainWindow::addperson2()
 
 void MainWindow::showproject()
 {
+    if (this->ov == NULL)
+    {
+        this->ov = new overview(this->current, this->currentgref), "overview";
+        this->cw->addTab(this->ov, "resumé");
+    }
+    else
+    {
+        this->ov->updateov(this->currentgref); //opti
+    }
     if (this->table == NULL)
+    {
         this->table = new tableshow((this->current), this);
+        this->cw->addTab(this->table, "tableaux");
+    }
     this->table->showtable(this, 0, this->currentgref, 0);
+
     //this->current->projectshow(this, this->table, this->currentgref);
 }
 
@@ -483,7 +498,8 @@ void MainWindow::updateproject()
 	this->current->initoroject(this->namecurrent.toStdString());
     delete this->table;
     this->table = new tableshow((this->current), this);
-    this->table->showtable(this, 0, 0, 0);
+    this->table->showtable(this, 0, this->currentgref, 0);
+    this->cw->addTab(table, "tableaux");
     this->addock();
 }
 
@@ -559,8 +575,46 @@ void	MainWindow::changescope2()
 
 void	MainWindow::showbarchartref()
 {
-	d_chart = new barref(NULL, this->current);
-	d_chart->show();
+//	d_chart = new barref(NULL, this->current);
+//	d_chart->show();
 }
 
-void	MainWindow::configproject(){menuconfigproject *m = new menuconfigproject(this->namecurrent);}
+void	MainWindow::configproject(){menuconfigproject *m = new menuconfigproject(this->namecurrent, this->current, this);}
+
+void    MainWindow::screenshootcurrent()
+{
+    // Shoot the screen
+    QScreen *screen = QGuiApplication::primaryScreen();
+    if (const QWindow *window = windowHandle())
+        screen = window->screen();
+    if (!screen)
+        qDebug() << "screen init fail";
+    QPixmap pixmap = QPixmap();
+    pixmap = screen->grabWindow(this->centralWidget()->winId());
+
+    // - Save this picture
+    const QString format = "png";
+        QString initialPath = QStandardPaths::writableLocation(QStandardPaths::PicturesLocation);
+        if (initialPath.isEmpty())
+            initialPath = QDir::currentPath();
+        initialPath += tr("/untitled.") + format;
+
+        QFileDialog fileDialog(this, tr("Save As"), initialPath);
+        fileDialog.setAcceptMode(QFileDialog::AcceptSave);
+        fileDialog.setFileMode(QFileDialog::AnyFile);
+        fileDialog.setDirectory(initialPath);
+        QStringList mimeTypes;
+        foreach (const QByteArray &bf, QImageWriter::supportedMimeTypes())
+            mimeTypes.append(QLatin1String(bf));
+        fileDialog.setMimeTypeFilters(mimeTypes);
+        fileDialog.selectMimeTypeFilter("image/" + format);
+        fileDialog.setDefaultSuffix(format);
+        if (fileDialog.exec() != QDialog::Accepted)
+            return;
+        const QString fileName = fileDialog.selectedFiles().first();
+        if (!pixmap.save(fileName)) {
+        //    QMessageBox::warning(this, tr("Save Error"), tr("The image could not be saved to \"%1\".")
+        //                         .arg(QDir::toNativeSeparators(fileName)));
+            qDebug() << tr("The image could not be saved to \"%1\".").arg(QDir::toNativeSeparators(fileName));
+        }
+}

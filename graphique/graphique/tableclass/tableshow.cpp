@@ -1,22 +1,28 @@
 #include "tableshow.h"
-#include "project.h"
-#include "question.h"
-#include "group.h"
-#include "person.h"
+#include "data/project.h"
+#include "data/question.h"
+#include "data/group.h"
+#include "data/person.h"
 #include "mainwindow.h"
 #include "headertableitem.h"
 #include "itemtable.h"
 #include "argtableitem.tpp"
 
-tableshow::tableshow(project * p, MainWindow *main) : p(p)
+tableshow::tableshow (project *p, int ref) : p(p)
 {
-    int i = (main->showmod == 0) ? 0 : 1;
+    this->setverticalheader(p->listquestion, 0);
+    this->setHorizontalHeaderItem(0, new headertableitem("Sous groupe", p->listgroup[ref], "#ALL(%)"));
+    this->updateall();
+}
+
+tableshow::tableshow(project * p, MainWindow *mainp) : p(p)
+{
+    int i = (mainp->showmod == 0) ? 0 : 1;
     i+= p->getNbgeneration();
     int k = i;
     int j = -1;
 
     qDebug() << "new tableshow";
-    main->setCentralWidget(this);
     //this->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
     if (p->listp.empty() || p->listquestion.empty())
         return ;
@@ -26,29 +32,29 @@ tableshow::tableshow(project * p, MainWindow *main) : p(p)
     this->k = i;
     i = 0;
     this->populate();
-    if (main->showmod == 0)
+    if (mainp->showmod == 0)
     {
-        this->sethorizontalheader(main);
+        this->sethorizontalheader(mainp);
         this->setverticalheader(p->listgroup, 0);
     }
-    else if (main->showmod == 2)
+    else if (mainp->showmod == 2)
     {
-        this->sethorizontalheader(main);
+        this->sethorizontalheader(mainp);
         this->setverticalheader(p->listquestion, 0);
     }
     this->updateall();
 }
 
-void    tableshow::sethorizontalheader(MainWindow *main)
+void    tableshow::sethorizontalheader(MainWindow *mainp)
 {
     vector<question>::const_iterator tmp2;
-    int i = (main->showmod == 1) ? 1 : 0;
+    int i = (mainp->showmod == 1) ? 1 : 0;
     i+= p->getNbgeneration();
 
-    if (main->showmod == 0 || main->showmod == 1)
+    if (mainp->showmod == 0 || mainp->showmod == 1)
     {
         tmp2 = p->listquestion.begin();
-        if (main->showmod == 0)
+        if (mainp->showmod == 0)
         {
             while (--k > -1)
                 this->setHorizontalHeaderItem(k, new headertableitem("Sous groupe"));
@@ -67,10 +73,10 @@ void    tableshow::sethorizontalheader(MainWindow *main)
             tmp2++;
         }
     }
-    /*else if (main->showmod == 2)
+    /*else if (mainp->showmod == 2)
     {
         tmp2 = p->list.begin();
-        if (main->showmod == 0)
+        if (mainp->showmod == 0)
         {
             while (--k > -1)
                 this->setHorizontalHeaderItem(k, new headertableitem("Sous groupe"));
@@ -96,6 +102,7 @@ void    tableshow::setverticalheader(vector<question> &q, int id)
     int i = -1;
     QList<int>::const_iterator listpg;
     QList<int> listint;
+    group * gtmp = NULL;
     //listint << id;
     p->groupqchild(id, listint);
 
@@ -103,16 +110,29 @@ void    tableshow::setverticalheader(vector<question> &q, int id)
     qDebug() << "questionheader";
     while (listpg != listint.end())
     {
-        group * gtmp = &(p->listqgroup[(q[(*listpg)]).qgroupid]);
-        if (p->listp.empty() == true)
-            return ;
-        while (gtmp->getGeneration() > 0)
+        qDebug() << "niark2" << *listpg;
+        list<question> listq37 = p->listqgroup[*listpg].getListq();
+        list<question>::iterator listqtmp = listq37.begin();
+        while (listqtmp != listq37.end())
         {
-            this->setItem(i, gtmp->getGeneration() - 1, new QTableWidgetItem(gtmp->getName().c_str()));
-            //gbox->item(*i, gtmp->getGeneration() - 1)->setBackgroundColor(Qt::red);
-            gtmp = &(p->listqgroup[gtmp->getParentid()]);
+            qDebug() << "niark3" <<(*listqtmp).qgroupid;
+            gtmp = &(p->listqgroup[((*listqtmp).qgroupid)]);
+            if (gtmp == NULL || gtmp->type == -1)
+            {
+                qDebug() << "setvertical question group fail idgroup=" << *listpg;
+                continue ;
+            }
+            if (p->listp.empty() == true)
+                return ;
+            while (gtmp->getGeneration() > 0)
+            {
+                this->setItem(i, gtmp->getGeneration() - 1, new QTableWidgetItem(gtmp->getName().c_str()));
+                //gbox->item(*i, gtmp->getGeneration() - 1)->setBackgroundColor(Qt::red);
+                gtmp = &(p->listqgroup[gtmp->getParentid()]);
+            }
+            this->setVerticalHeaderItem(i++, new headertableitem(gtmp->getName().c_str(), *listqtmp));
+            listqtmp++;
         }
-        this->setVerticalHeaderItem(i++, new headertableitem(gtmp->getName().c_str(), (q[(*listpg)])));
         listpg++;
         //gbox->verticalHeaderItem(i)->setBackgroundColor(gtmp->getColor());
     }
@@ -124,7 +144,7 @@ void    tableshow::setverticalheader(vector<group> &g, int id)
     int i = -1;
     QList<int>::const_iterator listpg;
     QList<int> listint;
-    //listint << id;
+    qDebug() << id;
     p->groupchild(id, listint);
 
     listpg = listint.begin();
@@ -188,7 +208,7 @@ void    tableshow::clearheader()
         delete (this->horizontalHeaderItem(h));
 }
 
-void	tableshow::showtable(MainWindow *main, int k, int id, int i)
+void	tableshow::showtable(MainWindow *mainp, int k, int id, int i)
 {
     QList<int>::const_iterator listpg;
     QList<int> listint;
@@ -204,7 +224,7 @@ void	tableshow::showtable(MainWindow *main, int k, int id, int i)
     /*listpg = listint.begin();
     while (listpg != listint.end())
     {
-        if (main->showmod == 1)
+        if (mainp->showmod == 1)
             this->listgroup[(*listpg)].show(this, &i, this->listgroup, this->k);
         else
             this->listgroup[(*listpg)].showgroup(this, &i, this->listquestion, this->listgroup, this->k);

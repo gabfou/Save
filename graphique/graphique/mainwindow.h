@@ -1,16 +1,15 @@
 #pragma once
 
 #include "ui_mainwindow.h"
-#include <QMainWindow>
-#include <QWindow>
 #include "le.h"
-#include <Qlabel>
+
 #include "grouptree.h"
 
-class barref;
+//class barref;
 class tableshow;
+class overview;
 
-#include "project.h"
+#include "data/project.h"
 
 //class grouptree;
 
@@ -29,8 +28,11 @@ public:
     int showmod = 0;
     QString namecurrent;
     QDockWidget *groupdock = NULL;
+    QTabWidget *cw;
+    project *current;
 public slots:
-        void updateproject();
+    void updateproject();
+    void screenshootcurrent();
 private slots:
     void showproject();
     void sendproject();
@@ -55,18 +57,19 @@ private slots:
     void configproject();
 private:
     Ui::MainWindow *ui;
-    project *current;
     QWindow *addprojectwindow;
     QLineEdit *nametmp;
     QLineEdit *prenametmp;
     QLineEdit *emailtmp;
     tableshow *table = NULL;
     grouptree *groupboxtmp;
-    barref *d_chart;
+//    barref *d_chart;
     int currentgref = 0;
     QRadioButton *radiobuttontmp;
+    overview *ov = NULL;
 
     void sendprojectauxi(QString str);
     void addock();
 };
 
+    
