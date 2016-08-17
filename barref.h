@@ -9,19 +9,19 @@ class project;
 
 class barref: public QwtPlot
 {
-    Q_OBJECT
+	Q_OBJECT
 
 public:
-    barref(QWidget * = NULL , project *p = NULL);
+	barref(QWidget * = NULL , project *p = NULL);
 public Q_SLOTS:
-    void setMode( int );
-    void setOrientation( int );
-    void exportChart();
+	void setMode( int );
+	void setOrientation( int );
+	void exportChart();
 
 private:
-    void populate(project *p);
+	void populate(project *p);
 
-     QwtPlotMultiBarChart *d_barrefItem;
+	 QwtPlotMultiBarChart *d_barrefItem;
 };
 
 #endif // BARREF_H

@@ -5,7 +5,7 @@
 class dockgroup
 {
 public:
-    dockgroup();
+	dockgroup();
 };
 
 #endif // DOCKGROUP_H

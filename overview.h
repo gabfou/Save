@@ -9,12 +9,13 @@ class bargraph;
 
 class overview : public QWidget
 {
-    project *p;
-    bargraph *bar;
-    bargraph *barref;
+	project *p;
+	bargraph *bar;
+	bargraph *barref;
+    int *showmod;
 public:
-    overview(project *p, int group);
-    void updateov(int group);
+    overview(project *p, int group, int *showmod);
+	void updateov(int group);
 };
 
 #endif // OVERVIEW_H

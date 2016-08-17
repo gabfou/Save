@@ -6,25 +6,28 @@
 
 class infoquestion : public QWidget
 {
-    Q_OBJECT
+	Q_OBJECT
 public:
-    infoquestion(project *p);
+	infoquestion(project *p, MainWindow *m);
 
 public slots:
-    void updateib(QTreeWidgetItem *item);
+	void updateib(QTreeWidgetItem *item);
 
 private slots:
-    void updatebdd();
+	void updatebdd();
 private:
-    QLineEdit *name;
-    grouptree *target;
-    QLineEdit *description;
-    QLineEdit *unit;
-    QComboBox *type;
-    QSpinBox *value;
-    project *p;
-    question *q = NULL;
-    int init;
+	QMetaObject::Connection cotmp;
+	QLineEdit *name;
+	grouptree *target;
+	QLineEdit *description;
+	QLineEdit *unit;
+	QComboBox *type;
+	QSpinBox *value;
+	project *p;
+	question *q = NULL;
+	QPushButton *b_update;
+	int init;
+	int qgroupid;
 
 };
 

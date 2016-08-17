@@ -9,11 +9,11 @@ class MainWindow;
 
 class menuconfigquestion : public QWidget
 {
-    project *p;
-    QDockWidget *groupdock;
-    grouptree *groupbox;
+	project *p;
+	QDockWidget *groupdock;
+	grouptree *groupbox;
 public:
-    menuconfigquestion(project *p, MainWindow *m);
+	menuconfigquestion(project *p, MainWindow *m);
 };
 
 #endif // MENUCONFIGQUESTION_H

@@ -8,23 +8,23 @@ question::question()
 
 question::question(string a, int b, int id, int qgroupid, QString sujet, QString unit)
 {
-    this->name = a;
-    this->group = b;
-    this->id = id;
-    this->qgroupid = qgroupid;
-    this->sujet = sujet;
-    this->unit = unit;
+	this->name = a;
+	this->group = b;
+	this->id = id;
+	this->qgroupid = qgroupid;
+	this->sujet = sujet;
+	this->unit = unit;
 }
 
 question::question(const question &q)
 {
-    this->group = q.group;
-    this->id = q.id;
-    this->name = q.name;
-    this->qgroupid = q.qgroupid;
-    this->note = q.note;
-    this->unit = q.unit;
-    this->sujet = q.sujet;
+	this->group = q.group;
+	this->id = q.id;
+	this->name = q.name;
+	this->qgroupid = q.qgroupid;
+	this->note = q.note;
+	this->unit = q.unit;
+	this->sujet = q.sujet;
 }
 
 question::~question()

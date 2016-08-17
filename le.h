@@ -71,10 +71,10 @@ class project;
 
 typedef struct  s_groupref
 {
-    QString         name;
-    QList<QString>  list;
-    int             total = 0;
-}               t_groupref;
+	QString		 name;
+	QList<QString>  list;
+	int			 total = 0;
+}			   t_groupref;
 
 using namespace std;
 
@@ -91,9 +91,9 @@ t_groupref syntheselistgroup(QList<t_groupref> listg, vector<question> questionl
 void gen_random(char *s, const int len);
 void sendmail(QString mail, QString body);
 int addgroup(QString nameproject, QString name, int groupparent, int type, project *p);
-void    supgroup(QString nameproject, int id, vector<group> &g);
-void    supquest(QString nameproject, int id);
-int    addquestion(project *p, QString name, int groupid, QString type, int note, QString description, int qgroupid);
+void	supgroup(QString nameproject, int id, vector<group> &g);
+void	supquest(QString nameproject, int id);
+int	addquestion(project *p, QString name, int groupid, QString type, int note, QString description, int qgroupid);
 //global
 extern bool g_ref;
 #endif // LE_H

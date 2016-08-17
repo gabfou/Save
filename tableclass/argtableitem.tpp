@@ -8,12 +8,12 @@ template<typename T>
 class argtableitem : public QTableWidgetItem
 {
 public:
-    argtableitem(QString str, T *arg) : arg(arg), QTableWidgetItem(str)
-    {
+	argtableitem(QString str, T *arg) : arg(arg), QTableWidgetItem(str)
+	{
 
-    }
-    T *arg;
-    int id;
+	}
+	T *arg;
+	int id;
 };
 
 #endif // ARGTABLEITEM_H

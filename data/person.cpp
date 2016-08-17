@@ -15,7 +15,7 @@ std::list<fact> person::getFlist() const{return flist;}
 
 std::list<fact> person::getFreflist() const
 {
-    return freflist;
+	return freflist;
 }
 
 person::person()
@@ -45,98 +45,98 @@ void person::add_fact(string line)
 
 void person::add_fact(string name, int time, int note, string date, int iteration)
 {
-    if (iteration)
-        (this->flist).push_back(newfact(name, time, note, date));
-    else
-    {
-        (this->freflist).push_back(newfact(name, time, note, date));
-    }
+	if (iteration)
+		(this->flist).push_back(newfact(name, time, note, date));
+	else
+	{
+		(this->freflist).push_back(newfact(name, time, note, date));
+	}
 }
 
 int	person::personshowcase(string qname) const
 {
-    list<fact>::const_iterator tmp;
+	list<fact>::const_iterator tmp;
 	int j = 0;
 	int l = 0;
 
 
-    tmp = this->flist.begin();
-    while (tmp != this->flist.end())
-    {
-        j += (*tmp).checkfacttime(qname ,l);
-        tmp++;
-    }
-    if (l != 0)
-        return(j / l);
-    return 0;
+	tmp = this->flist.begin();
+	while (tmp != this->flist.end())
+	{
+		j += (*tmp).checkfacttime(qname ,l);
+		tmp++;
+	}
+	if (l != 0)
+		return(j / l);
+	return 0;
 }
 
 void	person::personshow(QTableWidget *gbox, int i, int k, group parent, int ref) const
 {
 	list<fact>::iterator tmp;
-    vector<question>::const_iterator tmp2;
+	vector<question>::const_iterator tmp2;
 	int nb = 0;
-    int k2 = k;
+	int k2 = k;
 
-    tmp2 = this->questionlist->begin();
-    while (tmp2 != this->questionlist->end())
+	tmp2 = this->questionlist->begin();
+	while (tmp2 != this->questionlist->end())
 	{
 		nb = 0;
-        nb = (ref) ? this->personrefshowcase(tmp2->name) : this->personshowcase(tmp2->name);
+		nb = (ref) ? this->personrefshowcase(tmp2->name) : this->personshowcase(tmp2->name);
 		if (nb != 0)
-        {
-            gbox->setItem(i, k, new QTableWidgetItem(QString::number(nb)));
-            gbox->item(i, k)->setBackgroundColor(parent.getColor());
-        }
-        else
-        {
-            gbox->setItem(i, k, new QTableWidgetItem("NA"));
-            gbox->item(i, k)->setBackgroundColor(parent.getColor());
-        }
+		{
+			gbox->setItem(i, k, new QTableWidgetItem(QString::number(nb)));
+			gbox->item(i, k)->setBackgroundColor(parent.getColor());
+		}
+		else
+		{
+			gbox->setItem(i, k, new QTableWidgetItem("NA"));
+			gbox->item(i, k)->setBackgroundColor(parent.getColor());
+		}
 		k++;
 		tmp2++;
 	}
-    while (k2 > -1)
-    {
-        if (!(gbox->item(i, k2)))
-            gbox->setItem(i, k2, new QTableWidgetItem(""));
-        gbox->item(i, k2--)->setBackgroundColor(parent.getColor());
-    }
+	while (k2 > -1)
+	{
+		if (!(gbox->item(i, k2)))
+			gbox->setItem(i, k2, new QTableWidgetItem(""));
+		gbox->item(i, k2--)->setBackgroundColor(parent.getColor());
+	}
 }
 
 int	person::personrefshowcase(string qname) const
 {
-    list<fact>::const_iterator tmp;
-    int j = 0;
-    int l = 0;
+	list<fact>::const_iterator tmp;
+	int j = 0;
+	int l = 0;
 
-    tmp = this->freflist.begin();
-    while (tmp != this->freflist.end())
-    {
-        j += (*tmp).checkfacttime(qname ,l);
-        tmp++;
-    }
-    if (l != 0)
-        return(j / l);
-    return 0;
+	tmp = this->freflist.begin();
+	while (tmp != this->freflist.end())
+	{
+		j += (*tmp).checkfacttime(qname ,l);
+		tmp++;
+	}
+	if (l != 0)
+		return(j / l);
+	return 0;
 }
 
 void	person::personrefshow(QTableWidget *gbox, int i, int k) const
 {
-    list<fact>::iterator tmp;
-    vector<question>::const_iterator tmp2;
-    int nb = 0;
+	list<fact>::iterator tmp;
+	vector<question>::const_iterator tmp2;
+	int nb = 0;
 
-    tmp2 = this->questionlist->begin();
-    while (tmp2 != this->questionlist->end())
-    {
-        nb = 0;
-        nb = this->personrefshowcase(tmp2->name);
-        if (nb != 0)
-            gbox->setItem(i, k, new QTableWidgetItem(QString::number(nb)));
-        k++;
-        tmp2++;
-    }
+	tmp2 = this->questionlist->begin();
+	while (tmp2 != this->questionlist->end())
+	{
+		nb = 0;
+		nb = this->personrefshowcase(tmp2->name);
+		if (nb != 0)
+			gbox->setItem(i, k, new QTableWidgetItem(QString::number(nb)));
+		k++;
+		tmp2++;
+	}
 }
 
 QString	person::personsend(Smtp * smtp, QString post)
@@ -156,14 +156,14 @@ void	person::personsend()
 	
 	file.open(bidon + this->name + "form.php");
 	file2.open(bidon + this->name + "rep.php");
-    tmp = this->questionlist->begin();
+	tmp = this->questionlist->begin();
 	file << "INTRO";
 	file << "<form action = \"";
 	file << this->name + "rep.php";
 	file << "\" method = \"POST\">\n";
 	file2 << "<p>Merci!<\\p>";
 	file2 << "<?php\n";
-    while (tmp != this->questionlist->end())
+	while (tmp != this->questionlist->end())
 	{
 		var = "$file";
 		file2 << var + " = fopen('../server/server/" + PATH + "', 'a+');\n";
@@ -208,8 +208,8 @@ person::person(const person & person)
 	this->email = person.getEmail();
 	this->questionlist = person.getQuestionlist();
 	this->groupid = person.getGroupid();
-    this->flist = person.getFlist();
-    this->freflist = person.getFreflist();
+	this->flist = person.getFlist();
+	this->freflist = person.getFreflist();
 }
 
 

@@ -9,12 +9,12 @@ class MainWindow;
 class menuconfigproject : public QTabWidget
 {
 public:
-    menuconfigproject(QString name, project *p, MainWindow *m);
+	menuconfigproject(QString name, project *p, MainWindow *m);
 private:
-    QTabWidget *tab;
-    void configeneral();
-    void configgroupe();
-    QString name;
+	QTabWidget *tab;
+	void configeneral();
+	void configgroupe();
+	QString name;
 };
 
 #endif // MENUCONFIGPROJECT_H
