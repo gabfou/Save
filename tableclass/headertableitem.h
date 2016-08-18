@@ -19,7 +19,7 @@ public:
 	QString formule = "";
 	int groupe = 0;
 	int id = -1;
-	int type = -1;
+    int type = -1;
 	void *arg = NULL;
 	group argg;
 	person argp;
@@ -27,7 +27,7 @@ public:
 	headertableitem(QString str, group arg, QString form = "");
 	headertableitem(QString str, person arg, QString form = "");
     headertableitem(QString str, question arg, QString form = "");
-    bool is_in(vector<group> &g, QList<int> listint);
+    bool is_in(vector<group> &g, vector<group> &gq, QList<int> listint, QList<int> listqint);
 };
 
 #endif // HEADERTABLEITEM_H

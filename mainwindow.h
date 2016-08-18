@@ -25,16 +25,18 @@ public:
 	explicit MainWindow(QWidget *parent = 0);
 	~MainWindow();
 	void mailSent(QString status);
-    int showmod = 2;
+    int showmod = 0;
 	QString namecurrent;
 	QDockWidget *groupdock = NULL;
 	QTabWidget *cw;
 	project *current;
 	tableshow *table = NULL;
 	int currentgref = 0;
+    int currentgqref = 0;
 public slots:
 	void updateproject();
-	void screenshootcurrent();
+    void screenshootcurrent();
+    void changescopeq2();
 private slots:
 	void showproject();
 	void sendproject();

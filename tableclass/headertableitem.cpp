@@ -5,7 +5,6 @@ void headertableitem::setFormule(const QString &value){formule = value;}
 
 headertableitem::headertableitem(QString str, QString form, int id) : QTableWidgetItem(str), formule(form), id(id)
 {
-
 }
 
 headertableitem::headertableitem(QString str, group arg, QString form)
@@ -23,7 +22,7 @@ headertableitem::headertableitem(QString str, question arg, QString form)
 {
 }
 
-bool headertableitem::is_in(vector<group> &g, QList<int> listint)
+bool headertableitem::is_in(vector<group> &g, vector<group> &gq, QList<int> listint, QList<int> listqint)
 {
     QList<int>::iterator tmp;
 
@@ -53,14 +52,17 @@ bool headertableitem::is_in(vector<group> &g, QList<int> listint)
     }
     if (type == 2)
     {
-        if (g[0].type != 1)
+        if (gq[0].type != 1)
+        {
             return (1);
+        }
         else
         {
-            tmp = listint.begin();
-            while (tmp != listint.end())
+            tmp = listqint.begin();
+            while (tmp != listqint.end())
             {
-                if (g[*tmp].contain(this->argq))
+                gq[*tmp].getListq();
+                if (gq[*tmp].contain(this->argq))
                     return (1);
                 tmp++;
             }

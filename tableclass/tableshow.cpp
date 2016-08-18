@@ -25,8 +25,6 @@ void tableshow::reinit(project * p, MainWindow *mainp)
 	this->p = p;
 	int i = (mainp->showmod == 0) ? 0 : 1;
 	i+= p->getNbgeneration();
-	int k = i;
-	int j = -1;
 
 	qDebug() << "new tableshow";
 	//this->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
@@ -138,7 +136,6 @@ void	tableshow::setverticalheader(vector<question> &q, int id)
 			while (gtmp->getGeneration() > 0)
 			{
                 this->setItem(i, gtmp->getGeneration() - 1, new QTableWidgetItem(gtmp->getName().c_str()));
-				//gbox->item(*i, gtmp->getGeneration() - 1)->setBackgroundColor(Qt::red);
 				gtmp = &(p->listqgroup[gtmp->getParentid()]);
 			}
             this->setVerticalHeaderItem(i++, new headertableitem(gtmp->getName().c_str(), *listqtmp));
@@ -190,14 +187,13 @@ void	tableshow::populate()
 	}
 }
 
-void	tableshow::select(int gref)
+void	tableshow::select(int gref, int gqref)
 {
 	QList<int> listint;
+    QList<int> listqint;
 
-    if (*showmode == 2)
-        p->groupqchild(gref, listint);
-    else
-        p->groupchild(gref, listint);
+    p->groupqchild(gqref, listqint);
+    p->groupchild(gref, listint);
 	headertableitem *tmp;
 
 	int h = -1;
@@ -206,17 +202,34 @@ void	tableshow::select(int gref)
 	{
 		tmp = (dynamic_cast<headertableitem*>(this->verticalHeaderItem(h)));
         qDebug() << listint;
+        qDebug() << listqint;
         if (!tmp)
             qDebug() << "dynamic_cast<headertableitem*> fail tableshowselect";
         else
-            qDebug() << tmp->id;
+            qDebug() << "dynamic_cast<headertableitem*> id = " << tmp->id;
         //listint.contains(tmp->id)
-        if (tmp && tmp->is_in(((*showmode > 1) ? this->p->listqgroup : this->p->listgroup), listint))
+        if (tmp && tmp->is_in(this->p->listgroup , this->p->listqgroup, listint, listqint))
 			this->showRow(h);
 		else
             this->hideRow(h);
 	}
-//	int w = -1;
+    h = -1;
+
+    while (++h < this->columnCount())
+    {
+        tmp = (dynamic_cast<headertableitem*>(this->horizontalHeaderItem(h)));
+        qDebug() << listint;
+        qDebug() << listqint;
+        if (!tmp)
+            qDebug() << "dynamic_cast<headertableitem*> fail tableshowselect";
+        else
+            qDebug() << "dynamic_cast<headertableitem*> id = " << tmp->id;
+        //listint.contains(tmp->id)
+        if (tmp && tmp->is_in(this->p->listgroup, this->p->listqgroup, listint, listqint))
+            this->showColumn(h);
+        else
+            this->hideColumn(h);
+    }
 }
 
 void	tableshow::clearheader()
@@ -231,7 +244,7 @@ void	tableshow::clearheader()
 		delete (this->horizontalHeaderItem(h));
 }
 
-void	tableshow::showtable(MainWindow *mainp, int k, int id, int i)
+void	tableshow::showtable(MainWindow *mainp, int k, int id, int i, int qid)
 {
 	QList<int>::const_iterator listpg;
 	QList<int> listint;
@@ -245,7 +258,7 @@ void	tableshow::showtable(MainWindow *mainp, int k, int id, int i)
 	this->sethorizontalheader(main);
 	this->setverticaleheader(p->listgroup, id);
 	this->updateall();*/
-	this->select(id);
+    this->select(id, qid);
 	qDebug() << "showtableshow";
 	/*listpg = listint.begin();
 	while (listpg != listint.end())

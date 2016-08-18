@@ -87,8 +87,8 @@ inline void project::addquestion(string name, int group, int id, int qgroupid, Q
 {
 	this->nbquestion++;
 	question ret(name, group, id, qgroupid, sujet, unit);
-/*	while (this->listgroup.size() < id)
-		this->listgroup.push_back(question());*/
+    while (this->listquestion.size() < id)
+        this->listquestion.push_back(question());
 	this->listquestion.push_back(ret);
 }
 
@@ -236,7 +236,8 @@ void project::initoroject(string fproject)
 	tmp2 = this->listquestion.begin();
 	while (tmp2 != this->listquestion.end())
 	{
-		this->listqgroup[tmp2->qgroupid].addquestion(*tmp2);
+        if (tmp2->qgroupid != -1)
+            this->listqgroup[tmp2->qgroupid].addquestion(*tmp2);
 		tmp2++;
 	}
 }
@@ -307,10 +308,34 @@ void	project::groupqchild(int id, QList<int> & ret) const
 	listpg = listint.begin();
 	while (listpg != listint.end())
 	{
-		qDebug() << "number : " << QString::number(*listpg);
+        qDebug() << "groupqchild number group: " << QString::number(*listpg);
 		this->groupqchild(*listpg, ret);
 		listpg++;
 	}
+}
+
+void	project::questiongroupqchild(int id, QList<int> & ret) const
+{
+    list<int>::iterator listpg;
+    list<question> listq = listqgroup[id].getListq();
+    list<question>::iterator listqi;
+    list<int> listint = listqgroup[id].getListfils();
+
+    listqi = listq.begin();
+    while (listqi != listq.end())
+    {
+        qDebug() << "questiongroupchild : " << listqi->id;
+        ret << listqi->id;
+        listqi++;
+    }
+    listint = this->listqgroup[id].getListfils();
+    listpg = listint.begin();
+    while (listpg != listint.end())
+    {
+        qDebug() << "questiongroupchild number group: " << QString::number(*listpg);
+        this->questiongroupqchild(*listpg, ret);
+        listpg++;
+    }
 }
 
 void	project::projectshow(MainWindow *main, QTableWidget *gbox, int grefid)
@@ -353,17 +378,20 @@ void	project::projectshow(MainWindow *main, QTableWidget *gbox, int grefid)
 	this->projectgroupshow(main, gbox, k, grefid, &i);
 }
 
-QList<t_groupref> project::getgrouplist(int id)
+QList<t_groupref> project::getgrouplist(int id, int qid)
 {
 	QList<t_groupref> ret;
 	QList<int> listchild;
 	QList<int>::iterator i;
+    QList<int> listqchild;
 
 	groupchild(id, listchild);
+    questiongroupqchild(qid, listqchild);
+    qDebug() << "machin" << listqchild;
 	i = listchild.begin();
 	while (i != listchild.end())
 	{
-		ret << this->listgroup[*i].groupnamerep(this->listquestion, 0);
+        ret << this->listgroup[*i].groupnamerep(this->listquestion, 0, listqchild);
 		i++;
 	}
 	return ret;
@@ -373,14 +401,16 @@ QList<t_groupref> project::getgrouplistref(int id)
 {
 	QList<t_groupref> ret;
 	QList<int> listchild;
+    QList<int> listqchild;
 	QList<int>::iterator i;
 
 
 	groupchild(id, listchild);
 	i = listchild.begin();
+    questiongroupqchild(0, listqchild);
 	while (i != listchild.end())
 	{
-		ret << this->listgroup[*i].groupnamerep(this->listquestion, 1);
+        ret << this->listgroup[*i].groupnamerep(this->listquestion, 1, listqchild);
 		i++;
 	}
 	return ret;

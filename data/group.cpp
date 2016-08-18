@@ -82,12 +82,12 @@ std::list<int> group::getListfils() const
 }
 
 
-t_groupref group::groupnamerep(const vector<question> &questionlist, int ref) const
+t_groupref group::groupnamerep(const vector<question> &questionlist, int ref, QList<int> listqchild) const
 {
 	t_groupref ret;
 
 	ret.name = this->name.c_str();
-	ret.list = this->grouprep(questionlist, ref);
+    ret.list = this->grouprep(questionlist, ref, listqchild);
 
 	return ret;
 }
@@ -119,16 +119,17 @@ QString group::grouprep(question tmp2, int ref) const
 		return ("NA");
 }
 
-QList<QString> group::grouprep(const vector<question> & questionlist, int ref) const
+QList<QString> group::grouprep(const vector<question> & questionlist, int ref, QList<int> listqchild) const
 {
-	vector<question>::const_iterator tmp2;
+    QList<int>::const_iterator tmp2;
 	QList<QString> ret;
 	//afficher reponse au question
 
-	tmp2 = questionlist.begin();
-	while (tmp2 != questionlist.end())
+    tmp2 = listqchild.begin();
+    while (tmp2 != listqchild.end())
 	{
-		ret << grouprep(*tmp2, ref);
+        qDebug() << "truc :" << *tmp2;
+        ret << grouprep(questionlist[*tmp2], ref);
 		tmp2++;
 	}
 	return ret;
@@ -136,7 +137,7 @@ QList<QString> group::grouprep(const vector<question> & questionlist, int ref) c
 
 void group::showgroup(QTableWidget *gbox, int *i, const vector<question> & questionlist, const vector<group> & listgroup, int k)  const
 {
-	vector<question>::iterator tmp2;
+/*	vector<question>::iterator tmp2;
 	group gtmp = *this;
 
 	//afficher les groupe
@@ -161,7 +162,7 @@ void group::showgroup(QTableWidget *gbox, int *i, const vector<question> & quest
 
 	//afficher reponse au question
 
-	QList<QString> listrep = this->grouprep(questionlist, 0);
+    QList<QString> listrep = this->grouprep(questionlist, 0);
 	QList<QString>::iterator tmp = listrep.begin();
 	int x = k;
 
@@ -199,7 +200,7 @@ void group::showgroup(QTableWidget *gbox, int *i, const vector<question> & quest
 			gbox->item(*i, (x)--)->setBackgroundColor(gtmp.getColor());
 		}
 		(*i)++;
-	}
+    }*/
 }
 
 void group::groupsetcolor(int i)

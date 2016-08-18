@@ -3,12 +3,12 @@
 #include "data/question.h"
 #include "smtp.h"
 
-t_groupref syntheselistgroup(QList<t_groupref> listg, vector<question> questionlist)
+t_groupref syntheselistgroup(QList<t_groupref> listg, int nbcolumn)
 {
 	t_groupref ret;
 	QList<t_groupref>::iterator  tmp;
-	int tabi[questionlist.size() + 1];
-	int tabl[questionlist.size() + 1];
+    int tabi[nbcolumn + 1];
+    int tabl[nbcolumn + 1];
 	QList<QString>::iterator tmp4;
 	int i;
 	int m = 0;
@@ -39,7 +39,7 @@ t_groupref syntheselistgroup(QList<t_groupref> listg, vector<question> questionl
 	}
 	ret.total = 0;
 	i = -1;
-	while(++i < questionlist.size() + 1)
+    while(++i < nbcolumn + 1)
 	{
 		if (tabl[i] != 0)
 		{

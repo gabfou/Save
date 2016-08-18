@@ -15,11 +15,11 @@ class tableshow : public QTableWidget
 public:
     tableshow(project * p, MainWindow *mainp, int *showmode);
 
-	void showtable(MainWindow *Mainp, int k, int id, int i);
+    void showtable(MainWindow *Mainp, int k, int id, int i, int qid);
 	void sethorizontalheader(MainWindow *mainp);
 	void updateall();
 	void clearheader();
-	void select(int gref);
+    void select(int gref, int gqref);
 	void setverticalheader(vector<question> &q, int id);
 	void setverticalheader(vector<group> &g, int id);
     tableshow(project *p, int ref, int *showmode);

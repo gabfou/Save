@@ -27,7 +27,6 @@ SOURCES += main.cpp\
     sql/sqldatatable.cpp \
     sql/sqloperation.cpp \
     sql/sqltableitem.cpp \
-    tableclass/argtableitem.cpp \
     tableclass/argtableitem.tpp \
     tableclass/headeredit.cpp \
     tableclass/headertableitem.cpp \

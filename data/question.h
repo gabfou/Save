@@ -16,8 +16,8 @@ public:
 	string name;
 	QString sujet;
 	string group = "ALL";
-	int qgroupid = 0;
-	int id = 0;
+    int qgroupid = -1;
+    int id = -1;
 	int	note;
 	int type = 0;
 	bool bnote;

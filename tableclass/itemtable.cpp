@@ -32,10 +32,10 @@ void itemtable::update()
 		this->setBackgroundColor(Qt::white);
         return ;
 	}
-	else if (arg->type = 1 && head->type == 2)
+    else if (arg->type == 1 && head->type == 2)
 		update(&(arg->argg), &(head->argq));
-    else if (arg->type = 2 && head->type == 1)
-        update(&(head->argg), &(arg->argq));
+    else if (arg->type == 2 && head->type == 1)
+        updateall(&(head->argg), &(arg->argq));
 	else
 	{
 		this->setText(this->placeholder);
@@ -65,6 +65,22 @@ void itemtable::update(group *arg, question *head, QString form) // opti passer 
 		this->setBackgroundColor(arg->getColor());
 	}
    this->eval(val);
+}
+
+void itemtable::updateall(group *arg, question *head, QString form) // opti passer question en vector
+{
+    if (arg->type != 0)
+    {
+        qDebug("dafuq itemtable::updateall");
+        return ;
+    }
+    qDebug() << arg->id;
+    t_groupref gref = syntheselistgroup(p->getgrouplist(arg->id), 1);
+    QString val;
+
+    val = gref.total;
+    this->setBackgroundColor(arg->getColor());
+    this->eval(val);
 }
 
 void itemtable::eval(QString val)

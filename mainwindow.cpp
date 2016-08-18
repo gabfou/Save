@@ -316,6 +316,7 @@ void MainWindow::openproject2(QListWidgetItem *item)
 	this->current = new project;
 	this->current->initoroject(item->text().toStdString());
 	this->currentgref = 0;
+    this->currentgqref = 0;
 //	this->current->projectshow(this, this->table, this->currentgref);
 	this->namecurrent = item->text();
 	this->updateproject();
@@ -334,7 +335,10 @@ void MainWindow::addock()
 	groupdock->setWidget(this->groupboxtmp);
 	groupdock->show();
 	addDockWidget(Qt::LeftDockWidgetArea, groupdock);
-	connect(this->groupboxtmp, SIGNAL(itemClicked(QTreeWidgetItem *, int )), this, SLOT(changescope2()));
+    if (showmod == 0)
+        connect(this->groupboxtmp, SIGNAL(itemClicked(QTreeWidgetItem *, int )), this, SLOT(changescope2()));
+    if (showmod == 2)
+        connect(this->groupboxtmp, SIGNAL(itemClicked(QTreeWidgetItem *, int )), this, SLOT(changescopeq2()));
 }
 
 //ajout de collaborateur
@@ -429,7 +433,7 @@ void MainWindow::showproject()
         this->table = new tableshow((this->current), this, &(this->showmod));
 		this->cw->addTab(this->table, "tableaux");
 	}
-	this->table->showtable(this, 0, this->currentgref, 0);
+    this->table->showtable(this, 0, this->currentgref, 0, this->currentgqref);
 
 	//this->current->projectshow(this, this->table, this->currentgref);
 }
@@ -498,7 +502,7 @@ void MainWindow::updateproject()
 	this->current->initoroject(this->namecurrent.toStdString());
 	delete this->table;
     this->table = new tableshow((this->current), this, &(this->showmod));
-	this->table->showtable(this, 0, this->currentgref, 0);
+    this->table->showtable(this, 0, this->currentgref, 0, this->currentgqref);
 	this->cw->addTab(table, "tableaux");
 	this->addock();
 }
@@ -571,6 +575,12 @@ void	MainWindow::changescope2()
 {
 	this->currentgref = dynamic_cast<grouptreeitem*>(this->groupboxtmp->currentItem())->getId();
 	this->showproject();
+}
+
+void	MainWindow::changescopeq2()
+{
+    this->currentgqref = dynamic_cast<grouptreeitem*>(this->groupboxtmp->currentItem())->getId();
+    this->showproject();
 }
 
 void	MainWindow::showbarchartref()

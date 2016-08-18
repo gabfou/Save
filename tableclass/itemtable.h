@@ -20,7 +20,8 @@ private:
 	QString form;
 	project *p;
 	void update2(argtableitem<group> *arg);
-	void eval(QString val);
+    void eval(QString val);
+    void updateall(group *arg, question *head, QString form = "");
 };
 
 #endif // ITEMTABLE_H

@@ -87,7 +87,7 @@ void tab_to_fichier(const QString name, const QTableWidget *table);
 QXlsx::Document tab_to_xlsx(const QTableWidget &table, QXlsx::Document & xlsx);
 QString indextocase(int x, int y);
 void warning(QString error);
-t_groupref syntheselistgroup(QList<t_groupref> listg, vector<question> questionlist);
+t_groupref syntheselistgroup(QList<t_groupref> listg, int nbcolumn);
 void gen_random(char *s, const int len);
 void sendmail(QString mail, QString body);
 int addgroup(QString nameproject, QString name, int groupparent, int type, project *p);

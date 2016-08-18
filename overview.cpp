@@ -8,8 +8,8 @@ overview::overview(project *p, int group, int *showmod) : p(p), showmod(showmod)
 {
     if (*showmod == 2) // provisoire la meme en dessous
         group = 0;
-     bar = new bargraph(syntheselistgroup(p->getgrouplist(group), p->getListquestion()), p);
-     barref = new bargraph(syntheselistgroup(p->getgrouplistref(group), p->getListquestion()), p);
+     bar = new bargraph(syntheselistgroup(p->getgrouplist(group), p->getListquestion().size()), p);
+     barref = new bargraph(syntheselistgroup(p->getgrouplistref(group), p->getListquestion().size()), p);
      bar->setName("Reel");
 	 barref->setName("Escompté");
      //tableshow *table = new tableshow(p, group);
@@ -35,7 +35,7 @@ void overview::updateov(int group)
     if (*showmod == 2) // provisoire la meme au dessus
         group = 0;
 	qDebug() << "updateov";
-	bar->updateg(syntheselistgroup(p->getgrouplist(group), p->getListquestion()));
-	barref->updateg(syntheselistgroup(p->getgrouplistref(group), p->getListquestion()));
+    bar->updateg(syntheselistgroup(p->getgrouplist(group), p->getListquestion().size()));
+    barref->updateg(syntheselistgroup(p->getgrouplistref(group), p->getListquestion().size()));
     this->update();
 }

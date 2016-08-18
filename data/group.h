@@ -40,9 +40,9 @@ public:
 	QColor getColor() const;
 	void setColor(const QColor &value);
 	std::list<int> getListfils() const;
-	QList<QString> grouprep(const vector<question> & questionlist, int ref) const;
+    QList<QString> grouprep(const vector<question> & questionlist, int ref, QList<int> listqchild) const;
 
-	t_groupref groupnamerep(const vector<question> & questionlist, int ref) const;
+    t_groupref groupnamerep(const vector<question> & questionlist, int ref, QList<int> listqchild) const;
 	QString grouprep(question tmp2, int ref) const;
 	int id;
 	string name;
