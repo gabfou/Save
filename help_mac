@@ -1,0 +1,1 @@
+install_name_tool -change /opt/local/lib/mysql55/mysql/libmysqlclient.18.dylib ~/.brew/Cellar/mysql55/5.5.49/lib/libmysqlclient.18.dylib libqsqlmysqld.dylib
