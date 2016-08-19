@@ -6,6 +6,7 @@
 
 class project;
 class bargraph;
+class tableshow;
 
 class overview : public QWidget
 {
@@ -13,6 +14,7 @@ class overview : public QWidget
 	bargraph *bar;
 	bargraph *barref;
     int *showmod;
+    tableshow *table;
 public:
     overview(project *p, int group, int *showmod);
 	void updateov(int group);

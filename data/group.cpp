@@ -119,6 +119,21 @@ QString group::grouprep(question tmp2, int ref) const
 		return ("NA");
 }
 
+QString group::grouprepall(question tmp2, vector<group> &g) const // opti qstring neccessaire
+{
+    list<int>::const_iterator tmp = listfils.begin();
+    int val = 0;
+
+    val += grouprep(tmp2, 0).toInt();
+    while(tmp != listfils.end())
+    {
+        val += g[*tmp].grouprepall(tmp2, g).toInt();
+        tmp++;
+    }
+    return (QString::number(val));
+}
+
+
 QList<QString> group::grouprep(const vector<question> & questionlist, int ref, QList<int> listqchild) const
 {
     QList<int>::const_iterator tmp2;

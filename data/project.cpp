@@ -255,7 +255,7 @@ void	project::projectgroupshow(MainWindow *main, QTableWidget *gbox, int k, int 
 	listpg = listint.begin();
 	while (listpg != listint.end())
 	{
-		qDebug() << "number : " <<QString::number(*listpg);
+        //qDebug() << "number : " <<QString::number(*listpg);
 			this->projectgroupshow(main, gbox, k, *listpg, i);
 		listpg++;
 	}
@@ -308,10 +308,27 @@ void	project::groupqchild(int id, QList<int> & ret) const
 	listpg = listint.begin();
 	while (listpg != listint.end())
 	{
-        qDebug() << "groupqchild number group: " << QString::number(*listpg);
+        //qDebug() << "groupqchild number group: " << QString::number(*listpg);
 		this->groupqchild(*listpg, ret);
 		listpg++;
 	}
+}
+
+vector<question> project::questiongroupqchildnotopti(int id)
+{
+
+	QList<int> listqchild;
+	vector<question> ret;
+    QList<int>::iterator tmp;
+	questiongroupqchild(id, listqchild);
+
+	tmp = listqchild.begin();
+	while (tmp != listqchild.end())
+	{
+        ret.push_back(listquestion[(*tmp)]);
+		tmp++;
+	}
+	return (ret);
 }
 
 void	project::questiongroupqchild(int id, QList<int> & ret) const

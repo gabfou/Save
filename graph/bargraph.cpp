@@ -4,12 +4,14 @@
 
 bargraph::bargraph(t_groupref  g, project *p, QWidget *parent) : QWidget(parent), g(g), p(p)
 {
-	 setMinimumWidth(300);
+	setMinimumWidth(300);
+	listqchild = p->questiongroupqchildnotopti(0);
 }
 
 void bargraph::updateg(t_groupref g)
 {
 	this->g = g;
+	listqchild = p->questiongroupqchildnotopti(0);
 }
 
 
@@ -23,7 +25,8 @@ void bargraph::paintEvent(QPaintEvent *event)
 
 void bargraph::drawgraph(QPainter *qp)
 {
-	float incr = this->width() / ((p->listquestion.size() + 2) * 2);
+
+	float incr = this->width() / ((listqchild.size() + 2) * 2);
 	float x = incr;
 	float d = this->g.total;
 	float h120 = this->height() / 120;
@@ -35,12 +38,12 @@ void bargraph::drawgraph(QPainter *qp)
 		return ;
 	}
 	d /= 100;
-	qDebug() << "debut" << x <<  10 * h120 << incr << 100 * h120 << this->width() << this->height();
-	qp->drawText(0, 0, this->width(), 10 * h120, Qt::AlignCenter, this->name);
+//	qDebug() << "debut" << x <<  10 * h120 << incr << 100 * h120 << this->width() << this->height();
+    qp->drawText(0, 0, this->width(), 10 * h120, Qt::AlignCenter, this->name);
 	qp->setBrush(QBrush(Qt::cyan));
 	qp->drawRect(x, tmp37 * h120 , incr, 100 * h120);
 	QList<QString>::iterator tmp;
-	vector<question> listq = p->listquestion;
+	vector<question> listq = listqchild;
 	vector<question>::iterator tmp3;
 
 	tmp = g.list.begin();
@@ -53,9 +56,10 @@ void bargraph::drawgraph(QPainter *qp)
 			tmp++;
 			continue ;
 		}
-		x +=  incr + incr;
-		qDebug() << "boucle" << x <<  tmp37 << (*tmp).toFloat() / d;
-		qp->drawRect(x, tmp37 * h120, incr, ((*tmp).toFloat() / d) * h120);
+        x +=  incr + incr;
+//		qDebug() << "boucle" << x <<  tmp37 << (*tmp).toFloat() / d;
+        qp->drawRect(x, tmp37 * h120, incr, ((*tmp).toFloat() / d) * h120);
+        qp->drawText(x, tmp37 * h120, incr, ((*tmp).toFloat() / d) , Qt::AlignCenter | Qt::TextWordWrap, tmp3->name.c_str());
 		tmp37 += ((*tmp).toInt() / d);
 		tmp3++;
 		tmp++;

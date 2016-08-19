@@ -43,7 +43,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	QObject::connect(open_projet, SIGNAL(triggered()), this, SLOT(openproject()));
 	QAction *update = menu_projet->addAction("&Actualiser");
 	QObject::connect(update, SIGNAL(triggered()), this, SLOT(updateproject()));
-	QAction *configp = menu_projet->addAction("&Configuration");
+    QAction *configp = menu_projet->addAction("&Configuration projet");
 	QObject::connect(configp, SIGNAL(triggered()), this, SLOT(configproject()));
 
 	QMenu *menu_nouveaux = menuBar()->addMenu("&Ajouter");
@@ -433,7 +433,7 @@ void MainWindow::showproject()
         this->table = new tableshow((this->current), this, &(this->showmod));
 		this->cw->addTab(this->table, "tableaux");
 	}
-    this->table->showtable(this, 0, this->currentgref, 0, this->currentgqref);
+    this->table->showtable(this->currentgref, this->currentgqref);
 
 	//this->current->projectshow(this, this->table, this->currentgref);
 }
@@ -502,7 +502,7 @@ void MainWindow::updateproject()
 	this->current->initoroject(this->namecurrent.toStdString());
 	delete this->table;
     this->table = new tableshow((this->current), this, &(this->showmod));
-    this->table->showtable(this, 0, this->currentgref, 0, this->currentgqref);
+    this->table->showtable(this->currentgref, this->currentgqref);
 	this->cw->addTab(table, "tableaux");
 	this->addock();
 }

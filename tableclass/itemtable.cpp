@@ -8,7 +8,7 @@
 
 itemtable::itemtable(QString placeholder, project *p, QString form) : placeholder(placeholder), form(form), p(p)
 {
-	this->setText(placeholder);
+    //this->setText(placeholder);
 	//this->update();
 	//conect(this->tableWidget()->verticalHeaderItem(int));
 }
@@ -28,7 +28,7 @@ void itemtable::update()
 	if (!head || !arg)
 	{
         //qDebug() << "fail dynamic cast tab col=" << this->column() << " tab row =" << this->row();
-		this->setText(this->placeholder);
+        //this->setText(this->placeholder);
 		this->setBackgroundColor(Qt::white);
         return ;
 	}
@@ -38,30 +38,20 @@ void itemtable::update()
         updateall(&(head->argg), &(arg->argq));
 	else
 	{
-		this->setText(this->placeholder);
+//		this->setText(this->placeholder);
 		this->setBackgroundColor(Qt::white);
 	}
-    //qDebug() << "tab col=" << this->column() << " tab row =" << this->row() << "head type=" << head->type << "arg type=" << arg->type;
 }
 
 void itemtable::update(group *arg, question *head, QString form) // opti passer question en vector
 {
-	vector<question>::iterator tmp = this->p->listquestion.begin();
-	question *q = NULL;
+	// vector<question>::iterator tmp = this->p->listquestion.begin();
+	question *q = &(p->listquestion[head->id]); // opti verifier que ca sert a quelque chose (question deja en argument ?)
 	QString val;
 
-	while(tmp != this->p->listquestion.end())
-	{
-	   if ((*tmp).id == head->id)
-	   {
-		   q = &(*tmp);
-		   break ;
-	   }
-	   tmp++;
-	}
 	if (q)
 	{
-		val = arg->grouprep(*q, 0);
+        val = arg->grouprep(*q, 0);
 		this->setBackgroundColor(arg->getColor());
 	}
    this->eval(val);
@@ -74,11 +64,9 @@ void itemtable::updateall(group *arg, question *head, QString form) // opti pass
         qDebug("dafuq itemtable::updateall");
         return ;
     }
-    qDebug() << arg->id;
-    t_groupref gref = syntheselistgroup(p->getgrouplist(arg->id), 1);
     QString val;
-
-    val = gref.total;
+    question *q = &(p->listquestion[head->id]);
+    val = arg->grouprepall(*q, p->listgroup);
     this->setBackgroundColor(arg->getColor());
     this->eval(val);
 }

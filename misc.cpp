@@ -7,8 +7,8 @@ t_groupref syntheselistgroup(QList<t_groupref> listg, int nbcolumn)
 {
 	t_groupref ret;
 	QList<t_groupref>::iterator  tmp;
-    int tabi[nbcolumn + 1];
-    int tabl[nbcolumn + 1];
+    int tabi[listg.size() + 1];
+    int tabl[listg.size() + 1];
 	QList<QString>::iterator tmp4;
 	int i;
 	int m = 0;
@@ -39,7 +39,7 @@ t_groupref syntheselistgroup(QList<t_groupref> listg, int nbcolumn)
 	}
 	ret.total = 0;
 	i = -1;
-    while(++i < nbcolumn + 1)
+    while(++i < listg.size() + 1)
 	{
 		if (tabl[i] != 0)
 		{

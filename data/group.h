@@ -52,6 +52,7 @@ public:
     std::list<question> getListq() const;
     bool contain(person &p);
     bool contain(question &q);
+    QString grouprepall(question tmp2, vector<group> &g) const;
 };
 
 #endif // GROUP_H

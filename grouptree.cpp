@@ -91,7 +91,7 @@ void	grouptree::addgroupintree2(QTreeWidgetItem *item, int column)
 	item = NULL;
 	qDebug() << "upadte ?";
 	m->table->reinit((m->current), m);
-    m->table->showtable(m, 0, m->currentgref, 0, m->currentgqref);
+    m->table->showtable(m->currentgref, m->currentgqref);
 	//m->updateproject();// actualisation necessaire mais detruit cette classe
 	qDebug() << "upadte";
 }
@@ -123,7 +123,7 @@ void	grouptree::addquestintree2(QTreeWidgetItem *item, int column)
 	item = NULL;
 
 	m->table->reinit((m->current), m);
-    m->table->showtable(m, 0, m->currentgref, 0, m->currentgqref);
+    m->table->showtable(m->currentgref, m->currentgqref);
 }
 
 void	grouptree::supgroupintree()
@@ -133,7 +133,7 @@ void	grouptree::supgroupintree()
 	delete item;
 	item = NULL;
 	m->table->reinit((m->current), m);
-    m->table->showtable(m, 0, m->currentgref, 0, m->currentgqref);
+    m->table->showtable( m->currentgref, m->currentgqref);
 }
 
 void	grouptree::supquestintree()
@@ -143,7 +143,7 @@ void	grouptree::supquestintree()
 	delete item;
 	item = NULL;
 	m->table->reinit((m->current), m);
-    m->table->showtable(m, 0, m->currentgref, 0, m->currentgqref);
+    m->table->showtable(m->currentgref, m->currentgqref);
 }
 
 grouptree::~grouptree()
