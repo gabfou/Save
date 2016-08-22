@@ -49,10 +49,10 @@ MainWindow::MainWindow(QWidget *parent) :
 	QMenu *menu_nouveaux = menuBar()->addMenu("&Ajouter");
 	QAction *new_collaborateur = menu_nouveaux->addAction("&Ajouter un collaborateur");
 	QObject::connect(new_collaborateur, SIGNAL(triggered()), this, SLOT(addperson()));
-//	QAction *new_question = menu_nouveaux->addAction("&Ajouter une question");
-//	QObject::connect(new_question, SIGNAL(triggered()), this, SLOT(addquestion()));
-//	QAction *new_groupe = menu_nouveaux->addAction("&Ajouter un groupe");
-//	QObject::connect(new_groupe, SIGNAL(triggered()), this, SLOT(addgroupe()));
+    QAction *new_question = menu_nouveaux->addAction("&Ajouter une question");
+    QObject::connect(new_question, SIGNAL(triggered()), this, SLOT(addquestion()));
+    QAction *new_groupe = menu_nouveaux->addAction("&Ajouter un groupe");
+    QObject::connect(new_groupe, SIGNAL(triggered()), this, SLOT(addgroupe()));
 
 	//QMenu *menu_selection = menuBar()->addMenu("&selection");
 
@@ -62,11 +62,11 @@ MainWindow::MainWindow(QWidget *parent) :
 //	QAction *barchartref = menu_outil->addAction("&Graphique comparaison reference-donnée");
 //	QObject::connect(barchartref, SIGNAL(triggered()), this, SLOT(showbarchartref()));
 
-	QMenu *menu_affifchage = menuBar()->addMenu("&Affichage");
+    /*QMenu *menu_affifchage = menuBar()->addMenu("&Affichage");
 	QAction *afficherref = menu_affifchage->addAction("&Données de références");
 	afficherref->setCheckable(true);
 	afficherref->setChecked(false);
-	QObject::connect(afficherref, SIGNAL(toggled(bool)), this, SLOT(refmodechange(bool)));
+    QObject::connect(afficherref, SIGNAL(toggled(bool)), this, SLOT(refmodechange(bool)));*/
 	//QAction *scope = menu_affifchage->addAction("&Périmetre"); // A
 	//QObject::connect(scope, SIGNAL(triggered()), this, SLOT(changescope()));
 
@@ -204,7 +204,7 @@ void MainWindow::addquestion2()
 {
 	QSqlQuery qry;
 
-	qry.prepare( "CREATE TABLE IF NOT EXISTS project_" + this->namecurrent + "_question (id INTEGER UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT, question VARCHAR(30), groupid INTEGER, type VARCHAR(30), note BOOLEAN DEFAULT 1, sujet VARCHAR(30), qgroupid INT DEFAULT 0, typef INT DEFAULT 0)" );
+    qry.prepare( "CREATE TABLE IF NOT EXISTS project_" + this->namecurrent + "_question (id INTEGER UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT, question VARCHAR(30), groupid INTEGER, type VARCHAR(30), note BOOLEAN DEFAULT 1, sujet VARCHAR(300), qgroupid INT DEFAULT 0, typef INT DEFAULT 0)" );
 	if( !qry.exec() )
 		qDebug() << qry.lastError();
 	qry.prepare( "INSERT INTO project_" + this->namecurrent + "_question (question , groupid , type , note , sujet ) VALUES ( ? , ? , ? , ? , ? );" );
@@ -269,7 +269,16 @@ void MainWindow::addproject2()
 	if( !qry.exec("CREATE TABLE IF NOT EXISTS project_" + this->nametmp->text() + "_project (id INTEGER UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT, firstname VARCHAR(30), lastname VARCHAR(30), email VARCHAR(90), groupid INTEGER, password VARCHAR(256), refbool BOOLEAN DEFAULT 0, questionbool BOOLEAN DEfAULT 0)") )
 		qDebug() << qry.lastError() << "mainwindow.cpp 1";
 	else
-		qDebug() << "Table created!";
+        qDebug() << "Table created!";
+    qry.prepare( ("CREATE TABLE IF NOT EXISTS project_" +  this->nametmp->text() + "_question (id INTEGER UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT, question VARCHAR(30), groupid INTEGER, type VARCHAR(30), note BOOLEAN DEFAULT 1, sujet VARCHAR(300), qgroupid INT DEFAULT 0, typef INT DEFAULT 0, ref_only INT DEFAULT 0)") );
+    if( !qry.exec() )
+        qDebug() << qry.lastError();
+    qry.prepare( "CREATE TABLE IF NOT EXISTS project_" +  this->nametmp->text() + "_groupe (id INTEGER UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT, groupname VARCHAR(500), groupparent INTEGER DEFAULT 0, type BOOLEAN DEFAULT 0)" );
+    if( !qry.exec() )
+        qDebug() << qry.lastError();
+    qry.prepare( "CREATE TABLE IF NOT EXISTS project_" +  this->nametmp->text() + "_reponse (id INTEGER UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT, idperson INTEGER, name VARCHAR(100), time INTEGER,  note INTEGER, date_info datetime, iteration INTEGER);" );
+    if( !qry.exec() )
+        qDebug() << qry.lastError();
 	delete this->current;
 	this->current = new project;
 	this->current->initoroject(this->nametmp->text().toStdString());

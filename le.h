@@ -93,7 +93,7 @@ void sendmail(QString mail, QString body);
 int addgroup(QString nameproject, QString name, int groupparent, int type, project *p);
 void	supgroup(QString nameproject, int id, vector<group> &g);
 void	supquest(QString nameproject, int id);
-int	addquestion(project *p, QString name, int groupid, QString type, int note, QString description, int qgroupid);
+int	addquestion(project *p, QString name, int groupid, QString type, int note, QString description, int qgroupid, int typef);
 //global
 extern bool g_ref;
 #endif // LE_H

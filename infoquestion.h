@@ -8,7 +8,7 @@ class infoquestion : public QWidget
 {
 	Q_OBJECT
 public:
-	infoquestion(project *p, MainWindow *m);
+    infoquestion(project *p, MainWindow *m, grouptree *qgroup);
 
 public slots:
 	void updateib(QTreeWidgetItem *item);

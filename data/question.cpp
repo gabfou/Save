@@ -6,7 +6,7 @@ question::question()
 }
 
 
-question::question(string a, int b, int id, int qgroupid, QString sujet, QString unit)
+question::question(string a, int b, int id, int qgroupid, QString sujet, QString unit, int type)
 {
 	this->name = a;
 	this->group = b;
@@ -14,6 +14,7 @@ question::question(string a, int b, int id, int qgroupid, QString sujet, QString
 	this->qgroupid = qgroupid;
 	this->sujet = sujet;
 	this->unit = unit;
+    this->type = type;
 }
 
 question::question(const question &q)

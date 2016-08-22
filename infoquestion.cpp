@@ -5,7 +5,7 @@
 #include "grouptreeitem.h"
 #include "mainwindow.h"
 
-infoquestion::infoquestion(project *p, MainWindow *m) : p(p)
+infoquestion::infoquestion(project *p, MainWindow *m, grouptree *qgroup) : p(p)
 {
 	QVBoxLayout *vbox = new QVBoxLayout();
 	type = new QComboBox();
@@ -44,11 +44,16 @@ void infoquestion::updateib(QTreeWidgetItem * item)
 	cotmp = connect(b_update, SIGNAL(clicked(bool)), this, SLOT(updatebdd()));
 	if (tmp == NULL)
 	{
-		qDebug() << "infoquestion updateib dynamic cast fail";
+        qDebug() << "infoquestion updateib dynamic cast fail";
+        grouptreeitem *tmp2 = dynamic_cast<grouptreeitem*>(item);
+        if (tmp2)
+            qgroupid = tmp2->getId();
+        else
+            qDebug() << "infoquestion updateib dynamic cast 2 fail";
 		return ;
-	}
-	grouptreeitem *tmp2 = dynamic_cast<grouptreeitem*>(item->parent());
-	qgroupid = tmp2->getId();
+    }
+    grouptreeitem *tmp2 = dynamic_cast<grouptreeitem*>(item->parent());
+    qgroupid = tmp2->getId();
 	if (tmp->id == -1)
 	{
 		init = 0;
@@ -80,7 +85,7 @@ void infoquestion::updatebdd()
 		query.prepare(("UPDATE project_" + p->name + "_question Set question=?, type=?, note=?, sujet=?, typef=?, groupid=?, qgroupid=? WHERE id=?;").c_str());
 	else
 	{
-		query.prepare( ("CREATE TABLE IF NOT EXISTS project_" + p->name + "_question (id INTEGER UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT, question VARCHAR(30), groupid INTEGER, type VARCHAR(30), note BOOLEAN DEFAULT 1, sujet VARCHAR(30), qgroupid INT DEFAULT 0, typef INT DEFAULT 0)").c_str() );
+        query.prepare( ("CREATE TABLE IF NOT EXISTS project_" + p->name + "_question (id INTEGER UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT, question VARCHAR(30), groupid INTEGER, type VARCHAR(30), note BOOLEAN DEFAULT 1, sujet VARCHAR(300), qgroupid INT DEFAULT 0, typef INT DEFAULT 0)").c_str() );
 		if( !query.exec() )
 			qDebug() << query.lastError();
 		query.prepare( ("INSERT INTO project_" + p->name + "_question (question, type, note, sujet, typef, groupid, qgroupid) VALUES ( ? , ? , ? , ? , ? , ?, ?);").c_str() );

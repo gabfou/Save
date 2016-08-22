@@ -83,10 +83,10 @@ question project::getquestion(int id)
 	return(*(ql.begin()));
 }
 
-inline void project::addquestion(string name, int group, int id, int qgroupid, QString sujet, QString unit)
+inline void project::addquestion(string name, int group, int id, int qgroupid, QString sujet, QString unit, int type)
 {
 	this->nbquestion++;
-	question ret(name, group, id, qgroupid, sujet, unit);
+    question ret(name, group, id, qgroupid, sujet, unit, type);
     while (this->listquestion.size() < id)
         this->listquestion.push_back(question());
 	this->listquestion.push_back(ret);
@@ -183,7 +183,7 @@ void project::initoroject(string fproject)
 	}
 	else
 		qDebug() << "error get group :" << query.lastError();
-	if(query.exec(("SELECT question,groupid,id,qgroupid,sujet,type FROM project_" + fproject + "_question").c_str()))
+    if(query.exec(("SELECT question,groupid,id,qgroupid,sujet,type,typef FROM project_" + fproject + "_question").c_str()))
 	{
 		while(query.next())
 		{
@@ -192,7 +192,8 @@ void project::initoroject(string fproject)
 							  query.value(2).toInt(),
 							  query.value(3).toInt(),
 							  query.value(4).toString(),
-							  query.value(5).toString());
+                              query.value(5).toString(),
+                              query.value(6).toInt());
 		}
 	}
 	else
@@ -325,6 +326,7 @@ vector<question> project::questiongroupqchildnotopti(int id)
 	tmp = listqchild.begin();
 	while (tmp != listqchild.end())
 	{
+        qDebug() << listquestion[(*tmp)].name.c_str();
         ret.push_back(listquestion[(*tmp)]);
 		tmp++;
 	}

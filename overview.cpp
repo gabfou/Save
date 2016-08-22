@@ -18,10 +18,12 @@ overview::overview(project *p, int group, int *showmod) : p(p), showmod(showmod)
     barref->setName("Escompté");
     table = new tableshow(p, showmod);
     table->reinit();
-    table->sethorizontalheader(headertable, 2);
     vector<question> listqchild =  p->questiongroupqchildnotopti(0);
     table->setverticalheader(listqchild, 0);
-    table->showtable(0, 0);
+    table->sethorizontalheader(headertable, p->getNbgeneration());
+    //table->showtable(0, 0);
+    table->updateall();
+    table->select(0,0);
     QHBoxLayout *hb = new QHBoxLayout(this);
     QGridLayout *gl = new QGridLayout(this);
     gl->addWidget(barref, 1, 0);

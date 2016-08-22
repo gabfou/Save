@@ -20,7 +20,7 @@ private:
 	int nbgroup = 0;
 	int nbgeneration = 0;
 public:
-	void addquestion(string name, int group, int id, int qgroupid, QString sujet, QString unit);
+    void addquestion(string name, int group, int id, int qgroupid, QString sujet, QString unit, int type);
 	string name;
 	list<person> listp;
 	vector<question> listquestion;

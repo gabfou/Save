@@ -1,8 +1,6 @@
 <?php
 	include("testconect.php");
 	include("function.php");
-	//$bdd = new PDO('mysql:host=mysql-johann.alwaysdata.net;dbname=johann_project;charset=utf8', 'johann', 't4x5akda');
-	//$bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
 	$req_pre = $bdd->prepare('SELECT questionbool, groupid FROM project_'.htmlspecialchars($_SESSION['project']).'_project WHERE id = '.htmlspecialchars($_SESSION['id_client']).";"); // changer user
 	$req_pre->execute();
 	($tab = $req_pre->fetch());
@@ -10,8 +8,8 @@
 		header("Location: error_no_question.php");
 	$groupid = $tab['groupid'];
 ?>
- 
-	 <head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" /> 
+	<head>
 		<link rel="stylesheet" href="style.css" />
 		<title>etude muranoconseil</title>
 </head>
@@ -31,24 +29,26 @@
 		$arrayjson = array();
 		while ($groupid > -1)
 		{
-			$req_pre = $bdd->prepare('SELECT question, note, type, sujet, qgroupid  FROM project_'.htmlspecialchars($_SESSION['project']).'_question WHERE groupid = '.htmlspecialchars($groupid).";"); // changer user	 
+			$req_pre = $bdd->prepare('SELECT question, note, type, sujet, qgroupid, typef, ref_only  FROM project_'.htmlspecialchars($_SESSION['project']).'_question WHERE groupid = '.htmlspecialchars($groupid).";"); // changer user
 			$req_pre->execute();
 			($tabquestion = $req_pre->fetchall());
 			foreach ($tabquestion as $key => $value)
 			{
+				if ($value['ref_only'] != 1)
+				{
 					$echofinal = $echofinal.'<div id = "question'.$value['qgroupid'].'">';
 					$echofinal = $echofinal.'<fieldset class="field"><legend>'.$value['question'].'</legend>';
 					if ($value['typef'] == 0)
 						$echofinal = $echofinal.'<label for "'.$value['question'].'#time"> '.$value['sujet'].' (en '.$value['type'].'): </label><input class = "reponse" type="number" name="'.$value['question'].'#time" /><br>';
 					else if ($value['typef'] == 1)
-						$echofinal = $echofinal.'<label for "'.$value['question'].'#time"> '.$value['sujet'].' (en '.$value['type'].'): </label><input class = "reponse" type="radio" name="'.$value['question'].'#time" value="100" /><br>';
+						$echofinal = $echofinal.'<label for "'.$value['question'].'#time"> '.$value['sujet'].' (en '.$value['type'].'): </label><input class = "reponse" type="checkbox" name="'.$value['question'].'#time" value="1" /><br>';
 					if ($value['note'])
-						$echofinal = $echofinal.'<label for "'.$value['question'].'#note" >interet (sur un bareme de 1 (faible) à 5 (fort)) : </label><select name="'.$value['question'].'#note" /><option value = "1" name="'.$value['question'].'#note">1</option><option value = "2" name="'.$value['question'].'#note">2</option><option value = "3" name="'.$value['question'].'#note">3</option><option value = "4" name="'.$value['question'].'#note">4</option><option value = "5" name="'.$value['question'].'#note">5</option><br><br><br></select>';
+						$echofinal = $echofinal.'<label for "'.$value['question'].'#note" >interet : </label><select name="'.$value['question'].'#note" /><option value = "1" name="'.$value['question'].'#note">faible</option><option value = "3" name="'.$value['question'].'#note">moyen</option><option value = "5" name="'.$value['question'].'#note">fort</option><br><br><br></select>';
 						$echofinal = $echofinal.'</fieldset>';
 					$echofinal = $echofinal.'</div>';
 					$arrayjson[] = $value['qgroupid'];
 					$numberoffield++;
- 
+				}
 			}
 			$req_pre = $bdd->prepare('SELECT groupparent FROM project_'.htmlspecialchars($_SESSION['project']).'_groupe WHERE id = '.$groupid.";"); // changer user	
 			$req_pre->execute();
@@ -73,6 +73,7 @@
 			echo '<li class="etape" id = "pbar'.$value.'"><span>'.$str3['groupname'].'</span></li>';
 		}
 		echo '</ul>';
+		echo '<div id="progressbar"><div id="indicator"></div><div id="progressnum">0%</div></div>';
 		echo '<div class = "formulaire2">';
 		echo '<form action="updatetimesheet.php" method="post">';
 		echo $echofinal;
@@ -87,9 +88,28 @@
 					$js_array = json_encode($arrayjson);
 					echo "var array = ". $js_array . ";\n";
 					?>
+					var maxprogress = 100;   // total à atteindre
+					var actualprogress = 0;  // valeur courante
+					var itv = 0;  // id pour setinterval
+					function prog()
+					{
+						if(actualprogress >= maxprogress) 
+						{
+							clearInterval(itv);   	
+							return;
+						}	
+						var progressnum = document.getElementById("progressnum");
+						var indicator = document.getElementById("indicator");
+						actualprogress += 100 / array.length;	
+						indicator.style.width=actualprogress + "%";
+						progressnum.innerHTML = actualprogress + "%";
+						progressnum.style.marginLeft=actualprogress + "%";
+						if(actualprogress == maxprogress) clearInterval(itv);   
+					}
 					var i = 0;
 					$("[id^=question]").hide();
-					$("[id^=pbar]").css('background-color', '#6BF3FF');
+					//$("[id^=pbar]").css('background-color', '#6BF3FF');
+					$("[id^=pbar]").hide();
 					$("[id=next").hide();
 					$( "#target" ).click(function()
 					{
@@ -105,6 +125,7 @@
 						str2 = str2.concat("]");
 						$(str).show();
 						$(str2).css('background-color', '#449CA3');
+						prog();
 						if (!(array[i]))
 						{
 							$("[id=next]").show();
@@ -125,4 +146,4 @@
 	}
 	?>
 </div>
-	 </body>
+	</body>

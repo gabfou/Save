@@ -9,7 +9,7 @@
 itemtable::itemtable(QString placeholder, project *p, QString form) : placeholder(placeholder), form(form), p(p)
 {
     //this->setText(placeholder);
-	//this->update();
+    //this->update();
 	//conect(this->tableWidget()->verticalHeaderItem(int));
 }
 
@@ -52,9 +52,9 @@ void itemtable::update(group *arg, question *head, QString form) // opti passer 
 	if (q)
 	{
         val = arg->grouprep(*q, 0);
-		this->setBackgroundColor(arg->getColor());
+        //this->setBackgroundColor(arg->getColor()); //remettre les couleur
 	}
-   this->eval(val);
+    this->eval(val);
 }
 
 void itemtable::updateall(group *arg, question *head, QString form) // opti passer question en vector

@@ -116,7 +116,7 @@ QString group::grouprep(question tmp2, int ref) const
 	if (l != 0)
 		return(QString::number(nb / l));
 	else
-		return ("NA");
+        return ("NA");
 }
 
 QString group::grouprepall(question tmp2, vector<group> &g) const // opti qstring neccessaire
