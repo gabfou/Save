@@ -420,7 +420,7 @@ void MainWindow::addperson2()
 		qDebug() << qry.lastError();
 	else
 	{
-		sendmail(this->emailtmp->text(), "Bonjour votre mot de passse tout au long de l'étude sera " + QString(mdp));
+        sendmail(this->emailtmp->text(), "Bonjour votre mot de passse tout au long de l'étude sera " + QString(mdp) + "\r\n");
 		qDebug() << "INSERT success!";
 		this->current->addperson(this->nametmp->text().toStdString(), this->prenametmp->text().toStdString(), this->emailtmp->text().toStdString());
 	}
@@ -457,7 +457,7 @@ MainWindow::~MainWindow()
 void MainWindow::sendprojectauxi(QString str)
 {
 
-	QString body = "Bonjour dans le cadre de notre études veuiller repondre au formulaire à l'adresse suivante : http://www.muranoconseil.com/__DEV__/" + str + "?project__project=";
+    QString body = "Bonjour dans le cadre de notre études veuillez repondre au formulaire à l'adresse suivante : http://www.muranoconseil.com/__DEV__/" + str + "?project__project=";
 	QStringList listmail;
 
 	this->updateproject();
@@ -468,7 +468,7 @@ void MainWindow::sendprojectauxi(QString str)
 	QString bodytmp;
 	for (int i = 0; i < listmail.size(); ++i)
 	{
-		bodytmp = body;// + "person__person=" + listmail.at(i + 1) + "&";
+        bodytmp = body + "\r\n";// + "person__person=" + listmail.at(i + 1) + "&";
 		sendmail(listmail.at(i), bodytmp); // OPTI
 		i++;
 	}

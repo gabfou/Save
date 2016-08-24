@@ -1,10 +1,10 @@
 <?php
 	include("testconect.php");
 	include("function.php");
-	$req_pre = $bdd->prepare('SELECT questionbool, groupid FROM project_'.htmlspecialchars($_SESSION['project']).'_project WHERE id = '.htmlspecialchars($_SESSION['id_client']).";"); // changer user
+	$req_pre = $bdd->prepare('SELECT refbool, groupid FROM project_'.htmlspecialchars($_SESSION['project']).'_project WHERE id = '.htmlspecialchars($_SESSION['id_client']).";"); // changer user
 	$req_pre->execute();
 	($tab = $req_pre->fetch());
-	if ($tab['questionbool'] == 0)
+	if ($tab['refbool'] == 0)
 		header("Location: error_no_question.php");
 	$groupid = $tab['groupid'];
 ?>
@@ -24,8 +24,8 @@
 	{
 			$error = 0;
 			$numberoffield = 0;
-
-
+ 
+ 
 		$arrayjson = array();
 		while ($groupid > -1)
 		{
@@ -34,7 +34,6 @@
 			($tabquestion = $req_pre->fetchall());
 			foreach ($tabquestion as $key => $value)
 			{
-				if ($value['ref_only'] != 1)
 				{
 					$echofinal = $echofinal.'<div id = "question'.$value['qgroupid'].'">';
 					$echofinal = $echofinal.'<fieldset class="field"><legend>'.$value['question'].'</legend>';
@@ -43,7 +42,7 @@
 					else if ($value['typef'] == 1)
 						$echofinal = $echofinal.'<label for "'.$value['question'].'#time"> '.$value['sujet'].': </label><label><input class = "reponse" type="checkbox" name="'.$value['question'].'#time" value="1" />oui</label><label><input class = "reponse" type="checkbox" name="'.$value['question'].'#time" value="0" />non</label><br>';
 					if ($value['note'])
-						$echofinal = $echofinal.'<label for "'.$value['question'].'#note" >interet : </label><select name="'.$value['question'].'#note" /><option value = "1" name="'.$value['question'].'#note">faible</option><option value = "3" name="'.$value['question'].'#note">moyen</option><option value = "5" name="'.$value['question'].'#note">fort</option><br><br><br></select>';
+						$echofinal = $echofinal.'<label for "'.$value['question'].'#note" >Comment evalurez vous l\'interet de cette activité : </label><select name="'.$value['question'].'#note" /><option value = "1" name="'.$value['question'].'#note">faible</option><option value = "3" name="'.$value['question'].'#note">moyen</option><option value = "5" name="'.$value['question'].'#note">fort</option><br><br><br></select>';
 						$echofinal = $echofinal.'</fieldset>';
 					$echofinal = $echofinal.'</div>';
 					$arrayjson[] = $value['qgroupid'];
@@ -61,7 +60,7 @@
 		}
 		$arrayjson = array_unique($arrayjson);
 		$arrayjson = array_values($arrayjson);
-		$echofinal = $echofinal.'<div id = "intro"><p>Bonjour et merci de participer à cette étude</p><p>Veuillez cliquer sur le bouton suivant et repondre aux questions.</p></div>';
+		$echofinal = $echofinal.'<div id = "intro"><p>Bonjour et merci de participer à cette étude</p><p>Veuillez clicker sur le bouton suivant et répondre aux questions selon ce que vous pensez de votre journée moyenne.</p></div>';
 		echo '<ul id="menupbar">';
 		foreach ($arrayjson as $key => $value)
 		{
@@ -75,7 +74,7 @@
 		echo '</ul>';
 		echo '<div id="progressbar"><div id="indicator"></div><div id="progressnum">0%</div></div>';
 		echo '<div class = "formulaire2">';
-		echo '<form action="updatetimesheet.php" method="post">';
+		echo '<form action="updatetimesheet_ref.php" method="post">';
 		echo $echofinal;
 		echo '<p><input type="button" class = "from_input" id = "target" value="Suivant"></p>';
 		echo '<p><input type="submit" class = "from_input" id = "next" value="Envoyer"></p></form>';
@@ -135,8 +134,8 @@
 				})();
 			});
 	</script>
-
-
+ 
+ 
 	<?php
 	}
 	else
