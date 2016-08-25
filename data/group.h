@@ -31,8 +31,7 @@ public:
 	bool visible = true;
 	list<person> getListp();
 	void debug();
-	void show(QTableWidget *gbox, int *i, const vector<group> & listgroup, int k) const;
-	void showgroup(QTableWidget *gbox, int *i, const vector<question> & question, const vector<group> & listgroup, int k) const;
+    void show(QTableWidget *gbox, int *i, const vector<group> & listgroup, int k);
 	void addfils(int id);
 	int getGeneration() const;
 	int getParentid() const;
@@ -40,10 +39,10 @@ public:
 	QColor getColor() const;
 	void setColor(const QColor &value);
 	std::list<int> getListfils() const;
-    QList<QString> grouprep(const vector<question> & questionlist, int ref, QList<int> listqchild) const;
+    QList<QString> grouprep(const vector<question> & questionlist, int ref, QList<int> listqchild);
 
-    t_groupref groupnamerep(const vector<question> & questionlist, int ref, QList<int> listqchild) const;
-	QString grouprep(question tmp2, int ref) const;
+    t_groupref groupnamerep(const vector<question> & questionlist, int ref, QList<int> listqchild);
+    QString grouprep(question tmp2, int ref);
 	int id;
 	string name;
 	int type = -1;
@@ -52,7 +51,8 @@ public:
     std::list<question> getListq() const;
     bool contain(person &p);
     bool contain(question &q);
-    QString grouprepall(question tmp2, vector<group> &g) const;
+    QString grouprepall(question tmp2, vector<group> &g);
+    int init = 0;
 };
 
 #endif // GROUP_H

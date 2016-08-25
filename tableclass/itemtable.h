@@ -20,7 +20,7 @@ private:
 	QString form;
 	project *p;
 	void update2(argtableitem<group> *arg);
-    void eval(QString val);
+    void eval(QString val, question &q);
     void updateall(group *arg, question *head, QString form = "");
 };
 

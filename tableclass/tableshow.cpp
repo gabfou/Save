@@ -8,8 +8,42 @@
 #include "itemtable.h"
 #include "argtableitem.tpp"
 
+void tableshow::preinit()
+{
+    this->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    this->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    this->verticalHeader()->setContextMenuPolicy(Qt::ActionsContextMenu);
+    this->horizontalHeader()->setContextMenuPolicy(Qt::ActionsContextMenu);
+    this->setSortingEnabled(true);
+
+    // Action
+    QAction *tmp = new QAction(QString("Modifier"), this->verticalHeader());
+    this->verticalHeader()->addAction(tmp);
+    connect(tmp, SIGNAL(triggered()), this, SLOT(modifheader()));
+
+    tmp = new QAction(QString("Modifier"), this->horizontalHeader());
+    this->horizontalHeader()->addAction(tmp);
+    connect(tmp, SIGNAL(triggered()), this, SLOT(modifheader()));
+
+    tmp = new QAction(QString("Supprimer"), this->verticalHeader());
+    this->verticalHeader()->addAction(tmp);
+    connect(tmp, SIGNAL(triggered()), this, SLOT(supheader()));
+
+    tmp = new QAction(QString("Supprimer"), this->horizontalHeader());
+    this->horizontalHeader()->addAction(tmp);
+    connect(tmp, SIGNAL(triggered()), this, SLOT(modifheader()));
+
+    connect(this->horizontalHeader(), SIGNAL(sortIndicatorChanged(int,Qt::SortOrder)), this, SLOT(select()));
+/*  this->horizontalHeader()->setContextMenuPolicy(Qt::CustomContextMenu);
+    this->verticalHeader()->setContextMenuPolicy(Qt::CustomContextMenu);
+    this->verticalHeader()->addAction(modifier);
+    connect(this->horizontalHeader(), SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(clicked()));
+    connect(this->verticalHeader(), SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(clicked()));*/
+}
+
 tableshow::tableshow (project *p, int ref, int *showmode) : p(p), showmode(showmode)
 {
+    this->preinit();
     this->setverticalheader(p->listquestion, 0);
     this->setHorizontalHeaderItem(0, new headertableitem("Sous groupe", p->listgroup[ref], "#ALL(%)"));
     this->updateall();
@@ -17,10 +51,12 @@ tableshow::tableshow (project *p, int ref, int *showmode) : p(p), showmode(showm
 
 tableshow::tableshow (project *p, int *showmode) : p(p), showmode(showmode)
 {
+    this->preinit();
 }
 
 tableshow::tableshow(project * p, MainWindow *mainp, int *showmode) : showmode(showmode)
 {
+    this->preinit();
     reinit(p, mainp);
 }
 
@@ -28,7 +64,6 @@ void tableshow::sethorizontalheader(QList<headertableitem*> &list, int nc)
 {
     int i = 0;
     QList<headertableitem*>::iterator tmp;
-
 
     while (i < nc)
          this->setHorizontalHeaderItem(i++, new headertableitem(""));
@@ -87,6 +122,7 @@ void tableshow::setverticalheader(QList<headertableitem*> &listh, int nc)
 
 tableshow::tableshow(QList<headertableitem*> &listv, QList<headertableitem*> &listh)
 {
+    this->preinit();
     reinit(listv, listh);
 }
 
@@ -94,7 +130,6 @@ void tableshow::reinit()
 {
 
     qDebug() << "new tableshow";
-    //this->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
     if (p->listp.empty() || p->listquestion.empty())
     {
         qDebug() << "listp ou lisquestion vide dans reinit";
@@ -113,7 +148,6 @@ void tableshow::reinit(QList<headertableitem*> &listv, QList<headertableitem*> &
     i+= p->getNbgeneration();
 
     qDebug() << "new tableshow";
-    //this->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
     if (p->listp.empty() || p->listquestion.empty())
     {
         qDebug() << "listp ou lisquestion vide dans reinit";
@@ -136,7 +170,6 @@ void tableshow::reinit(project * p, MainWindow *mainp)
     i+= p->getNbgeneration();
 
     qDebug() << "new tableshow";
-    //this->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
     if (p->listp.empty() || p->listquestion.empty())
     {
         qDebug() << "listp ou lisquestion vide dans reinit";
@@ -217,6 +250,7 @@ void	tableshow::sethorizontalheader(MainWindow *mainp)
 
 void	tableshow::setverticalheader(vector<question> &q, int id)
 {
+    (void)q;
     int i = -1;
     QList<int>::const_iterator listpg;
     QList<int> listint;
@@ -313,7 +347,6 @@ void	tableshow::select(int gref, int gqref)
             qDebug() << "dynamic_cast<headertableitem*> fail tableshowselect";
         else
             qDebug() << "dynamic_cast<headertableitem*> id = " << tmp->id;
-        //listint.contains(tmp->id)
         if (tmp && tmp->is_in(this->p->listgroup , this->p->listqgroup, listint, listqint))
             this->showRow(h);
         else

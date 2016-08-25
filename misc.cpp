@@ -37,7 +37,7 @@ t_groupref syntheselistgroup(QList<t_groupref> listg, int nbcolumn)
 		m++;
 		tmp++;
 	}
-	ret.total = 0;
+    ret.total = 0;
 	i = -1;
     while(++i < listg.size() + 1)
 	{

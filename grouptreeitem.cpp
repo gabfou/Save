@@ -3,6 +3,7 @@
 #include "data/question.h"
 #include "data/project.h"
 #include "questiontreeitem.h"
+#include "persontreeitem.h"
 
 grouptreeitem::grouptreeitem()
 {
@@ -37,6 +38,19 @@ grouptreeitem::grouptreeitem(QStringList str, project * p, int id, int type, int
 				listq++;
 			}
 		}
+        else if (type == 0)
+        {
+            list<person>::iterator listp;
+            list<person> listperson = g[id].getListp();
+
+            listp = listperson.begin();
+            while (listp != listperson.end())
+            {
+                qDebug() << "gcf";
+                this->addChild(new persontreeitem(QStringList(QString(listp->name.c_str())), listp->id, (QTreeWidget*)0));
+                listp++;
+            }
+        }
 		else
 			qDebug() << "groupitem group type =" << g[id].type;
 	}

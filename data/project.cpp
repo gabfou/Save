@@ -83,10 +83,10 @@ question project::getquestion(int id)
 	return(*(ql.begin()));
 }
 
-inline void project::addquestion(string name, int group, int id, int qgroupid, QString sujet, QString unit, int type)
+inline void project::addquestion(string name, int group, unsigned int id, int qgroupid, QString sujet, QString unit, int type, QString splitchar)
 {
 	this->nbquestion++;
-    question ret(name, group, id, qgroupid, sujet, unit, type);
+    question ret(name, group, id, qgroupid, sujet, unit, type, splitchar);
     while (this->listquestion.size() < id)
         this->listquestion.push_back(question());
 	this->listquestion.push_back(ret);
@@ -108,7 +108,7 @@ void project::addreponse(int id, string name, int time, int note, string date, i
 	}
 }
 
-inline void project::addgroup(string name, int parentid, int id, int type)
+inline void project::addgroup(string name, int parentid, unsigned int id, int type)
 {
 	if (type == 0)
 	{
@@ -169,6 +169,10 @@ void project::initoroject(string fproject)
 	this->name = fproject;
 	QSqlQuery query;
 
+    this->listgroup.clear();
+    this->listp.clear();
+    this->listqgroup.clear();
+    this->listquestion.clear();
 	this->addgroup("ALL", -1, 0, 0);
 	this->addgroup("ALL", -1, 0, 1);
 	if(query.exec(("SELECT groupname, groupparent, id, type FROM project_" + fproject + "_groupe").c_str()))
@@ -183,7 +187,7 @@ void project::initoroject(string fproject)
 	}
 	else
 		qDebug() << "error get group :" << query.lastError();
-    if(query.exec(("SELECT question,groupid,id,qgroupid,sujet,type,typef FROM project_" + fproject + "_question").c_str()))
+    if(query.exec(("SELECT question,groupid,id,qgroupid,sujet,type,typef,splitchar FROM project_" + fproject + "_question").c_str()))
 	{
 		while(query.next())
 		{
@@ -193,7 +197,8 @@ void project::initoroject(string fproject)
 							  query.value(3).toInt(),
 							  query.value(4).toString(),
                               query.value(5).toString(),
-                              query.value(6).toInt());
+                              query.value(6).toInt(),
+                              query.value(7).toString());
 		}
 	}
 	else
@@ -243,30 +248,21 @@ void project::initoroject(string fproject)
 	}
 }
 
-void	project::projectgroupshow(MainWindow *main, QTableWidget *gbox, int k, int id, int *i)
-{
-	list<int>::iterator listpg;
-	list<int> listint = listgroup[id].getListfils();
-
-	if (main->showmod == 1)
-		this->listgroup[id].show(gbox, i, this->listgroup, k);
-	else
-		this->listgroup[id].showgroup(gbox, i, this->listquestion, this->listgroup, k);
-	listint = this->listgroup[id].getListfils();
-	listpg = listint.begin();
-	while (listpg != listint.end())
-	{
-        //qDebug() << "number : " <<QString::number(*listpg);
-			this->projectgroupshow(main, gbox, k, *listpg, i);
-		listpg++;
-	}
-}
-
-void	project::groupchild(int id, QList<int> & ret) const
+void	project::groupchild(unsigned int id, QList<int> & ret) const
 {
 	list<int>::iterator listpg;
 	list<int> listint;// = listgroup[id].getListfils();
 
+    if (listgroup.empty())
+    {
+         qDebug() << "project->listgroup empty project pqs init?";
+         return ;
+    }
+    if (id >= listgroup.size() || listgroup[id].init == 0)
+    {
+         qDebug() << "group with id =" << id << " doesn't exist but is call in projct::groupchild";
+         return ;
+    }
     ret << id;
 	listint = this->listgroup[id].getListfils();
 	listpg = listint.begin();
@@ -278,13 +274,13 @@ void	project::groupchild(int id, QList<int> & ret) const
 	}
 }
 
-void	project::groupchild(int id, QList<int> & ret, vector<group> &g) const
+void	project::groupchild(unsigned int id, QList<int> & ret, vector<group> &g) const
 {
 	list<int>::iterator listpg;
 	list<int> listint;// = listgroup[id].getListfils();
 
 	ret << id;
-	if (g[id].type = -1)
+    if (g[id].type == -1)
 	{
 		qDebug() << "groupchild bug id =" << id;
 		return ;
@@ -355,46 +351,6 @@ void	project::questiongroupqchild(int id, QList<int> & ret) const
         this->questiongroupqchild(*listpg, ret);
         listpg++;
     }
-}
-
-void	project::projectshow(MainWindow *main, QTableWidget *gbox, int grefid)
-{
-	list<person>::iterator tmp;
-	vector<question>::iterator tmp2;
-	int i = (main->showmod == 1) ? 1 : 0;
-	i+= this->nbgeneration;
-	int k = i;
-
-	//gbox->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
-	if (this->listp.empty() || this->listquestion.empty())
-		return ;
-	gbox->clear();
-	//if (g_ref)
-	   gbox->setRowCount(this->nbperson * 2 + this->nbgroup * 2);
-	//else
-	  //  gbox->setRowCount(this->nbperson);
-	gbox->setColumnCount(this->nbquestion + i /* 2*/);
-	tmp2 = this->listquestion.begin();
-	if (main->showmod == 0)
-	{
-		while (--k > -1)
-			gbox->setHorizontalHeaderItem(k, new QTableWidgetItem("Sous groupe"));
-	}
-	else
-	{
-		gbox->setHorizontalHeaderItem(--k, new QTableWidgetItem("Noms"));
-		while (--k > -1)
-			gbox->setHorizontalHeaderItem(k, new QTableWidgetItem("Sous groupe"));
-	}
-	k = i;
-	while (tmp2 != this->listquestion.end())
-	{
-		gbox->setHorizontalHeaderItem(i++, new QTableWidgetItem(("Moyenne " + tmp2->name + "").c_str()));
-		//gbox->setHorizontalHeaderItem(i++, new QTableWidgetItem(("temps a " + tmp2->name + " reel").c_str()));
-		tmp2++;
-	}
-	i = 0;
-	this->projectgroupshow(main, gbox, k, grefid, &i);
 }
 
 QList<t_groupref> project::getgrouplist(int id, int qid)
@@ -468,7 +424,7 @@ void	project::send()
 }
 
 QString	project::postquestion(QString group) //creation de l url
-{
+{(void)group;
 	vector<question>::iterator tmp;
 	QString ret = "";
 

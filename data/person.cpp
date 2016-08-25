@@ -50,31 +50,38 @@ void person::add_fact(string name, int time, int note, string date, int iteratio
 	else
 	{
 		(this->freflist).push_back(newfact(name, time, note, date));
-	}
+    }
 }
 
-int	person::personshowcase(string qname) const
+int person::personshowcase(question & qname, list<fact> lf) const
 {
-	list<fact>::const_iterator tmp;
-	int j = 0;
-	int l = 0;
+    list<fact>::iterator tmp;
+    int j = 0;
+    int l = 0;
 
-
-	tmp = this->flist.begin();
-	while (tmp != this->flist.end())
-	{
-		j += (*tmp).checkfacttime(qname ,l);
-		tmp++;
-	}
-	if (l != 0)
-		return(j / l);
-	return 0;
+    tmp = lf.begin();
+    while (tmp != lf.end())
+    {
+        if (qname.type == 0 || qname.type == 1)
+            j += (*tmp).checkfacttime(qname.name ,l);
+        tmp++;
+    }
+    if (qname.type == 1)
+        j = j * 100;
+    if (l != 0)
+        return(j / l);
+    return 0;
 }
 
-void	person::personshow(QTableWidget *gbox, int i, int k, group parent, int ref) const
+int	person::personshowcase(question & qname)
+{
+    return (this->personshowcase(qname, this->flist));
+}
+
+void	person::personshow(QTableWidget *gbox, int i, int k, group parent, int ref)
 {
 	list<fact>::iterator tmp;
-	vector<question>::const_iterator tmp2;
+    vector<question>::iterator tmp2;
 	int nb = 0;
 	int k2 = k;
 
@@ -82,7 +89,7 @@ void	person::personshow(QTableWidget *gbox, int i, int k, group parent, int ref)
 	while (tmp2 != this->questionlist->end())
 	{
 		nb = 0;
-		nb = (ref) ? this->personrefshowcase(tmp2->name) : this->personshowcase(tmp2->name);
+        nb = (ref) ? this->personrefshowcase(*tmp2) : this->personshowcase(*tmp2);
 		if (nb != 0)
 		{
 			gbox->setItem(i, k, new QTableWidgetItem(QString::number(nb)));
@@ -104,34 +111,22 @@ void	person::personshow(QTableWidget *gbox, int i, int k, group parent, int ref)
 	}
 }
 
-int	person::personrefshowcase(string qname) const
+int	person::personrefshowcase(question &qname)
 {
-	list<fact>::const_iterator tmp;
-	int j = 0;
-	int l = 0;
-
-	tmp = this->freflist.begin();
-	while (tmp != this->freflist.end())
-	{
-		j += (*tmp).checkfacttime(qname ,l);
-		tmp++;
-	}
-	if (l != 0)
-		return(j / l);
-	return 0;
+    return (this->personshowcase(qname, this->freflist));
 }
 
-void	person::personrefshow(QTableWidget *gbox, int i, int k) const
+void	person::personrefshow(QTableWidget *gbox, int i, int k)
 {
 	list<fact>::iterator tmp;
-	vector<question>::const_iterator tmp2;
+    vector<question>::iterator tmp2;
 	int nb = 0;
 
 	tmp2 = this->questionlist->begin();
 	while (tmp2 != this->questionlist->end())
 	{
 		nb = 0;
-		nb = this->personrefshowcase(tmp2->name);
+        nb = this->personrefshowcase(*tmp2);
 		if (nb != 0)
 			gbox->setItem(i, k, new QTableWidgetItem(QString::number(nb)));
 		k++;
@@ -141,8 +136,8 @@ void	person::personrefshow(QTableWidget *gbox, int i, int k) const
 
 QString	person::personsend(Smtp * smtp, QString post)
 {
-	//smtp->sendMail("etudes@muranoconseil.com", "gabfou95@gmail.com" , "Etude muranoconseil",  body + post);
-	return (this->email.c_str());
+    //smtp->sendMail("etudes@muranoconseil.com", "gabfou95@gmail.com" , "Etude muranoconseil",  body + post);
+    return (this->email.c_str());
 }
 
 void	person::personsend()

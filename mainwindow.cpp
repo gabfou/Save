@@ -4,10 +4,11 @@
 #include "data/project.h"
 #include "grouptree.h"
 //#include "barref.h"
-#include "menuconfigproject.h"
+#include "config/menuconfigproject.h"
 #include "grouptreeitem.h"
 #include "tableclass/tableshow.h"
 #include "overview.h"
+#include "alltree.h"
 
 MainWindow::MainWindow(QWidget *parent) :
 	QMainWindow(parent),
@@ -22,7 +23,7 @@ MainWindow::MainWindow(QWidget *parent) :
 //	this->table = new QTableWidget(this);
 	// default display
 
-	this->resize(800,500);
+    this->resize(1200,800);
 
 	// timer
 
@@ -51,8 +52,8 @@ MainWindow::MainWindow(QWidget *parent) :
 	QObject::connect(new_collaborateur, SIGNAL(triggered()), this, SLOT(addperson()));
     QAction *new_question = menu_nouveaux->addAction("&Ajouter une question");
     QObject::connect(new_question, SIGNAL(triggered()), this, SLOT(addquestion()));
-    QAction *new_groupe = menu_nouveaux->addAction("&Ajouter un groupe");
-    QObject::connect(new_groupe, SIGNAL(triggered()), this, SLOT(addgroupe()));
+//    QAction *new_groupe = menu_nouveaux->addAction("&Ajouter un groupe");
+//    QObject::connect(new_groupe, SIGNAL(triggered()), this, SLOT(addgroupe()));
 
 	//QMenu *menu_selection = menuBar()->addMenu("&selection");
 
@@ -100,49 +101,49 @@ void MainWindow::checksqlconexion()
 
 
 
-void MainWindow::addgroupe()
-{
-	QWidget *win = new QWidget();
-	QLabel *Labeljeu = new QLabel("Name :");
-	this->nametmp = new QLineEdit;
-	Labeljeu->setAlignment(Qt::AlignTop);
-	QLabel *Labelgroup = new QLabel("Groupe :");
-	this->groupboxtmp = new grouptree(this, this->current->listgroup);
-	Labelgroup->setAlignment(Qt::AlignTop);
+//void MainWindow::addgroupe()
+//{
+//	QWidget *win = new QWidget();
+//	QLabel *Labeljeu = new QLabel("Name :");
+//	this->nametmp = new QLineEdit;
+//	Labeljeu->setAlignment(Qt::AlignTop);
+//	QLabel *Labelgroup = new QLabel("Groupe :");
+//	this->groupboxtmp = new grouptree(this, this->current->listgroup);
+//	Labelgroup->setAlignment(Qt::AlignTop);
 
-	//Boutons
-	QPushButton *b_valider = new QPushButton("Valider");
-	QPushButton *b_annuler = new QPushButton("Fermer");
+//	//Boutons
+//	QPushButton *b_valider = new QPushButton("Valider");
+//	QPushButton *b_annuler = new QPushButton("Fermer");
 
-	//Connexions aux slots
-	connect(b_valider, SIGNAL(clicked()), this, SLOT(addgroupe2()));
-	connect(b_annuler, SIGNAL(clicked()), win, SLOT(close()));
+//	//Connexions aux slots
+//	connect(b_valider, SIGNAL(clicked()), this, SLOT(addgroupe2()));
+//	connect(b_annuler, SIGNAL(clicked()), win, SLOT(close()));
 
-	//Layout
-	QGroupBox *groupbox = new QGroupBox("");
+//	//Layout
+//	QGroupBox *groupbox = new QGroupBox("");
 
-	QGridLayout *layoutFormulaire = new QGridLayout();
-	layoutFormulaire->addWidget(Labeljeu, 0, 0);
-	layoutFormulaire->addWidget(this->nametmp, 0, 1);
-	layoutFormulaire->addWidget(Labelgroup, 1, 0);
-	layoutFormulaire->addWidget(this->groupboxtmp, 1, 1);
+//	QGridLayout *layoutFormulaire = new QGridLayout();
+//	layoutFormulaire->addWidget(Labeljeu, 0, 0);
+//	layoutFormulaire->addWidget(this->nametmp, 0, 1);
+//	layoutFormulaire->addWidget(Labelgroup, 1, 0);
+//	layoutFormulaire->addWidget(this->groupboxtmp, 1, 1);
 
-	groupbox->setLayout(layoutFormulaire);
+//	groupbox->setLayout(layoutFormulaire);
 
-	QGridLayout *layout = new QGridLayout();
-	layout->setAlignment(Qt::AlignTop);
-	layout->addWidget(groupbox, 0, 0, 1, 2, Qt::AlignTop);
-	layout->addWidget(b_annuler, 1, 0, Qt::AlignLeft);
-	layout->addWidget(b_valider, 1, 1, Qt::AlignRight);
-	//setLayout(layout);
-	win->setLayout(layout);
-	win->show();
-}
+//	QGridLayout *layout = new QGridLayout();
+//	layout->setAlignment(Qt::AlignTop);
+//	layout->addWidget(groupbox, 0, 0, 1, 2, Qt::AlignTop);
+//	layout->addWidget(b_annuler, 1, 0, Qt::AlignLeft);
+//	layout->addWidget(b_valider, 1, 1, Qt::AlignRight);
+//	//setLayout(layout);
+//	win->setLayout(layout);
+//	win->show();
+//}
 
-void MainWindow::addgroupe2()
-{
-	addgroup(this->namecurrent, this->nametmp->text(),dynamic_cast<grouptreeitem*>(this->groupboxtmp->currentItem())->getId(), 0, current);
-}
+//void MainWindow::addgroupe2()
+//{
+//	addgroup(this->namecurrent, this->nametmp->text(),dynamic_cast<grouptreeitem*>(this->groupboxtmp->currentItem())->getId(), 0, current);
+//}
 
 // ajout de question
 
@@ -207,7 +208,7 @@ void MainWindow::addquestion2()
     qry.prepare( "CREATE TABLE IF NOT EXISTS project_" + this->namecurrent + "_question (id INTEGER UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT, question VARCHAR(30), groupid INTEGER, type VARCHAR(30), note BOOLEAN DEFAULT 1, sujet VARCHAR(300), qgroupid INT DEFAULT 0, typef INT DEFAULT 0)" );
 	if( !qry.exec() )
 		qDebug() << qry.lastError();
-	qry.prepare( "INSERT INTO project_" + this->namecurrent + "_question (question , groupid , type , note , sujet ) VALUES ( ? , ? , ? , ? , ? );" );
+    qry.prepare("INSERT INTO project_" + this->namecurrent + "_question (question , groupid , type , note , sujet ) VALUES ( ? , ? , ? , ? , ? );");
 	qry.addBindValue(this->nametmp->text());
 	qry.addBindValue(QString::number(dynamic_cast<grouptreeitem*>(this->groupboxtmp->currentItem())->getId()));
 	qry.addBindValue(this->prenametmp->text());
@@ -221,7 +222,6 @@ void MainWindow::addquestion2()
 }
 
 //ajout de projet
-
 
 void MainWindow::addproject() // empecher charactere speciaux
 {
@@ -258,8 +258,6 @@ void MainWindow::addproject() // empecher charactere speciaux
 	//setLayout(layout);
 	win->setLayout(layout);
 	win->show();
-
-
 }
 
 void MainWindow::addproject2()
@@ -267,18 +265,18 @@ void MainWindow::addproject2()
 	QSqlQuery qry;
 
 	if( !qry.exec("CREATE TABLE IF NOT EXISTS project_" + this->nametmp->text() + "_project (id INTEGER UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT, firstname VARCHAR(30), lastname VARCHAR(30), email VARCHAR(90), groupid INTEGER, password VARCHAR(256), refbool BOOLEAN DEFAULT 0, questionbool BOOLEAN DEfAULT 0)") )
-		qDebug() << qry.lastError() << "mainwindow.cpp 1";
+        qDebug() << "create project" << qry.lastError();
 	else
         qDebug() << "Table created!";
-    qry.prepare( ("CREATE TABLE IF NOT EXISTS project_" +  this->nametmp->text() + "_question (id INTEGER UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT, question VARCHAR(30), groupid INTEGER, type VARCHAR(30), note BOOLEAN DEFAULT 1, sujet VARCHAR(300), qgroupid INT DEFAULT 0, typef INT DEFAULT 0, ref_only INT DEFAULT 0)") );
-    if( !qry.exec() )
-        qDebug() << qry.lastError();
+    qry.prepare( ("CREATE TABLE IF NOT EXISTS project_" +  this->nametmp->text() + "_question (id INTEGER UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT, question VARCHAR(30), groupid INTEGER, type VARCHAR(30), note BOOLEAN DEFAULT 1, sujet VARCHAR(300), qgroupid INT DEFAULT 0, typef INT DEFAULT 0, ref_only INT DEFAULT 0, splitchar VARCHAR(3000) NOT NULL DEFAULT '')") );
+    if(!qry.exec())
+        qDebug() << "create question" << qry.lastError();
     qry.prepare( "CREATE TABLE IF NOT EXISTS project_" +  this->nametmp->text() + "_groupe (id INTEGER UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT, groupname VARCHAR(500), groupparent INTEGER DEFAULT 0, type BOOLEAN DEFAULT 0)" );
-    if( !qry.exec() )
-        qDebug() << qry.lastError();
-    qry.prepare( "CREATE TABLE IF NOT EXISTS project_" +  this->nametmp->text() + "_reponse (id INTEGER UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT, idperson INTEGER, name VARCHAR(100), time INTEGER,  note INTEGER, date_info datetime, iteration INTEGER);" );
-    if( !qry.exec() )
-        qDebug() << qry.lastError();
+    if(!qry.exec())
+        qDebug() << "create groupe" << qry.lastError();
+    qry.prepare( "CREATE TABLE IF NOT EXISTS project_" +  this->nametmp->text() + "_reponse (id INTEGER UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT, idperson INTEGER, name VARCHAR(100), time INTEGER,  note INTEGER, date_info datetime, iteration INTEGER,  str VARCHAR(100) NOT NULL DEFAULT '');" );
+    if(!qry.exec())
+        qDebug() << "create reponse" << qry.lastError();
 	delete this->current;
 	this->current = new project;
 	this->current->initoroject(this->nametmp->text().toStdString());
@@ -337,11 +335,13 @@ void MainWindow::addock()
 	if (groupdock)
 		delete groupdock;
 	groupdock = new QDockWidget(this);
-	if (showmod == 0)
-		this->groupboxtmp = new grouptree(this, this->current->listgroup);
-	if (showmod == 2)
-		this->groupboxtmp = new grouptree(this, this->current->listqgroup);
-	groupdock->setWidget(this->groupboxtmp);
+    if (showmod == 0)
+        this->groupboxtmp = new grouptree(this, this->current->listgroup); // a virer
+    if (showmod == 2)
+        this->groupboxtmp = new grouptree(this, this->current->listqgroup); // a virer
+//    this->groupboxtmp();
+    this->alltreetmp = new Alltree(this, this->current);
+    groupdock->setWidget(this->alltreetmp);
 	groupdock->show();
 	addDockWidget(Qt::LeftDockWidgetArea, groupdock);
     if (showmod == 0)
@@ -430,7 +430,7 @@ void MainWindow::showproject()
 {
 	if (this->ov == NULL)
 	{
-        this->ov = new overview(this->current, this->currentgref, &(this->showmod)), "overview";
+        this->ov = new overview(this->current, this->currentgref, &(this->showmod));//, "overview";
 		this->cw->addTab(this->ov, "resumé");
 	}
 	else
@@ -498,8 +498,8 @@ void MainWindow::sendproject_ref()
 
 void MainWindow::mailSent(QString status)
 {
-	//if(status == "Message sent")
-	//	QMessageBox::warning( 0, tr( "Qt Simple SMTP client" ), tr( "Message sent!\n\n" ) );
+    if(status == "Message sent")
+        QMessageBox::warning( 0, tr( "Qt Simple SMTP client" ), tr( "Message sent!\n\n" ) );
 }
 
 //recuperation des donnee en ligne
@@ -513,6 +513,8 @@ void MainWindow::updateproject()
     this->table = new tableshow((this->current), this, &(this->showmod));
     this->table->showtable(this->currentgref, this->currentgqref);
 	this->cw->addTab(table, "tableaux");
+    delete this->ov;
+    this->ov = NULL;
 	this->addock();
 }
 
@@ -547,43 +549,11 @@ void	MainWindow::refmodechange(bool checked)
 	this->showproject();
 }
 
-void	MainWindow::changescope()
-{
-	QWidget *win = new QWidget();
-	QLabel *Labelgroup = new QLabel("Groupe :");
-	this->groupboxtmp = new grouptree(this, this->current->listgroup);
-	Labelgroup->setAlignment(Qt::AlignTop);
-
-	//Boutons
-	QPushButton *b_valider = new QPushButton("Valider");
-	QPushButton *b_annuler = new QPushButton("Fermer");
-
-	//Connexions aux slots
-	connect(b_valider, SIGNAL(clicked()), this, SLOT(changescope2()));
-	connect(b_annuler, SIGNAL(clicked()), win, SLOT(close()));
-
-	//Layout
-	QGroupBox *groupbox = new QGroupBox("");
-
-	QGridLayout *layoutFormulaire = new QGridLayout();
-	layoutFormulaire->addWidget(Labelgroup, 1, 0);
-	layoutFormulaire->addWidget(this->groupboxtmp, 1, 1);
-
-	groupbox->setLayout(layoutFormulaire);
-
-	QGridLayout *layout = new QGridLayout();
-	layout->setAlignment(Qt::AlignTop);
-	layout->addWidget(groupbox, 0, 0, 1, 2, Qt::AlignTop);
-	layout->addWidget(b_annuler, 1, 0, Qt::AlignLeft);
-	layout->addWidget(b_valider, 1, 1, Qt::AlignRight);
-	win->setLayout(layout);
-	win->show();
-}
 
 void	MainWindow::changescope2()
 {
-	this->currentgref = dynamic_cast<grouptreeitem*>(this->groupboxtmp->currentItem())->getId();
-	this->showproject();
+    this->currentgref = dynamic_cast<grouptreeitem*>(this->groupboxtmp->currentItem())->getId();
+    this->showproject();
 }
 
 void	MainWindow::changescopeq2()
@@ -598,7 +568,7 @@ void	MainWindow::showbarchartref()
 //	d_chart->show();
 }
 
-void	MainWindow::configproject(){menuconfigproject *m = new menuconfigproject(this->namecurrent, this->current, this);}
+void	MainWindow::configproject(){menuconfigproject *m = new menuconfigproject(this->namecurrent, this->current, this);m->show();}
 
 void	MainWindow::screenshootcurrent()
 {

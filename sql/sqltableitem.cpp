@@ -1,13 +1,13 @@
 #include "sqltableitem.h"
 
 sqltableitem::sqltableitem(QString parparam, QString tablename, QString colname, int id)
-	: tablename(tablename), colname(colname), id(QString::number(id)), QTableWidgetItem(parparam)
+    : QTableWidgetItem(parparam), tablename(tablename), colname(colname), id(QString::number(id))
 {
 
 }
 
 sqltableitem::sqltableitem(int parparam, QString tablename, QString colname, int id)
-	: tablename(tablename), colname(colname), id(QString::number(id)), QTableWidgetItem(QString::number(parparam))
+    : QTableWidgetItem(QString::number(parparam)), tablename(tablename), colname(colname), id(QString::number(id))
 {
 
 }

@@ -17,6 +17,7 @@ void bargraph::updateg(t_groupref g)
 
 void bargraph::paintEvent(QPaintEvent *event)
 {
+    (void)event;
 	QPainter qp(this);
 	this->drawgraph(&qp);
 }

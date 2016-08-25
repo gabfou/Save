@@ -44,7 +44,7 @@ void itemtable::update()
 }
 
 void itemtable::update(group *arg, question *head, QString form) // opti passer question en vector
-{
+{(void)form;
 	// vector<question>::iterator tmp = this->p->listquestion.begin();
 	question *q = &(p->listquestion[head->id]); // opti verifier que ca sert a quelque chose (question deja en argument ?)
 	QString val;
@@ -54,7 +54,7 @@ void itemtable::update(group *arg, question *head, QString form) // opti passer 
         val = arg->grouprep(*q, 0);
         //this->setBackgroundColor(arg->getColor()); //remettre les couleur
 	}
-    this->eval(val);
+    this->eval(val, *head);
 }
 
 void itemtable::updateall(group *arg, question *head, QString form) // opti passer question en vector
@@ -68,10 +68,15 @@ void itemtable::updateall(group *arg, question *head, QString form) // opti pass
     question *q = &(p->listquestion[head->id]);
     val = arg->grouprepall(*q, p->listgroup);
     this->setBackgroundColor(arg->getColor());
-    this->eval(val);
+    this->eval(val, *head);
 }
 
-void itemtable::eval(QString val)
+void itemtable::eval(QString val, question &q)
 {
-	this->setText(val);
+    if (q.type == 0 || q.type == 2)
+        this->setText(val);
+    if (q.type == 1 && val.compare("NA") != 0)
+        this->setText(val + "%");
+    else if (q.type == 1)
+        this->setText(val);
 }

@@ -88,6 +88,7 @@ int fact::showfact(QGridLayout *gbox, int i, int j)
 
 ostream & operator<<(ostream & o, fact const & rhs)
 {
+    (void)rhs;
 	o << "placeholder";
 	return o;
 }

@@ -157,7 +157,7 @@ void Smtp::readyRead()
 
         state = Mail;
     }
-    else if ( state == Mail && responseLine == "235" )
+    else if (state == Mail && responseLine == "235")
     {
         // HELO response was okay (well, it has to be)
 
@@ -167,7 +167,7 @@ void Smtp::readyRead()
         t->flush();
         state = Rcpt;
     }
-    else if ( state == Rcpt && responseLine == "250" )
+    else if (state == Rcpt && responseLine == "250")
     {
         //Apperantly for Google it is mandatory to have MAIL FROM and RCPT email formated the following way -> <email@gmail.com>
         *t << "RCPT TO:<" << rcpt << ">\r\n"; //r
@@ -181,7 +181,7 @@ void Smtp::readyRead()
         t->flush();
         state = Body;
     }
-    else if ( state == Body && responseLine == "354" )
+    else if (state == Body && responseLine == "354")
     {
 
         *t << message << "\r\n.\r\n";
@@ -190,12 +190,11 @@ void Smtp::readyRead()
     }
     else if ( state == Quit && responseLine == "250" )
     {
-
-        *t << "QUIT\r\n";
+       *t << "QUIT\r\n";
         t->flush();
         // here, we just close.
         state = Close;
-        emit status( tr( "Message sent" ) );
+        emit status(tr( "Message sent" ));
     }
     else if ( state == Close )
     {

@@ -6,7 +6,7 @@
 #include "questiontreeitem.h"
 #include "tableclass/tableshow.h"
 
-grouptree::grouptree(MainWindow *m, vector<group> & g, int i) : m(m) , g(g), i(i)
+grouptree::grouptree(MainWindow *m, vector<group> & g, int i) : g(g), m(m), i(i)
 {
 	if (g.empty())
 		this->addTopLevelItem(new QTreeWidgetItem((QTreeWidget*)0, QStringList(QString("Aucun projet ouvert"))));
@@ -82,7 +82,7 @@ void	grouptree::addgroupintree()
 }
 
 void	grouptree::addgroupintree2(QTreeWidgetItem *item, int column)
-{
+{(void)column;
 	disconnect(cotmp);
 	qDebug() << item->text(0);
 	int niark = addgroup(m->namecurrent, item->text(0), tmpid, g[tmpid].type, m->current);

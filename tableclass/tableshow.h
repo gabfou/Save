@@ -36,7 +36,8 @@ private:
     int *showmode;
 	//const T & curentarg;
 	int k;
-	void populate();
+    void populate();
+    void preinit();
 };
 
 #endif // TABLESHOW_H

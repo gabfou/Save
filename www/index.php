@@ -5,7 +5,13 @@
 	$req_pre->execute();
 	($tab = $req_pre->fetch());
 	if ($tab['questionbool'] == 0)
+	{
 		header("Location: error_no_question.php");
+		echo "<html></html>";
+		flush();
+		ob_flush();
+		exit;
+	}
 	$groupid = $tab['groupid'];
 ?>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" /> 
@@ -39,7 +45,7 @@
 					$echofinal = $echofinal.'<div id = "question'.$value['qgroupid'].'">';
 					$echofinal = $echofinal.'<fieldset class="field"><legend>'.$value['question'].'</legend>';
 					if ($value['typef'] == 0)
-						$echofinal = $echofinal.'<label for "'.$value['question'].'#time"> '.$value['sujet'].' (en '.$value['type'].'): </label><input class = "reponse" type="number" name="'.$value['question'].'#time" /><br>';
+						$echofinal = $echofinal.'<label for "'.$value['question'].'#time"> '.$value['sujet'].' (en '.$value['type'].'): </label><input class = "reponse" type="number" name="'.$value['question'].'#time" value="0" /><br>';
 					else if ($value['typef'] == 1)
 						$echofinal = $echofinal.'<label for "'.$value['question'].'#time"> '.$value['sujet'].': </label><label><input class = "reponse" type="checkbox" name="'.$value['question'].'#time" value="1" />oui</label><label><input class = "reponse" type="checkbox" name="'.$value['question'].'#time" value="0" />non</label><br>';
 					if ($value['note'])
@@ -61,7 +67,7 @@
 		}
 		$arrayjson = array_unique($arrayjson);
 		$arrayjson = array_values($arrayjson);
-		$echofinal = $echofinal.'<div id = "intro"><p>Bonjour et merci de participer à cette étude</p><p>Veuillez cliquer sur le bouton suivant et repondre aux questions.</p></div>';
+		$echofinal = $echofinal.'<div id = "intro"><p>Bonjour et merci de participer à cette étude</p><p>Veuillez cliquer sur le bouton suivant et repondre aux questions en fonction de votre journée.</p></div>';
 		echo '<ul id="menupbar">';
 		foreach ($arrayjson as $key => $value)
 		{

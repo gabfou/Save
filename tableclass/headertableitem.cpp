@@ -69,4 +69,5 @@ bool headertableitem::is_in(vector<group> &g, vector<group> &gq, QList<int> list
             return (0);
         }
     }
+    return (false);
 }

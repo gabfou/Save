@@ -32,11 +32,12 @@ void	group::addfils(int id)
 
 group::group(string name, int parentid, int id, vector<group> & listgroup, int type) : type(type)
 {
+    this->init = 1;
 	this->name = name;
 	this->parentid = parentid;
 	this->id = id;
 	this->groupsetcolor(id);
-	if (parentid > -1 && parentid < listgroup.size())
+    if (parentid > -1 && (size_t)parentid < listgroup.size())
 	{
 		listgroup[parentid].addfils(id);
 		this->generation = listgroup[parentid].getGeneration() + 1;
@@ -82,7 +83,7 @@ std::list<int> group::getListfils() const
 }
 
 
-t_groupref group::groupnamerep(const vector<question> &questionlist, int ref, QList<int> listqchild) const
+t_groupref group::groupnamerep(const vector<question> &questionlist, int ref, QList<int> listqchild)
 {
 	t_groupref ret;
 
@@ -92,24 +93,27 @@ t_groupref group::groupnamerep(const vector<question> &questionlist, int ref, QL
 	return ret;
 }
 
-QString group::grouprep(question tmp2, int ref) const
+QString group::grouprep(question tmp2, int ref)
 {
-	list<person>::const_iterator tmp;
+    list<person>::iterator tmp;
 	int nb;
-	int l;
+    int l;
 
-	nb = 0;
-	l = 0;
-	tmp = this->listp.begin();
+    if (tmp2.type == 2)
+        return ("reponse non chiffrer");
+    // int
+    nb = 0;
+    l = 0;
+    tmp = this->listp.begin();
 	while (tmp != this->listp.end())
 	{
 		if (ref == 0)
 		{
-			if ((nb += (*tmp).personshowcase(tmp2.name)) != 0)
+            if ((nb += (*tmp).personshowcase(tmp2)) != 0)
 				l++;
 		}
 		else
-			if ((nb += (*tmp).personrefshowcase(tmp2.name)) != 0)
+            if ((nb += (*tmp).personrefshowcase(tmp2)) != 0)
 				l++;
 		tmp++;
 	}
@@ -119,9 +123,9 @@ QString group::grouprep(question tmp2, int ref) const
         return ("NA");
 }
 
-QString group::grouprepall(question tmp2, vector<group> &g) const // opti qstring neccessaire
+QString group::grouprepall(question tmp2, vector<group> &g) // opti qstring neccessaire
 {
-    list<int>::const_iterator tmp = listfils.begin();
+    list<int>::iterator tmp = listfils.begin();
     int val = 0;
 
     val += grouprep(tmp2, 0).toInt();
@@ -134,9 +138,9 @@ QString group::grouprepall(question tmp2, vector<group> &g) const // opti qstrin
 }
 
 
-QList<QString> group::grouprep(const vector<question> & questionlist, int ref, QList<int> listqchild) const
+QList<QString> group::grouprep(const vector<question> & questionlist, int ref, QList<int> listqchild)
 {
-    QList<int>::const_iterator tmp2;
+    QList<int>::iterator tmp2;
 	QList<QString> ret;
 	//afficher reponse au question
 
@@ -150,82 +154,14 @@ QList<QString> group::grouprep(const vector<question> & questionlist, int ref, Q
 	return ret;
 }
 
-void group::showgroup(QTableWidget *gbox, int *i, const vector<question> & questionlist, const vector<group> & listgroup, int k)  const
-{
-/*	vector<question>::iterator tmp2;
-	group gtmp = *this;
-
-	//afficher les groupe
-
-	if (listp.empty() == true)
-		return ;
-	while (gtmp.getGeneration() > 0)
-	{
-		gbox->setItem(*i, gtmp.getGeneration() - 1, new QTableWidgetItem(gtmp.getName().c_str()));
-		//gbox->item(*i, gtmp.getGeneration() - 1)->setBackgroundColor(Qt::red);
-		if (g_ref)
-			gbox->setItem(*i + 1, gtmp.getGeneration() - 1, new QTableWidgetItem(gtmp.getName().c_str()));
-		gtmp = listgroup[gtmp.getParentid()];
-	}
-	gbox->setVerticalHeaderItem(*i, new QTableWidgetItem(gtmp.getName().c_str()));
-	gbox->verticalHeaderItem(*i)->setBackgroundColor(gtmp.getColor());
-	if (g_ref)
-	{
-		gbox->setVerticalHeaderItem(*i + 1, new QTableWidgetItem((gtmp.getName() + " ref").c_str()));
-		gbox->verticalHeaderItem(*i + 1)->setBackgroundColor(gtmp.getColor());
-	}
-
-	//afficher reponse au question
-
-    QList<QString> listrep = this->grouprep(questionlist, 0);
-	QList<QString>::iterator tmp = listrep.begin();
-	int x = k;
-
-	while (tmp  != listrep.end())
-	{
-		gbox->setItem(*i, x, new QTableWidgetItem(*tmp));
-		gbox->item(*i, (x)++)->setBackgroundColor(gtmp.getColor());
-		tmp++;
-	}
-	x = k;
-	while (x > -1)
-	{
-		if (!(gbox->item(*i, x)))
-			gbox->setItem(*i, x, new QTableWidgetItem(""));
-		gbox->item(*i, (x)--)->setBackgroundColor(gtmp.getColor());
-	}
-	(*i)++;
-	if (g_ref)
-	{
-		QList<QString> listrepref = this->grouprep(questionlist, 1);
-		x = k;
-		tmp = listrepref.begin();
-
-		while (tmp != listrepref.end())
-		{
-			gbox->setItem(*i, x, new QTableWidgetItem(*tmp));
-			gbox->item(*i, (x)++)->setBackgroundColor(gtmp.getColor());
-			tmp++;
-		}
-		x = k;
-		while (x > -1)
-		{
-			if (!(gbox->item(*i, x)))
-				gbox->setItem(*i, x, new QTableWidgetItem(""));
-			gbox->item(*i, (x)--)->setBackgroundColor(gtmp.getColor());
-		}
-		(*i)++;
-    }*/
-}
-
 void group::groupsetcolor(int i)
 {
 	this->color = panelgcolor[i % 5];
 }
 
-void group::show(QTableWidget *gbox, int *i, const vector<group> & listgroup, int k) const
+void group::show(QTableWidget *gbox, int *i, const vector<group> & listgroup, int k)
 {
-	list<person>::const_iterator tmp;
+    list<person>::iterator tmp;
 	group gtmp = *this;
 
 	tmp = this->listp.begin();

@@ -20,6 +20,7 @@
 #include <QSqlerror>
 #include <QString>
 #include <QPushButton>
+#include <QCheckBox>
 #include <QTWidgets/QMessageBox>
 //#include <QtGui/QMessageBox>
 #include <QDialog>
@@ -29,6 +30,7 @@
 #include <cstdlib>
 #include <fstream>
 #include <QComboBox>
+#include <QListWidget>
 //#include <random>
 #include <time.h>
 #include <QTreeWidget>
@@ -93,7 +95,7 @@ void sendmail(QString mail, QString body);
 int addgroup(QString nameproject, QString name, int groupparent, int type, project *p);
 void	supgroup(QString nameproject, int id, vector<group> &g);
 void	supquest(QString nameproject, int id);
-int	addquestion(project *p, QString name, int groupid, QString type, int note, QString description, int qgroupid, int typef);
+int	addquestion(project *p, QString name, int groupid, QString type, int note, QString description, int qgroupid, int typef, bool ref_only, QString splitchar);
 //global
 extern bool g_ref;
 #endif // LE_H

@@ -37,13 +37,13 @@ void	supgroup(QString nameproject, int id, vector<group> & g)
 	}
 }
 
-int	addquestion(project *p, QString name, int groupid, QString type, int note, QString description, int qgroupid, int typef)
+int	addquestion(project *p, QString name, int groupid, QString type, int note, QString description, int qgroupid, int typef, bool ref_only, QString splitchar)
 {
 	QSqlQuery qry;
 
-    qry.prepare( ("CREATE TABLE IF NOT EXISTS project_" + p->name + "_question (id INTEGER UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT, question VARCHAR(30), groupid INTEGER, type VARCHAR(30), note BOOLEAN DEFAULT 1, sujet VARCHAR(300), qgroupid INT DEFAULT 0, typef INT DEFAULT 0)").c_str() );
-    if( !qry.exec() )
-        qDebug() << qry.lastError();
+//    qry.prepare( ("CREATE TABLE IF NOT EXISTS project_" + p->name + "_question (id INTEGER UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT, question VARCHAR(30), groupid INTEGER, type VARCHAR(30), note BOOLEAN DEFAULT 1, sujet VARCHAR(300), qgroupid INT DEFAULT 0, typef INT DEFAULT 0)").c_str() );
+//    if( !qry.exec() )
+//        qDebug() << qry.lastError();
     qry.prepare( ("INSERT INTO project_" + p->name + "_question (question , groupid , type , note , sujet , typef, qgroupid ) VALUES ( ? , ? , ? , ? , ?, ?, ? );").c_str() );
 	qry.addBindValue(name);
 	qry.addBindValue(groupid);
@@ -52,11 +52,13 @@ int	addquestion(project *p, QString name, int groupid, QString type, int note, Q
 	qry.addBindValue(description);
     qry.addBindValue(typef);
     qry.addBindValue(qgroupid);
+    qry.addBindValue(ref_only);
+    qry.addBindValue(splitchar);
 	if( !qry.exec() )
 		qDebug() << qry.lastError();
 	else
 		qDebug() << "question insert success!";
-    p->addquestion(name.toStdString(), groupid, qry.lastInsertId().toInt(), qgroupid, description, type, typef);
+    p->addquestion(name.toStdString(), groupid, qry.lastInsertId().toInt(), qgroupid, description, type, typef, "");
 	return (qry.lastInsertId().toInt());
 }
 

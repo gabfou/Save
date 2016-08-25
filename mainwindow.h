@@ -8,6 +8,7 @@
 //class barref;
 class tableshow;
 class overview;
+class Alltree;
 
 #include "data/project.h"
 
@@ -50,12 +51,11 @@ private slots:
 	void openproject();
 	void openproject2(QListWidgetItem *);
 	void convert_to_xlsx();
-	void addgroupe();
-	void addgroupe2();
+//	void addgroupe();
+//	void addgroupe2();
 	void modechange(bool checked);
 	void sendproject_ref();
 	void refmodechange(bool checked);
-	void changescope();
 	void changescope2();
 	void showbarchartref();
 	void configproject();
@@ -66,7 +66,8 @@ private:
 	QLineEdit *prenametmp;
 	QLineEdit *emailtmp;
 
-	grouptree *groupboxtmp;
+    Alltree *alltreetmp = NULL;
+    grouptree *groupboxtmp;
 //	barref *d_chart;
 	QRadioButton *radiobuttontmp;
 	overview *ov = NULL;

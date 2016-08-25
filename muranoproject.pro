@@ -35,16 +35,19 @@ SOURCES += main.cpp\
     dockgroup.cpp \
     grouptree.cpp \
     grouptreeitem.cpp \
-    infoquestion.cpp \
-    menuconfigproject.cpp \
-    menuconfigquestion.cpp \
     misc.cpp \
     overview.cpp \
     questiontreeitem.cpp \
     smtp.cpp \
     table_common_operation.cpp \
     test.cpp \
-    xlsx_common_operation.cpp
+    xlsx_common_operation.cpp \
+    misc/listedit.cpp \
+    config/infoquestion.cpp \
+    config/menuconfigproject.cpp \
+    config/menuconfigquestion.cpp \
+    alltree.cpp \
+    persontreeitem.cpp
 
 HEADERS  += mainwindow.h \
     data/fact.h \
@@ -63,14 +66,17 @@ HEADERS  += mainwindow.h \
     dockgroup.h \
     grouptree.h \
     grouptreeitem.h \
-    infoquestion.h \
     le.h \
-    menuconfigproject.h \
-    menuconfigquestion.h \
     overview.h \
     questiontreeitem.h \
     smtp.h \
-    test.h
+    test.h \
+    misc/listedit.h \
+    config/infoquestion.h \
+    config/menuconfigproject.h \
+    config/menuconfigquestion.h \
+    alltree.h \
+    persontreeitem.h
 
 FORMS    += mainwindow.ui
 
