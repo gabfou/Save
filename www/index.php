@@ -123,7 +123,7 @@
 						}
 						var progressnum = document.getElementById("progressnum");
 						var indicator = document.getElementById("indicator");
-						actualprogress = (100 / array.length) * nb;
+						actualprogress = ((100 / array.length) * nb).toFixed(0);
 						indicator.style.width=actualprogress + "%";
 						progressnum.innerHTML = actualprogress + "%";
 						progressnum.style.marginLeft=actualprogress + "%";
