@@ -6,6 +6,7 @@
 class project;
 class MainWindow;
 class group;
+class grouptreeitem;
 
 class grouptree : public QTreeWidget
 {
@@ -24,7 +25,8 @@ public:
 	grouptree();
 	~grouptree();
 	MainWindow *m = NULL;
-	grouptree(MainWindow *m, vector<group> &g, int i = 0);
+    grouptree(MainWindow *m, vector<group> &g, int i = 0);
+    void setcurrentgroup(int id, QTreeWidgetItem *dontgiveit = NULL);
 public slots:
 	void supgroupintree();
 	void contextmenuselect();

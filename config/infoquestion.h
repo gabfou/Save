@@ -9,7 +9,7 @@ class infoquestion : public QWidget
 {
 	Q_OBJECT
 public:
-    infoquestion(project *p, MainWindow *m, grouptree *qgroup);
+    infoquestion(project *p, MainWindow *m);
 
 public slots:
 	void updateib(QTreeWidgetItem *item);
@@ -18,6 +18,7 @@ private slots:
     void updatebdd();
     void typeshow(int type);
 private:
+    grouptree *groupbox;
 	QMetaObject::Connection cotmp;
 	QLineEdit *name;
 	grouptree *target;
@@ -31,6 +32,7 @@ private:
     listedit *selectlist;
     QLabel *selectlistlabel;
     QLabel *unitlabel;
+    QLabel *infolabel;
 	int init;
 	int qgroupid;
     QStringList listchar;

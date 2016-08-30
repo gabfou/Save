@@ -23,7 +23,7 @@ grouptreeitem::grouptreeitem(QStringList str, project * p, int id, int type, int
 		this->addChild(new grouptreeitem(QStringList(QString(g[*listpg].getName().c_str())), p, *listpg, type, mod, (QTreeWidget*)0));
 		listpg++;
 	}
-	if (mod == 1)
+    if (mod > 0)
 	{
 		if (type == 1)
 		{

@@ -15,12 +15,13 @@ private:
 	std::list<fact> flist;
 	std::list<fact> freflist;
 	std::vector<question> *questionlist;
-	string lastname;
-	string email;
-    int groupid = 0;
     int personshowcase(question &qname, list<fact> lf) const;
 public:
     string name;
+    string lastname;
+    string firstname;
+    string email;
+    int groupid = 0;
 	int	id;
 	person();
 	virtual ~person();

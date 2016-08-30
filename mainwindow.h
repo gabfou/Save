@@ -30,14 +30,14 @@ public:
 	QString namecurrent;
 	QDockWidget *groupdock = NULL;
 	QTabWidget *cw;
-	project *current;
+    project current;
 	tableshow *table = NULL;
 	int currentgref = 0;
     int currentgqref = 0;
 public slots:
 	void updateproject();
     void screenshootcurrent();
-    void changescopeq2();
+    void changescopeq2(QTreeWidgetItem *item);
 private slots:
 	void showproject();
 	void sendproject();
@@ -56,7 +56,7 @@ private slots:
 	void modechange(bool checked);
 	void sendproject_ref();
 	void refmodechange(bool checked);
-	void changescope2();
+    void changescope2(QTreeWidgetItem *item);
 	void showbarchartref();
 	void configproject();
 private:

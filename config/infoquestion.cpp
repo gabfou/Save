@@ -33,9 +33,10 @@ void infoquestion::typeshow(int type)
     }
 }
 
-infoquestion::infoquestion(project *p, MainWindow *m, grouptree *qgroup) : p(p)
+infoquestion::infoquestion(project *p, MainWindow *m) : p(p)
 {
 	QVBoxLayout *vbox = new QVBoxLayout();
+    QHBoxLayout *hbox = new QHBoxLayout();
 	type = new QComboBox();
 	type->addItem("Nombre");
 	type->addItem("Radio");
@@ -50,10 +51,14 @@ infoquestion::infoquestion(project *p, MainWindow *m, grouptree *qgroup) : p(p)
     selectlist = new listedit();
     selectlistlabel = new QLabel("option");
     unitlabel = new QLabel("Unitée");
+    infolabel = new QLabel("");
+    groupbox = new grouptree(m, p->listgroup, 0);
+    groupbox->headerItem()->setText(0, "Groupe cible");
 
+    vbox->addWidget(infolabel);
 	vbox->addWidget(new QLabel("Type"));
 	vbox->addWidget(type);
-	vbox->addWidget(new QLabel("Name"));
+	vbox->addWidget(new QLabel("Noms"));
 	vbox->addWidget(name);
 	vbox->addWidget(new QLabel("Description"));
 	vbox->addWidget(description);
@@ -65,7 +70,9 @@ infoquestion::infoquestion(project *p, MainWindow *m, grouptree *qgroup) : p(p)
     vbox->addWidget(new QLabel("Valeur"));
     vbox->addWidget(value);
     vbox->addWidget(b_update);
-	this->setLayout(vbox);
+    hbox->addLayout(vbox);
+    hbox->addWidget(groupbox);
+    this->setLayout(hbox);
 
     this->prephide();
 
@@ -79,6 +86,7 @@ void infoquestion::updateib(QTreeWidgetItem * item)
 {
 	questiontreeitem *tmp = dynamic_cast<questiontreeitem*>(item);
 
+    infolabel->setText("");
     this->prephide();
 	disconnect(cotmp);
 	cotmp = connect(b_update, SIGNAL(clicked(bool)), this, SLOT(updatebdd()));
@@ -104,11 +112,11 @@ void infoquestion::updateib(QTreeWidgetItem * item)
 		init = 1;
 		this->q = new question(p->getquestion(tmp->id));
 	}
-
     type->setCurrentIndex(q->type);
 	name->setText(q->name.c_str());
 	description->setText(q->sujet);
 	unit->setText(q->unit);
+    groupbox->setcurrentgroup(q->group);
 //    listchar =
 //	value->setText(q.value);
 }
@@ -136,7 +144,7 @@ void infoquestion::updatebdd()
 	query.addBindValue("0");
 	query.addBindValue(description->text());
 	query.addBindValue(type->currentIndex());
-	query.addBindValue("0");
+    query.addBindValue(dynamic_cast<grouptreeitem*>(groupbox->currentItem())->getId());
 	query.addBindValue(qgroupid);
     query.addBindValue(ref_only->isChecked());
     query.addBindValue(selectlist->getlstr().join(" "));
@@ -146,9 +154,16 @@ void infoquestion::updatebdd()
 	{
 		// fonctione pas
 		//p->addquestion(name->text().toStdString(), 0, query.lastInsertId().toInt(), type->currentIndex(), description->text(), unit->text());
-
 	}
 	if (!(query.exec()))
+    {
 		qDebug() << query.lastError();
+        infolabel->setText("Un problème est survenu");
+    }
+    else
+    {
+        init = 1;
+        infolabel->setText("Modification enregistrée");
+    }
 }
 // question &q

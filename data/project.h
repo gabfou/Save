@@ -59,5 +59,6 @@ public:
     question getquestion(int id);
     void questiongroupqchild(int id, QList<int> &ret) const;
     vector<question> questiongroupqchildnotopti(int id);
+    person getperson(int id);
 };
 

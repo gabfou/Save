@@ -19,7 +19,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	ui->setupUi(this);
 	this->cw = new QTabWidget();
 	this->setCentralWidget(cw);
-	this->current = new project;
+//	this->current = new project;
 //	this->table = new QTableWidget(this);
 	// default display
 
@@ -157,7 +157,7 @@ void MainWindow::addquestion()
 	this->emailtmp = new QLineEdit;
 	Labelsujet->setAlignment(Qt::AlignTop);
 	QLabel *Labelgroup = new QLabel("Groupe :");
-	this->groupboxtmp = new grouptree(this, this->current->listgroup);
+    this->groupboxtmp = new grouptree(this, this->current.listgroup);
 	Labelgroup->setAlignment(Qt::AlignTop);
 	QLabel *Labeltype = new QLabel("Unitée :");
 	this->prenametmp = new QLineEdit;
@@ -277,9 +277,7 @@ void MainWindow::addproject2()
     qry.prepare( "CREATE TABLE IF NOT EXISTS project_" +  this->nametmp->text() + "_reponse (id INTEGER UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT, idperson INTEGER, name VARCHAR(100), time INTEGER,  note INTEGER, date_info datetime, iteration INTEGER,  str VARCHAR(100) NOT NULL DEFAULT '');" );
     if(!qry.exec())
         qDebug() << "create reponse" << qry.lastError();
-	delete this->current;
-	this->current = new project;
-	this->current->initoroject(this->nametmp->text().toStdString());
+    this->current.initoroject(this->nametmp->text().toStdString());
 	//this->current->projectshow(this, this->table, this->currentgref);
 	this->namecurrent = this->nametmp->text();
 }
@@ -319,9 +317,7 @@ void MainWindow::openproject2(QListWidgetItem *item)
 {
 	QSqlQuery qry;
 
-	delete this->current;
-	this->current = new project;
-	this->current->initoroject(item->text().toStdString());
+    this->current.initoroject(item->text().toStdString());
 	this->currentgref = 0;
     this->currentgqref = 0;
 //	this->current->projectshow(this, this->table, this->currentgref);
@@ -335,23 +331,22 @@ void MainWindow::addock()
 	if (groupdock)
 		delete groupdock;
 	groupdock = new QDockWidget(this);
-    if (showmod == 0)
-        this->groupboxtmp = new grouptree(this, this->current->listgroup); // a virer
-    if (showmod == 2)
-        this->groupboxtmp = new grouptree(this, this->current->listqgroup); // a virer
+//    if (showmod == 0)
+//        this->groupboxtmp = new grouptree(this, this->current->listgroup); // a virer
+//    if (showmod == 2)
+//        this->groupboxtmp = new grouptree(this, this->current->listqgroup); // a virer
 //    this->groupboxtmp();
-    this->alltreetmp = new Alltree(this, this->current);
+    this->alltreetmp = new Alltree(this, &(this->current));
     groupdock->setWidget(this->alltreetmp);
 	groupdock->show();
 	addDockWidget(Qt::LeftDockWidgetArea, groupdock);
-    if (showmod == 0)
-        connect(this->groupboxtmp, SIGNAL(itemClicked(QTreeWidgetItem *, int )), this, SLOT(changescope2()));
-    if (showmod == 2)
-        connect(this->groupboxtmp, SIGNAL(itemClicked(QTreeWidgetItem *, int )), this, SLOT(changescopeq2()));
+//    if (showmod == 0)
+//        connect(this->groupboxtmp, SIGNAL(itemClicked(QTreeWidgetItem *, int )), this, SLOT(changescope2()));
+//    if (showmod == 2)
+//        connect(this->groupboxtmp, SIGNAL(itemClicked(QTreeWidgetItem *, int )), this, SLOT(changescopeq2()));
 }
 
 //ajout de collaborateur
-
 
 void MainWindow::addperson()
 {
@@ -366,7 +361,7 @@ void MainWindow::addperson()
 	this->emailtmp = new QLineEdit;
 	Labelemail->setAlignment(Qt::AlignTop);
 	QLabel *Labelgroup = new QLabel("Groupe :");
-	this->groupboxtmp = new grouptree(this, this->current->listgroup);
+    this->groupboxtmp = new grouptree(this, this->current.listgroup);
 	Labelgroup->setAlignment(Qt::AlignTop);
 
 	//Boutons
@@ -422,7 +417,7 @@ void MainWindow::addperson2()
 	{
         sendmail(this->emailtmp->text(), "Bonjour votre mot de passse tout au long de l'étude sera " + QString(mdp) + "\r\n");
 		qDebug() << "INSERT success!";
-		this->current->addperson(this->nametmp->text().toStdString(), this->prenametmp->text().toStdString(), this->emailtmp->text().toStdString());
+        this->current.addperson(this->nametmp->text().toStdString(), this->prenametmp->text().toStdString(), this->emailtmp->text().toStdString());
 	}
 }
 
@@ -430,7 +425,7 @@ void MainWindow::showproject()
 {
 	if (this->ov == NULL)
 	{
-        this->ov = new overview(this->current, this->currentgref, &(this->showmod));//, "overview";
+        this->ov = new overview(&(this->current), this->currentgref, &(this->showmod));//, "overview";
 		this->cw->addTab(this->ov, "resumé");
 	}
 	else
@@ -439,7 +434,7 @@ void MainWindow::showproject()
 	}
 	if (this->table == NULL)
 	{
-        this->table = new tableshow((this->current), this, &(this->showmod));
+        this->table = new tableshow(&(this->current), this, &(this->showmod));
 		this->cw->addTab(this->table, "tableaux");
 	}
     this->table->showtable(this->currentgref, this->currentgqref);
@@ -463,8 +458,8 @@ void MainWindow::sendprojectauxi(QString str)
 	this->updateproject();
 	body.append(this->namecurrent);
 	body.append("&");
-   // body.append(this->current->postquestion("ALL"));
-	listmail = this->current->sendproject(NULL);
+    // body.append(this->current->postquestion("ALL"));
+    listmail = this->current.sendproject(NULL);
 	QString bodytmp;
 	for (int i = 0; i < listmail.size(); ++i)
 	{
@@ -498,19 +493,17 @@ void MainWindow::sendproject_ref()
 
 void MainWindow::mailSent(QString status)
 {
-    if(status == "Message sent")
-        QMessageBox::warning( 0, tr( "Qt Simple SMTP client" ), tr( "Message sent!\n\n" ) );
+//    if(status == "Message sent")
+//        QMessageBox::warning( 0, tr( "Qt Simple SMTP client" ), tr( "Message sent!\n\n" ) );
 }
 
 //recuperation des donnee en ligne
 
 void MainWindow::updateproject()
 {
-	delete this->current;
-	this->current = new project;
-	this->current->initoroject(this->namecurrent.toStdString());
+    this->current.initoroject(this->namecurrent.toStdString());
 	delete this->table;
-    this->table = new tableshow((this->current), this, &(this->showmod));
+    this->table = new tableshow(&(this->current), this, &(this->showmod));
     this->table->showtable(this->currentgref, this->currentgqref);
 	this->cw->addTab(table, "tableaux");
     delete this->ov;
@@ -550,16 +543,26 @@ void	MainWindow::refmodechange(bool checked)
 }
 
 
-void	MainWindow::changescope2()
+void	MainWindow::changescope2(QTreeWidgetItem *item)
 {
-    this->currentgref = dynamic_cast<grouptreeitem*>(this->groupboxtmp->currentItem())->getId();
-    this->showproject();
+    grouptreeitem *tmp;
+
+    if ((tmp = dynamic_cast<grouptreeitem*>(item)) != NULL)
+    {
+        this->currentgref = tmp->getId();
+        this->showproject();
+    }
 }
 
-void	MainWindow::changescopeq2()
+void	MainWindow::changescopeq2(QTreeWidgetItem *item)
 {
-    this->currentgqref = dynamic_cast<grouptreeitem*>(this->groupboxtmp->currentItem())->getId();
-    this->showproject();
+    grouptreeitem *tmp;
+
+    if ((tmp = dynamic_cast<grouptreeitem*>(item)) != NULL)
+    {
+        this->currentgqref = tmp->getId();
+        this->showproject();
+    }
 }
 
 void	MainWindow::showbarchartref()
@@ -568,7 +571,7 @@ void	MainWindow::showbarchartref()
 //	d_chart->show();
 }
 
-void	MainWindow::configproject(){menuconfigproject *m = new menuconfigproject(this->namecurrent, this->current, this);m->show();}
+void	MainWindow::configproject(){menuconfigproject *m = new menuconfigproject(this->namecurrent, &(this->current), this);m->show();}
 
 void	MainWindow::screenshootcurrent()
 {

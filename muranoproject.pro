@@ -47,7 +47,9 @@ SOURCES += main.cpp\
     config/menuconfigproject.cpp \
     config/menuconfigquestion.cpp \
     alltree.cpp \
-    persontreeitem.cpp
+    persontreeitem.cpp \
+    config/menuconfigperson.cpp \
+    config/infoperson.cpp
 
 HEADERS  += mainwindow.h \
     data/fact.h \
@@ -76,7 +78,9 @@ HEADERS  += mainwindow.h \
     config/menuconfigproject.h \
     config/menuconfigquestion.h \
     alltree.h \
-    persontreeitem.h
+    persontreeitem.h \
+    config/menuconfigperson.h \
+    config/infoperson.h
 
 FORMS    += mainwindow.ui
 

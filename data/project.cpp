@@ -71,7 +71,7 @@ inline void project::addperson(string name, string lastname, string email, int i
 
 question project::getquestion(int id)
 {
-	vector<question> ql = this->listquestion;;
+    vector<question> ql = this->listquestion;
 	vector<question>::iterator q = ql.begin();
 
 	while (q != ql.end())
@@ -81,6 +81,20 @@ question project::getquestion(int id)
 		q++;
 	}
 	return(*(ql.begin()));
+}
+
+person project::getperson(int id)
+{
+    list<person> pl = this->listp;
+    list<person>::iterator p = pl.begin();
+
+    while (p != pl.end())
+    {
+        if (p->id == id)
+            return (*p);
+        p++;
+    }
+    return(*(pl.begin()));
 }
 
 inline void project::addquestion(string name, int group, unsigned int id, int qgroupid, QString sujet, QString unit, int type, QString splitchar)

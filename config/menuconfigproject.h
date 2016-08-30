@@ -8,8 +8,11 @@ class MainWindow;
 
 class menuconfigproject : public QTabWidget
 {
+    Q_OBJECT
 public:
-	menuconfigproject(QString name, project *p, MainWindow *m);
+    menuconfigproject(QString name, project *p, MainWindow *m);
+private slots:
+    void showsql();
 private:
 	QTabWidget *tab;
 	void configeneral();

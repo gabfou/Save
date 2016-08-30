@@ -15,7 +15,7 @@ public:
 	string questionform(string personname);
 	string name;
 	QString sujet;
-	string group = "ALL";
+    int group = 0;
     int qgroupid = -1;
     int id = -1;
 	int	note;

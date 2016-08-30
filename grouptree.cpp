@@ -10,7 +10,9 @@ grouptree::grouptree(MainWindow *m, vector<group> & g, int i) : g(g), m(m), i(i)
 {
 	if (g.empty())
 		this->addTopLevelItem(new QTreeWidgetItem((QTreeWidget*)0, QStringList(QString("Aucun projet ouvert"))));
-	this->addTopLevelItem(new grouptreeitem(QStringList(QString(g[0].getName().c_str())), m->current, 0, g[0].type, i, (QTreeWidget*)0));
+    this->addTopLevelItem(new grouptreeitem(QStringList(QString(g[0].getName().c_str())), &(m->current), 0, g[0].type, i, (QTreeWidget*)0));
+
+    this->setCurrentItem(this->topLevelItem(0));
 
 	// action sur clic droit
 	this->setContextMenuPolicy(Qt::ActionsContextMenu);
@@ -23,11 +25,9 @@ grouptree::grouptree(MainWindow *m, vector<group> & g, int i) : g(g), m(m), i(i)
 	this->addAction(supg);
 	connect(supg, SIGNAL(triggered()), this, SLOT(supgroupintree()));
 
-
 	newq = new QAction(QString("Nouvelle question"), this);
 	this->addAction(newq);
 	connect(newq, SIGNAL(triggered()), this, SLOT(addquestintree()));
-
 
 	supq = new QAction(QString("Suprimer question"), this);
 	this->addAction(supq);
@@ -48,19 +48,34 @@ void	grouptree::contextmenuselect()
 	supg->setVisible(false);
 	newq->setVisible(false);
 	supq->setVisible(false);
-	if (tmp)
+    if (tmp)
 	{
 		newg->setVisible(true);
 		supg->setVisible(true);
-		if (g[0].type == 1)
+        if (g[0].type == 1 && i == 1)
 			newq->setVisible(true);
 		return ;
 	}
-	if (tmp2)
+    else if (tmp2 && i == 1)
 	{
 		supq->setVisible(true);
 		return ;
 	}
+}
+
+void grouptree::setcurrentgroup(int id, QTreeWidgetItem *dontgiveit)
+{
+    grouptreeitem *tmp;
+
+    if (dontgiveit == NULL)
+    {
+        dontgiveit = this->topLevelItem(0);
+    }
+    tmp = dynamic_cast<grouptreeitem*>(dontgiveit);
+    if (tmp && tmp->getId() == id)
+        this->setCurrentItem(dontgiveit);
+    for(int i = 0; i < dontgiveit->childCount(); ++i)
+        setcurrentgroup(id, dontgiveit->child(i));
 }
 
 void	grouptree::addgroupintree()
@@ -82,15 +97,16 @@ void	grouptree::addgroupintree()
 }
 
 void	grouptree::addgroupintree2(QTreeWidgetItem *item, int column)
-{(void)column;
+{
+    (void)column;
 	disconnect(cotmp);
 	qDebug() << item->text(0);
-	int niark = addgroup(m->namecurrent, item->text(0), tmpid, g[tmpid].type, m->current);
-	item->parent()->addChild(new grouptreeitem(QStringList(QString(g[niark].getName().c_str())), m->current, niark, g[niark].type, i, (QTreeWidget*)0));
+    int niark = addgroup(m->namecurrent, item->text(0), tmpid, g[tmpid].type, &(m->current));
+    item->parent()->addChild(new grouptreeitem(QStringList(QString(g[niark].getName().c_str())), &(m->current), niark, g[niark].type, i, (QTreeWidget*)0));
 	delete item;
 	item = NULL;
 	qDebug() << "upadte ?";
-	m->table->reinit((m->current), m);
+	m->table->reinit(&(m->current), m);
     m->table->showtable(m->currentgref, m->currentgqref);
 	//m->updateproject();// actualisation necessaire mais detruit cette classe
 	qDebug() << "upadte";
@@ -122,7 +138,7 @@ void	grouptree::addquestintree2(QTreeWidgetItem *item, int column)
 	delete item;
 	item = NULL;
 
-	m->table->reinit((m->current), m);
+	m->table->reinit(&(m->current), m);
     m->table->showtable(m->currentgref, m->currentgqref);
 }
 
@@ -132,7 +148,7 @@ void	grouptree::supgroupintree()
 	QTreeWidgetItem *item = this->currentItem();
 	delete item;
 	item = NULL;
-	m->table->reinit((m->current), m);
+	m->table->reinit(&(m->current), m);
     m->table->showtable( m->currentgref, m->currentgqref);
 }
 
@@ -142,7 +158,7 @@ void	grouptree::supquestintree()
 	QTreeWidgetItem *item = this->currentItem();
 	delete item;
 	item = NULL;
-	m->table->reinit((m->current), m);
+	m->table->reinit(&(m->current), m);
     m->table->showtable(m->currentgref, m->currentgqref);
 }
 

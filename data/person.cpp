@@ -136,6 +136,8 @@ void	person::personrefshow(QTableWidget *gbox, int i, int k)
 
 QString	person::personsend(Smtp * smtp, QString post)
 {
+    (void)smtp;
+    (void)post;
     //smtp->sendMail("etudes@muranoconseil.com", "gabfou95@gmail.com" , "Etude muranoconseil",  body + post);
     return (this->email.c_str());
 }
@@ -190,6 +192,8 @@ person::person(string name, string lastname, string email)
 person::person(string name, string lastname, string email, int id, vector<question> *listquestion, int groupid)
 {
 	this->name = name + " " + lastname;
+    this->firstname = name;
+    this->lastname = lastname;
 	this->id  = id;
 	this->email = email;
 	this->questionlist = listquestion;
@@ -205,6 +209,8 @@ person::person(const person & person)
 	this->groupid = person.getGroupid();
 	this->flist = person.getFlist();
 	this->freflist = person.getFreflist();
+    this->firstname = person.firstname;
+    this->lastname = person.lastname;
 }
 
 
