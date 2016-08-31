@@ -63,11 +63,11 @@ MainWindow::MainWindow(QWidget *parent) :
 //	QAction *barchartref = menu_outil->addAction("&Graphique comparaison reference-donnée");
 //	QObject::connect(barchartref, SIGNAL(triggered()), this, SLOT(showbarchartref()));
 
-    /*QMenu *menu_affifchage = menuBar()->addMenu("&Affichage");
+    QMenu *menu_affifchage = menuBar()->addMenu("&Affichage");
 	QAction *afficherref = menu_affifchage->addAction("&Données de références");
 	afficherref->setCheckable(true);
 	afficherref->setChecked(false);
-    QObject::connect(afficherref, SIGNAL(toggled(bool)), this, SLOT(refmodechange(bool)));*/
+    QObject::connect(afficherref, SIGNAL(toggled(bool)), this, SLOT(refmodechange(bool)));
 	//QAction *scope = menu_affifchage->addAction("&Périmetre"); // A
 	//QObject::connect(scope, SIGNAL(triggered()), this, SLOT(changescope()));
 
@@ -271,7 +271,7 @@ void MainWindow::addproject2()
     qry.prepare( ("CREATE TABLE IF NOT EXISTS project_" +  this->nametmp->text() + "_question (id INTEGER UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT, question VARCHAR(30), groupid INTEGER, type VARCHAR(30), note BOOLEAN DEFAULT 1, sujet VARCHAR(300), qgroupid INT DEFAULT 0, typef INT DEFAULT 0, ref_only INT DEFAULT 0, splitchar VARCHAR(3000) NOT NULL DEFAULT '')") );
     if(!qry.exec())
         qDebug() << "create question" << qry.lastError();
-    qry.prepare( "CREATE TABLE IF NOT EXISTS project_" +  this->nametmp->text() + "_groupe (id INTEGER UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT, groupname VARCHAR(500), groupparent INTEGER DEFAULT 0, type BOOLEAN DEFAULT 0)" );
+    qry.prepare( "CREATE TABLE IF NOT EXISTS project_" +  this->nametmp->text() + "_groupe (id INTEGER UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT, groupname VARCHAR(500), groupparent INTEGER DEFAULT 0, type BOOLEAN DEFAULT 0, description VARCHAR(300) NOT NULL DEFAULT '')" );
     if(!qry.exec())
         qDebug() << "create groupe" << qry.lastError();
     qry.prepare( "CREATE TABLE IF NOT EXISTS project_" +  this->nametmp->text() + "_reponse (id INTEGER UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT, idperson INTEGER, name VARCHAR(100), time INTEGER,  note INTEGER, date_info datetime, iteration INTEGER,  str VARCHAR(100) NOT NULL DEFAULT '');" );
@@ -425,7 +425,7 @@ void MainWindow::showproject()
 {
 	if (this->ov == NULL)
 	{
-        this->ov = new overview(&(this->current), this->currentgref, &(this->showmod));//, "overview";
+        this->ov = new overview(this, &(this->current), this->currentgref, &(this->showmod));//, "overview";
 		this->cw->addTab(this->ov, "resumé");
 	}
 	else
@@ -538,10 +538,10 @@ void	MainWindow::modechange(bool checked)
 
 void	MainWindow::refmodechange(bool checked)
 {
-	g_ref = (checked) ? 1 : 0;
-	this->showproject();
+    ref = (checked) ? 1 : 0;
+    current.ref = ref;
+    this->table->updateall();
 }
-
 
 void	MainWindow::changescope2(QTreeWidgetItem *item)
 {

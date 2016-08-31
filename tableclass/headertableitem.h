@@ -7,15 +7,16 @@
 #include "data/person.h"
 #include "data/question.h"
 
-class headertableitem : public QTableWidgetItem
+class headertableitem : public QObject, public QTableWidgetItem
 {
+    Q_OBJECT
 public:
 	//headertableitem();
 
 	QString getFormule() const;
 	void setFormule(const QString &value);
 
-	headertableitem(QString str, QString form = "", int id = -1);
+    headertableitem(project *p, QString str, QString form = "", int id = -1);
 	QString formule = "";
 	int groupe = 0;
 	int id = -1;
@@ -24,10 +25,13 @@ public:
 	group argg;
 	person argp;
 	question argq;
-	headertableitem(QString str, group arg, QString form = "");
-	headertableitem(QString str, person arg, QString form = "");
-    headertableitem(QString str, question arg, QString form = "");
+    project *p;
+    headertableitem(project *p, QString str, group arg, QString form = "");
+    headertableitem(project *p, QString str, person arg, QString form = "");
+    headertableitem(project *p, QString str, question arg, QString form = "");
     bool is_in(vector<group> &g, vector<group> &gq, QList<int> listint, QList<int> listqint);
+public slots:
+    void changearg(QTreeWidgetItem *item);
 };
 
 #endif // HEADERTABLEITEM_H

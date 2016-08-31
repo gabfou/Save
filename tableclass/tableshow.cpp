@@ -10,28 +10,32 @@
 
 void tableshow::preinit()
 {
+    menuhead = new QMenu(this->horizontalHeader());
     this->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
     this->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
-    this->verticalHeader()->setContextMenuPolicy(Qt::ActionsContextMenu);
-    this->horizontalHeader()->setContextMenuPolicy(Qt::ActionsContextMenu);
+    this->verticalHeader()->setContextMenuPolicy(Qt::CustomContextMenu);
+    this->horizontalHeader()->setContextMenuPolicy(Qt::CustomContextMenu);
     this->setSortingEnabled(true);
+
+    connect(this, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(saveqpoint(QPoint)));
+    connect(this->horizontalHeader(), SIGNAL(activated(QModelIndex)), this, SLOT(saveqpoint()));
 
     // Action
     QAction *tmp = new QAction(QString("Modifier"), this->verticalHeader());
     this->verticalHeader()->addAction(tmp);
-    connect(tmp, SIGNAL(triggered()), this, SLOT(modifheader()));
+    connect(tmp, SIGNAL(triggered()), this, SLOT(modifvheader()));
 
     tmp = new QAction(QString("Modifier"), this->horizontalHeader());
     this->horizontalHeader()->addAction(tmp);
-    connect(tmp, SIGNAL(triggered()), this, SLOT(modifheader()));
+    connect(tmp, SIGNAL(triggered()), this, SLOT(modifhheader()));
 
     tmp = new QAction(QString("Supprimer"), this->verticalHeader());
     this->verticalHeader()->addAction(tmp);
-    connect(tmp, SIGNAL(triggered()), this, SLOT(supheader()));
+    connect(tmp, SIGNAL(triggered()), this, SLOT(supvheader()));
 
     tmp = new QAction(QString("Supprimer"), this->horizontalHeader());
     this->horizontalHeader()->addAction(tmp);
-    connect(tmp, SIGNAL(triggered()), this, SLOT(modifheader()));
+    connect(tmp, SIGNAL(triggered()), this, SLOT(suphheader()));
 
     connect(this->horizontalHeader(), SIGNAL(sortIndicatorChanged(int,Qt::SortOrder)), this, SLOT(select()));
 /*  this->horizontalHeader()->setContextMenuPolicy(Qt::CustomContextMenu);
@@ -41,20 +45,20 @@ void tableshow::preinit()
     connect(this->verticalHeader(), SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(clicked()));*/
 }
 
-tableshow::tableshow (project *p, int ref, int *showmode) : p(p), showmode(showmode)
+tableshow::tableshow (MainWindow *m, project *p, int ref, int *showmode) : p(p), showmode(showmode), m(m)
 {
     this->preinit();
     this->setverticalheader(p->listquestion, 0);
-    this->setHorizontalHeaderItem(0, new headertableitem("Sous groupe", p->listgroup[ref], "#ALL(%)"));
+    this->setHorizontalHeaderItem(0, new headertableitem(p, "Sous groupe", p->listgroup[ref], "#ALL(%)"));
     this->updateall();
 }
 
-tableshow::tableshow (project *p, int *showmode) : p(p), showmode(showmode)
+tableshow::tableshow (MainWindow *m, project *p, int *showmode) : p(p), showmode(showmode), m(m)
 {
     this->preinit();
 }
 
-tableshow::tableshow(project * p, MainWindow *mainp, int *showmode) : showmode(showmode)
+tableshow::tableshow(project *p, MainWindow *mainp, int *showmode) : showmode(showmode), m(mainp)
 {
     this->preinit();
     reinit(p, mainp);
@@ -66,7 +70,7 @@ void tableshow::sethorizontalheader(QList<headertableitem*> &list, int nc)
     QList<headertableitem*>::iterator tmp;
 
     while (i < nc)
-         this->setHorizontalHeaderItem(i++, new headertableitem(""));
+         this->setHorizontalHeaderItem(i++, new headertableitem(p, ""));
     tmp = list.begin();
     while (tmp != list.end())
     {
@@ -120,7 +124,7 @@ void tableshow::setverticalheader(QList<headertableitem*> &listh, int nc)
 //    }
 }
 
-tableshow::tableshow(QList<headertableitem*> &listv, QList<headertableitem*> &listh)
+tableshow::tableshow(MainWindow *m, QList<headertableitem*> &listv, QList<headertableitem*> &listh) : m(m)
 {
     this->preinit();
     reinit(listv, listh);
@@ -208,18 +212,18 @@ void	tableshow::sethorizontalheader(MainWindow *mainp)
         if (mainp->showmod == 0)
         {
             while (--k > -1)
-                this->setHorizontalHeaderItem(k, new headertableitem("Sous groupe"));
+                this->setHorizontalHeaderItem(k, new headertableitem(p, "Sous groupe"));
         }
         else
         {
-            this->setHorizontalHeaderItem(--k, new headertableitem("Noms"));
+            this->setHorizontalHeaderItem(--k, new headertableitem(p, "Noms"));
             while (--k > -1)
-                this->setHorizontalHeaderItem(k, new headertableitem("Sous groupe"));
+                this->setHorizontalHeaderItem(k, new headertableitem(p, "Sous groupe"));
         }
         //k = i;
         while (tmp2 != listqchild.end())
         {
-            this->setHorizontalHeaderItem(i++, new headertableitem(("Moyenne " + tmp2->name + "").c_str(), *tmp2, "%"));
+            this->setHorizontalHeaderItem(i++, new headertableitem(p, ("Moyenne " + tmp2->name + "").c_str(), *tmp2, "%"));
             //this->setHorizontalHeaderItem(i++, new QTableWidgetItem(("temps a " + tmp2->name + " reel").c_str()));
             tmp2++;
         }
@@ -230,18 +234,18 @@ void	tableshow::sethorizontalheader(MainWindow *mainp)
         if (mainp->showmod == 0)
         {
             while (--k > -1)
-                this->setHorizontalHeaderItem(k, new headertableitem("Sous groupe"));
+                this->setHorizontalHeaderItem(k, new headertableitem(p, "Sous groupe"));
         }
         else
         {
-            this->setHorizontalHeaderItem(--k, new headertableitem("Noms"));
+            this->setHorizontalHeaderItem(--k, new headertableitem(p, "Noms"));
             while (--k > -1)
-                this->setHorizontalHeaderItem(k, new headertableitem("Sous groupe"));
+                this->setHorizontalHeaderItem(k, new headertableitem(p, "Sous groupe"));
         }
         //k = i;
         while (tmp != p->listgroup.end())
         {
-            this->setHorizontalHeaderItem(i++, new headertableitem(("Moyenne " + tmp->name + "").c_str(), *tmp, "%"));
+            this->setHorizontalHeaderItem(i++, new headertableitem(p, ("Moyenne " + tmp->name + "").c_str(), *tmp, "%"));
             //this->setHorizontalHeaderItem(i++, new QTableWidgetItem(("temps a " + tmp2->name + " reel").c_str()));
             tmp++;
         }
@@ -279,7 +283,7 @@ void	tableshow::setverticalheader(vector<question> &q, int id)
                 this->setItem(i, gtmp->getGeneration() - 1, new QTableWidgetItem(gtmp->getName().c_str()));
                 gtmp = &(p->listqgroup[gtmp->getParentid()]);
             }
-            this->setVerticalHeaderItem(i, new headertableitem(gtmp->getName().c_str(), *listqtmp));
+            this->setVerticalHeaderItem(i, new headertableitem(p, gtmp->getName().c_str(), *listqtmp));
             this->setItem(i++, i37, new QTableWidgetItem(listqtmp->name.c_str()));
             listqtmp++;
         }
@@ -308,7 +312,7 @@ void	tableshow::setverticalheader(vector<group> &g, int id)
             //gbox->item(*i, gtmp->getGeneration() - 1)->setBackgroundColor(Qt::red);
             gtmp = &(g[gtmp->getParentid()]);
         }
-        this->setVerticalHeaderItem(i++, new headertableitem(gtmp->getName().c_str(), (g[*listpg])));
+        this->setVerticalHeaderItem(i++, new headertableitem(p, gtmp->getName().c_str(), (g[*listpg])));
         listpg++;
         //gbox->verticalHeaderItem(i)->setBackgroundColor(gtmp->getColor());
     }
@@ -410,6 +414,88 @@ void	tableshow::showtable(int id, int qid)
     }*/
 }
 
+void    tableshow::saveqpoint()
+{
+    lastqpoint = QCursor::pos();
+}
+
+void    tableshow::saveqpoint(QPoint qpoint)
+{
+    qDebug() << "dsad";
+    lastqpoint = qpoint;
+    menuhead->popup(qpoint);
+}
+
+void    tableshow::suphheader()
+{
+    this->removeColumn(this->columnAt(lastqpoint.x()));
+}
+
+void    tableshow::supvheader()
+{
+    this->removeRow(this->rowAt(lastqpoint.y()));
+}
+
+void    tableshow::modifhheader()
+{
+    headertableitem *headcast = dynamic_cast<headertableitem*>(this->horizontalHeaderItem(this->columnAt(lastqpoint.x())));
+    QWidget *provisoire = new QWidget();
+    QVBoxLayout *lprovisoire = new QVBoxLayout(provisoire);
+
+    if (headcast)
+    {
+        QTabWidget *tab = new QTabWidget();
+        grouptree *groupboxp = new grouptree(m, p->listgroup, 2);
+        tab->addTab(groupboxp, "Personne");
+        connect(groupboxp, SIGNAL(itemDoubleClicked(QTreeWidgetItem*,int)), headcast, SLOT(changearg(QTreeWidgetItem *)));
+        grouptree *groupboxq = new grouptree(m, p->listqgroup, 2);
+        tab->addTab(groupboxq, "Question");
+        connect(groupboxq, SIGNAL(itemDoubleClicked(QTreeWidgetItem*,int)), headcast, SLOT(changearg(QTreeWidgetItem *)));
+        lprovisoire->addWidget(tab);
+        qDebug() << "tableshow::modifitem head";
+    }
+    else
+    {
+        qDebug() << "tableshow::modifitem fail";
+    }
+    provisoire->setLayout(lprovisoire);
+    provisoire->show();
+}
+
+void    tableshow::modifvheader()
+{
+    headertableitem *headcast = dynamic_cast<headertableitem*>(this->verticalHeaderItem(this->rowAt(lastqpoint.y())));
+    QWidget *provisoire = new QWidget();
+    QVBoxLayout *lprovisoire = new QVBoxLayout(provisoire);
+
+    if (headcast)
+    {
+        QTabWidget *tab = new QTabWidget();
+        grouptree *groupboxp = new grouptree(m, p->listgroup, 2);
+        tab->addTab(groupboxp, "Personne");
+        connect(groupboxp, SIGNAL(itemDoubleClicked(QTreeWidgetItem*,int)), headcast, SLOT(changearg(QTreeWidgetItem *)));
+        grouptree *groupboxq = new grouptree(m, p->listgroup, 2);
+        tab->addTab(groupboxq, "Question");
+        connect(groupboxq, SIGNAL(itemDoubleClicked(QTreeWidgetItem*,int)), headcast, SLOT(changearg(QTreeWidgetItem *)));
+        lprovisoire->addWidget(tab);
+        this->updateall(); // opti
+        qDebug() << "tableshow::modifitem head";
+    }
+    else
+    {
+        qDebug() << "tableshow::modifitem fail";
+    }
+    provisoire->setLayout(lprovisoire);
+    provisoire->show();
+}
+
+//void    tableshow::changearg(QTreeWidgetItem * item)
+//{
+//    headertableitem *headcast = dynamic_cast<headertableitem*>(item);
+
+//    headcast->changearg(item)
+//}
+
 void	tableshow::updateall()
 {
     int h = -1;
@@ -427,5 +513,6 @@ void	tableshow::updateall()
         }
     }
 }
+
 
 

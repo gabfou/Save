@@ -7,7 +7,7 @@ menuconfigquestion::menuconfigquestion(project *p, MainWindow *m) : p(p)
 {
 	QHBoxLayout *hlayout = new QHBoxLayout(this);
 
-	groupbox = new grouptree(m, p->listqgroup, 1);
+    groupbox = new grouptree(m, p->listqgroup, 1);
 	QSizePolicy spgroupbox(QSizePolicy::Preferred, QSizePolicy::Preferred);
 	spgroupbox.setHorizontalStretch(1);
 	groupbox->setSizePolicy(spgroupbox);

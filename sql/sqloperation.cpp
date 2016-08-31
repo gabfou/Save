@@ -3,7 +3,7 @@
 #include "data/project.h"
 
 
-int	addgroup(QString nameproject, QString name, int groupparent, int type, project *p)
+int	addgroup(QString nameproject, QString name, int groupparent, int type, QString description, project *p)
 {
 	QSqlQuery qry;
 
@@ -20,7 +20,7 @@ int	addgroup(QString nameproject, QString name, int groupparent, int type, proje
 		qDebug() << qry.lastError();
 	else
 		qDebug() << "groupe insert success!";
-	p->addgroup(name.toStdString(), groupparent, qry.lastInsertId().toInt(), type);
+    p->addgroup(name.toStdString(), groupparent, qry.lastInsertId().toInt(), type, description);
 	return (qry.lastInsertId().toInt());
 }
 
@@ -73,4 +73,14 @@ void	supquest(QString nameproject, int id)
 	{
 		qDebug() << "question delete success!";
 	}
+}
+
+void    sqlupdate(QString tablename, QString colname, QString str, int id)
+{
+    QSqlQuery query;
+    query.prepare("UPDATE " + tablename + " Set " + colname + "=? WHERE id=?;");
+    query.addBindValue(str);
+    query.addBindValue(id);
+    if (!(query.exec()))
+        qDebug() << query.lastError();
 }

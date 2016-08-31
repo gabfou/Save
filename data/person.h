@@ -26,8 +26,6 @@ public:
 	person();
 	virtual ~person();
 	void add_fact(string line);
-    void personshow(QTableWidget *gbox, int i, int k, group parent, int ref);
-    void personsend();
 	person(string name, vector<question> *question);
 	person(string name, string lastname, string email);
 	person(string name, string lastname, string email, int id, vector<question> *listquestion, int groupid);
@@ -36,7 +34,7 @@ public:
 	int getId() const;
 	void setId(int value);
 	int compare(int id);
-	void add_fact(string name, int time, int note, string date, int iteration);
+    void add_fact(string name, int time, int note, string date, int iteration);
     QString personsend(Smtp *smtp, QString post);
 	int getGroupid() const;
 	person(const person &person);

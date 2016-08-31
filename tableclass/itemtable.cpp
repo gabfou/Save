@@ -51,7 +51,7 @@ void itemtable::update(group *arg, question *head, QString form) // opti passer 
 
 	if (q)
 	{
-        val = arg->grouprep(*q, 0);
+        val = arg->grouprep(*q, p->ref);
         //this->setBackgroundColor(arg->getColor()); //remettre les couleur
 	}
     this->eval(val, *head);

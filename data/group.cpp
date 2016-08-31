@@ -30,12 +30,13 @@ void	group::addfils(int id)
 }
 
 
-group::group(string name, int parentid, int id, vector<group> & listgroup, int type) : type(type)
+group::group(string name, int parentid, int id, vector<group> & listgroup, int type, QString description) : type(type)
 {
     this->init = 1;
 	this->name = name;
 	this->parentid = parentid;
 	this->id = id;
+    this->description = description;
 	this->groupsetcolor(id);
     if (parentid > -1 && (size_t)parentid < listgroup.size())
 	{
@@ -113,8 +114,11 @@ QString group::grouprep(question tmp2, int ref)
 				l++;
 		}
 		else
+        {
             if ((nb += (*tmp).personrefshowcase(tmp2)) != 0)
 				l++;
+            qDebug() << "ref ?";
+        }
 		tmp++;
 	}
 	if (l != 0)
@@ -157,34 +161,6 @@ QList<QString> group::grouprep(const vector<question> & questionlist, int ref, Q
 void group::groupsetcolor(int i)
 {
 	this->color = panelgcolor[i % 5];
-}
-
-void group::show(QTableWidget *gbox, int *i, const vector<group> & listgroup, int k)
-{
-    list<person>::iterator tmp;
-	group gtmp = *this;
-
-	tmp = this->listp.begin();
-	while (tmp != this->listp.end())
-	{
-		while (gtmp.getGeneration() > 0)
-		{
-			gbox->setItem(*i, gtmp.getGeneration() - 1, new QTableWidgetItem(gtmp.getName().c_str()));
-			if (g_ref)
-				gbox->setItem(*i + 1, gtmp.getGeneration() - 1, new QTableWidgetItem(gtmp.getName().c_str()));
-			gtmp = listgroup[gtmp.getParentid()];
-		}
-		gbox->setVerticalHeaderItem(*i, new QTableWidgetItem(gtmp.getName().c_str()));
-		gbox->setItem(*i, k - 1, new QTableWidgetItem((*tmp).getName().c_str()));
-		(*tmp).personshow(gbox, (*i)++, k, gtmp, 0);
-		if (g_ref)
-		{
-			gbox->setVerticalHeaderItem(*i, new QTableWidgetItem(gtmp.getName().c_str()));
-			gbox->setItem(*i, k - 1, new QTableWidgetItem((*tmp).getName().c_str()));
-			(*tmp).personshow(gbox, (*i)++, k, gtmp, 1);
-		}
-		tmp++;
-	}
 }
 
 group::~group()

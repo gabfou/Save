@@ -24,14 +24,13 @@ public:
 	group();
 	virtual ~group();
 
-	group(string name, int parentid, int id, vector<group> &listgroup, int type);
+    group(string name, int parentid, int id, vector<group> &listgroup, int type, QString description);
 	void addperson(person p);
 	string getName() const;
 	void addqfils(int id);
 	bool visible = true;
 	list<person> getListp();
-	void debug();
-    void show(QTableWidget *gbox, int *i, const vector<group> & listgroup, int k);
+    void debug();
 	void addfils(int id);
 	int getGeneration() const;
 	int getParentid() const;
@@ -45,6 +44,7 @@ public:
     QString grouprep(question tmp2, int ref);
 	int id;
 	string name;
+    QString description;
 	int type = -1;
 	std::list<int> getListqfils() const;
 	void addquestion(question q);

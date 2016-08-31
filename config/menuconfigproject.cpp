@@ -16,8 +16,8 @@ menuconfigproject::menuconfigproject(QString name, project *p, MainWindow *m) : 
 		return ;
     this->resize(700, 500);
 	this->configeneral();
-    this->addTab(new menuconfigperson(p, m), "person");
-	this->addTab(new menuconfigquestion(p, m), "question");
+    this->addTab(new menuconfigperson(p, m), "Personne");
+    this->addTab(new menuconfigquestion(p, m), "Question");
 	this->show();
 }
 

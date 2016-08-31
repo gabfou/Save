@@ -10,7 +10,7 @@ grouptreeitem::grouptreeitem()
 
 }
 
-grouptreeitem::grouptreeitem(QStringList str, project * p, int id, int type, int mod, QTreeWidget *parent) : QTreeWidgetItem(parent, str)
+grouptreeitem::grouptreeitem(QStringList str, project * p, int id, int type, int mod, QTreeWidget *parent) : QTreeWidgetItem(parent, str), typeg(type)
 {
 	vector<group> &g = (type == 0) ? p->listgroup : p->listqgroup;
 	list<int>::iterator listpg;
@@ -33,7 +33,6 @@ grouptreeitem::grouptreeitem(QStringList str, project * p, int id, int type, int
 			listq = listquestion.begin();
 			while (listq != listquestion.end())
 			{
-				qDebug() << "gcf";
 				this->addChild(new questiontreeitem(QStringList(QString(listq->name.c_str())), listq->id, (QTreeWidget*)0));
 				listq++;
 			}
@@ -46,7 +45,6 @@ grouptreeitem::grouptreeitem(QStringList str, project * p, int id, int type, int
             listp = listperson.begin();
             while (listp != listperson.end())
             {
-                qDebug() << "gcf";
                 this->addChild(new persontreeitem(QStringList(QString(listp->name.c_str())), listp->id, (QTreeWidget*)0));
                 listp++;
             }

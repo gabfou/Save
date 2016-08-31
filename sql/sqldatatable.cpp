@@ -52,10 +52,5 @@ void sqldatatable::sqlupdateitem(QTableWidgetItem* item)
 		qDebug() << "dinamic cast fail sqlupdateitem";
 		return ;
 	}
-	QSqlQuery query;
-	query.prepare("UPDATE " + tmp->getTablename() + " Set " + tmp->getColname() + "=? WHERE id=?;");
-	query.addBindValue(tmp->text());
-	query.addBindValue(tmp->getId());
-	if (!(query.exec()))
-		qDebug() << query.lastError();
+    sqlupdate(tmp->getTablename(), tmp->getColname(), tmp->text(), tmp->getId().toInt());
 }

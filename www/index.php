@@ -82,19 +82,22 @@
 		$arrayjson = array_unique($arrayjson);
 		$arrayjson = array_values($arrayjson);
 		$echofinal = $echofinal.'<div id = "intro"><p>Bonjour et merci de participer à cette étude</p><p>Veuillez cliquer sur le bouton suivant et repondre aux questions en fonction de votre journée.</p></div>';
+		$introdesc = "";
 		echo '<ul id="menupbar">';
 		foreach ($arrayjson as $key => $value)
 		{
-			$req_pre = $bdd->prepare('SELECT groupname  FROM project_'.htmlspecialchars($_SESSION['project']).'_groupe WHERE id= '.htmlspecialchars($value).";"); // changer user   
+			$req_pre = $bdd->prepare('SELECT groupname, description FROM project_'.htmlspecialchars($_SESSION['project']).'_groupe WHERE id= '.htmlspecialchars($value).";"); // changer user   
 			$req_pre->execute();
 			$str3 = $req_pre->fetch();
 			if ($value == 0)
 				$str3['groupname'] = "General";
 			echo '<li class="etape" id = "pbar'.$value.'"><span>'.$str3['groupname'].'</span></li>';
+			$introdesc = $introdesc.'<p id = gdesc'.$value.'>'.$str3['description'].'</p>';
 		}
 		echo '</ul>';
 		echo '<div id="progressbar"><div id="indicator"></div><div id="progressnum">0%</div></div>';
 		echo '<div class = "formulaire2">';
+		echo $introdesc;
 		echo '<form action="updatetimesheet.php" method="post" id="formulaireid">';
 		echo $echofinal;
 		echo '<input type="button" class = "from_inputleft" id = "go_back" value="Retour">';
@@ -161,6 +164,7 @@
 						$("[id=next]").show();
 						$("[id=target]").hide();
 						$("[id^=resum]").show();
+						$("[id^=gdesc]").hide();
 						$("[id^=question]").show();
 						$("[id^=rep]").hide();
 						question_array.forEach(bilanforeach);
@@ -187,12 +191,17 @@
 						str2 = str2.concat(array[nb]);
 						str = str.concat("]");
 						str2 = str2.concat("]");
+						var str4 = "[id=gdesc";
+						str4 = str4.concat(array[nb]);
+						str4 = str4.concat("]");
+						$(str4).show();						
 						$(str).show();
 						$(str2).css('background-color', '#449CA3');
 						prog(nb);
 					}
 					var i = -1;
 					$("[id^=question]").hide();
+					$("[id^=gdesc]").hide();
 					$("[id^=resum]").hide();
 					//$("[id^=pbar]").css('background-color', '#6BF3FF');
 					$("[id^=pbar]").hide();

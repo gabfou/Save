@@ -19,23 +19,27 @@ class grouptree : public QTreeWidget
 	QAction *supg;
 	QAction *newq;
 	QAction *supq;
+    QPlainTextEdit *texttmp;
+    QAction *modifdg;
 	QMetaObject::Connection cotmp;
 	int i;
 public:
 	grouptree();
 	~grouptree();
-	MainWindow *m = NULL;
+    MainWindow *m = NULL;
     grouptree(MainWindow *m, vector<group> &g, int i = 0);
     void setcurrentgroup(int id, QTreeWidgetItem *dontgiveit = NULL);
 public slots:
 	void supgroupintree();
 	void contextmenuselect();
-	void supquestintree();
+    void supquestintree();
+    void modifdgroupintree();
 private slots:
 	void addgroupintree();
 	void addgroupintree2(QTreeWidgetItem *item, int column);
 	void addquestintree2(QTreeWidgetItem *item, int column);
-	void addquestintree();
+    void addquestintree();
+    void modifdgroupintree2();
 };
 
 #endif // GROUPTREE_H

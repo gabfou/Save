@@ -23,19 +23,32 @@ public:
     void select(int gref, int gqref);
 	void setverticalheader(vector<question> &q, int id);
 	void setverticalheader(vector<group> &g, int id);
-    tableshow(project *p, int ref, int *showmode);
+    tableshow (MainWindow *m, project *p, int ref, int *showmode);
     void reinit(project *p, MainWindow *mainp);
-    tableshow(project *p, int *showmode);
+    tableshow(MainWindow *m, project *p, int *showmode);
     void sethorizontalheader(QList<headertableitem *> &list, int nc = 0);
     void setverticalheader(QList<headertableitem *> &listh, int nc = 0);
     void reinit(QList<headertableitem *> &listv, QList<headertableitem *> &listh);
-    tableshow(QList<headertableitem *> &listv, QList<headertableitem *> &listh);
+    tableshow(MainWindow *m, QList<headertableitem *> &listv, QList<headertableitem *> &listh);
     void reinit();
+
+public slots:
+
+private slots:
+    void saveqpoint(QPoint qpoint);
+    void suphheader();
+    void supvheader();
+    void modifhheader();
+    void modifvheader();
+    void saveqpoint();
 private:
+    QMenu *menuhead;
 	project * p;
     int *showmode;
+    MainWindow *m;
 	//const T & curentarg;
 	int k;
+    QPoint lastqpoint;
     void populate();
     void preinit();
 };

@@ -1,6 +1,8 @@
 #ifndef LE_H
 #define LE_H
 
+#include "QMenu"
+#include <QPlainTextEdit>
 #include <QtSql>
 #include <QDockWidget>
 #include <Qstring>
@@ -92,10 +94,12 @@ void warning(QString error);
 t_groupref syntheselistgroup(QList<t_groupref> listg, int nbcolumn);
 void gen_random(char *s, const int len);
 void sendmail(QString mail, QString body);
-int addgroup(QString nameproject, QString name, int groupparent, int type, project *p);
+int addgroup(QString nameproject, QString name, int groupparent, int type, QString description, project *p);
 void	supgroup(QString nameproject, int id, vector<group> &g);
 void	supquest(QString nameproject, int id);
 int	addquestion(project *p, QString name, int groupid, QString type, int note, QString description, int qgroupid, int typef, bool ref_only, QString splitchar);
+void    sqlupdate(QString tablename, QString colname, QString str, int id);
+
 //global
 extern bool g_ref;
 #endif // LE_H

@@ -25,6 +25,10 @@ grouptree::grouptree(MainWindow *m, vector<group> & g, int i) : g(g), m(m), i(i)
 	this->addAction(supg);
 	connect(supg, SIGNAL(triggered()), this, SLOT(supgroupintree()));
 
+    modifdg = new QAction(QString("Modifier description"), this);
+    this->addAction(modifdg);
+    connect(modifdg, SIGNAL(triggered()), this, SLOT(modifdgroupintree()));
+
 	newq = new QAction(QString("Nouvelle question"), this);
 	this->addAction(newq);
 	connect(newq, SIGNAL(triggered()), this, SLOT(addquestintree()));
@@ -48,10 +52,12 @@ void	grouptree::contextmenuselect()
 	supg->setVisible(false);
 	newq->setVisible(false);
 	supq->setVisible(false);
+    modifdg->setVisible(false);
     if (tmp)
 	{
 		newg->setVisible(true);
 		supg->setVisible(true);
+        modifdg->setVisible(true);
         if (g[0].type == 1 && i == 1)
 			newq->setVisible(true);
 		return ;
@@ -101,7 +107,7 @@ void	grouptree::addgroupintree2(QTreeWidgetItem *item, int column)
     (void)column;
 	disconnect(cotmp);
 	qDebug() << item->text(0);
-    int niark = addgroup(m->namecurrent, item->text(0), tmpid, g[tmpid].type, &(m->current));
+    int niark = addgroup(m->namecurrent, item->text(0), tmpid, g[tmpid].type, "", &(m->current));
     item->parent()->addChild(new grouptreeitem(QStringList(QString(g[niark].getName().c_str())), &(m->current), niark, g[niark].type, i, (QTreeWidget*)0));
 	delete item;
 	item = NULL;
@@ -150,6 +156,35 @@ void	grouptree::supgroupintree()
 	item = NULL;
 	m->table->reinit(&(m->current), m);
     m->table->showtable( m->currentgref, m->currentgqref);
+}
+
+void	grouptree::modifdgroupintree()
+{
+    QWidget *win = new QWidget();
+    QLabel *Labeldescription = new QLabel("Description");
+    this->texttmp = new QPlainTextEdit(g[dynamic_cast<grouptreeitem*>(this->currentItem())->getId()].description, win);
+    Labeldescription->setAlignment(Qt::AlignTop);
+
+    //Boutons
+    QPushButton *b_valider = new QPushButton("Valider");
+
+    //Connexions aux slots
+    connect(b_valider, SIGNAL(clicked()), this, SLOT(modifdgroupintree2()));
+    connect(b_valider, SIGNAL(clicked()), win, SLOT(close()));
+
+    QVBoxLayout *layoutFormulaire = new QVBoxLayout(this);
+    layoutFormulaire->addWidget(Labeldescription);
+    layoutFormulaire->addWidget(this->texttmp);
+    layoutFormulaire->addWidget(b_valider);
+
+    win->setLayout(layoutFormulaire);
+    win->show();
+}
+
+void	grouptree::modifdgroupintree2()
+{
+    sqlupdate(("project_" + m->current.name + "_groupe").c_str(), "description", texttmp->toPlainText(), dynamic_cast<grouptreeitem*>(this->currentItem())->getId());
+    g[dynamic_cast<grouptreeitem*>(this->currentItem())->getId()].description = texttmp->toPlainText();
 }
 
 void	grouptree::supquestintree()

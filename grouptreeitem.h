@@ -11,6 +11,7 @@ public:
 	grouptreeitem();
 	grouptreeitem(QStringList str, project *p, int id, int type = 0, int mod = 0, QTreeWidget *parent = 0);
 	int getId() const;
+    int typeg = 0;
 
 private:
 	int id;

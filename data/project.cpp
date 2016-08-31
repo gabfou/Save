@@ -10,7 +10,7 @@
 
 vector<group> project::getListgroup() const{return listgroup;}
 vector<question> project::getListquestion() const{return listquestion;}
-list<person> project::getListp() const{return listp;}
+vector<person> project::getListp() const{return listp;}
 
 int project::getNbperson() const
 {
@@ -85,8 +85,8 @@ question project::getquestion(int id)
 
 person project::getperson(int id)
 {
-    list<person> pl = this->listp;
-    list<person>::iterator p = pl.begin();
+    vector<person> pl = this->listp;
+    vector<person>::iterator p = pl.begin();
 
     while (p != pl.end())
     {
@@ -108,7 +108,7 @@ inline void project::addquestion(string name, int group, unsigned int id, int qg
 
 void project::addreponse(int id, string name, int time, int note, string date, int iteration)
 {
-	list<person>::iterator tmp;
+    vector<person>::iterator tmp;
 
 	tmp = listp.begin();
 	while (tmp != listp.end())
@@ -122,11 +122,11 @@ void project::addreponse(int id, string name, int time, int note, string date, i
 	}
 }
 
-inline void project::addgroup(string name, int parentid, unsigned int id, int type)
+inline void project::addgroup(string name, int parentid, unsigned int id, int type, QString description)
 {
 	if (type == 0)
 	{
-		group ret(name, parentid, id, (this->listgroup), type);
+        group ret(name, parentid, id, (this->listgroup), type, description);
 		if (ret.getGeneration() > this->nbgeneration)
 			this->nbgeneration = ret.getGeneration();
 		while (this->listgroup.size() < id)
@@ -135,7 +135,7 @@ inline void project::addgroup(string name, int parentid, unsigned int id, int ty
 	}
 	else if (type == 1)
 	{
-		group ret(name, parentid, id, (this->listqgroup), type);
+        group ret(name, parentid, id, (this->listqgroup), type, description);
 		if (ret.getGeneration() > this->nbgeneration) // changer nbgenaration par nbqgeneration
 			this->nbgeneration = ret.getGeneration();
 		while (this->listqgroup.size() < id)
@@ -187,16 +187,17 @@ void project::initoroject(string fproject)
     this->listp.clear();
     this->listqgroup.clear();
     this->listquestion.clear();
-	this->addgroup("ALL", -1, 0, 0);
-	this->addgroup("ALL", -1, 0, 1);
-	if(query.exec(("SELECT groupname, groupparent, id, type FROM project_" + fproject + "_groupe").c_str()))
+    this->addgroup("ALL", -1, 0, 0, "");
+    this->addgroup("ALL", -1, 0, 1, "");
+    if(query.exec(("SELECT groupname, groupparent, id, type, description FROM project_" + fproject + "_groupe").c_str()))
 	{
 		while(query.next())
 		{
 			this->addgroup(query.value(0).toString().toStdString(),
 						   query.value(1).toInt(),
 						   query.value(2).toInt(),
-						   query.value(3).toInt());
+                           query.value(3).toInt(),
+                           query.value(4).toString());
 		}
 	}
 	else
@@ -245,7 +246,7 @@ void project::initoroject(string fproject)
 	}
 	else
 		qDebug() << "error get reponse :" << query.lastError();
-	list<person>::iterator tmp;
+    vector<person>::iterator tmp;
 	tmp = this->listp.begin();
 	while (tmp != this->listp.end())
 	{
@@ -407,34 +408,20 @@ QList<t_groupref> project::getgrouplistref(int id)
 
 QStringList	project::sendproject(Smtp * smtp)
 {
-	list<person>::iterator tmp;
-	QStringList listmail;
-	QString post = (this->name.c_str());
-	post.append("&");
-	post.append(this->postquestion("ALL"));
+    vector<person>::iterator tmp;
+    QStringList listmail;
+    QString post = (this->name.c_str());
+    post.append("&");
+    post.append(this->postquestion("ALL"));
 
-	tmp = this->listp.begin();
-	while (tmp != this->listp.end())
-	{
-		listmail.push_back((*tmp).personsend(smtp, post));
-		listmail.push_back(QString::number((*tmp).id));
-		tmp++;
-	}
-	return (listmail);
-}
-
-// obsolete
-
-void	project::send()
-{
-	list<person>::iterator tmp;
-
-	tmp = this->listp.begin();
-	while (tmp != this->listp.end())
-	{
-		(*tmp).personsend();
-		tmp++;
-	}
+    tmp = this->listp.begin();
+    while (tmp != this->listp.end())
+    {
+        listmail.push_back((*tmp).personsend(smtp, post));
+        listmail.push_back(QString::number((*tmp).id));
+        tmp++;
+    }
+    return (listmail);
 }
 
 QString	project::postquestion(QString group) //creation de l url

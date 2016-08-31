@@ -5,18 +5,18 @@
 #include "tableclass/headertableitem.h"
 
 
-overview::overview(project *p, int group, int *showmod) : p(p), showmod(showmod)
+overview::overview(MainWindow *m, project *p, int group, int *showmod) : p(p), showmod(showmod)
 {
 
     if (*showmod == 2) // provisoire la meme en dessous
         group = 0;
     QList<headertableitem*> headertable;
-    headertable.push_back(new headertableitem(p->listgroup[group].name.c_str(), p->listgroup[group]));
+    headertable.push_back(new headertableitem(p, p->listgroup[group].name.c_str(), p->listgroup[group]));
     bar = new bargraph(syntheselistgroup(p->getgrouplist(group), p->getListquestion().size()), p);
     barref = new bargraph(syntheselistgroup(p->getgrouplistref(group), p->getListquestion().size()), p);
     bar->setName("Reel");
     barref->setName("Escompté");
-    table = new tableshow(p, showmod);
+    table = new tableshow(m, p, showmod);
     table->reinit();
     vector<question> listqchild =  p->questiongroupqchildnotopti(0);
     table->setverticalheader(listqchild, 0);

@@ -31,6 +31,7 @@ public:
 	QDockWidget *groupdock = NULL;
 	QTabWidget *cw;
     project current;
+    int ref = 0;
 	tableshow *table = NULL;
 	int currentgref = 0;
     int currentgqref = 0;
