@@ -2,17 +2,13 @@
 include "function.php";
 session_set_cookie_params(3600);
 session_start();
-// try
-// {
-//     $bdd = new PDO('mysql:host=mysql-johann.alwaysdata.net;dbname=johann_project;charset=utf8', 'johann', 't4x5akda');
-// }
-// catch (PDOException $e) {
-// 	echo 'Error : '.$e->getMessage();
-// 	die();
-// }
 if (isset($_SESSION['id_client']))
 {
-	header("Location: crossroad.php?project__project=".htmlspecialchars($_GET[project__project]));
+	header("Location: index.php");
+	echo "<html></html>";
+	flush();
+	ob_flush();
+	die();
 }
 else
 {
@@ -28,7 +24,7 @@ else
 		//include ("sql_connect.php");
 		try
 		{
-		$req_pre = $bdd->prepare('SELECT id, email FROM project_'.htmlspecialchars($_GET[project__project]).'_project WHERE password ="'.htmlspecialchars($hash).'";'); // changer user
+		$req_pre = $bdd->prepare('SELECT idperson, email, name_table FROM project_all_user WHERE password ="'.htmlspecialchars($hash).'";'); // changer user
 		if ($req_pre === false)
 			echo "mysql probleme"; // a virer
 		// $req_pre->bindValue(1, htmlspecialchars($login), PDO::PARAM_STR);
@@ -41,15 +37,20 @@ else
 		die();
 		}
 		foreach ($tab as $key => $value) {
-			 $_SESSION['id_client'] = $value['id'];
+			 $_SESSION['id_client'] = $value['idperson'];
 			 $_SESSION['email'] = $value['email'];
-			 $_SESSION['project'] = htmlspecialchars($_GET[project__project]);
+			 $_SESSION['project'] = $value['name_table'];
 		}
 		if (!$_SESSION['id_client'])
 			$tag = "refused";
 		else
-			header("Location: crossroad.php?project__project=".htmlspecialchars($_GET[project__project]));
- 
+		{
+			header("Location: index.php");
+			echo "<html></html>";
+			flush();
+			ob_flush();
+			die();
+		}
 	}
 	?>
 	<!doctype html>
@@ -75,7 +76,7 @@ else
 				?>
 				<h2 class = "text_form">Connexion</h2>
 				<?php
-				 echo '<form class = "formulaire" action="login.php?project__project='.htmlspecialchars($_GET[project__project]).'" method="post">'
+				 echo '<form class = "formulaire" action="login.php" method="post">'
 				?>
 					<input class = "field2" name = "login" type = "text" placeholder = "e-mail">
 					<input class = "field2" name = "password" type = "password" placeholder = "mot de passe">

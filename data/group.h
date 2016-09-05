@@ -53,6 +53,8 @@ public:
     bool contain(question &q);
     QString grouprepall(question tmp2, vector<group> &g);
     int init = 0;
+    void supquestion(int id);
+    void supperson(int id);
 };
 
 #endif // GROUP_H

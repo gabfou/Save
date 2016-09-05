@@ -55,17 +55,19 @@ project::project(string fproject)
 	this->initoroject(fproject);
 }
 
-void project::addperson(string name, string lastname, string email)
+void project::addperson(QString name, QString lastname, QString email)
 {
 	this->nbperson++;
 	person ret(name, lastname, email);
 	this->listp.push_back(ret);
 }
 
-inline void project::addperson(string name, string lastname, string email, int id, vector<question> *listquestion, int groupid)
+inline void project::addperson(QString name, QString lastname, QString email, int id, vector<question> *listquestion, int groupid)
 {
 	this->nbperson++;
 	person ret(name, lastname, email, id, listquestion, groupid);
+    while (this->listp.size() < id)
+        this->listp.push_back(person());
 	this->listp.push_back(ret);
 }
 
@@ -97,7 +99,7 @@ person project::getperson(int id)
     return(*(pl.begin()));
 }
 
-inline void project::addquestion(string name, int group, unsigned int id, int qgroupid, QString sujet, QString unit, int type, QString splitchar)
+inline void project::addquestion(QString name, int group, unsigned int id, int qgroupid, QString sujet, QString unit, int type, QString splitchar)
 {
 	this->nbquestion++;
     question ret(name, group, id, qgroupid, sujet, unit, type, splitchar);
@@ -162,7 +164,7 @@ inline question newquestion(string line)
 	return(ret);
 }
 
-int listcompare(list<person> listp, string line)
+int listcompare(list<person> listp, QString line)
 {
 	list<person>::iterator tmp;
 
@@ -206,7 +208,7 @@ void project::initoroject(string fproject)
 	{
 		while(query.next())
 		{
-			this->addquestion(query.value(0).toString().toStdString(),
+            this->addquestion(query.value(0).toString(),
 							  query.value(1).toInt(),
 							  query.value(2).toInt(),
 							  query.value(3).toInt(),
@@ -222,9 +224,9 @@ void project::initoroject(string fproject)
 	{
 		while(query.next())
 		{
-			this->addperson(query.value(1).toString().toStdString(),
-							query.value(2).toString().toStdString(),
-							query.value(3).toString().toStdString(),
+            this->addperson(query.value(1).toString(),
+                            query.value(2).toString(),
+                            query.value(3).toString(),
 							query.value(0).toInt(),
 							&listquestion,
 							query.value(4).toInt());
@@ -250,7 +252,8 @@ void project::initoroject(string fproject)
 	tmp = this->listp.begin();
 	while (tmp != this->listp.end())
 	{
-		this->listgroup[tmp->getGroupid()].addperson(*tmp);
+        if (tmp->groupid != -1)
+            this->listgroup[tmp->getGroupid()].addperson(*tmp);
 		tmp++;
 	}
 	vector<question>::iterator tmp2;
@@ -337,7 +340,7 @@ vector<question> project::questiongroupqchildnotopti(int id)
 	tmp = listqchild.begin();
 	while (tmp != listqchild.end())
 	{
-        qDebug() << listquestion[(*tmp)].name.c_str();
+        qDebug() << listquestion[(*tmp)].name;
         ret.push_back(listquestion[(*tmp)]);
 		tmp++;
 	}
@@ -432,7 +435,7 @@ QString	project::postquestion(QString group) //creation de l url
 	tmp = this->listquestion.begin();
 	while (tmp != this->listquestion.end())
 	{
-		ret.append(((*tmp).name + "=0&").c_str());
+        ret.append(((*tmp).name + "=0&"));
 		tmp++;
 	}
 	return ret;

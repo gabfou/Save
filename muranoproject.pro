@@ -27,8 +27,6 @@ SOURCES += main.cpp\
     sql/sqldatatable.cpp \
     sql/sqloperation.cpp \
     sql/sqltableitem.cpp \
-    tableclass/argtableitem.tpp \
-    tableclass/headeredit.cpp \
     tableclass/headertableitem.cpp \
     tableclass/itemtable.cpp \
     tableclass/tableshow.cpp \
@@ -60,7 +58,6 @@ HEADERS  += mainwindow.h \
     graph/bargraph.h \
     sql/sqldatatable.h \
     sql/sqltableitem.h \
-    tableclass/headeredit.h \
     tableclass/headertableitem.h \
     tableclass/itemtable.h \
     tableclass/tableshow.h \

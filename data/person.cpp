@@ -7,9 +7,9 @@
 int person::getId() const{return id;}
 void person::setId(int value){id = value;}
 int person::getGroupid() const{return groupid;}
-string person::getEmail() const{return email;}
-string person::getLastname() const{return lastname;}
-string person::getName() const{return name;}
+QString person::getEmail() const{return email;}
+QString person::getLastname() const{return lastname;}
+QString person::getName() const{return name;}
 std::vector<question> *person::getQuestionlist() const{return questionlist;}
 std::list<fact> person::getFlist() const{return flist;}
 
@@ -48,52 +48,52 @@ void person::add_fact(string name, int time, int note, string date, int iteratio
 	if (iteration)
 		(this->flist).push_back(newfact(name, time, note, date));
 	else
-    {
+	{
 		(this->freflist).push_back(newfact(name, time, note, date));
-    }
+	}
 }
 
 int person::personshowcase(question & qname, list<fact> lf) const
 {
-    list<fact>::iterator tmp;
-    int j = 0;
-    int l = 0;
+	list<fact>::iterator tmp;
+	int j = 0;
+	int l = 0;
 
-    tmp = lf.begin();
-    while (tmp != lf.end())
-    {
-        if (qname.type == 0 || qname.type == 1)
-            j += (*tmp).checkfacttime(qname.name ,l);
-        tmp++;
-    }
-    if (qname.type == 1)
-        j = j * 100;
-    if (l != 0)
-        return(j / l);
-    return 0;
+	tmp = lf.begin();
+	while (tmp != lf.end())
+	{
+		if (qname.type == 0 || qname.type == 1)
+			j += (*tmp).checkfacttime(qname.name ,l);
+		tmp++;
+	}
+	if (qname.type == 1)
+		j = j * 100;
+	if (l != 0)
+		return(j / l);
+	return 0;
 }
 
 int	person::personshowcase(question & qname)
 {
-    return (this->personshowcase(qname, this->flist));
+	return (this->personshowcase(qname, this->flist));
 }
 
 int	person::personrefshowcase(question &qname)
 {
-    return (this->personshowcase(qname, this->freflist));
+	return (this->personshowcase(qname, this->freflist));
 }
 
 void	person::personrefshow(QTableWidget *gbox, int i, int k)
 {
 	list<fact>::iterator tmp;
-    vector<question>::iterator tmp2;
+	vector<question>::iterator tmp2;
 	int nb = 0;
 
 	tmp2 = this->questionlist->begin();
 	while (tmp2 != this->questionlist->end())
 	{
 		nb = 0;
-        nb = this->personrefshowcase(*tmp2);
+		nb = this->personrefshowcase(*tmp2);
 		if (nb != 0)
 			gbox->setItem(i, k, new QTableWidgetItem(QString::number(nb)));
 		k++;
@@ -103,28 +103,28 @@ void	person::personrefshow(QTableWidget *gbox, int i, int k)
 
 QString	person::personsend(Smtp * smtp, QString post)
 {
-    (void)smtp;
-    (void)post;
-    return (this->email.c_str());
+	(void)smtp;
+	(void)post;
+    return (this->email);
 }
 
-person::person(string name, vector<question> *question)
+person::person(QString name, vector<question> *question)
 {
 	this->name = name;
 	this->questionlist = question;
 }
 
-person::person(string name, string lastname, string email)
+person::person(QString name, QString lastname, QString email)
 {
 	this->name = name + " " + lastname;
 	this->email = email;
 }
 
-person::person(string name, string lastname, string email, int id, vector<question> *listquestion, int groupid)
+person::person(QString name, QString lastname, QString email, int id, vector<question> *listquestion, int groupid)
 {
 	this->name = name + " " + lastname;
-    this->firstname = name;
-    this->lastname = lastname;
+	this->firstname = name;
+	this->lastname = lastname;
 	this->id  = id;
 	this->email = email;
 	this->questionlist = listquestion;
@@ -140,12 +140,12 @@ person::person(const person & person)
 	this->groupid = person.getGroupid();
 	this->flist = person.getFlist();
 	this->freflist = person.getFreflist();
-    this->firstname = person.firstname;
-    this->lastname = person.lastname;
+	this->firstname = person.firstname;
+	this->lastname = person.lastname;
 }
 
 
-int person::compare(string name2)
+int person::compare(QString name2)
 {
 	return (name2.compare(this->name));
 }

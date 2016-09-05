@@ -6,14 +6,14 @@ class question
 public:
 	question();
 	question(string line);
-    question(string a, int b, int id, int qgroupid, QString sujet, QString unit, int type, QString splitchar);
+    question(QString a, int b, int id, int qgroupid, QString sujet, QString unit, int type, QString splitchar);
 	question(string a, string b);
 	question(const question &q);
 	virtual ~question();
-	string questionrep(string personname, string var);
-	string questionrep(string personname);
-	string questionform(string personname);
-	string name;
+    QString questionrep(string personname, string var);
+
+
+    QString name;
 	QString sujet;
     int group = 0;
     int qgroupid = -1;

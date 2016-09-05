@@ -48,10 +48,10 @@ MainWindow::MainWindow(QWidget *parent) :
 	QObject::connect(configp, SIGNAL(triggered()), this, SLOT(configproject()));
 
 	QMenu *menu_nouveaux = menuBar()->addMenu("&Ajouter");
-	QAction *new_collaborateur = menu_nouveaux->addAction("&Ajouter un collaborateur");
-	QObject::connect(new_collaborateur, SIGNAL(triggered()), this, SLOT(addperson()));
-    QAction *new_question = menu_nouveaux->addAction("&Ajouter une question");
-    QObject::connect(new_question, SIGNAL(triggered()), this, SLOT(addquestion()));
+//	QAction *new_collaborateur = menu_nouveaux->addAction("&Ajouter un collaborateur");
+//	QObject::connect(new_collaborateur, SIGNAL(triggered()), this, SLOT(addperson()));
+//    QAction *new_question = menu_nouveaux->addAction("&Ajouter une question");
+//    QObject::connect(new_question, SIGNAL(triggered()), this, SLOT(addquestion()));
 //    QAction *new_groupe = menu_nouveaux->addAction("&Ajouter un groupe");
 //    QObject::connect(new_groupe, SIGNAL(triggered()), this, SLOT(addgroupe()));
 
@@ -277,6 +277,12 @@ void MainWindow::addproject2()
     qry.prepare( "CREATE TABLE IF NOT EXISTS project_" +  this->nametmp->text() + "_reponse (id INTEGER UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT, idperson INTEGER, name VARCHAR(100), time INTEGER,  note INTEGER, date_info datetime, iteration INTEGER,  str VARCHAR(100) NOT NULL DEFAULT '');" );
     if(!qry.exec())
         qDebug() << "create reponse" << qry.lastError();
+    qry.prepare( "CREATE TABLE IF NOT EXISTS project_all_user (id INTEGER UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT, idperson INTEGER, email VARCHAR(90), password VARCHAR(256), name_table VARCHAR(200), date_last_etude datetime, iteration INTEGER NOT NULL DEFAULT 0);" );
+    if(!qry.exec())
+        qDebug() << "create master table user" << qry.lastError();
+    qry.prepare( "CREATE TABLE IF NOT EXISTS project_" +  this->nametmp->text() + "_etude (id INTEGER UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT, begin datetime NOT NULL DEFAULT NOW(), iteration INTEGER, iteration_detail VARCHAR(3000));" );
+    if(!qry.exec())
+        qDebug() << "create etude" << qry.lastError();
     this->current.initoroject(this->nametmp->text().toStdString());
 	//this->current->projectshow(this, this->table, this->currentgref);
 	this->namecurrent = this->nametmp->text();
@@ -317,7 +323,7 @@ void MainWindow::openproject2(QListWidgetItem *item)
 {
 	QSqlQuery qry;
 
-    this->current.initoroject(item->text().toStdString());
+    //this->current.initoroject(item->text().toStdString());
 	this->currentgref = 0;
     this->currentgqref = 0;
 //	this->current->projectshow(this, this->table, this->currentgref);
@@ -417,7 +423,7 @@ void MainWindow::addperson2()
 	{
         sendmail(this->emailtmp->text(), "Bonjour votre mot de passse tout au long de l'étude sera " + QString(mdp) + "\r\n");
 		qDebug() << "INSERT success!";
-        this->current.addperson(this->nametmp->text().toStdString(), this->prenametmp->text().toStdString(), this->emailtmp->text().toStdString());
+        this->current.addperson(this->nametmp->text(), this->prenametmp->text(), this->emailtmp->text());
 	}
 }
 

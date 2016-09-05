@@ -33,7 +33,7 @@ void infoquestion::typeshow(int type)
     }
 }
 
-infoquestion::infoquestion(project *p, MainWindow *m) : p(p)
+infoquestion::infoquestion(project *p, MainWindow *m) : p(p), m(m)
 {
 	QVBoxLayout *vbox = new QVBoxLayout();
     QHBoxLayout *hbox = new QHBoxLayout();
@@ -113,7 +113,7 @@ void infoquestion::updateib(QTreeWidgetItem * item)
 		this->q = new question(p->getquestion(tmp->id));
 	}
     type->setCurrentIndex(q->type);
-	name->setText(q->name.c_str());
+    name->setText(q->name);
 	description->setText(q->sujet);
 	unit->setText(q->unit);
     groupbox->setcurrentgroup(q->group);
@@ -129,41 +129,9 @@ void infoquestion::updatebdd()
 		warning->show();
 		return ;
 	}
-	QSqlQuery query;
-	if (init)
-        query.prepare(("UPDATE project_" + p->name + "_question Set question=?, type=?, note=?, sujet=?, typef=?, groupid=?, qgroupid=?, ref_only=?, splitchar=? WHERE id=?;").c_str());
-	else
-	{
-//        query.prepare( ("CREATE TABLE IF NOT EXISTS project_" + p->name + "_question (id INTEGER UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT, question VARCHAR(30), groupid INTEGER, type VARCHAR(30), note BOOLEAN DEFAULT 1, sujet VARCHAR(300), qgroupid INT DEFAULT 0, typef INT DEFAULT 0)").c_str() );
-//		if( !query.exec() )
-//			qDebug() << query.lastError();
-        query.prepare( ("INSERT INTO project_" + p->name + "_question (question, type, note, sujet, typef, groupid, qgroupid, ref_only, splitchar) VALUES ( ? , ? , ? , ? , ? , ?, ?, ?, ?);").c_str() );
-	}
-	query.addBindValue(name->text());
-	query.addBindValue(unit->text());
-	query.addBindValue("0");
-	query.addBindValue(description->text());
-	query.addBindValue(type->currentIndex());
-    query.addBindValue(dynamic_cast<grouptreeitem*>(groupbox->currentItem())->getId());
-	query.addBindValue(qgroupid);
-    query.addBindValue(ref_only->isChecked());
-    query.addBindValue(selectlist->getlstr().join(" "));
-	if (init)
-		query.addBindValue(q->id);
-	else
-	{
-		// fonctione pas
-		//p->addquestion(name->text().toStdString(), 0, query.lastInsertId().toInt(), type->currentIndex(), description->text(), unit->text());
-	}
-	if (!(query.exec()))
-    {
-		qDebug() << query.lastError();
-        infolabel->setText("Un problème est survenu");
-    }
-    else
-    {
-        init = 1;
-        infolabel->setText("Modification enregistrée");
-    }
+    addquestion(p, name->text(), dynamic_cast<grouptreeitem*>(groupbox->currentItem())->getId(),
+                unit->text(), 0, description->text(), qgroupid, type->currentIndex(), ref_only->isChecked(),
+                selectlist->getlstr().join(" "), ((init) ? q->id : -1));
+
 }
 // question &q

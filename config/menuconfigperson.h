@@ -10,6 +10,7 @@ class MainWindow;
 class menuconfigperson : public QWidget
 {
 	project *p;
+    MainWindow *m;
 	QDockWidget *groupdock;
 	grouptree *groupbox;
 public:

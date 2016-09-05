@@ -29,6 +29,37 @@ void	group::addfils(int id)
 	this->listfils.push_back(dafuq);
 }
 
+void    group::supquestion(int id)
+{
+    list<question>::iterator tmp = listq.begin();
+
+    while (tmp != listq.end())
+    {
+        if (tmp->id == id)
+        {
+            listq.erase(tmp);
+            return ;
+        }
+        tmp++;
+    }
+}
+
+void    group::supperson(int id)
+{
+    if (init == 0)
+        return ;
+    list<person>::iterator tmp = listp.begin();
+
+    while (tmp != listp.end())
+    {
+        if (tmp->id == id)
+        {
+            listp.erase(tmp);
+            return ;
+        }
+        tmp++;
+    }
+}
 
 group::group(string name, int parentid, int id, vector<group> & listgroup, int type, QString description) : type(type)
 {
@@ -56,14 +87,14 @@ void group::addperson(person p)
 {
 	person p2(p);
 	this->listp.push_back(p2);
-	qDebug() << p2.getName().c_str();
+    qDebug() << p2.getName();
 }
 
 void group::addquestion(question q)
 {
 	question q2(q);
 	this->listq.push_back(q2);
-	qDebug() << q2.name.c_str();
+    qDebug() << q2.name;
 }
 
 void group::debug()
@@ -73,7 +104,7 @@ void group::debug()
 	while (tmp != this->listp.end())
 	{
 		//this->listgroup[tmp->getGroupid()].addperson(*tmp);
-		qDebug() << tmp->getName().c_str();
+        qDebug() << tmp->getName();
 		tmp++;
 	}
 }

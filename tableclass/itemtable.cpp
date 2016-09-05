@@ -1,6 +1,5 @@
 #include "itemtable.h"
 #include "headertableitem.h"
-#include "argtableitem.tpp"
 #include "data/person.h"
 #include "data/question.h"
 #include "tableshow.h"

@@ -6,7 +6,6 @@
 #include "mainwindow.h"
 #include "headertableitem.h"
 #include "itemtable.h"
-#include "argtableitem.tpp"
 
 void tableshow::preinit()
 {
@@ -223,7 +222,7 @@ void	tableshow::sethorizontalheader(MainWindow *mainp)
         //k = i;
         while (tmp2 != listqchild.end())
         {
-            this->setHorizontalHeaderItem(i++, new headertableitem(p, ("Moyenne " + tmp2->name + "").c_str(), *tmp2, "%"));
+            this->setHorizontalHeaderItem(i++, new headertableitem(p, ("Moyenne " + tmp2->name + ""), *tmp2, "%"));
             //this->setHorizontalHeaderItem(i++, new QTableWidgetItem(("temps a " + tmp2->name + " reel").c_str()));
             tmp2++;
         }
@@ -284,7 +283,7 @@ void	tableshow::setverticalheader(vector<question> &q, int id)
                 gtmp = &(p->listqgroup[gtmp->getParentid()]);
             }
             this->setVerticalHeaderItem(i, new headertableitem(p, gtmp->getName().c_str(), *listqtmp));
-            this->setItem(i++, i37, new QTableWidgetItem(listqtmp->name.c_str()));
+            this->setItem(i++, i37, new QTableWidgetItem(listqtmp->name));
             listqtmp++;
         }
         listpg++;

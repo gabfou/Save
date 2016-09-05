@@ -20,7 +20,7 @@ public:
 	fact(string line);
 	virtual ~fact();
 	int showfact(QGridLayout *gbox, int i, int j);
-	int checkfacttime(string name, int & counter) const;
+    int checkfacttime(QString name, int & counter) const;
 	QString getTimestr() const;
 	int getNote() const;
 	void setNote(int value);

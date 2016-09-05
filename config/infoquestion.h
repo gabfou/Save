@@ -27,6 +27,7 @@ private:
 	QComboBox *type;
 	QSpinBox *value;
 	project *p;
+    MainWindow *m;
 	question *q = NULL;
 	QPushButton *b_update;
     listedit *selectlist;

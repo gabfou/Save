@@ -33,7 +33,7 @@ grouptreeitem::grouptreeitem(QStringList str, project * p, int id, int type, int
 			listq = listquestion.begin();
 			while (listq != listquestion.end())
 			{
-				this->addChild(new questiontreeitem(QStringList(QString(listq->name.c_str())), listq->id, (QTreeWidget*)0));
+                this->addChild(new questiontreeitem(QStringList(QString(listq->name)), listq->id, (QTreeWidget*)0));
 				listq++;
 			}
 		}
@@ -45,7 +45,7 @@ grouptreeitem::grouptreeitem(QStringList str, project * p, int id, int type, int
             listp = listperson.begin();
             while (listp != listperson.end())
             {
-                this->addChild(new persontreeitem(QStringList(QString(listp->name.c_str())), listp->id, (QTreeWidget*)0));
+                this->addChild(new persontreeitem(QStringList(QString(listp->name)), listp->id, (QTreeWidget*)0));
                 listp++;
             }
         }

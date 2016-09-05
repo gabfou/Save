@@ -60,7 +60,7 @@ void bargraph::drawgraph(QPainter *qp)
         x +=  incr + incr;
 //		qDebug() << "boucle" << x <<  tmp37 << (*tmp).toFloat() / d;
         qp->drawRect(x, tmp37 * h120, incr, ((*tmp).toFloat() / d) * h120);
-        qp->drawText(x, tmp37 * h120, incr, ((*tmp).toFloat() / d) , Qt::AlignCenter | Qt::TextWordWrap, tmp3->name.c_str());
+        qp->drawText(x, tmp37 * h120, incr, ((*tmp).toFloat() / d) , Qt::AlignCenter | Qt::TextWordWrap, tmp3->name);
 		tmp37 += ((*tmp).toInt() / d);
 		tmp3++;
 		tmp++;

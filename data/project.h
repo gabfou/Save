@@ -21,7 +21,7 @@ private:
 	int nbgeneration = 0;
 public:
     int ref = 0;
-    void addquestion(string name, int group, unsigned int id, int qgroupid, QString sujet, QString unit, int type, QString splitchar);
+    void addquestion(QString name, int group, unsigned int id, int qgroupid, QString sujet, QString unit, int type, QString splitchar);
 	string name;
     vector<person> listp;
 	vector<question> listquestion;
@@ -34,8 +34,8 @@ public:
 	void initoroject(string fproject);
 	~project();
 //public slots:
-	void addperson(string name, string lastname, string email);
-	void addperson(string name, string lastname, string email, int id, vector<question>* listquestion, int groupid);
+    void addperson(QString name, QString lastname, QString email);
+    void addperson(QString name, QString lastname, QString email, int id, vector<question>* listquestion, int groupid);
 	QString postquestion(QString group);
 	void addquestion(string name, string group);
     void addreponse(int id, string name, int time, int note, string date, int iteration);

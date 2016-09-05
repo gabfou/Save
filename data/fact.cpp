@@ -62,9 +62,9 @@ fact::~fact()
 {
 }
 
-int fact::checkfacttime(string name, int & counter) const
+int fact::checkfacttime(QString name, int & counter) const
 {
-	if (strcmp(name.c_str(), this->factname.c_str()) == 0)
+    if (name.compare(this->factname.c_str()) == 0)
 	{
 		counter++;
 		return (this->time);

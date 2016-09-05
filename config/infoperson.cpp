@@ -58,9 +58,9 @@ void infoperson::updateib(QTreeWidgetItem * item)
 		init = 1;
         this->pe = new person(p->getperson(tmp->id));
 	}
-    name->setText(pe->firstname.c_str());
-    lastname->setText(pe->lastname.c_str());
-    email->setText(pe->email.c_str());
+    name->setText(pe->firstname);
+    lastname->setText(pe->lastname);
+    email->setText(pe->email);
 //    listchar =
 //	value->setText(q.value);
 }
@@ -68,6 +68,7 @@ void infoperson::updateib(QTreeWidgetItem * item)
 void infoperson::updatebdd()
 {
     char mdp[7];
+    QString mdphash;
 
     if (!pe && init)
 	{
@@ -94,7 +95,7 @@ void infoperson::updatebdd()
 	else
 	{
         gen_random(mdp, 6);
-        QString mdphash = "poke";
+        mdphash = "poke";
         mdphash += mdp;
         mdphash += "mon";
         query.addBindValue(mdphash);
@@ -110,6 +111,17 @@ void infoperson::updatebdd()
     {
         if (init == 0)
         {
+            QSqlQuery query2;
+            query2.prepare( ("INSERT INTO project_all_user (email, password, idperson, name_table) VALUES (?, ?, ?, ?);") );
+            query2.addBindValue(email->text());
+            query2.addBindValue(mdphash);
+            query2.addBindValue(query.lastInsertId());
+            query2.addBindValue((p->name).c_str());
+            if (!(query2.exec()))
+            {
+                qDebug() << query2.lastError() << "ajout de all user fail";
+                infolabel->setText("Un problème est survenu");
+            }
             sendmail(email->text(), "Bonjour votre mot de passse tout au long de l'étude sera " + QString(mdp) + "\r\n");
             init = 1;
         }

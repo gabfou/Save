@@ -44,13 +44,13 @@ void createConnection()
 void createConnection()
 {
 	QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
-	db.setHostName("mysql-johann.alwaysdata.net");
-	db.setDatabaseName("johann_project");
-	db.setUserName("johann");
-	db.setPassword("t4x5akda");
+    db.setHostName("mysql1.paris1.alwaysdata.com");
+    db.setDatabaseName("etudemurano_project");
+    db.setUserName("127008_johann");
+    db.setPassword("t4x5akda");
 	if (!db.open())
 	{
-		qDebug() << db.lastError().text();
+        qDebug() << db.lastError().text() << "pb conection";
 	}
 	else
 	{
