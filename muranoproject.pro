@@ -30,7 +30,6 @@ SOURCES += main.cpp\
     tableclass/headertableitem.cpp \
     tableclass/itemtable.cpp \
     tableclass/tableshow.cpp \
-    dockgroup.cpp \
     grouptree.cpp \
     grouptreeitem.cpp \
     misc.cpp \
@@ -62,7 +61,6 @@ HEADERS  += mainwindow.h \
     tableclass/itemtable.h \
     tableclass/tableshow.h \
     define.h \
-    dockgroup.h \
     grouptree.h \
     grouptreeitem.h \
     le.h \

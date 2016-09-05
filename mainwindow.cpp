@@ -16,7 +16,7 @@ MainWindow::MainWindow(QWidget *parent) :
 {
 	string comande;
 
-	ui->setupUi(this);
+    ui->setupUi(this);
 	this->cw = new QTabWidget();
 	this->setCentralWidget(cw);
 //	this->current = new project;
@@ -47,7 +47,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QAction *configp = menu_projet->addAction("&Configuration projet");
 	QObject::connect(configp, SIGNAL(triggered()), this, SLOT(configproject()));
 
-	QMenu *menu_nouveaux = menuBar()->addMenu("&Ajouter");
+//	QMenu *menu_nouveaux = menuBar()->addMenu("&Ajouter");
 //	QAction *new_collaborateur = menu_nouveaux->addAction("&Ajouter un collaborateur");
 //	QObject::connect(new_collaborateur, SIGNAL(triggered()), this, SLOT(addperson()));
 //    QAction *new_question = menu_nouveaux->addAction("&Ajouter une question");

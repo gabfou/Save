@@ -10,6 +10,24 @@ grouptreeitem::grouptreeitem()
 
 }
 
+void grouptreeitem::setVisiblenongroup(bool v)
+{
+    int i = -1;
+    grouptreeitem *tmpg;
+    questiontreeitem *tmpq;
+    persontreeitem *tmpp;
+
+    while(++i < this->childCount())
+    {
+        if (tmpg = dynamic_cast<grouptreeitem*>(this->child(i)))
+            tmpg->setVisiblenongroup(v);
+        else if(tmpq = dynamic_cast<questiontreeitem*>(this->child(i)))
+            tmpq->setHidden((v) ? false : true);
+        else if(tmpp = dynamic_cast<persontreeitem*>(this->child(i)))
+            tmpp->setHidden((v) ? false : true);
+    }
+}
+
 grouptreeitem::grouptreeitem(QStringList str, project * p, int id, int type, int mod, QTreeWidget *parent) : QTreeWidgetItem(parent, str), typeg(type)
 {
 	vector<group> &g = (type == 0) ? p->listgroup : p->listqgroup;

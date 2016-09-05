@@ -104,6 +104,11 @@ void grouptree::setcurrentgroup(int id, QTreeWidgetItem *dontgiveit)
 		setcurrentgroup(id, dontgiveit->child(i));
 }
 
+void    grouptree::setVisiblenongroup(bool v)
+{
+        dynamic_cast<grouptreeitem*>(this->topLevelItem(0))->setVisiblenongroup(v);
+}
+
 void	grouptree::addgroupintree()
 {
 	//QWidget *win = new QWidget();

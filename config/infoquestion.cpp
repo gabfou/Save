@@ -95,13 +95,20 @@ void infoquestion::updateib(QTreeWidgetItem * item)
         qDebug() << "infoquestion updateib dynamic cast fail";
         grouptreeitem *tmp2 = dynamic_cast<grouptreeitem*>(item);
         if (tmp2)
+        {
+            infolabel->setText("Groupe");
             qgroupid = tmp2->getId();
+        }
         else
+        {
+            infolabel->setText("Erreur: selection ilisible");
             qDebug() << "infoquestion updateib dynamic cast 2 fail";
+        }
 		return ;
     }
     grouptreeitem *tmp2 = dynamic_cast<grouptreeitem*>(item->parent());
     qgroupid = tmp2->getId();
+    infolabel->setText("Question");
 	if (tmp->id == -1)
 	{
 		init = 0;

@@ -6,13 +6,28 @@
 
 Alltree::Alltree(MainWindow *m, project *current) : p(current)
 {
-    groupboxtmp = new grouptree(m, p->listgroup, 0);
-    this->addTab(groupboxtmp, "groupe");
-    connect(this->groupboxtmp, SIGNAL(itemClicked(QTreeWidgetItem *, int )), m, SLOT(changescope2(QTreeWidgetItem *)));
+    QTabWidget *tabgroup = new QTabWidget();
+    QCheckBox *affichenongroup = new QCheckBox("Voir les non group");
+    QVBoxLayout *layout = new QVBoxLayout();
 
-    this->addTab(new grouptree(m, p->listgroup, 2), "persone");
+    this->setLayout(layout);
+
+    layout->addWidget(affichenongroup);
+
+    groupboxtmp = new grouptree(m, p->listgroup, 1);
+    groupboxtmp->setVisiblenongroup(0);
+    groupboxtmp->resizeColumnToContents(0);
+    tabgroup->addTab(groupboxtmp, "groupe");
+    connect(this->groupboxtmp, SIGNAL(itemClicked(QTreeWidgetItem *, int )), m, SLOT(changescope2(QTreeWidgetItem *)));
+    connect(affichenongroup, SIGNAL(toggled(bool)), groupboxtmp, SLOT(setVisiblenongroup(bool)));
 
     groupboxtmp = new grouptree(m, p->listqgroup, 2);
-    this->addTab(groupboxtmp, "question");
+    groupboxtmp->setVisiblenongroup(0);
+    groupboxtmp->resizeColumnToContents(0);
+    tabgroup->addTab(groupboxtmp, "question");
     connect(this->groupboxtmp, SIGNAL(itemClicked(QTreeWidgetItem *, int )), m, SLOT(changescopeq2(QTreeWidgetItem *)));
+    connect(affichenongroup, SIGNAL(toggled(bool)), groupboxtmp, SLOT(setVisiblenongroup(bool)));
+
+    layout->addWidget(tabgroup);
+
 }

@@ -23,19 +23,15 @@ overview::overview(MainWindow *m, project *p, int group, int *showmod) : p(p), s
     table->sethorizontalheader(headertable, p->getNbgeneration());
     //table->showtable(0, 0);
     table->updateall();
-    table->select(0,0);
+    table->select(0, 0);
     QHBoxLayout *hb = new QHBoxLayout(this);
     QGridLayout *gl = new QGridLayout(this);
     gl->addWidget(barref, 1, 0);
     gl->addWidget(bar, 0, 0);
 
-    QSizePolicy sp(QSizePolicy::Preferred, QSizePolicy::Preferred);
-    sp.setHorizontalStretch(1);
-    //table->setSizePolicy(sp);
-    bar->setSizePolicy(sp);
-
-    hb->addLayout(gl);
+    hb->addLayout(gl, 3);
     hb->addWidget(table);
+//    table->setSizePolicy(sp2);
     setLayout(hb);
     //this->updateov(group);
     //this->show();

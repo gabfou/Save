@@ -36,6 +36,7 @@ public slots:
 	void contextmenuselect();
     void supquestintree();
     void modifdgroupintree();
+    void setVisiblenongroup(bool v);
 private slots:
 	void addgroupintree();
 	void addgroupintree2(QTreeWidgetItem *item, int column);

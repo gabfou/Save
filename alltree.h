@@ -7,7 +7,7 @@ class grouptree;
 
 class MainWindow;
 
-class Alltree : public QTabWidget
+class Alltree : public QWidget
 {
 public:
     Alltree(MainWindow *m, project *current);

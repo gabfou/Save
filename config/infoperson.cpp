@@ -41,12 +41,19 @@ void infoperson::updateib(QTreeWidgetItem * item)
 	{
         grouptreeitem *tmp2 = dynamic_cast<grouptreeitem*>(item);
         if (tmp2)
+        {
             groupid = tmp2->getId();
+            infolabel->setText("Groupe");
+        }
         else
+        {
+            infolabel->setText("Erreur: selection ilisible");
             qDebug() << "infoperson updateib dynamic cast 2 fail";
+        }
 		return ;
     }
     grouptreeitem *tmp2 = dynamic_cast<grouptreeitem*>(item->parent());
+    infolabel->setText("Utilisateur");
     groupid = tmp2->getId();
 	if (tmp->id == -1)
 	{
@@ -61,8 +68,6 @@ void infoperson::updateib(QTreeWidgetItem * item)
     name->setText(pe->firstname);
     lastname->setText(pe->lastname);
     email->setText(pe->email);
-//    listchar =
-//	value->setText(q.value);
 }
 
 void infoperson::updatebdd()

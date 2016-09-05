@@ -13,6 +13,8 @@ public:
 	int getId() const;
     int typeg = 0;
 
+public slots:
+    void setVisiblenongroup(bool v);
 private:
 	int id;
 };
