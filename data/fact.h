@@ -15,12 +15,13 @@ private:
 	time_t	datesys = -1;
 public:
 	string	factname;
+    int idquestion = -1;
 
 	fact();
 	fact(string line);
 	virtual ~fact();
 	int showfact(QGridLayout *gbox, int i, int j);
-    int checkfacttime(QString name, int & counter) const;
+    int checkfacttime(int idquestion, int &counter) const;
 	QString getTimestr() const;
 	int getNote() const;
 	void setNote(int value);
@@ -30,7 +31,7 @@ public:
 	void setDate(const string &value);
 	string getFactname() const;
 	void setFactname(const string &value);
-	fact(string name, int time, int note, string date);
+    fact(string name, int time, int note, string date, int idquestion);
 };
 
 ostream & operator<<(ostream &o, fact const & rhs);

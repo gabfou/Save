@@ -3,15 +3,20 @@
 #include "data/question.h"
 #include "smtp.h"
 
-t_groupref syntheselistgroup(QList<t_groupref> listg, int nbcolumn)
+t_groupref syntheselistgroup(QList<t_groupref> listg)
 {
 	t_groupref ret;
+
+    if (listg.empty())
+        return (ret);
+
 	QList<t_groupref>::iterator  tmp;
-    int tabi[listg.size() + 1];
-    int tabl[listg.size() + 1];
-	QList<QString>::iterator tmp4;
-	int i;
-	int m = 0;
+    float tabi[listg.begin()->list.size() + 1];
+    float tabl[listg.begin()->list.size() + 1];
+    qDebug() << "dsfsdfdsfdsgdg  " << listg.begin()->list.size();
+    QList<float>::iterator tmp4;
+    int i;
+    int m = 0;
 
 	ret.name = "synthese";
 	tmp = listg.begin();
@@ -26,11 +31,8 @@ t_groupref syntheselistgroup(QList<t_groupref> listg, int nbcolumn)
 				tabi[i] = 0;
 				tabl[i] = 0;
 			}
-			if (*tmp4 != "NA")
-			{
-				tabi[i] += (*tmp4).toInt();
-				(tabl[i])++;
-			}
+            tabi[i] += (*tmp4);
+            (tabl[i])++;
 			i++;
 			tmp4++;
 		}
@@ -39,19 +41,29 @@ t_groupref syntheselistgroup(QList<t_groupref> listg, int nbcolumn)
 	}
     ret.total = 0;
 	i = -1;
-    while(++i < listg.size() + 1)
+    while(++i < listg.begin()->list.size())
 	{
 		if (tabl[i] != 0)
 		{
-			int tmp37 = tabi[i] / tabl[i];
+            float tmp37 = tabi[i] / tabl[i];
+            qDebug() << "test test test" << tmp37;
 			ret.total += tmp37;
-			ret.list += QString::number(tmp37);
+            ret.list += tmp37;
 		}
 		else
-			ret.list += QString::number(0);
+            ret.list += 0;
 	}
 	return ret;
 }
+
+/*float total(t_groupref g)
+{
+    int total = 0;
+    i = -1;
+    while(++i < listg.size() + 1)
+        total += tmp37;
+    return total;
+}*/
 
 void ft_error(string error)
 {

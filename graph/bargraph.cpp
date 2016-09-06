@@ -1,19 +1,27 @@
 #include "bargraph.h"
 #include "data/question.h"
 #include "data/project.h"
+#include "mainwindow.h"
 
-bargraph::bargraph(t_groupref  g, project *p, QWidget *parent) : QWidget(parent), g(g), p(p)
+bargraph::bargraph(t_groupref  g, project *p, MainWindow *m, QWidget *parent) : QWidget(parent), g(g), p(p)
 {
     //setMinimumWidth(300);
 	listqchild = p->questiongroupqchildnotopti(0);
+//    connect(m, SIGNAL(gqrefchange(int)), this, SLOT(selectq(int)));
 }
 
-void bargraph::updateg(t_groupref g)
+void bargraph::updateg(t_groupref g, int qgroup)
 {
 	this->g = g;
-	listqchild = p->questiongroupqchildnotopti(0);
+    listqchild = p->questiongroupqchildnotopti(qgroup);
+    //this->g.total = total(g, listqchild);
 }
 
+void bargraph::selectq(int gqref)
+{
+    qDebug() << "trucyhgsadjfhgsafdghasfd";
+//    listqchild = p->questiongroupqchildnotopti(gqref);
+}
 
 void bargraph::paintEvent(QPaintEvent *event)
 {
@@ -45,13 +53,13 @@ void bargraph::drawgraph(QPainter *qp)
     qp->drawText(0, 0, this->width(), 10 * h120, Qt::AlignCenter, this->name);
 	qp->setBrush(QBrush(Qt::cyan));
 	qp->drawRect(x, tmp37 * h120 , width, 100 * h120);
-    qp->drawText(x, tmp37 * h120 , width, 100 * h120, Qt::AlignCenter | Qt::TextWordWrap, "100%");
+    qp->drawText(x, tmp37 * h120 , width, 100 * h120, Qt::AlignCenter | Qt::TextWrapAnywhere, "100%");
     qp->translate(x, start * h120);
     qp->rotate(-45);
-    qp->drawText(0, 0, 80, width, Qt::AlignCenter | Qt::TextWordWrap, "total");
+    qp->drawText(0, 0, 80, (width > 50) ? 50 : width, Qt::AlignCenter | Qt::TextWordWrap | Qt::TextDontClip, "total"); // pourrai peut etre simplifier
     qp->rotate(45);
     qp->translate(-x, -start * h120);
-	QList<QString>::iterator tmp;
+    QList<float>::iterator tmp;
 	vector<question> listq = listqchild;
 	vector<question>::iterator tmp3;
 
@@ -59,22 +67,22 @@ void bargraph::drawgraph(QPainter *qp)
 	tmp3 = listq.begin();
 	while (tmp3 != listq.end() && tmp != g.list.end())
 	{
-		if ((*tmp).compare("NA") == 0)
+        /*if ((*tmp) == 0)
 		{
 			tmp3++;
 			tmp++;
 			continue ;
-		}
+        }*/
         x +=  incr + incr;
 //		qDebug() << "boucle" << x <<  tmp37 << (*tmp).toFloat() / d;
-        qp->drawRect(x, tmp37 * h120, width, ((*tmp).toFloat() / d) * h120);
-        qp->drawText(x, tmp37 * h120, width, ((*tmp).toFloat() / d) * h120, Qt::AlignCenter | Qt::TextWordWrap, QString::number((int)((*tmp).toFloat() / d)) + "%");
+        qp->drawRect(x, tmp37 * h120, width, ((*tmp) / d) * h120);
+        qp->drawText(x, tmp37 * h120, width, ((*tmp) / d) * h120, Qt::AlignCenter | Qt::TextWrapAnywhere, QString::number((int)((*tmp) / d)) + "%");
         qp->translate(x, start * h120);
         qp->rotate(-45);
-        qp->drawText(0, 0, 80, width, Qt::AlignCenter | Qt::TextWordWrap, tmp3->name);
+        qp->drawText(0, 0, 80, (width > 50) ? 50 : width, Qt::AlignCenter | Qt::TextWordWrap | Qt::TextDontClip, tmp3->name); // pourrai peut etre simplifier
         qp->rotate(45);
         qp->translate(-x, -start * h120);
-        tmp37 += ((*tmp).toFloat() / d);
+        tmp37 += ((*tmp) / d);
 		tmp3++;
 		tmp++;
 	}

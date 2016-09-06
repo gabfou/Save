@@ -65,8 +65,8 @@ void itemtable::updateall(group *arg, question *head, QString form) // opti pass
     }
     QString val;
     question *q = &(p->listquestion[head->id]);
-    val = arg->grouprepall(*q, p->listgroup);
-    this->setBackgroundColor(arg->getColor());
+    val = QString::number(arg->grouprepall(*q, p->listgroup));
+    //this->setBackgroundColor(arg->getColor());
     this->eval(val, *head);
 }
 

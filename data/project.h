@@ -21,6 +21,8 @@ private:
 	int nbgeneration = 0;
 public:
     int ref = 0;
+    int gref = 0;
+    int gqref = 0;
     void addquestion(QString name, int group, unsigned int id, int qgroupid, QString sujet, QString unit, int type, QString splitchar);
 	string name;
     vector<person> listp;
@@ -38,14 +40,14 @@ public:
     void addperson(QString name, QString lastname, QString email, int id, vector<question>* listquestion, int groupid);
 	QString postquestion(QString group);
 	void addquestion(string name, string group);
-    void addreponse(int id, string name, int time, int note, string date, int iteration);
+    void addreponse(int id, string name, int time, int note, string date, int iteration, int idquestion);
     QStringList sendproject(Smtp *smtp);
 	void convert_to_xlsx();
     void addgroup(string name, int parentid, unsigned int id, int type, QString description);
 	vector<group> getListgroup() const;
 	void setListgroup(const vector<group> &value);
 	QList<t_groupref> getgrouplist(int id, int qid = 0);
-	QList<t_groupref> getgrouplistref(int id);
+    QList<t_groupref> getgrouplistref(int id, int qid = 0);
 	vector<question> getListquestion() const;
     vector<person> getListp() const;
 	int getNbperson() const;

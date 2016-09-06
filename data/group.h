@@ -38,7 +38,7 @@ public:
 	QColor getColor() const;
 	void setColor(const QColor &value);
 	std::list<int> getListfils() const;
-    QList<QString> grouprep(const vector<question> & questionlist, int ref, QList<int> listqchild);
+    QList<float> grouprep(const vector<question> & questionlist, int ref, QList<int> listqchild);
 
     t_groupref groupnamerep(const vector<question> & questionlist, int ref, QList<int> listqchild);
     QString grouprep(question tmp2, int ref);
@@ -51,7 +51,7 @@ public:
     std::list<question> getListq() const;
     bool contain(person &p);
     bool contain(question &q);
-    QString grouprepall(question tmp2, vector<group> &g);
+    float grouprepall(question tmp2, vector<group> &g);
     int init = 0;
     void supquestion(int id);
     void supperson(int id);

@@ -75,6 +75,10 @@ private:
 
 	void sendprojectauxi(QString str);
 	void addock();
+
+signals:
+     void grefchange(int gref);
+     void gqrefchange(int gqref);
 };
 
 	

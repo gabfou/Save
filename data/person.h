@@ -15,7 +15,7 @@ private:
 	std::list<fact> flist;
 	std::list<fact> freflist;
 	std::vector<question> *questionlist;
-    int personshowcase(question &qname, list<fact> lf) const;
+    float personshowcase(question &qname, list<fact> lf) const;
 public:
     QString name;
     QString lastname;
@@ -34,7 +34,7 @@ public:
 	int getId() const;
 	void setId(int value);
 	int compare(int id);
-    void add_fact(string name, int time, int note, string date, int iteration);
+    void add_fact(string name, int time, int note, string date, int iteration, int idquestion);
     QString personsend(Smtp *smtp, QString post);
 	int getGroupid() const;
 	person(const person &person);
@@ -44,8 +44,8 @@ public:
 	std::vector<question> *getQuestionlist() const;
 	std::list<fact> getFlist() const;
 	void personadd(QTableWidget *gbox, int i, group &g);
-    int personshowcase(question &qname);
+    float personshowcase(question &qname);
     void personrefshow(QTableWidget *gbox, int i, int k);
-    int personrefshowcase(question & qname);
+    float personrefshowcase(question & qname);
 	std::list<fact> getFreflist() const;
 };

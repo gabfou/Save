@@ -4,16 +4,19 @@
 #include "le.h"
 
 class project;
+class MainWindow;
 
 class bargraph : public QWidget
 {
 public:
-	bargraph(t_groupref g, project *q, QWidget *parent = 0);
-	void updateg(t_groupref g);
+    bargraph(t_groupref g, project *q, MainWindow *m, QWidget *parent = 0);
+    void updateg(t_groupref g, int qgroup);
 	void redraw();
 	QString getName() const;
 	void setName(const QString &value);
 
+public slots:
+    void selectq(int gqref);
 protected:
 	void paintEvent(QPaintEvent *event);
 	void  drawgraph(QPainter *qp);

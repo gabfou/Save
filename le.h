@@ -76,8 +76,8 @@ class project;
 typedef struct  s_groupref
 {
 	QString		 name;
-	QList<QString>  list;
-	int			 total = 0;
+    QList<float>  list;
+    float			 total = 0;
 }			   t_groupref;
 
 using namespace std;
@@ -91,7 +91,7 @@ void tab_to_fichier(const QString name, const QTableWidget *table);
 QXlsx::Document tab_to_xlsx(const QTableWidget &table, QXlsx::Document & xlsx);
 QString indextocase(int x, int y);
 void warning(QString error);
-t_groupref syntheselistgroup(QList<t_groupref> listg, int nbcolumn);
+t_groupref syntheselistgroup(QList<t_groupref> listg);
 void gen_random(char *s, const int len);
 void sendmail(QString mail, QString body);
 int addgroup(QString nameproject, QString name, int groupparent, int type, QString description, project *p);

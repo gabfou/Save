@@ -50,21 +50,22 @@ fact::fact(string line)
 	this->date = &line[i];
 }
 
-fact::fact(string name, int time, int note, string date)
+fact::fact(string name, int time, int note, string date, int idquestion)
 {
 	this->factname = name;
 	this->note = note;
 	this->time = time;
 	this->date = date;
+    this->idquestion = idquestion;
 }
 
 fact::~fact()
 {
 }
 
-int fact::checkfacttime(QString name, int & counter) const
+int fact::checkfacttime(int idquestion, int &counter) const
 {
-    if (name.compare(this->factname.c_str()) == 0)
+    if (this->idquestion == idquestion)
 	{
 		counter++;
 		return (this->time);

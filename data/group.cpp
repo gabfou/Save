@@ -128,8 +128,9 @@ t_groupref group::groupnamerep(const vector<question> &questionlist, int ref, QL
 QString group::grouprep(question tmp2, int ref)
 {
     list<person>::iterator tmp;
-	int nb;
-    int l;
+    float nb;
+    float l;
+    float inttmp;
 
     if (tmp2.type == 2)
         return ("reponse non chiffrer");
@@ -141,49 +142,54 @@ QString group::grouprep(question tmp2, int ref)
 	{
 		if (ref == 0)
 		{
-            if ((nb += (*tmp).personshowcase(tmp2)) != 0)
+            if ((inttmp = (*tmp).personshowcase(tmp2)) > -0.1)
+            {
 				l++;
+                nb += inttmp;
+            }
 		}
 		else
         {
-            if ((nb += (*tmp).personrefshowcase(tmp2)) != 0)
-				l++;
-            qDebug() << "ref ?";
+            if ((inttmp = (*tmp).personrefshowcase(tmp2)) > -0.1)
+            {
+                l++;
+                nb += inttmp;
+            }
         }
 		tmp++;
 	}
 	if (l != 0)
-		return(QString::number(nb / l));
+        return(QString::number(nb / l));
 	else
         return ("NA");
 }
 
-QString group::grouprepall(question tmp2, vector<group> &g) // opti qstring neccessaire
+float group::grouprepall(question tmp2, vector<group> &g) // opti qstring neccessaire
 {
     list<int>::iterator tmp = listfils.begin();
-    int val = 0;
+    float val = 0;
 
     val += grouprep(tmp2, 0).toInt();
     while(tmp != listfils.end())
     {
-        val += g[*tmp].grouprepall(tmp2, g).toInt();
+        val += g[*tmp].grouprepall(tmp2, g);
         tmp++;
     }
-    return (QString::number(val));
+    return (val);
 }
 
 
-QList<QString> group::grouprep(const vector<question> & questionlist, int ref, QList<int> listqchild)
+QList<float> group::grouprep(const vector<question> & questionlist, int ref, QList<int> listqchild)
 {
     QList<int>::iterator tmp2;
-	QList<QString> ret;
+    QList<float> ret;
 	//afficher reponse au question
 
     tmp2 = listqchild.begin();
     while (tmp2 != listqchild.end())
 	{
         qDebug() << "truc :" << *tmp2;
-        ret << grouprep(questionlist[*tmp2], ref);
+        ret << grouprep(questionlist[*tmp2], ref).toFloat();
 		tmp2++;
 	}
 	return ret;

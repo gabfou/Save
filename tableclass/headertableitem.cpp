@@ -9,7 +9,7 @@
 QString headertableitem::getFormule() const{return formule;}
 void headertableitem::setFormule(const QString &value){formule = value;}
 
-headertableitem::headertableitem(project *p, QString str, QString form, int id) : QTableWidgetItem(str), formule(form), id(id), p(p)
+headertableitem::headertableitem(project *p, QString str, QString form, int id) : QTableWidgetItem(str), formule(form), id(id), p(p), type(-1)
 {
 }
 
@@ -63,6 +63,10 @@ bool headertableitem::is_in(vector<group> &g, vector<group> &gq, QList<int> list
 {
     QList<int>::iterator tmp;
 
+    if (type == -1)
+    {
+        return (1);
+    }
     if (type == 1)
     {
         if (g[0].type != this->argg.type)

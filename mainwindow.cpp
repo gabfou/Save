@@ -274,7 +274,7 @@ void MainWindow::addproject2()
     qry.prepare( "CREATE TABLE IF NOT EXISTS project_" +  this->nametmp->text() + "_groupe (id INTEGER UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT, groupname VARCHAR(500), groupparent INTEGER DEFAULT 0, type BOOLEAN DEFAULT 0, description VARCHAR(300) NOT NULL DEFAULT '')" );
     if(!qry.exec())
         qDebug() << "create groupe" << qry.lastError();
-    qry.prepare( "CREATE TABLE IF NOT EXISTS project_" +  this->nametmp->text() + "_reponse (id INTEGER UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT, idperson INTEGER, name VARCHAR(100), time INTEGER,  note INTEGER, date_info datetime, iteration INTEGER,  str VARCHAR(100) NOT NULL DEFAULT '');" );
+    qry.prepare( "CREATE TABLE IF NOT EXISTS project_" +  this->nametmp->text() + "_reponse (id INTEGER UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT, idperson INTEGER, name VARCHAR(100), time INTEGER,  note INTEGER, date_info datetime, iteration INTEGER,  str VARCHAR(100) NOT NULL DEFAULT '', idquestion INT NOT NULL DEFAULT -1);" );
     if(!qry.exec())
         qDebug() << "create reponse" << qry.lastError();
     qry.prepare( "CREATE TABLE IF NOT EXISTS project_all_user (id INTEGER UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT, idperson INTEGER, email VARCHAR(90), password VARCHAR(256), name_table VARCHAR(200), date_last_etude datetime, iteration INTEGER NOT NULL DEFAULT 0);" );
@@ -436,7 +436,7 @@ void MainWindow::showproject()
 	}
 	else
 	{
-		this->ov->updateov(this->currentgref); //opti
+        this->ov->updateov(this->currentgref, currentgqref); //opti
 	}
 	if (this->table == NULL)
 	{
@@ -556,6 +556,8 @@ void	MainWindow::changescope2(QTreeWidgetItem *item)
     if ((tmp = dynamic_cast<grouptreeitem*>(item)) != NULL)
     {
         this->currentgref = tmp->getId();
+        this->current.gref = this->currentgref;
+        emit grefchange(currentgref);
         this->showproject();
     }
 }
@@ -567,6 +569,9 @@ void	MainWindow::changescopeq2(QTreeWidgetItem *item)
     if ((tmp = dynamic_cast<grouptreeitem*>(item)) != NULL)
     {
         this->currentgqref = tmp->getId();
+        this->current.gqref = this->currentgqref;
+        qDebug() << "dsdsffdsfdsfserdwcdsgvbfd";
+        emit gqrefchange(currentgqref);
         this->showproject();
     }
 }

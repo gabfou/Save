@@ -135,7 +135,7 @@ void tableshow::reinit()
     qDebug() << "new tableshow";
     if (p->listp.empty() || p->listquestion.empty())
     {
-        qDebug() << "listp ou lisquestion vide dans reinit";
+        qDebug() << "listp ou lisquestion vide dans reinit 1";
         return ;
     }
     this->clear();
@@ -153,7 +153,7 @@ void tableshow::reinit(QList<headertableitem*> &listv, QList<headertableitem*> &
     qDebug() << "new tableshow";
     if (p->listp.empty() || p->listquestion.empty())
     {
-        qDebug() << "listp ou lisquestion vide dans reinit";
+        qDebug() << "listp ou lisquestion vide dans reinit 2";
         return ;
     }
     this->clear();
@@ -175,7 +175,7 @@ void tableshow::reinit(project * p, MainWindow *mainp)
     qDebug() << "new tableshow";
     if (p->listp.empty() || p->listquestion.empty())
     {
-        qDebug() << "listp ou lisquestion vide dans reinit";
+        qDebug() << "listp ou lisquestion vide dans reinit 3";
         return ;
     }
     this->clear();
@@ -211,13 +211,13 @@ void	tableshow::sethorizontalheader(MainWindow *mainp)
         if (mainp->showmod == 0)
         {
             while (--k > -1)
-                this->setHorizontalHeaderItem(k, new headertableitem(p, "Sous groupe"));
+                this->setHorizontalHeaderItem(k, new headertableitem(p, "Sous groupes"));
         }
         else
         {
             this->setHorizontalHeaderItem(--k, new headertableitem(p, "Noms"));
             while (--k > -1)
-                this->setHorizontalHeaderItem(k, new headertableitem(p, "Sous groupe"));
+                this->setHorizontalHeaderItem(k, new headertableitem(p, "Sous groupes"));
         }
         //k = i;
         while (tmp2 != listqchild.end())
@@ -233,13 +233,13 @@ void	tableshow::sethorizontalheader(MainWindow *mainp)
         if (mainp->showmod == 0)
         {
             while (--k > -1)
-                this->setHorizontalHeaderItem(k, new headertableitem(p, "Sous groupe"));
+                this->setHorizontalHeaderItem(k, new headertableitem(p, "Sous groupes"));
         }
         else
         {
             this->setHorizontalHeaderItem(--k, new headertableitem(p, "Noms"));
             while (--k > -1)
-                this->setHorizontalHeaderItem(k, new headertableitem(p, "Sous groupe"));
+                this->setHorizontalHeaderItem(k, new headertableitem(p, "Sous groupes"));
         }
         //k = i;
         while (tmp != p->listgroup.end())
@@ -344,12 +344,12 @@ void	tableshow::select(int gref, int gqref)
     while (++h < this->rowCount())
     {
         tmp = (dynamic_cast<headertableitem*>(this->verticalHeaderItem(h)));
-        qDebug() << listint;
+ /*       qDebug() << listint;
         qDebug() << listqint;
         if (!tmp)
             qDebug() << "dynamic_cast<headertableitem*> fail tableshowselect";
         else
-            qDebug() << "dynamic_cast<headertableitem*> id = " << tmp->id;
+            qDebug() << "dynamic_cast<headertableitem*> id = " << tmp->id;*/
         if (tmp && tmp->is_in(this->p->listgroup , this->p->listqgroup, listint, listqint))
             this->showRow(h);
         else
@@ -360,12 +360,12 @@ void	tableshow::select(int gref, int gqref)
     while (++h < this->columnCount())
     {
         tmp = (dynamic_cast<headertableitem*>(this->horizontalHeaderItem(h)));
-        qDebug() << listint;
+/*        qDebug() << listint;
         qDebug() << listqint;
         if (!tmp)
             qDebug() << "dynamic_cast<headertableitem*> fail tableshowselect";
         else
-            qDebug() << "dynamic_cast<headertableitem*> id = " << tmp->id;
+            qDebug() << "dynamic_cast<headertableitem*> id = " << tmp->id;*/
         //listint.contains(tmp->id)
         if (tmp && tmp->is_in(this->p->listgroup, this->p->listqgroup, listint, listqint))
             this->showColumn(h);
@@ -501,10 +501,10 @@ void	tableshow::updateall()
     int w;
 
     qDebug() << "updateall";
-    while (++h < this->rowCount())
+    while (++h < this->rowCount() + 1)
     {
-        w = this->k - 1;
-        while (++w < this->columnCount())
+        w = - 1;
+        while (++w < this->columnCount() + 1)
         {
             itemtable *tmp = dynamic_cast<itemtable *>(this->item(h, w));
             if (tmp)

@@ -17,7 +17,7 @@ class overview : public QWidget
     tableshow *table;
 public:
     overview(MainWindow *m, project *p, int group, int *showmod);
-	void updateov(int group);
+    void updateov(int group, int qgroup);
 };
 
 #endif // OVERVIEW_H

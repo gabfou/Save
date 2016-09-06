@@ -32,9 +32,9 @@ inline fact newfact(string line)
 	return(ret);
 }
 
-inline fact newfact(string name, int time, int note, string date)
+inline fact newfact(string name, int time, int note, string date, int idquestion)
 {
-	fact ret(name, time, note, date);
+    fact ret(name, time, note, date, idquestion);
 	return(ret);
 }
 
@@ -43,42 +43,44 @@ void person::add_fact(string line)
 	(this->flist).push_back(newfact(line));
 }
 
-void person::add_fact(string name, int time, int note, string date, int iteration)
+void person::add_fact(string name, int time, int note, string date, int iteration, int idquestion)
 {
 	if (iteration)
-		(this->flist).push_back(newfact(name, time, note, date));
+        (this->flist).push_back(newfact(name, time, note, date, idquestion));
 	else
 	{
-		(this->freflist).push_back(newfact(name, time, note, date));
+        (this->freflist).push_back(newfact(name, time, note, date, idquestion));
 	}
 }
 
-int person::personshowcase(question & qname, list<fact> lf) const
+float person::personshowcase(question & qname, list<fact> lf) const
 {
 	list<fact>::iterator tmp;
-	int j = 0;
-	int l = 0;
+    float j = 0;
+    int l = 0;
 
 	tmp = lf.begin();
 	while (tmp != lf.end())
 	{
 		if (qname.type == 0 || qname.type == 1)
-			j += (*tmp).checkfacttime(qname.name ,l);
+        {
+            j += (*tmp).checkfacttime(qname.id ,l);
+        }
 		tmp++;
 	}
 	if (qname.type == 1)
-		j = j * 100;
+        j = j * 100.0;
 	if (l != 0)
-		return(j / l);
-	return 0;
+        return(j / (float)l);
+    return -1;
 }
 
-int	person::personshowcase(question & qname)
+float	person::personshowcase(question & qname)
 {
 	return (this->personshowcase(qname, this->flist));
 }
 
-int	person::personrefshowcase(question &qname)
+float	person::personrefshowcase(question &qname)
 {
 	return (this->personshowcase(qname, this->freflist));
 }

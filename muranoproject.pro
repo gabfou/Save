@@ -37,7 +37,6 @@ SOURCES += main.cpp\
     questiontreeitem.cpp \
     smtp.cpp \
     table_common_operation.cpp \
-    test.cpp \
     xlsx_common_operation.cpp \
     misc/listedit.cpp \
     config/infoquestion.cpp \
@@ -67,7 +66,6 @@ HEADERS  += mainwindow.h \
     overview.h \
     questiontreeitem.h \
     smtp.h \
-    test.h \
     misc/listedit.h \
     config/infoquestion.h \
     config/menuconfigproject.h \
