@@ -24,7 +24,7 @@ else
 		//include ("sql_connect.php");
 		try
 		{
-		$req_pre = $bdd->prepare('SELECT idperson, email, name_table FROM project_all_user WHERE password ="'.htmlspecialchars($hash).'";'); // changer user
+		$req_pre = $bdd->prepare('SELECT idperson, email, name_table FROM project_all_user WHERE password ="'.htmlspecialchars($hash).'" AND email="'.htmlspecialchars($login).'";'); // changer user
 		if ($req_pre === false)
 			echo "mysql probleme"; // a virer
 		// $req_pre->bindValue(1, htmlspecialchars($login), PDO::PARAM_STR);

@@ -32,6 +32,7 @@ public:
 	QTabWidget *cw;
     project current;
     int ref = 0;
+    int val = 0;
 	tableshow *table = NULL;
 	int currentgref = 0;
     int currentgqref = 0;
@@ -59,7 +60,8 @@ private slots:
 	void refmodechange(bool checked);
     void changescope2(QTreeWidgetItem *item);
 	void showbarchartref();
-	void configproject();
+    void configproject();
+    void valmodechange(bool checked);
 private:
 	Ui::MainWindow *ui;
 	QWindow *addprojectwindow;
@@ -72,6 +74,7 @@ private:
 //	barref *d_chart;
 	QRadioButton *radiobuttontmp;
 	overview *ov = NULL;
+
 
 	void sendprojectauxi(QString str);
 	void addock();

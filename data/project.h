@@ -19,6 +19,8 @@ private:
 	int nbquestion = 0;
 	int nbgroup = 0;
 	int nbgeneration = 0;
+    int val = 0;
+
 public:
     int ref = 0;
     int gref = 0;

@@ -30,7 +30,7 @@ void itemtable::update()
         //this->setText(this->placeholder);
 		this->setBackgroundColor(Qt::white);
         return ;
-	}
+    }
     else if (arg->type == 1 && head->type == 2)
 		update(&(arg->argg), &(head->argq));
     else if (arg->type == 2 && head->type == 1)
@@ -50,7 +50,12 @@ void itemtable::update(group *arg, question *head, QString form) // opti passer 
 
 	if (q)
 	{
-        val = arg->grouprep(*q, p->ref);
+        if (p->val)
+        {
+            val = arg->grouprepval(*q, p->ref);
+        }
+        else
+            val = arg->grouprep(*q, p->ref);
         //this->setBackgroundColor(arg->getColor()); //remettre les couleur
 	}
     this->eval(val, *head);

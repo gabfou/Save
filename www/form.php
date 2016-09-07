@@ -39,7 +39,7 @@
 			($tabquestion = $req_pre->fetchall());
 			foreach ($tabquestion as $key => $value)
 			{
-				if ($value['ref_only'] != 1)
+				if ($value['ref_only'] != 1 || $_SESSION['iteration'] == 0)
 				{
 					$echofinal = $echofinal.'<div id = "question'.$value['qgroupid'].'">';
 					$echofinal = $echofinal.'<fieldset class="field"><legend>'.$value['question'].'</legend>';
@@ -119,19 +119,19 @@
 					var itv = 0; // id pour setinterval
 					function prog(nb)
 					{
-						if(actualprogress >= maxprogress)
-						{
-							clearInterval(itv);
-							return;
-						}
+						// if(actualprogress >= maxprogress)
+						// {
+						// 	clearInterval(itv);
+						// 	return ;
+						// }
 						var progressnum = document.getElementById("progressnum");
 						var indicator = document.getElementById("indicator");
-						actualprogress = ((100 / array.length) * nb).toFixed(0);
+						actualprogress = ((maxprogress / array.length) * nb).toFixed(0);
 						indicator.style.width=actualprogress + "%";
 						progressnum.innerHTML = actualprogress + "%";
 						progressnum.style.marginLeft=actualprogress + "%";
-						if(actualprogress == maxprogress)
-							clearInterval(itv);
+						//if(actualprogress == maxprogress)
+						//	clearInterval(itv);
 					}
 					function bilanforeach(element, index, array)
 					{
@@ -180,6 +180,7 @@
 						}
 						$("[id^=rep]").show();
 						$("[id=next]").hide();
+						$("[id^=gdesc]").hide();
 						$("[id=target]").show();
 						$("[id^=question]").hide();
 						$("[id^=resum]").hide();
@@ -194,7 +195,7 @@
 						var str4 = "[id=gdesc";
 						str4 = str4.concat(array[nb]);
 						str4 = str4.concat("]");
-						$(str4).show();						
+						$(str4).show();
 						$(str).show();
 						$(str2).css('background-color', '#449CA3');
 						prog(nb);
