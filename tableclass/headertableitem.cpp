@@ -97,6 +97,8 @@ bool headertableitem::is_in(vector<group> &g, vector<group> &gq, QList<int> list
         {
             return (1);
         }
+        else if (p->ref == 0 && argq.ref_only)
+            return (0);
         else
         {
             tmp = listqint.begin();

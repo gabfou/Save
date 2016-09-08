@@ -37,7 +37,8 @@ void	supgroup(QString nameproject, int id, vector<group> & g)
 	}
 }
 
-int	addquestion(project *p, QString name, int groupid, QString type, int note, QString description, int qgroupid, int typef, bool ref_only, QString splitchar, int id)
+int	addquestion(project *p, QString name, int groupid, QString type, int note, QString description, int qgroupid,
+                int typef, bool ref_only, QString splitchar, int val, int id)
 {
 	QSqlQuery qry;
 
@@ -67,7 +68,7 @@ int	addquestion(project *p, QString name, int groupid, QString type, int note, Q
 		qDebug() << "question insert success!";
 	if (id == -1)
 	{
-		p->addquestion(name, groupid, qry.lastInsertId().toInt(), qgroupid, description, type, typef, "");
+        p->addquestion(name, groupid, qry.lastInsertId().toInt(), qgroupid, description, type, typef, "", val, ref_only);
 		p->listqgroup[qgroupid].addquestion(p->listquestion[qry.lastInsertId().toInt()]);
 	}
 	else
@@ -80,6 +81,8 @@ int	addquestion(project *p, QString name, int groupid, QString type, int note, Q
 		p->listquestion[id].qgroupid = qgroupid;
 		p->listquestion[id].type = typef;
 		p->listquestion[id].liststr = splitchar.split(" ");
+        p->listquestion[id].val = val;
+        p->listquestion[id].ref_only = ref_only;
 	}
 	return (qry.lastInsertId().toInt());
 }

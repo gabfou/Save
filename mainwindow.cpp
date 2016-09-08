@@ -68,7 +68,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	afficherref->setCheckable(true);
 	afficherref->setChecked(false);
 	QObject::connect(afficherref, SIGNAL(toggled(bool)), this, SLOT(refmodechange(bool)));
-    QAction *afficherval = menu_affifchage->addAction("&Données de références");
+    QAction *afficherval = menu_affifchage->addAction("&Ponderation");
     afficherval->setCheckable(true);
     afficherval->setChecked(false);
     QObject::connect(afficherval, SIGNAL(toggled(bool)), this, SLOT(valmodechange(bool)));
@@ -291,7 +291,8 @@ void MainWindow::addproject2()
 				" qgroupid INT DEFAULT 0,"
 				" typef INT DEFAULT 0,"
 				" ref_only INT DEFAULT 0,"
-				" splitchar VARCHAR(3000) NOT NULL DEFAULT '')") );
+                " splitchar VARCHAR(3000) NOT NULL DEFAULT '',"
+                " value INT NOT NULL DEFAULT -1)") );
 	if(!qry.exec())
 		qDebug() << "create question" << qry.lastError();
 
@@ -601,6 +602,7 @@ void	MainWindow::refmodechange(bool checked)
 	ref = (checked) ? 1 : 0;
 	current.ref = ref;
 	this->table->updateall();
+    this->table->showtable(currentgref, currentgqref);
 }
 
 void	MainWindow::valmodechange(bool checked)
@@ -608,6 +610,7 @@ void	MainWindow::valmodechange(bool checked)
     val = (checked) ? 1 : 0;
     current.val = val;
     this->table->updateall();
+    this->table->showtable(currentgref, currentgqref);
 }
 
 void	MainWindow::changescope2(QTreeWidgetItem *item)

@@ -13,7 +13,7 @@ t_groupref syntheselistgroup(QList<t_groupref> listg)
 	QList<t_groupref>::iterator  tmp;
     float tabi[listg.begin()->list.size() + 1];
     float tabl[listg.begin()->list.size() + 1];
-    qDebug() << "dsfsdfdsfdsgdg  " << listg.begin()->list.size();
+    qDebug() << "dsfsdfdsfdsgdg " << listg.begin()->list.size();
     QList<float>::iterator tmp4;
     int i;
     int m = 0;
@@ -100,4 +100,3 @@ void sendmail(QString mail, QString body)
 	Smtp	*smtp = new Smtp(username, passwd, server);
 	smtp->sendMail("etudes@muranoconseil.com", mail , "Etude muranoconseil",  body + "\r\n\r\nMURAnO Conseil : Marketing / Retail / Supply Chain");
 }
-

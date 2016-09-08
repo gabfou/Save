@@ -52,7 +52,8 @@ void itemtable::update(group *arg, question *head, QString form) // opti passer 
 	{
         if (p->val)
         {
-            val = arg->grouprepval(*q, p->ref);
+            if (q->val != -1)
+                val = arg->grouprepval(*q, p->ref);
         }
         else
             val = arg->grouprep(*q, p->ref);

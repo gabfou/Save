@@ -100,10 +100,11 @@ person project::getperson(int id)
     return(*(pl.begin()));
 }
 
-inline void project::addquestion(QString name, int group, unsigned int id, int qgroupid, QString sujet, QString unit, int type, QString splitchar)
+inline void project::addquestion(QString name, int group, unsigned int id, int qgroupid, QString sujet,
+                                 QString unit, int type, QString splitchar, int value, bool ref_only)
 {
 	this->nbquestion++;
-    question ret(name, group, id, qgroupid, sujet, unit, type, splitchar);
+    question ret(name, group, id, qgroupid, sujet, unit, type, splitchar, value, ref_only);
     while (this->listquestion.size() < id)
         this->listquestion.push_back(question());
 	this->listquestion.push_back(ret);
@@ -205,7 +206,7 @@ void project::initoroject(string fproject)
 	}
 	else
 		qDebug() << "error get group :" << query.lastError();
-    if(query.exec(("SELECT question,groupid,id,qgroupid,sujet,type,typef,splitchar FROM project_" + fproject + "_question").c_str()))
+    if(query.exec(("SELECT question,groupid,id,qgroupid,sujet,type,typef,splitchar,value,ref_only FROM project_" + fproject + "_question").c_str()))
 	{
 		while(query.next())
 		{
@@ -216,7 +217,9 @@ void project::initoroject(string fproject)
 							  query.value(4).toString(),
                               query.value(5).toString(),
                               query.value(6).toInt(),
-                              query.value(7).toString());
+                              query.value(7).toString(),
+                              query.value(8).toInt(),
+                              query.value(9).toBool());
 		}
 	}
 	else

@@ -19,13 +19,13 @@ private:
 	int nbquestion = 0;
 	int nbgroup = 0;
 	int nbgeneration = 0;
-    int val = 0;
 
 public:
+    int val = 0;
     int ref = 0;
     int gref = 0;
     int gqref = 0;
-    void addquestion(QString name, int group, unsigned int id, int qgroupid, QString sujet, QString unit, int type, QString splitchar);
+    void addquestion(QString name, int group, unsigned int id, int qgroupid, QString sujet, QString unit, int type, QString splitchar, int value, bool ref_only);
 	string name;
     vector<person> listp;
 	vector<question> listquestion;

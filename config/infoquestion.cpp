@@ -124,6 +124,7 @@ void infoquestion::updateib(QTreeWidgetItem * item)
 	description->setText(q->sujet);
 	unit->setText(q->unit);
     groupbox->setcurrentgroup(q->group);
+    ref_only->setChecked(q->ref_only);
 //    listchar =
 //	value->setText(q.value);
 }
@@ -138,7 +139,7 @@ void infoquestion::updatebdd()
 	}
     addquestion(p, name->text(), dynamic_cast<grouptreeitem*>(groupbox->currentItem())->getId(),
                 unit->text(), 0, description->text(), qgroupid, type->currentIndex(), ref_only->isChecked(),
-                selectlist->getlstr().join(" "), ((init) ? q->id : -1));
+                selectlist->getlstr().join(" "), value->text().toInt(), ((init) ? q->id : -1));
 
 }
 // question &q

@@ -45,7 +45,9 @@ public:
 	std::list<fact> getFlist() const;
 	void personadd(QTableWidget *gbox, int i, group &g);
     float personshowcase(question &qname);
-    void personrefshow(QTableWidget *gbox, int i, int k);
     float personrefshowcase(question & qname);
-	std::list<fact> getFreflist() const;
+    std::list<fact> getFreflist() const;
+    float personshowcaseval(question &qname, list<fact> lf) const;
+    float personshowcaseval(question &qname);
+    float personrefshowcaseval(question &qname);
 };

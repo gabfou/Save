@@ -53,6 +53,42 @@ void person::add_fact(string name, int time, int note, string date, int iteratio
 	}
 }
 
+
+
+float person::personshowcaseval(question & qname, list<fact> lf) const
+{
+    list<fact>::iterator tmp;
+    float j = 0;
+    int l = 0;
+
+    tmp = lf.begin();
+    while (tmp != lf.end())
+    {
+        if ((qname.type == 0 || qname.type == 1) && qname.val != -1)
+        {
+            j += (*tmp).checkfacttime(qname.id ,l) * qname.val;
+        }
+        tmp++;
+    }
+    if (qname.type == 1)
+        j = j * 100.0;
+    if (l != 0)
+        return(j / (float)l);
+    return -1;
+}
+
+float	person::personshowcaseval(question & qname)
+{
+    return (this->personshowcaseval(qname, this->flist));
+}
+
+float	person::personrefshowcaseval(question &qname)
+{
+    return (this->personshowcaseval(qname, this->freflist));
+}
+
+
+
 float person::personshowcase(question & qname, list<fact> lf) const
 {
 	list<fact>::iterator tmp;
@@ -85,23 +121,7 @@ float	person::personrefshowcase(question &qname)
 	return (this->personshowcase(qname, this->freflist));
 }
 
-void	person::personrefshow(QTableWidget *gbox, int i, int k)
-{
-	list<fact>::iterator tmp;
-	vector<question>::iterator tmp2;
-	int nb = 0;
 
-	tmp2 = this->questionlist->begin();
-	while (tmp2 != this->questionlist->end())
-	{
-		nb = 0;
-		nb = this->personrefshowcase(*tmp2);
-		if (nb != 0)
-			gbox->setItem(i, k, new QTableWidgetItem(QString::number(nb)));
-		k++;
-		tmp2++;
-	}
-}
 
 QString	person::personsend(Smtp * smtp, QString post)
 {

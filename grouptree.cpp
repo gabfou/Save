@@ -166,7 +166,7 @@ void	grouptree::addquestintree2(QTreeWidgetItem *item, int column)
 	qDebug() << item->text(0);
 	item->parent()->addChild(new questiontreeitem(QStringList(item->text(0)) , -1, (QTreeWidget*)0));
 
-	addquestion(&(m->current), item->text(0), 0, "", 0, "", 0, 0, 0, "");
+    addquestion(&(m->current), item->text(0), 0, "", 0, "", 0, 0, 0, "", -1);
 	m->table->reinit(&(m->current), m);
 	m->table->showtable(m->currentgref, m->currentgqref);
 	delete item;

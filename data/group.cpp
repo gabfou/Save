@@ -125,6 +125,45 @@ t_groupref group::groupnamerep(const vector<question> &questionlist, int ref, QL
 	return ret;
 }
 
+QString group::grouprepval(question tmp2, int ref)
+{
+    list<person>::iterator tmp;
+    float nb;
+    float l;
+    float inttmp;
+
+    if (tmp2.type == 2)
+        return ("reponse non chiffrer");
+    // int
+    nb = 0;
+    l = 0;
+    tmp = this->listp.begin();
+    while (tmp != this->listp.end())
+    {
+        if (ref == 0)
+        {
+            if ((inttmp = (*tmp).personshowcaseval(tmp2)) > -0.1)
+            {
+                l++;
+                nb += inttmp;
+            }
+        }
+        else
+        {
+            if ((inttmp = (*tmp).personrefshowcaseval(tmp2)) > -0.1)
+            {
+                l++;
+                nb += inttmp;
+            }
+        }
+        tmp++;
+    }
+    if (l != 0)
+        return(QString::number(nb / l));
+    else
+        return ("NA");
+}
+
 QString group::grouprep(question tmp2, int ref)
 {
     list<person>::iterator tmp;

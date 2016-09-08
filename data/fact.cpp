@@ -63,6 +63,7 @@ fact::~fact()
 {
 }
 
+
 int fact::checkfacttime(int idquestion, int &counter) const
 {
     if (this->idquestion == idquestion)
