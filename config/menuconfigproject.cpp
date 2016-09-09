@@ -4,7 +4,7 @@
 #include "menuconfigperson.h"
 #include "data/project.h"
 
-menuconfigproject::menuconfigproject(QString name, project *p, MainWindow *m) : name(name)
+menuconfigproject::menuconfigproject(QString name, project *p, MainWindow *m) : name(name), p(p)
 {
 	//QLabel *Labelgroup = new QLabel("group :");
 	//this->groupboxtmp = new grouptree(this->current);
@@ -30,11 +30,13 @@ void menuconfigproject::configeneral()
 	QPushButton *b_actualiser = new QPushButton("Actualiser");
 	QPushButton *b_annuler = new QPushButton("Fermer");
     QPushButton *tablesql = new QPushButton("table sql");
+    QPushButton *sup_retour_chariot = new QPushButton("suprimer retour chariot");
 
 	//Connexions aux slots
 	//connect(b_valider, SIGNAL(clicked()), this, SLOT(changescope2()));
 	connect(b_annuler, SIGNAL(clicked()), this, SLOT(close()));
     connect(tablesql, SIGNAL(clicked(bool)), this, SLOT(showsql()));
+    connect(sup_retour_chariot, SIGNAL(clicked(bool)), this, SLOT(sup_retour_chariot()));
 
 	//Layout
 	QGroupBox *groupbox = new QGroupBox("");
@@ -53,6 +55,7 @@ void menuconfigproject::configeneral()
   //  layout->addWidget(b_actualiser, 1, 1, Qt::AlignRight);
   //  layout->addWidget(b_valider, 1, 2, Qt::AlignRight);
       layout->addWidget(tablesql, 2, 2, Qt::AlignLeft);
+      layout->addWidget(sup_retour_chariot, 3, 2, Qt::AlignLeft);
 	//setLayout(layout);
 	win->setLayout(layout);
 	this->addTab(win, "general");
@@ -98,4 +101,36 @@ void menuconfigproject::configgroupe()
 	//setLayout(layout);
 	win->setLayout(layout);*/
 	this->addTab(new sqldatatable(QString("groupname, groupparent"), "project_" + this->name + "_groupe", 2), "groupe");
+}
+
+void menuconfigproject::sup_retour_chariot()
+{
+    int i = -1;
+    QSqlQuery qry;
+
+    while (++i < p->listgroup.size())
+    {
+        if (p->listgroup[i].init)
+        {
+            p->listgroup[i].name.remove('\n');
+            qry.prepare("UPDATE project_" + p->name + "_groupe Set groupname=? WHERE id=?;");
+            qry.addBindValue(p->listgroup[i].name);
+            qry.addBindValue(i);
+            if (!(qry.exec()))
+                qDebug() << qry.lastError();
+        }
+    }
+    i = -1;
+    while (++i < p->listqgroup.size())
+    {
+        if (p->listqgroup[i].init)
+        {
+            p->listqgroup[i].name.remove('\n');
+            qry.prepare("UPDATE project_" + p->name + "_groupe Set groupname=? WHERE id=?;");
+            qry.addBindValue(p->listqgroup[i].name);
+            qry.addBindValue(i);
+            if (!(qry.exec()))
+                qDebug() << qry.lastError();
+        }
+    }
 }

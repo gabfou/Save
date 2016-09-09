@@ -9,7 +9,6 @@ class question;
 class group
 {
 private:
-	int parentid;
 	int generation = 0;
 	std::list<person> listp;
 	std::list<question> listq;
@@ -21,12 +20,13 @@ private:
 	void showgroupauxi(QTableWidget *gbox, int *i, int k, group gtmp, int ref, vector<question>::iterator tmp2);
 	void showgroupauxi(QTableWidget *gbox, int *i, int k, group gtmp, int ref, string questionname);
 public:
+    int parentid;
 	group();
 	virtual ~group();
 
-    group(string name, int parentid, int id, vector<group> &listgroup, int type, QString description);
+    group(QString name, int parentid, int id, vector<group> &listgroup, int type, QString description);
 	void addperson(person p);
-	string getName() const;
+    QString getName() const;
 	void addqfils(int id);
 	bool visible = true;
 	list<person> getListp();
@@ -43,7 +43,7 @@ public:
     t_groupref groupnamerep(const vector<question> & questionlist, int ref, QList<int> listqchild);
     QString grouprep(question tmp2, int ref);
 	int id;
-	string name;
+    QString name;
     QString description;
 	int type = -1;
 	std::list<int> getListqfils() const;

@@ -33,7 +33,7 @@ void infoquestion::typeshow(int type)
     }
 }
 
-infoquestion::infoquestion(project *p, MainWindow *m) : p(p), m(m)
+infoquestion::infoquestion(project *p, MainWindow *m) : info(p), m(m)
 {
 	QVBoxLayout *vbox = new QVBoxLayout();
     QHBoxLayout *hbox = new QHBoxLayout();
@@ -51,11 +51,9 @@ infoquestion::infoquestion(project *p, MainWindow *m) : p(p), m(m)
     selectlist = new listedit();
     selectlistlabel = new QLabel("option");
     unitlabel = new QLabel("Unitée");
-    infolabel = new QLabel("");
     groupbox = new grouptree(m, p->listgroup, 0);
     groupbox->headerItem()->setText(0, "Groupe cible");
 
-    vbox->addWidget(infolabel);
 	vbox->addWidget(new QLabel("Type"));
 	vbox->addWidget(type);
 	vbox->addWidget(new QLabel("Noms"));
@@ -72,7 +70,7 @@ infoquestion::infoquestion(project *p, MainWindow *m) : p(p), m(m)
     vbox->addWidget(b_update);
     hbox->addLayout(vbox);
     hbox->addWidget(groupbox);
-    this->setLayout(hbox);
+    cont->setLayout(hbox);
 
     this->prephide();
 
@@ -86,6 +84,8 @@ void infoquestion::updateib(QTreeWidgetItem * item)
 {
 	questiontreeitem *tmp = dynamic_cast<questiontreeitem*>(item);
 
+
+    this->updateibg(-1, -1);
     infolabel->setText("");
     this->prephide();
 	disconnect(cotmp);

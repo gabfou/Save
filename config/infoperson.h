@@ -3,10 +3,12 @@
 
 #include "le.h"
 #include "grouptree.h"
+#include "info.h"
+
 class listedit;
 class person;
 
-class infoperson : public QWidget
+class infoperson : public info
 {
 	Q_OBJECT
 public:
@@ -22,7 +24,6 @@ private:
 	QLineEdit *name;
 	QLineEdit *lastname;
 	QLineEdit *email;
-	project *p;
     person *pe = NULL;
 	QPushButton *b_update;
     QLabel *infolabel;

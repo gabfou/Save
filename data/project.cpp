@@ -50,7 +50,7 @@ project::project()
 
 }
 
-project::project(string fproject)
+project::project(QString fproject)
 {
 	this->initoroject(fproject);
 }
@@ -126,7 +126,7 @@ void project::addreponse(int id, string name, int time, int note, string date, i
 	}
 }
 
-inline void project::addgroup(string name, int parentid, unsigned int id, int type, QString description)
+inline void project::addgroup(QString name, int parentid, unsigned int id, int type, QString description)
 {
 	if (type == 0)
 	{
@@ -182,7 +182,7 @@ int listcompare(list<person> listp, QString line)
 	return (0);
 }
 
-void project::initoroject(string fproject)
+void project::initoroject(QString fproject)
 {
 	this->name = fproject;
 	QSqlQuery query;
@@ -193,11 +193,11 @@ void project::initoroject(string fproject)
     this->listquestion.clear();
     this->addgroup("ALL", -1, 0, 0, "");
     this->addgroup("ALL", -1, 0, 1, "");
-    if(query.exec(("SELECT groupname, groupparent, id, type, description FROM project_" + fproject + "_groupe").c_str()))
+    if(query.exec(("SELECT groupname, groupparent, id, type, description FROM project_" + fproject + "_groupe")))
 	{
 		while(query.next())
 		{
-			this->addgroup(query.value(0).toString().toStdString(),
+            this->addgroup(query.value(0).toString(),
 						   query.value(1).toInt(),
 						   query.value(2).toInt(),
                            query.value(3).toInt(),
@@ -206,7 +206,7 @@ void project::initoroject(string fproject)
 	}
 	else
 		qDebug() << "error get group :" << query.lastError();
-    if(query.exec(("SELECT question,groupid,id,qgroupid,sujet,type,typef,splitchar,value,ref_only FROM project_" + fproject + "_question").c_str()))
+    if(query.exec(("SELECT question,groupid,id,qgroupid,sujet,type,typef,splitchar,value,ref_only FROM project_" + fproject + "_question")))
 	{
 		while(query.next())
 		{
@@ -224,7 +224,7 @@ void project::initoroject(string fproject)
 	}
 	else
 		qDebug() << "error get question :" << query.lastError();
-	if(query.exec(("SELECT id, firstname,lastname,email,groupid FROM project_" + fproject + "_project").c_str()))
+    if(query.exec(("SELECT id, firstname,lastname,email,groupid FROM project_" + fproject + "_project")))
 	{
 		while(query.next())
 		{
@@ -238,7 +238,7 @@ void project::initoroject(string fproject)
 	}
 	else
 		qDebug() << "error get user :" << query.lastError();
-    if(query.exec(("SELECT idperson,name,time,note,date_info, iteration, idquestion FROM project_" + fproject + "_reponse").c_str()))
+    if(query.exec(("SELECT idperson,name,time,note,date_info, iteration, idquestion FROM project_" + fproject + "_reponse")))
 	{
 		while(query.next())
 		{
@@ -362,7 +362,7 @@ void	project::questiongroupqchild(int id, QList<int> & ret) const
     listqi = listq.begin();
     while (listqi != listq.end())
     {
-        qDebug() << "questiongroupchild : " << listqi->id;
+        //qDebug() << "questiongroupchild : " << listqi->id;
         ret << listqi->id;
         listqi++;
     }
@@ -370,7 +370,7 @@ void	project::questiongroupqchild(int id, QList<int> & ret) const
     listpg = listint.begin();
     while (listpg != listint.end())
     {
-        qDebug() << "questiongroupchild number group: " << QString::number(*listpg);
+        //qDebug() << "questiongroupchild number group: " << QString::number(*listpg);
         this->questiongroupqchild(*listpg, ret);
         listpg++;
     }
@@ -418,7 +418,7 @@ QStringList	project::sendproject(Smtp * smtp)
 {
     vector<person>::iterator tmp;
     QStringList listmail;
-    QString post = (this->name.c_str());
+    QString post = (this->name);
     post.append("&");
     post.append(this->postquestion("ALL"));
 

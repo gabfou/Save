@@ -3,24 +3,34 @@
 #include "data/project.h"
 
 
-int	addgroup(QString nameproject, QString name, int groupparent, int type, QString description, project *p)
+int	addgroup(project *p, QString nameproject, QString name, int groupparent, int type, QString description, int id)
 {
 	QSqlQuery qry;
 
-	qry.prepare( "CREATE TABLE IF NOT EXISTS project_" + nameproject + "_groupe (id INTEGER UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT, groupname VARCHAR(500), groupparent INTEGER DEFAULT 0, type BOOLEAN DEFAULT 0)" );
-	if( !qry.exec() )
-		qDebug() << qry.lastError();
-	else
-		qDebug() << "groupe Table created!";
-	qry.prepare( "INSERT INTO project_" + nameproject + "_groupe (groupname ,groupparent ,type) VALUES ( ? , ? , ? );" );
+    if (id != -1)
+        qry.prepare(("UPDATE project_" + p->name + "_groupe Set groupname=?, groupparrent=?, type=?, description=? WHERE id=?;"));
+    else
+        qry.prepare( "INSERT INTO project_" + nameproject + "_groupe (groupname ,groupparent ,type, description) VALUES ( ? , ? , ? , ? );" );
 	qry.addBindValue(name);
 	qry.addBindValue(QString::number(groupparent));
 	qry.addBindValue(QString::number(type));
+    if (id != -1)
+        qry.addBindValue(id);
 	if( !qry.exec() )
 		qDebug() << qry.lastError();
 	else
 		qDebug() << "groupe insert success!";
-	p->addgroup(name.toStdString(), groupparent, qry.lastInsertId().toInt(), type, description);
+    if (id == -1)
+        p->addgroup(name, groupparent, qry.lastInsertId().toInt(), type, description);
+    else
+    {
+        vector<group> *tmp = (type == 0) ? &p->listgroup : &p->listqgroup;
+        (*tmp)[id].parentid = groupparent;
+        (*tmp)[id].type = type;
+        (*tmp)[id].description = description;
+        (*tmp)[id].name = name;
+
+    }
 	return (qry.lastInsertId().toInt());
 }
 
@@ -43,13 +53,13 @@ int	addquestion(project *p, QString name, int groupid, QString type, int note, Q
 	QSqlQuery qry;
 
 	if (id != -1)
-		qry.prepare(("UPDATE project_" + p->name + "_question Set question=?, groupid=?, type=?, note=?, sujet=?, typef=?, qgroupid=?, ref_only=?, splitchar=? WHERE id=?;").c_str());
+        qry.prepare(("UPDATE project_" + p->name + "_question Set question=?, groupid=?, type=?, note=?, sujet=?, typef=?, qgroupid=?, ref_only=?, splitchar=? WHERE id=?;"));
 	else
 	{
-//		qry.prepare( ("CREATE TABLE IF NOT EXISTS project_" + p->name + "_question (id INTEGER UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT, question VARCHAR(30), groupid INTEGER, type VARCHAR(30), note BOOLEAN DEFAULT 1, sujet VARCHAR(300), qgroupid INT DEFAULT 0, typef INT DEFAULT 0)").c_str() );
+//		qry.prepare( ("CREATE TABLE IF NOT EXISTS project_" + p->name + "_question (id INTEGER UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT, question VARCHAR(30), groupid INTEGER, type VARCHAR(30), note BOOLEAN DEFAULT 1, sujet VARCHAR(300), qgroupid INT DEFAULT 0, typef INT DEFAULT 0)") );
 //		if( !qry.exec() )
 //			qDebug() << qry.lastError();
-		qry.prepare( ("INSERT INTO project_" + p->name + "_question (question , groupid , type , note , sujet , typef, qgroupid, ref_only, splitchar ) VALUES ( ? , ? , ? , ? , ?, ?, ?, ?, ? );").c_str() );
+        qry.prepare( ("INSERT INTO project_" + p->name + "_question (question , groupid , type , note , sujet , typef, qgroupid, ref_only, splitchar ) VALUES ( ? , ? , ? , ? , ?, ?, ?, ?, ? );") );
 	}
 	qry.addBindValue(name);
 	qry.addBindValue(groupid);
@@ -102,18 +112,19 @@ void	supquest(project *p, QString nameproject, int id)
 	p->listquestion[id] = question();
 }
 
-int	addperson(project *p, QString firstname, QString lastname, QString email, int groupid, int id)
+int	addperson(project *p, QString firstname, QString lastname,
+              QString email, int groupid, int id)
 {
 	QSqlQuery qry;
 
 	if (id != -1)
-        qry.prepare(("UPDATE project_" + p->name + "_project Set firstname=?, lastname=?, email=?, groupid=?, passwd=? WHERE id=?;").c_str());
+        qry.prepare(("UPDATE project_" + p->name + "_project Set firstname=?, lastname=?, email=?, groupid=?, passwd=? WHERE id=?;"));
 	else
 	{
 //		qry.prepare( ("CREATE TABLE IF NOT EXISTS project_" + p->name + "_project (id INTEGER UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT, person VARCHAR(30), groupid INTEGER, type VARCHAR(30), note BOOLEAN DEFAULT 1, sujet VARCHAR(300), qgroupid INT DEFAULT 0, typef INT DEFAULT 0)").c_str() );
 //		if( !qry.exec() )
 //			qDebug() << qry.lastError();
-        qry.prepare( ("INSERT INTO project_" + p->name + "_project (firstname, lastname, email, groupid ) VALUES ( ? , ? , ? , ? );").c_str() );
+        qry.prepare( ("INSERT INTO project_" + p->name + "_project (firstname, lastname, email, groupid ) VALUES ( ? , ? , ? , ? );") );
 	}
 	qry.addBindValue(firstname);
 	qry.addBindValue(lastname);
@@ -153,6 +164,8 @@ int	addperson(project *p, QString firstname, QString lastname, QString email, in
 void	supperson(project *p, QString nameproject, int id)
 {
     qDebug() << id;
+    if (id < 0)
+        return ;
 	QSqlQuery qry;
     qry.prepare( "DELETE FROM project_" + nameproject + "_project WHERE id=?;" );
 	qry.addBindValue(id);

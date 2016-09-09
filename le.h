@@ -94,7 +94,7 @@ void warning(QString error);
 t_groupref syntheselistgroup(QList<t_groupref> listg);
 void gen_random(char *s, const int len);
 void sendmail(QString mail, QString body);
-int addgroup(QString nameproject, QString name, int groupparent, int type, QString description, project *p);
+int addgroup(project *p, QString nameproject, QString name, int groupparent, int type, QString description, int id = -1);
 void	supgroup(QString nameproject, int id, vector<group> &g);
 void	supquest(project *p, QString nameproject, int id);
 int	addquestion(project *p, QString name, int groupid, QString type, int note, QString description, int qgroupid, int typef, bool ref_only, QString splitchar, int val, int id = -1);

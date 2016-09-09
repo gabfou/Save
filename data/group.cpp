@@ -12,7 +12,7 @@ group::group()
 
 QColor panelgcolor[5] = {Qt::cyan, Qt::magenta, Qt::yellow, Qt::blue, Qt::darkGreen};
 
-string group::getName() const{return this->name;}
+QString group::getName() const{return this->name;}
 list<person> group::getListp(){return this->listp;}
 int group::getGeneration() const{return generation;}
 int group::getParentid() const{return parentid;}
@@ -22,7 +22,7 @@ void group::setColor(const QColor &value){color = value;}
 
 void	group::addfils(int id)
 {
-	qDebug() << this->name.c_str() << " addfils: " << QString::number(id) << QString::number((long int)this);
+    qDebug() << this->name << " addfils: " << QString::number(id) << QString::number((long int)this);
 	int dafuq = id;
 	if (this->listfils.empty())
 		qDebug() << "emptyfils";
@@ -46,7 +46,7 @@ void    group::supquestion(int id)
 
 void    group::supperson(int id)
 {
-    if (init == 0)
+    if (id < 0 || !this || init == 0)
         return ;
     list<person>::iterator tmp = listp.begin();
 
@@ -61,7 +61,7 @@ void    group::supperson(int id)
     }
 }
 
-group::group(string name, int parentid, int id, vector<group> & listgroup, int type, QString description) : type(type)
+group::group(QString name, int parentid, int id, vector<group> & listgroup, int type, QString description) : type(type)
 {
     this->init = 1;
 	this->name = name;
@@ -119,7 +119,7 @@ t_groupref group::groupnamerep(const vector<question> &questionlist, int ref, QL
 {
 	t_groupref ret;
 
-	ret.name = this->name.c_str();
+    ret.name = this->name;
     ret.list = this->grouprep(questionlist, ref, listqchild);
 
 	return ret;

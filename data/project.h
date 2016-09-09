@@ -26,7 +26,7 @@ public:
     int gref = 0;
     int gqref = 0;
     void addquestion(QString name, int group, unsigned int id, int qgroupid, QString sujet, QString unit, int type, QString splitchar, int value, bool ref_only);
-	string name;
+    QString name;
     vector<person> listp;
 	vector<question> listquestion;
 	vector<group> listgroup;
@@ -34,8 +34,8 @@ public:
 
 	void checkmailcalendar();
 	project();
-	project(string fproject);
-	void initoroject(string fproject);
+    project(QString fproject);
+    void initoroject(QString fproject);
 	~project();
 //public slots:
     void addperson(QString name, QString lastname, QString email);
@@ -45,7 +45,7 @@ public:
     void addreponse(int id, string name, int time, int note, string date, int iteration, int idquestion);
     QStringList sendproject(Smtp *smtp);
 	void convert_to_xlsx();
-    void addgroup(string name, int parentid, unsigned int id, int type, QString description);
+    void addgroup(QString name, int parentid, unsigned int id, int type, QString description);
 	vector<group> getListgroup() const;
 	void setListgroup(const vector<group> &value);
 	QList<t_groupref> getgrouplist(int id, int qid = 0);

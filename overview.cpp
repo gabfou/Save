@@ -10,7 +10,7 @@ overview::overview(MainWindow *m, project *p, int group, int *showmod) : p(p), s
     if (*showmod == 2) // provisoire la meme en dessous
         group = 0;
     QList<headertableitem*> headertable;
-    headertable.push_back(new headertableitem(p, p->listgroup[group].name.c_str(), p->listgroup[group]));
+    headertable.push_back(new headertableitem(p, p->listgroup[group].name, p->listgroup[group]));
     bar = new bargraph(syntheselistgroup(p->getgrouplist(group)), p, m);
     barref = new bargraph(syntheselistgroup(p->getgrouplistref(group)), p, m);
     bar->setName("Reel");

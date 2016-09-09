@@ -13,11 +13,13 @@ public:
     menuconfigproject(QString name, project *p, MainWindow *m);
 private slots:
     void showsql();
+    void sup_retour_chariot();
 private:
 	QTabWidget *tab;
 	void configeneral();
 	void configgroupe();
 	QString name;
+    project *p;
 };
 
 #endif // MENUCONFIGPROJECT_H

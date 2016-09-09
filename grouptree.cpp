@@ -11,7 +11,7 @@ grouptree::grouptree(MainWindow *m, vector<group> & g, int i) : g(g), m(m), i(i)
 {
 	if (g.empty())
 		this->addTopLevelItem(new QTreeWidgetItem((QTreeWidget*)0, QStringList(QString("Aucun projet ouvert"))));
-	this->addTopLevelItem(new grouptreeitem(QStringList(QString(g[0].getName().c_str())), &(m->current), 0, g[0].type, i, (QTreeWidget*)0));
+    this->addTopLevelItem(new grouptreeitem(QStringList(QString(g[0].getName())), &(m->current), 0, g[0].type, i, (QTreeWidget*)0));
 
 	this->setCurrentItem(this->topLevelItem(0));
 
@@ -132,8 +132,8 @@ void	grouptree::addgroupintree2(QTreeWidgetItem *item, int column)
 	(void)column;
 	disconnect(cotmp);
 	qDebug() << item->text(0);
-	int niark = addgroup(m->namecurrent, item->text(0), tmpid, g[tmpid].type, "", &(m->current));
-	item->parent()->addChild(new grouptreeitem(QStringList(QString(g[niark].getName().c_str())), &(m->current), niark, g[niark].type, i, (QTreeWidget*)0));
+    int niark = addgroup(&(m->current), m->namecurrent, item->text(0), tmpid, g[tmpid].type, "");
+    item->parent()->addChild(new grouptreeitem(QStringList(QString(g[niark].getName())), &(m->current), niark, g[niark].type, i, (QTreeWidget*)0));
 	delete item;
 	item = NULL;
 	qDebug() << "upadte ?";
@@ -238,7 +238,7 @@ void	grouptree::modifdgroupintree()
 
 void	grouptree::modifdgroupintree2()
 {
-	sqlupdate(("project_" + m->current.name + "_groupe").c_str(), "description", texttmp->toPlainText(), dynamic_cast<grouptreeitem*>(this->currentItem())->getId());
+    sqlupdate(("project_" + m->current.name + "_groupe"), "description", texttmp->toPlainText(), dynamic_cast<grouptreeitem*>(this->currentItem())->getId());
 	g[dynamic_cast<grouptreeitem*>(this->currentItem())->getId()].description = texttmp->toPlainText();
 }
 

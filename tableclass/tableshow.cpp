@@ -244,7 +244,7 @@ void	tableshow::sethorizontalheader(MainWindow *mainp)
         //k = i;
         while (tmp != p->listgroup.end())
         {
-            this->setHorizontalHeaderItem(i++, new headertableitem(p, ("Moyenne " + tmp->name + "").c_str(), *tmp, "%"));
+            this->setHorizontalHeaderItem(i++, new headertableitem(p, ("Moyenne " + tmp->name + ""), *tmp, "%"));
             //this->setHorizontalHeaderItem(i++, new QTableWidgetItem(("temps a " + tmp2->name + " reel").c_str()));
             tmp++;
         }
@@ -279,10 +279,10 @@ void	tableshow::setverticalheader(vector<question> &q, int id)
             int i37 = (gtmp->getGeneration() == -1) ? 0 : gtmp->getGeneration();
             while (gtmp->getGeneration() > 0)
             {
-                this->setItem(i, gtmp->getGeneration() - 1, new QTableWidgetItem(gtmp->getName().c_str()));
+                this->setItem(i, gtmp->getGeneration() - 1, new QTableWidgetItem(gtmp->getName()));
                 gtmp = &(p->listqgroup[gtmp->getParentid()]);
             }
-            this->setVerticalHeaderItem(i, new headertableitem(p, gtmp->getName().c_str(), *listqtmp));
+            this->setVerticalHeaderItem(i, new headertableitem(p, gtmp->getName(), *listqtmp));
             this->setItem(i++, i37, new QTableWidgetItem(listqtmp->name));
             listqtmp++;
         }
@@ -307,11 +307,11 @@ void	tableshow::setverticalheader(vector<group> &g, int id)
             return ;
         while (gtmp->getGeneration() > 0)
         {
-            this->setItem(i, gtmp->getGeneration() - 1, new QTableWidgetItem(gtmp->getName().c_str()));
+            this->setItem(i, gtmp->getGeneration() - 1, new QTableWidgetItem(gtmp->getName()));
             //gbox->item(*i, gtmp->getGeneration() - 1)->setBackgroundColor(Qt::red);
             gtmp = &(g[gtmp->getParentid()]);
         }
-        this->setVerticalHeaderItem(i++, new headertableitem(p, gtmp->getName().c_str(), (g[*listpg])));
+        this->setVerticalHeaderItem(i++, new headertableitem(p, gtmp->getName(), (g[*listpg])));
         listpg++;
         //gbox->verticalHeaderItem(i)->setBackgroundColor(gtmp->getColor());
     }

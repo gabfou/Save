@@ -338,7 +338,7 @@ void MainWindow::addproject2()
 	if(!qry.exec())
 		qDebug() << "create etude" << qry.lastError();
 
-	this->current.initoroject(this->nametmp->text().toStdString());
+    this->current.initoroject(this->nametmp->text());
 	//this->current->projectshow(this, this->table, this->currentgref);
 	this->namecurrent = this->nametmp->text();
 }
@@ -562,7 +562,7 @@ void MainWindow::mailSent(QString status)
 
 void MainWindow::updateproject()
 {
-	this->current.initoroject(this->namecurrent.toStdString());
+    this->current.initoroject(this->namecurrent);
 	delete this->table;
 	this->table = new tableshow(&(this->current), this, &(this->showmod));
 	this->table->showtable(this->currentgref, this->currentgqref);

@@ -3,9 +3,11 @@
 
 #include "le.h"
 #include "grouptree.h"
+#include "info.h"
+
 class listedit;
 
-class infoquestion : public QWidget
+class infoquestion : public info
 {
 	Q_OBJECT
 public:
@@ -25,15 +27,13 @@ private:
 	QLineEdit *description;
 	QLineEdit *unit;
 	QComboBox *type;
-	QSpinBox *value;
-	project *p;
+    QSpinBox *value;
     MainWindow *m;
 	question *q = NULL;
 	QPushButton *b_update;
     listedit *selectlist;
     QLabel *selectlistlabel;
     QLabel *unitlabel;
-    QLabel *infolabel;
 	int init;
 	int qgroupid;
     QStringList listchar;
