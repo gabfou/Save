@@ -7,6 +7,7 @@ class project;
 class MainWindow;
 class group;
 class grouptreeitem;
+class infoquestion;
 
 class grouptree : public QTreeWidget
 {
@@ -21,10 +22,12 @@ class grouptree : public QTreeWidget
 	QAction *supq;
     QAction *newp;
     QAction *supp;
+    QAction *newqg;
     QPlainTextEdit *texttmp;
     QAction *modifdg;
 	QMetaObject::Connection cotmp;
 	int i;
+    infoquestion *infoqtmp;
 public:
 	grouptree();
 	~grouptree();
@@ -46,6 +49,8 @@ private slots:
     void addpersonintree();
     void addpersonintree2(QTreeWidgetItem *item, int column);
     void suppersonintree();
+    void addquestglobintree();
+    void addquestglobintree2();
 };
 
 #endif // GROUPTREE_H

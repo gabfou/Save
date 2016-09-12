@@ -6,12 +6,12 @@ question::question()
 }
 
 
-question::question(QString a, int b, int id, int qgroupid, QString sujet, QString unit, int type, QString splitchar, int value, bool ref_only)
+question::question(QString name, int groupcible, int id, int qgroupid, QString sujet, QString unit, int type, QString splitchar, int value, bool ref_only)
 {
-	this->name = a;
-	this->group = b;
+    this->name = name;
+    this->group = groupcible;
 	this->id = id;
-	this->qgroupid = qgroupid;
+    this->qgroupid = qgroupid;
 	this->sujet = sujet;
 	this->unit = unit;
     this->type = type;

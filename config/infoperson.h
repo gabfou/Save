@@ -20,6 +20,7 @@ public slots:
 private slots:
     void updatebdd();
 private:
+    QWidget *contp;
 	QMetaObject::Connection cotmp;
 	QLineEdit *name;
 	QLineEdit *lastname;
@@ -29,6 +30,7 @@ private:
     QLabel *infolabel;
 	int init;
 	int groupid;
+    QVBoxLayout *vbox;
     void prephide();
 };
 

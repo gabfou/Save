@@ -8,7 +8,8 @@
 
 infoperson::infoperson(project *p, MainWindow *m) : info(p)
 {
-	QVBoxLayout *vbox = new QVBoxLayout();
+    vbox = new QVBoxLayout();
+    contp = new QWidget();
 	name = new QLineEdit();
 	lastname = new QLineEdit();
 	email = new QLineEdit();
@@ -21,7 +22,8 @@ infoperson::infoperson(project *p, MainWindow *m) : info(p)
 	vbox->addWidget(new QLabel("Email"));
 	vbox->addWidget(email);
     vbox->addWidget(b_update);
-    cont->setLayout(vbox);
+    contp->setLayout(vbox);
+    vboxinfo->addWidget(contp);
 
 	//slot
 
@@ -41,6 +43,7 @@ void infoperson::updateib(QTreeWidgetItem * item)
         grouptreeitem *tmp2 = dynamic_cast<grouptreeitem*>(item);
         if (tmp2)
         {
+            contp->hide();
             groupid = tmp2->getId();
             infolabel->setText("Groupe");
         }
@@ -51,6 +54,8 @@ void infoperson::updateib(QTreeWidgetItem * item)
         }
 		return ;
     }
+    contg->hide();
+    contp->show();
     grouptreeitem *tmp2 = dynamic_cast<grouptreeitem*>(item->parent());
     infolabel->setText("Utilisateur");
     groupid = tmp2->getId();

@@ -92,6 +92,19 @@ void gen_random(char *s, const int len)
 	s[len] = 0;
 }
 
+QList<int> QStrltoQil(QStringList &src)
+{
+    QList<int> ret;
+    QStringList::iterator i = src.begin();
+
+    while(i != src.end())
+    {
+        ret.push_back(i->toInt());
+        i++;
+    }
+    return (ret);
+}
+
 void sendmail(QString mail, QString body)
 {
 	QString username = "etudes@muranoconseil.com";

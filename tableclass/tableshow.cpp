@@ -332,7 +332,7 @@ void	tableshow::populate()
 
 void	tableshow::select(int gref, int gqref)
 {
-    QList<int> listint;
+/*    QList<int> listint;
     QList<int> listqint;
 
     p->groupqchild(gqref, listqint);
@@ -344,12 +344,6 @@ void	tableshow::select(int gref, int gqref)
     while (++h < this->rowCount())
     {
         tmp = (dynamic_cast<headertableitem*>(this->verticalHeaderItem(h)));
- /*       qDebug() << listint;
-        qDebug() << listqint;
-        if (!tmp)
-            qDebug() << "dynamic_cast<headertableitem*> fail tableshowselect";
-        else
-            qDebug() << "dynamic_cast<headertableitem*> id = " << tmp->id;*/
         if (tmp && tmp->is_in(this->p->listgroup , this->p->listqgroup, listint, listqint))
             this->showRow(h);
         else
@@ -360,18 +354,11 @@ void	tableshow::select(int gref, int gqref)
     while (++h < this->columnCount())
     {
         tmp = (dynamic_cast<headertableitem*>(this->horizontalHeaderItem(h)));
-/*        qDebug() << listint;
-        qDebug() << listqint;
-        if (!tmp)
-            qDebug() << "dynamic_cast<headertableitem*> fail tableshowselect";
-        else
-            qDebug() << "dynamic_cast<headertableitem*> id = " << tmp->id;*/
-        //listint.contains(tmp->id)
         if (tmp && tmp->is_in(this->p->listgroup, this->p->listqgroup, listint, listqint))
             this->showColumn(h);
         else
             this->hideColumn(h);
-    }
+    }*/
 }
 
 void	tableshow::clearheader()

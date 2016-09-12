@@ -14,8 +14,9 @@ public slots:
     void updateibg(int id, int type);
 protected:
     QLabel      *infolabel;
-    QWidget     *cont;
-    QVBoxLayout *vbox;
+    QWidget     *contg;
+    QVBoxLayout *vboxinfo;
+    QVBoxLayout *infog;
     project     *p;
 
 private:

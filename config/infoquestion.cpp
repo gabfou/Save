@@ -33,10 +33,11 @@ void infoquestion::typeshow(int type)
     }
 }
 
-infoquestion::infoquestion(project *p, MainWindow *m) : info(p), m(m)
+infoquestion::infoquestion(project *p, MainWindow *m, int con) : info(p), m(m)
 {
 	QVBoxLayout *vbox = new QVBoxLayout();
-    QHBoxLayout *hbox = new QHBoxLayout();
+    contq = new QWidget();
+    hbox = new QHBoxLayout();
 	type = new QComboBox();
 	type->addItem("Nombre");
 	type->addItem("Radio");
@@ -70,20 +71,28 @@ infoquestion::infoquestion(project *p, MainWindow *m) : info(p), m(m)
     vbox->addWidget(b_update);
     hbox->addLayout(vbox);
     hbox->addWidget(groupbox);
-    cont->setLayout(hbox);
+    contq->setLayout(hbox);
+    vboxinfo->addWidget(contq);
 
+    contq->hide();
     this->prephide();
 
 	//slot
-
-	cotmp = connect(b_update, SIGNAL(clicked(bool)), this, SLOT(updatebdd()));
+    if (con)
+        cotmp = connect(b_update, SIGNAL(clicked(bool)), this, SLOT(updatebdd()));
     connect(type, SIGNAL(currentIndexChanged(int)), this, SLOT(typeshow(int)));
+}
+
+void infoquestion::setquestionmod(int qgroupid)
+{
+    contg->hide();
+    contq->show();
+    this->qgroupid = qgroupid;
 }
 
 void infoquestion::updateib(QTreeWidgetItem * item)
 {
 	questiontreeitem *tmp = dynamic_cast<questiontreeitem*>(item);
-
 
     this->updateibg(-1, -1);
     infolabel->setText("");
@@ -96,7 +105,8 @@ void infoquestion::updateib(QTreeWidgetItem * item)
         grouptreeitem *tmp2 = dynamic_cast<grouptreeitem*>(item);
         if (tmp2)
         {
-            infolabel->setText("Groupe");
+            contq->hide();
+            this->updateibg(tmp2->getId(), 1);
             qgroupid = tmp2->getId();
         }
         else
@@ -106,6 +116,8 @@ void infoquestion::updateib(QTreeWidgetItem * item)
         }
 		return ;
     }
+    contg->hide();
+    contq->show();
     grouptreeitem *tmp2 = dynamic_cast<grouptreeitem*>(item->parent());
     qgroupid = tmp2->getId();
     infolabel->setText("Question");
@@ -127,6 +139,14 @@ void infoquestion::updateib(QTreeWidgetItem * item)
     ref_only->setChecked(q->ref_only);
 //    listchar =
 //	value->setText(q.value);
+}
+
+question infoquestion::getquestioncopy()
+{
+    question ret = question(name->text(), dynamic_cast<grouptreeitem*>(groupbox->currentItem())->getId(), -1,
+                              qgroupid, description->text(), unit->text(), type->currentIndex(),
+                              selectlist->getlstr().join(" "),value->text().toInt(), ref_only->isChecked());
+    return (ret);
 }
 
 void infoquestion::updatebdd()

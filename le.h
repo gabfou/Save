@@ -101,6 +101,7 @@ int	addquestion(project *p, QString name, int groupid, QString type, int note, Q
 void    sqlupdate(QString tablename, QString colname, QString str, int id);
 void	supperson(project *p, QString nameproject, int id);
 int	addperson(project *p, QString firstname, QString lastname, QString email, int groupid, int id = -1);
+QList<int> QStrltoQil(QStringList &src);
 
 //global
 extern bool g_ref;

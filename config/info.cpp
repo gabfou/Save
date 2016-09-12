@@ -4,19 +4,22 @@
 
 info::info(project *p) : p(p)
 {
-    vbox = new QVBoxLayout();
-    cont = new QWidget();
-    infolabel = new QLabel("");
+    vboxinfo = new QVBoxLayout();
+    contg = new QWidget();
+    infog = new QVBoxLayout();
+    infolabel = new QLabel("test");
     descriptiong = new QLineEdit();
     b_update = new QPushButton("Enregistrer");
 
-    vbox->addWidget(infolabel);
-    vbox->addWidget(cont);
+    vboxinfo->addWidget(infolabel);
 
-    vbox->addWidget(new QLabel("description"));
-    vbox->addWidget(descriptiong);
-    vbox->addWidget(b_update);
-    cont->setLayout(vbox);
+    infog->addWidget(new QLabel("description"));
+    infog->addWidget(descriptiong);
+    infog->addWidget(b_update);
+    contg->setLayout(infog);
+    vboxinfo->addWidget(contg);
+    this->setLayout(vboxinfo);
+    contg->hide();
 
     //slot
 
@@ -35,7 +38,8 @@ void info::updateibg(int id, int type)
         current = &(p->listgroup[id]);
     if (type == 1)
         current = &(p->listqgroup[id]);
-    cont->setLayout(vbox);
+    infolabel->setText("groupe");
+    contg->show();
 }
 
 void info::updatebddg()

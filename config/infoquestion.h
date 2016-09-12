@@ -11,8 +11,11 @@ class infoquestion : public info
 {
 	Q_OBJECT
 public:
-    infoquestion(project *p, MainWindow *m);
+    infoquestion(project *p, MainWindow *m, int con = 1);
+    QPushButton *b_update;
 
+    question getquestioncopy();
+    void setquestionmod(int qgroupid);
 public slots:
 	void updateib(QTreeWidgetItem *item);
 
@@ -20,6 +23,8 @@ private slots:
     void updatebdd();
     void typeshow(int type);
 private:
+    QWidget *contq;
+    QHBoxLayout *hbox;
     grouptree *groupbox;
 	QMetaObject::Connection cotmp;
 	QLineEdit *name;
@@ -30,7 +35,6 @@ private:
     QSpinBox *value;
     MainWindow *m;
 	question *q = NULL;
-	QPushButton *b_update;
     listedit *selectlist;
     QLabel *selectlistlabel;
     QLabel *unitlabel;

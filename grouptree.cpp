@@ -6,6 +6,7 @@
 #include "questiontreeitem.h"
 #include "persontreeitem.h"
 #include "tableclass/tableshow.h"
+#include "config/infoquestion.h"
 
 grouptree::grouptree(MainWindow *m, vector<group> & g, int i) : g(g), m(m), i(i)
 {
@@ -21,6 +22,10 @@ grouptree::grouptree(MainWindow *m, vector<group> & g, int i) : g(g), m(m), i(i)
 	newg = new QAction(QString("Nouveaux"), this);
 	this->addAction(newg);
 	connect(newg, SIGNAL(triggered()), this, SLOT(addgroupintree()));
+
+    newqg = new QAction(QString("Nouvelle question globale"), this);
+    this->addAction(newqg);
+    connect(newqg, SIGNAL(triggered()), this, SLOT(addquestglobintree()));
 
 	supg = new QAction(QString("Suprimer"), this);
 	this->addAction(supg);
@@ -66,13 +71,17 @@ void	grouptree::contextmenuselect()
 	newp->setVisible(false);
 	supp->setVisible(false);
 	modifdg->setVisible(false);
+    newqg->setVisible(false);
 	if (tmp)
 	{
 		newg->setVisible(true);
 		supg->setVisible(true);
 		modifdg->setVisible(true);
 		if (g[0].type == 1 && i == 1)
+        {
+            newqg->setVisible(true);
 			newq->setVisible(true);
+        }
 		else if (g[0].type == 0 && i == 1)
 			newp->setVisible(true);
 		return ;
@@ -173,6 +182,22 @@ void	grouptree::addquestintree2(QTreeWidgetItem *item, int column)
 	item = NULL;
 }
 
+void	grouptree::addquestglobintree()
+{
+    infoqtmp = new infoquestion(&(m->current), m, 0);
+    infoqtmp->setquestionmod(dynamic_cast<grouptreeitem*>(this->currentItem())->getId());
+    infoqtmp->show();
+
+    connect(infoqtmp->b_update, SIGNAL(clicked(bool)), this, SLOT(addquestglobintree2()));
+}
+
+void	grouptree::addquestglobintree2()
+{
+    dynamic_cast<grouptreeitem*>(this->currentItem())->addquestglobinttree(infoqtmp->getquestioncopy());
+    m->table->reinit(&(m->current), m);
+    m->table->showtable(m->currentgref, m->currentgqref);
+}
+
 void	grouptree::addpersonintree()
 {
 	//QWidget *win = new QWidget();
@@ -223,7 +248,7 @@ void	grouptree::modifdgroupintree()
 	//Boutons
 	QPushButton *b_valider = new QPushButton("Valider");
 
-	//Connexions aux slots
+    //Connexions aux slots
 	connect(b_valider, SIGNAL(clicked()), this, SLOT(modifdgroupintree2()));
 	connect(b_valider, SIGNAL(clicked()), win, SLOT(close()));
 

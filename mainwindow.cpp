@@ -301,7 +301,8 @@ void MainWindow::addproject2()
 				" groupname VARCHAR(500),"
 				" groupparent INTEGER DEFAULT 0,"
 				" type BOOLEAN DEFAULT 0,"
-				" description VARCHAR(300) NOT NULL DEFAULT '')" );
+                " description VARCHAR(300) NOT NULL DEFAULT '',"
+                " etape BOOLEAN DEFAULT 1)" );
 	if(!qry.exec())
 		qDebug() << "create groupe" << qry.lastError();
 
@@ -554,6 +555,7 @@ void MainWindow::sendproject_ref()
 
 void MainWindow::mailSent(QString status)
 {
+    (void)status;
 //	if(status == "Message sent")
 //		QMessageBox::warning( 0, tr( "Qt Simple SMTP client" ), tr( "Message sent!\n\n" ) );
 }

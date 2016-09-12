@@ -19,16 +19,16 @@ void grouptreeitem::setVisiblenongroup(bool v)
 
     while(++i < this->childCount())
     {
-        if (tmpg = dynamic_cast<grouptreeitem*>(this->child(i)))
+        if ((tmpg = dynamic_cast<grouptreeitem*>(this->child(i))))
             tmpg->setVisiblenongroup(v);
-        else if(tmpq = dynamic_cast<questiontreeitem*>(this->child(i)))
+        else if((tmpq = dynamic_cast<questiontreeitem*>(this->child(i))))
             tmpq->setHidden((v) ? false : true);
-        else if(tmpp = dynamic_cast<persontreeitem*>(this->child(i)))
+        else if((tmpp = dynamic_cast<persontreeitem*>(this->child(i))))
             tmpp->setHidden((v) ? false : true);
     }
 }
 
-grouptreeitem::grouptreeitem(QStringList str, project * p, int id, int type, int mod, QTreeWidget *parent) : QTreeWidgetItem(parent, str), typeg(type)
+grouptreeitem::grouptreeitem(QStringList str, project * p, int id, int type, int mod, QTreeWidget *parent) : QTreeWidgetItem(parent, str), typeg(type), p(p)
 {
 	vector<group> &g = (type == 0) ? p->listgroup : p->listqgroup;
 	list<int>::iterator listpg;
@@ -39,6 +39,7 @@ grouptreeitem::grouptreeitem(QStringList str, project * p, int id, int type, int
 	while (listpg != listint.end())
 	{
         this->addChild(new grouptreeitem(QStringList(QString(g[*listpg].getName())), p, *listpg, type, mod, (QTreeWidget*)0));
+        nbgchild++;
 		listpg++;
 	}
     if (mod > 0)
@@ -70,6 +71,29 @@ grouptreeitem::grouptreeitem(QStringList str, project * p, int id, int type, int
 		else
 			qDebug() << "groupitem group type =" << g[id].type;
 	}
+}
+
+void    grouptreeitem::addquestglobinttree(const question &q)
+{
+    int i = -1;
+    grouptreeitem *tmpg;
+
+    if (nbgchild == 0)
+    {
+        this->addChild(new questiontreeitem(QStringList(q.name),
+                                                        addquestion(p, q.name, q.group, q.unit, q.note, q.sujet,
+                                                                    dynamic_cast<grouptreeitem*>(this->parent())->getId(),
+                                                                    q.type, q.ref_only, q.liststr.join(" "), q.val),
+                                                        (QTreeWidget*)0));
+    }
+    else
+    {
+        while (++i < this->childCount())
+        {
+            if ((tmpg = dynamic_cast<grouptreeitem*>(this->child(i))))
+                tmpg->addquestglobinttree(q);
+        }
+    }
 }
 
 int grouptreeitem::getId() const

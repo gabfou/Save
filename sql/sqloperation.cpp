@@ -69,7 +69,7 @@ int	addquestion(project *p, QString name, int groupid, QString type, int note, Q
 	qry.addBindValue(typef);
 	qry.addBindValue(qgroupid);
 	qry.addBindValue(ref_only);
-	qry.addBindValue(splitchar);
+    qry.addBindValue(splitchar + " ");
 	if (id != -1)
 		qry.addBindValue(id);
 	if (!qry.exec())

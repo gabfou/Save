@@ -257,15 +257,15 @@ void project::initoroject(QString fproject)
 	tmp = this->listp.begin();
 	while (tmp != this->listp.end())
 	{
-        if (tmp->groupid != -1)
+        if (tmp->groupid > -1 && tmp->groupid < listgroup.size())
             this->listgroup[tmp->getGroupid()].addperson(*tmp);
 		tmp++;
 	}
 	vector<question>::iterator tmp2;
 	tmp2 = this->listquestion.begin();
 	while (tmp2 != this->listquestion.end())
-	{
-        if (tmp2->qgroupid != -1)
+    {
+        if (tmp2->qgroupid > -1 && tmp2->qgroupid < listqgroup.size())
             this->listqgroup[tmp2->qgroupid].addquestion(*tmp2);
 		tmp2++;
 	}

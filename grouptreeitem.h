@@ -12,11 +12,14 @@ public:
 	grouptreeitem(QStringList str, project *p, int id, int type = 0, int mod = 0, QTreeWidget *parent = 0);
 	int getId() const;
     int typeg = 0;
+    int nbgchild = 0;
 
+    void addquestglobinttree(const question &q);
 public slots:
     void setVisiblenongroup(bool v);
 private:
 	int id;
+    project *p;
 };
 
 #endif // GROUPTREEITEM_H
