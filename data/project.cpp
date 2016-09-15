@@ -100,6 +100,11 @@ person project::getperson(int id)
     return(*(pl.begin()));
 }
 
+int project::getNbqgroup() const
+{
+    return nbqgroup;
+}
+
 inline void project::addquestion(QString name, int group, unsigned int id, int qgroupid, QString sujet,
                                  QString unit, int type, QString splitchar, int value, bool ref_only)
 {
@@ -130,6 +135,7 @@ inline void project::addgroup(QString name, int parentid, unsigned int id, int t
 {
 	if (type == 0)
 	{
+        this->nbgroup++;
         group ret(name, parentid, id, (this->listgroup), type, description);
 		if (ret.getGeneration() > this->nbgeneration)
 			this->nbgeneration = ret.getGeneration();
@@ -139,6 +145,7 @@ inline void project::addgroup(QString name, int parentid, unsigned int id, int t
 	}
 	else if (type == 1)
 	{
+        this->nbqgroup++;
         group ret(name, parentid, id, (this->listqgroup), type, description);
 		if (ret.getGeneration() > this->nbgeneration) // changer nbgenaration par nbqgeneration
 			this->nbgeneration = ret.getGeneration();

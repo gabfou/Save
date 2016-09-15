@@ -62,6 +62,7 @@ private slots:
 	void showbarchartref();
     void configproject();
     void valmodechange(bool checked);
+    void globalrep(bool checked);
 private:
 	Ui::MainWindow *ui;
 	QWindow *addprojectwindow;

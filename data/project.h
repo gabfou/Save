@@ -19,6 +19,7 @@ private:
 	int nbquestion = 0;
 	int nbgroup = 0;
 	int nbgeneration = 0;
+    int nbqgroup = 0;
 
 public:
     int val = 0;
@@ -64,5 +65,6 @@ public:
     void questiongroupqchild(int id, QList<int> &ret) const;
     vector<question> questiongroupqchildnotopti(int id);
     person getperson(int id);
+    int getNbqgroup() const;
 };
 

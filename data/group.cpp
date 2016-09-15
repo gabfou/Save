@@ -203,6 +203,19 @@ QString group::grouprep(question tmp2, int ref)
         return ("NA");
 }
 
+QString group::grouprep(QString tmp3, int ref)
+{
+    list<question>::iterator tmp = listq.begin();
+
+    while (tmp != listq.end())
+    {
+        if (tmp3.compare(tmp->name))
+            return (this->grouprep(*tmp, ref));
+        tmp++;
+    }
+    return ("NA");
+}
+
 float group::grouprepall(question tmp2, vector<group> &g) // opti qstring neccessaire
 {
     list<int>::iterator tmp = listfils.begin();

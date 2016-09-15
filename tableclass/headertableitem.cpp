@@ -28,6 +28,11 @@ headertableitem::headertableitem(project *p, QString str, question arg, QString 
 {
 }
 
+headertableitem::headertableitem(project *p, QString str, QString arg, QString form)
+    : QTableWidgetItem(str), type(4), argstr(arg), id(-1), formule(form), p(p)
+{
+}
+
 void headertableitem::changearg(QTreeWidgetItem *item)
 {
     grouptreeitem *gcast = dynamic_cast<grouptreeitem*>(item);
@@ -63,15 +68,18 @@ bool headertableitem::is_in(vector<group> &g, vector<group> &gq, QList<int> list
 {
     QList<int>::iterator tmp;
 
-    if (type == -1)
+    if (type == -1 || type == 4)
     {
         return (1);
     }
     if (type == 1)
     {
-        if (g[0].type != this->argg.type)
+        qDebug() << "is_in" << argg.type << argg.getListp().empty() << argg.getListq().empty();
+        if ((argg.type == 0 && argg.getListp().empty()) || (argg.type == 1 && argg.getListq().empty()))
+            return (0);
+        if (g[0].type != this->argg.type) // a enlever si en dessous finie
             return (1);
-        if (listint.contains(id))
+        if ((listint.contains(id)) || (listqint.contains(id))) // a finir
             return (1);
         return (0);
     }

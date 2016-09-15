@@ -15,7 +15,7 @@ overview::overview(MainWindow *m, project *p, int group, int *showmod) : p(p), s
     barref = new bargraph(syntheselistgroup(p->getgrouplistref(group)), p, m);
     bar->setName("Reel");
     barref->setName("Escompté");
-    table = new tableshow(m, p, showmod);
+    table = new tableshow(m, p, 0);
     table->reinit();
     vector<question> listqchild =  p->questiongroupqchildnotopti(0);
     table->setverticalheader(listqchild, 0);

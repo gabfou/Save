@@ -25,11 +25,13 @@ public:
 	group argg;
 	person argp;
 	question argq;
+    QString argstr;
     project *p;
     headertableitem(project *p, QString str, group arg, QString form = "");
     headertableitem(project *p, QString str, person arg, QString form = "");
     headertableitem(project *p, QString str, question arg, QString form = "");
     bool is_in(vector<group> &g, vector<group> &gq, QList<int> listint, QList<int> listqint);
+    headertableitem(project *p, QString str, QString arg, QString form);
 public slots:
     void changearg(QTreeWidgetItem *item);
 };

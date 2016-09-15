@@ -82,7 +82,7 @@ void    grouptreeitem::addquestglobinttree(const question &q)
     {
         this->addChild(new questiontreeitem(QStringList(q.name),
                                                         addquestion(p, q.name, q.group, q.unit, q.note, q.sujet,
-                                                                    dynamic_cast<grouptreeitem*>(this->parent())->getId(),
+                                                                    this->getId(),
                                                                     q.type, q.ref_only, q.liststr.join(" "), q.val),
                                                         (QTreeWidget*)0));
     }

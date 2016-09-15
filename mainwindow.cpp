@@ -72,6 +72,11 @@ MainWindow::MainWindow(QWidget *parent) :
     afficherval->setCheckable(true);
     afficherval->setChecked(false);
     QObject::connect(afficherval, SIGNAL(toggled(bool)), this, SLOT(valmodechange(bool)));
+    QAction *afficherglobalrep = menu_affifchage->addAction("&afficher le tableaux global");
+    afficherglobalrep->setCheckable(true);
+    afficherglobalrep->setChecked(false);
+    QObject::connect(afficherglobalrep, SIGNAL(toggled(bool)), this, SLOT(globalrep(bool)));
+
 	//QAction *scope = menu_affifchage->addAction("&Périmetre"); // A
 	//QObject::connect(scope, SIGNAL(triggered()), this, SLOT(changescope()));
 
@@ -496,7 +501,7 @@ void MainWindow::showproject()
 	}
 	if (this->table == NULL)
 	{
-		this->table = new tableshow(&(this->current), this, &(this->showmod));
+        this->table = new tableshow(&(this->current), this, 0);
 		this->cw->addTab(this->table, "tableaux");
 	}
 	this->table->showtable(this->currentgref, this->currentgqref);
@@ -566,7 +571,7 @@ void MainWindow::updateproject()
 {
     this->current.initoroject(this->namecurrent);
 	delete this->table;
-	this->table = new tableshow(&(this->current), this, &(this->showmod));
+    this->table = new tableshow(&(this->current), this, 0);
 	this->table->showtable(this->currentgref, this->currentgqref);
 	this->cw->addTab(table, "tableaux");
 	delete this->ov;
@@ -613,6 +618,16 @@ void	MainWindow::valmodechange(bool checked)
     current.val = val;
     this->table->updateall();
     this->table->showtable(currentgref, currentgqref);
+}
+
+void    MainWindow::globalrep(bool checked)
+{
+    if (checked)
+    {
+        tableshow *tablegr = new tableshow(&(this->current), this, 2);
+        tablegr->select(0, 0);
+        cw->addTab(tablegr, "Tableau global");
+    }
 }
 
 void	MainWindow::changescope2(QTreeWidgetItem *item)

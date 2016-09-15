@@ -35,6 +35,10 @@ void itemtable::update()
 		update(&(arg->argg), &(head->argq));
     else if (arg->type == 2 && head->type == 1)
         updateall(&(head->argg), &(arg->argq));
+    else if (arg->type == 1  && head->type == 4)
+    {
+        update(&(arg->argg), &(head->argstr));
+    }
 	else
 	{
 //		this->setText(this->placeholder);
@@ -62,6 +66,20 @@ void itemtable::update(group *arg, question *head, QString form) // opti passer 
     this->eval(val, *head);
 }
 
+void itemtable::update(group *arg, QString *head, QString form)
+{
+    QString val;
+//        if (p->val)
+//        {
+//            if (q->val != -1)
+//                val = arg->grouprepval(*q, p->ref);
+//        }
+//        else
+    val = arg->grouprep(*head, p->ref);
+        //this->setBackgroundColor(arg->getColor()); //remettre les couleur
+   this->eval(val);
+}
+
 void itemtable::updateall(group *arg, question *head, QString form) // opti passer question en vector
 {
     if (arg->type != 0)
@@ -74,6 +92,11 @@ void itemtable::updateall(group *arg, question *head, QString form) // opti pass
     val = QString::number(arg->grouprepall(*q, p->listgroup));
     //this->setBackgroundColor(arg->getColor());
     this->eval(val, *head);
+}
+
+void itemtable::eval(QString val)
+{
+    this->setText(val);
 }
 
 void itemtable::eval(QString val, question &q)

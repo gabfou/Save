@@ -14,7 +14,7 @@ class tableshow : public QTableWidget
 {
 	Q_OBJECT
 public:
-    tableshow(project * p, MainWindow *mainp, int *showmode);
+    tableshow(project * p, MainWindow *mainp, int showmode);
 
     void showtable(int id, int qid);
 	void sethorizontalheader(MainWindow *mainp);
@@ -22,10 +22,9 @@ public:
 	void clearheader();
     void select(int gref, int gqref);
 	void setverticalheader(vector<question> &q, int id);
-	void setverticalheader(vector<group> &g, int id);
-    tableshow (MainWindow *m, project *p, int ref, int *showmode);
+    void setverticalheader(vector<group> &g, int id);
     void reinit(project *p, MainWindow *mainp);
-    tableshow(MainWindow *m, project *p, int *showmode);
+    tableshow(MainWindow *m, project *p, int showmode);
     void sethorizontalheader(QList<headertableitem *> &list, int nc = 0);
     void setverticalheader(QList<headertableitem *> &listh, int nc = 0);
     void reinit(QList<headertableitem *> &listv, QList<headertableitem *> &listh);
@@ -44,7 +43,7 @@ private slots:
 private:
     QMenu *menuhead;
 	project * p;
-    int *showmode;
+    int showmode;
     MainWindow *m;
 	//const T & curentarg;
 	int k;
