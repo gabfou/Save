@@ -5,6 +5,7 @@
 #include "grouptreeitem.h"
 #include "mainwindow.h"
 #include "misc/listedit.h"
+#include "misc/tablistedit.h"
 
 void infoquestion::prephide()
 {
@@ -12,6 +13,7 @@ void infoquestion::prephide()
     unitlabel->hide();
     selectlistlabel->hide();
     selectlist->hide();
+    selectlistval->hide();
 }
 
 void infoquestion::typeshow(int type)
@@ -31,6 +33,11 @@ void infoquestion::typeshow(int type)
         selectlistlabel->show();
         selectlist->show();
     }
+    if (type == 3)
+    {
+        selectlistlabel->show();
+        selectlistval->show();
+    }
 }
 
 infoquestion::infoquestion(project *p, MainWindow *m, int con) : info(p), m(m)
@@ -40,8 +47,9 @@ infoquestion::infoquestion(project *p, MainWindow *m, int con) : info(p), m(m)
     hbox = new QHBoxLayout();
 	type = new QComboBox();
 	type->addItem("Nombre");
-	type->addItem("Radio");
-    type->addItem("Select");
+    type->addItem("Oui/non");
+    type->addItem("Option");
+    type->addItem("Option avec valeur");
     type->setCurrentIndex(1);
 	name = new QLineEdit();
 	description = new QLineEdit();
@@ -50,7 +58,8 @@ infoquestion::infoquestion(project *p, MainWindow *m, int con) : info(p), m(m)
     ref_only = new QCheckBox("A poser qu'une seul fois");
 	b_update = new QPushButton("Enregistrer");
     selectlist = new listedit();
-    selectlistlabel = new QLabel("option");
+    selectlistval = new tablistedit(2);
+    selectlistlabel = new QLabel("Option");
     unitlabel = new QLabel("Unitée");
     groupbox = new grouptree(m, p->listgroup, 0);
     groupbox->headerItem()->setText(0, "Groupe cible");
@@ -62,7 +71,8 @@ infoquestion::infoquestion(project *p, MainWindow *m, int con) : info(p), m(m)
 	vbox->addWidget(new QLabel("Description"));
 	vbox->addWidget(description);
     vbox->addWidget(selectlistlabel);
-    vbox->addWidget(selectlist);
+    vbox->addWidget(selectlist, 3);
+    vbox->addWidget(selectlistval, 1);
     vbox->addWidget(unitlabel);
 	vbox->addWidget(unit);
     vbox->addWidget(ref_only);

@@ -9,12 +9,13 @@ class listedit : public QWidget
 
     QPushButton *add;
     QPushButton *sup;
+    int co = 1;
 public:
-    listedit();
+    listedit(int co = 1);
     listedit(QStringList &str);
     QListWidget *list;
     void init(QStringList &str);
-    void preinit();
+    void preinit(int co = 1);
     QStringList getlstr();
 public slots:
     void edit(QListWidgetItem *item);
@@ -22,6 +23,8 @@ public slots:
     void supitem();
 private slots:
     void closeedit(QListWidgetItem *item);
+signals:
+     void newitemcreated();
 };
 
 #endif // LISTEDIT_H

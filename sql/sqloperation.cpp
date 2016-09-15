@@ -53,13 +53,13 @@ int	addquestion(project *p, QString name, int groupid, QString type, int note, Q
 	QSqlQuery qry;
 
 	if (id != -1)
-        qry.prepare(("UPDATE project_" + p->name + "_question Set question=?, groupid=?, type=?, note=?, sujet=?, typef=?, qgroupid=?, ref_only=?, splitchar=? WHERE id=?;"));
+        qry.prepare(("UPDATE project_" + p->name + "_question Set question=?, groupid=?, type=?, note=?, sujet=?, typef=?, qgroupid=?, ref_only=?, splitchar=?, val=? WHERE id=?;"));
 	else
 	{
 //		qry.prepare( ("CREATE TABLE IF NOT EXISTS project_" + p->name + "_question (id INTEGER UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT, question VARCHAR(30), groupid INTEGER, type VARCHAR(30), note BOOLEAN DEFAULT 1, sujet VARCHAR(300), qgroupid INT DEFAULT 0, typef INT DEFAULT 0)") );
 //		if( !qry.exec() )
 //			qDebug() << qry.lastError();
-        qry.prepare( ("INSERT INTO project_" + p->name + "_question (question , groupid , type , note , sujet , typef, qgroupid, ref_only, splitchar ) VALUES ( ? , ? , ? , ? , ?, ?, ?, ?, ? );") );
+        qry.prepare( ("INSERT INTO project_" + p->name + "_question (question , groupid , type , note , sujet , typef, qgroupid, ref_only, splitchar, val ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ? );") );
 	}
 	qry.addBindValue(name);
 	qry.addBindValue(groupid);
@@ -70,6 +70,7 @@ int	addquestion(project *p, QString name, int groupid, QString type, int note, Q
 	qry.addBindValue(qgroupid);
 	qry.addBindValue(ref_only);
     qry.addBindValue(splitchar + " ");
+    qry.addBindValue(val);
 	if (id != -1)
 		qry.addBindValue(id);
 	if (!qry.exec())

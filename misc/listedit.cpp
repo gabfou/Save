@@ -1,30 +1,40 @@
 #include "listedit.h"
 
-listedit::listedit()
+listedit::listedit(int co) : co(co)
 {
-    this->preinit();
+    this->preinit(co);
 }
 
 listedit::listedit(QStringList &str)
 {
-    this->preinit();
+    this->preinit(co);
     this->init(str);
 }
 
-void listedit::preinit()
+void listedit::preinit(int co)
 {
     list = new QListWidget();
-    add = new QPushButton("Nouveaux");
-    sup = new QPushButton("Suprimer");
+    if (co)
+    {
+        add = new QPushButton("Nouveaux");
+        sup = new QPushButton("Suprimer");
+    }
     QHBoxLayout *hbox = new QHBoxLayout();
-    hbox->addWidget(sup);
-    hbox->addWidget(add);
+    if (co)
+    {
+        hbox->addWidget(sup);
+        hbox->addWidget(add);
+    }
     QVBoxLayout *vbox = new QVBoxLayout();
+    list->setContentsMargins(0,0,0,0);
     vbox->addWidget(list);
     vbox->addLayout(hbox);
     connect(list, SIGNAL(itemDoubleClicked(QListWidgetItem*)), this, SLOT(edit(QListWidgetItem*)));
-    connect(add, SIGNAL(pressed()), this, SLOT(newitem()));
-    connect(sup, SIGNAL(pressed()), this, SLOT(supitem()));
+    if (co)
+    {
+        connect(add, SIGNAL(pressed()), this, SLOT(newitem()));
+        connect(sup, SIGNAL(pressed()), this, SLOT(supitem()));
+    }
     this->setLayout(vbox);
 }
 
@@ -45,6 +55,7 @@ void listedit::edit(QListWidgetItem *item)
 void listedit::closeedit(QListWidgetItem *item)
 {
     list->closePersistentEditor(item);
+    emit newitemcreated();
 }
 
 void listedit::newitem()
@@ -52,6 +63,11 @@ void listedit::newitem()
     QListWidgetItem *newitem = new QListWidgetItem("");
     list->addItem(newitem);
     this->edit(newitem);
+}
+
+void newitemcreated()
+{
+
 }
 
 QStringList listedit::getlstr()

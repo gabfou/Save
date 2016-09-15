@@ -27,7 +27,6 @@ private:
 	QLineEdit *email;
     person *pe = NULL;
 	QPushButton *b_update;
-    QLabel *infolabel;
 	int init;
 	int groupid;
     QVBoxLayout *vbox;
