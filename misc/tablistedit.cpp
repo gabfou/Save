@@ -34,3 +34,34 @@ tablistedit::tablistedit(int colnb)
     vbox->addLayout(hbox2);
     this->setLayout(vbox);
 }
+
+
+QStringList tablistedit::getlstr()
+{
+    QList<QListWidgetItem *>::iterator *ltmp = new QList<QListWidgetItem *>::iterator[list.size()];
+    QList<listedit*>::iterator listle;
+    int size = 0;
+    QStringList ret;
+
+    int i = 0;
+
+    listle = list.begin();
+    i = -1;
+    while(listle != list.end())
+    {
+        ltmp[i++] = (*listle)->list->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard).begin();
+        listle++;
+        size++;
+    }
+    while (size-- > 0)
+    {
+        i = -1;
+        while(++i < list.size())
+        {
+            ret << (*ltmp[i])->text();
+            ltmp[i]++;
+        }
+    }
+    delete lmtp;
+    return (ret);
+}
