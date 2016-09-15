@@ -172,10 +172,10 @@ void	grouptree::addquestintree()
 
 void	grouptree::addquestintree2(QTreeWidgetItem *item, int column)
 {
-	qDebug() << item->text(0);
-	item->parent()->addChild(new questiontreeitem(QStringList(item->text(0)) , -1, (QTreeWidget*)0));
+    //qDebug() << item->text(0);
+    int id = addquestion(&(m->current), item->text(0), 0, "", 0, "", 0, 0, 0, "", -1);
+    item->parent()->addChild(new questiontreeitem(QStringList(item->text(0)) , id, (QTreeWidget*)0));
 
-    addquestion(&(m->current), item->text(0), 0, "", 0, "", 0, 0, 0, "", -1);
 	m->table->reinit(&(m->current), m);
 	m->table->showtable(m->currentgref, m->currentgqref);
 	delete item;
@@ -218,10 +218,10 @@ void	grouptree::addpersonintree()
 
 void	grouptree::addpersonintree2(QTreeWidgetItem *item, int column)
 {
-	qDebug() << item->text(0);
-	item->parent()->addChild(new persontreeitem(QStringList(item->text(0)) , -1, (QTreeWidget*)0));
+//	qDebug() << item->text(0);
 
-    addperson(&(m->current), item->text(0).section(" ", 0, 0), item->text(0).section(" ", 1, 1), "not defined", 0);
+    int id = addperson(&(m->current), item->text(0).section(" ", 0, 0), item->text(0).section(" ", 1, 1), "not defined", 0);
+    item->parent()->addChild(new persontreeitem(QStringList(item->text(0)) , id, (QTreeWidget*)0));
 	m->table->reinit(&(m->current), m);
 	m->table->showtable(m->currentgref, m->currentgqref);
 	delete item;

@@ -97,6 +97,7 @@
 		echo '</ul>';
 		echo '<div id="progressbar"><div id="indicator"></div><div id="progressnum">0%</div></div>';
 		echo '<div class = "formulaire2">';
+		echo '<h2 id = bilan>BILAN</h1>';
 		echo $introdesc;
 		echo '<form action="updatetimesheet.php" method="post" id="formulaireid">';
 		echo $echofinal;
@@ -167,6 +168,7 @@
 						$("[id^=gdesc]").hide();
 						$("[id^=question]").show();
 						$("[id^=rep]").hide();
+						$("[id=bilan]").show();
 						question_array.forEach(bilanforeach);
 					}
 					function etapemanageur(nb)
@@ -186,6 +188,7 @@
 						$("[id^=resum]").hide();
 						$("[id=intro]").hide();
 						$("[id^=pbar]").css('background-color', '#6BF3FF');
+						$("[id=bilan]").hide();
 						var str = "[id=question";
 						str = str.concat(array[nb]);
 						var str2 = "[id=pbar";
@@ -207,6 +210,7 @@
 					//$("[id^=pbar]").css('background-color', '#6BF3FF');
 					$("[id^=pbar]").hide();
 					$("[id=next]").hide();
+					$("[id=bilan]").hide();
 					$( "#target" ).click(function()
 					{
 						etapemanageur(++i);

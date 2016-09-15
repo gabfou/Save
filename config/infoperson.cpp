@@ -37,7 +37,6 @@ void infoperson::updateib(QTreeWidgetItem * item)
     this->updateibg(-1, -1);
     infolabel->setText("");
 	disconnect(cotmp);
-	cotmp = connect(b_update, SIGNAL(clicked(bool)), this, SLOT(updatebdd()));
 	if (tmp == NULL)
 	{
         grouptreeitem *tmp2 = dynamic_cast<grouptreeitem*>(item);
@@ -54,6 +53,7 @@ void infoperson::updateib(QTreeWidgetItem * item)
         }
 		return ;
     }
+    cotmp = connect(b_update, SIGNAL(clicked(bool)), this, SLOT(updatebdd()));
     contg->hide();
     contp->show();
     grouptreeitem *tmp2 = dynamic_cast<grouptreeitem*>(item->parent());

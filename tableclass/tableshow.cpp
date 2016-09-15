@@ -332,7 +332,7 @@ void	tableshow::populate()
 
 void	tableshow::select(int gref, int gqref)
 {
-/*    QList<int> listint;
+    QList<int> listint;
     QList<int> listqint;
 
     p->groupqchild(gqref, listqint);
@@ -358,7 +358,7 @@ void	tableshow::select(int gref, int gqref)
             this->showColumn(h);
         else
             this->hideColumn(h);
-    }*/
+    }
 }
 
 void	tableshow::clearheader()
