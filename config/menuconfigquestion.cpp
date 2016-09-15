@@ -20,5 +20,3 @@ menuconfigquestion::menuconfigquestion(project *p, MainWindow *m) : p(p)
 	hlayout->addWidget(infobox);
 	connect(groupbox, SIGNAL(itemClicked(QTreeWidgetItem *, int )), infobox, SLOT(updateib(QTreeWidgetItem *)));
 }
-
-

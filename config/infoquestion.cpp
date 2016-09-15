@@ -98,7 +98,6 @@ void infoquestion::updateib(QTreeWidgetItem * item)
     infolabel->setText("");
     this->prephide();
 	disconnect(cotmp);
-	cotmp = connect(b_update, SIGNAL(clicked(bool)), this, SLOT(updatebdd()));
 	if (tmp == NULL)
 	{
         qDebug() << "infoquestion updateib dynamic cast fail";
@@ -116,6 +115,7 @@ void infoquestion::updateib(QTreeWidgetItem * item)
         }
 		return ;
     }
+    cotmp = connect(b_update, SIGNAL(clicked(bool)), this, SLOT(updatebdd()));
     contg->hide();
     contq->show();
     grouptreeitem *tmp2 = dynamic_cast<grouptreeitem*>(item->parent());

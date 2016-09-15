@@ -14,6 +14,7 @@ int	addgroup(project *p, QString nameproject, QString name, int groupparent, int
 	qry.addBindValue(name);
 	qry.addBindValue(QString::number(groupparent));
 	qry.addBindValue(QString::number(type));
+    qry.addBindValue(description);
     if (id != -1)
         qry.addBindValue(id);
 	if( !qry.exec() )
@@ -29,7 +30,6 @@ int	addgroup(project *p, QString nameproject, QString name, int groupparent, int
         (*tmp)[id].type = type;
         (*tmp)[id].description = description;
         (*tmp)[id].name = name;
-
     }
 	return (qry.lastInsertId().toInt());
 }
@@ -78,7 +78,7 @@ int	addquestion(project *p, QString name, int groupid, QString type, int note, Q
 		qDebug() << "question insert success!";
 	if (id == -1)
 	{
-        p->addquestion(name, groupid, qry.lastInsertId().toInt(), qgroupid, description, type, typef, "", val, ref_only);
+        p->addquestion(name, groupid, qry.lastInsertId().toInt(), qgroupid, description, type, typef, splitchar + " ", val, ref_only);
 		p->listqgroup[qgroupid].addquestion(p->listquestion[qry.lastInsertId().toInt()]);
 	}
 	else
