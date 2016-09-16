@@ -6,7 +6,7 @@ class question
 public:
 	question();
 	question(string line);
-    question(QString name, int groupcible, int id, int qgroupid, QString sujet, QString unit, int type, QString splitchar, int value, bool ref_only);
+    question(QString name, int groupcible, int id, int qgroupid, QString sujet, QString unit, int type, QString splitchar, int value, bool ref_only, bool global);
 	question(string a, string b);
 	question(const question &q);
 	virtual ~question();
@@ -24,6 +24,7 @@ public:
     QStringList liststr;
 	QString unit;
     int val = -1;
+    bool global;
     bool ref_only;
 };
 

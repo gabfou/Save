@@ -5,7 +5,7 @@
 #include "grouptreeitem.h"
 #include "mainwindow.h"
 #include "misc/listedit.h"
-#include "misc/tablistedit.h"
+#include "misc/listeditwval.h"
 
 void infoquestion::prephide()
 {
@@ -55,10 +55,11 @@ infoquestion::infoquestion(project *p, MainWindow *m, int con) : info(p), m(m)
 	description = new QLineEdit();
 	unit = new QLineEdit();
 	value = new QSpinBox();
+    value->setValue(1);
     ref_only = new QCheckBox("A poser qu'une seul fois");
 	b_update = new QPushButton("Enregistrer");
     selectlist = new listedit();
-    selectlistval = new tablistedit(2);
+    selectlistval = new listeditwval();
     selectlistlabel = new QLabel("Option");
     unitlabel = new QLabel("Unitée");
     groupbox = new grouptree(m, p->listgroup, 0);
@@ -153,14 +154,17 @@ void infoquestion::updateib(QTreeWidgetItem * item)
 
 question infoquestion::getquestioncopy()
 {
+    QString splitchar = (type->currentIndex() == 3) ? selectlistval->getlstr().join(" ") : selectlist->getlstr().join(" ");
+
     question ret = question(name->text(), dynamic_cast<grouptreeitem*>(groupbox->currentItem())->getId(), -1,
                               qgroupid, description->text(), unit->text(), type->currentIndex(),
-                              selectlist->getlstr().join(" "),value->text().toInt(), ref_only->isChecked());
+                              splitchar, value->text().toInt(), ref_only->isChecked(), 0);
     return (ret);
 }
 
 void infoquestion::updatebdd()
 {
+    QString splitchar = (type->currentIndex() == 3) ? selectlistval->getlstr().join(" ") : selectlist->getlstr().join(" ");
 	if (!q && init)
 	{
 		QLabel *warning = new QLabel("Aucun objet selectioné");
@@ -169,7 +173,7 @@ void infoquestion::updatebdd()
 	}
     addquestion(p, name->text(), dynamic_cast<grouptreeitem*>(groupbox->currentItem())->getId(),
                 unit->text(), 0, description->text(), qgroupid, type->currentIndex(), ref_only->isChecked(),
-                selectlist->getlstr().join(" "), value->text().toInt(), ((init) ? q->id : -1));
+                splitchar, value->text().toInt(), 0, ((init) ? q->id : -1));
 
 }
 // question &q

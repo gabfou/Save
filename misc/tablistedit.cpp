@@ -28,15 +28,13 @@ tablistedit::tablistedit(int colnb)
             connect(tmp2, SIGNAL(newitemcreated()), tmp, SLOT(newitem()));
         connect(sup, SIGNAL(pressed()), tmp, SLOT(supitem()));
         tmp2 = tmp;
-
     }
     vbox->addLayout(hbox);
     vbox->addLayout(hbox2);
     this->setLayout(vbox);
 }
 
-
-QStringList tablistedit::getlstr()
+QStringList tablistedit::getlstr() // segfault
 {
     QList<QListWidgetItem *>::iterator *ltmp = new QList<QListWidgetItem *>::iterator[list.size()];
     QList<listedit*>::iterator listle;
@@ -49,7 +47,7 @@ QStringList tablistedit::getlstr()
     i = -1;
     while(listle != list.end())
     {
-        ltmp[i++] = (*listle)->list->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard).begin();
+        ltmp[++i] = (*listle)->list->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard).begin();
         listle++;
         size++;
     }
@@ -58,10 +56,10 @@ QStringList tablistedit::getlstr()
         i = -1;
         while(++i < list.size())
         {
-            ret << (*ltmp[i])->text();
+            ret << (*(ltmp[i]))->text();
             ltmp[i]++;
         }
     }
-    delete lmtp;
+    delete ltmp;
     return (ret);
 }

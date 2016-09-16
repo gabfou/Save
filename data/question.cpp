@@ -6,7 +6,7 @@ question::question()
 }
 
 
-question::question(QString name, int groupcible, int id, int qgroupid, QString sujet, QString unit, int type, QString splitchar, int value, bool ref_only)
+question::question(QString name, int groupcible, int id, int qgroupid, QString sujet, QString unit, int type, QString splitchar, int value, bool ref_only, bool global)
 {
     this->name = name;
     this->group = groupcible;
@@ -18,6 +18,7 @@ question::question(QString name, int groupcible, int id, int qgroupid, QString s
     this->liststr = splitchar.split(" ");
     this->val = value;
     this->ref_only = ref_only;
+    this->global = global;
 }
 
 question::question(const question &q)
@@ -33,6 +34,7 @@ question::question(const question &q)
 	this->sujet = q.sujet;
     this->val = q.val;
     this->ref_only = q.ref_only;
+    this->global = q.global;
 }
 
 question::~question()

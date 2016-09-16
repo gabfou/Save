@@ -47,7 +47,8 @@ SOURCES += main.cpp\
     config/menuconfigperson.cpp \
     config/infoperson.cpp \
     config/info.cpp \
-    misc/tablistedit.cpp
+    misc/tablistedit.cpp \
+    misc/listeditwval.cpp
 
 HEADERS  += mainwindow.h \
     data/fact.h \
@@ -77,7 +78,8 @@ HEADERS  += mainwindow.h \
     config/menuconfigperson.h \
     config/infoperson.h \
     config/info.h \
-    misc/tablistedit.h
+    misc/tablistedit.h \
+    misc/listeditwval.h
 
 FORMS    += mainwindow.ui
 

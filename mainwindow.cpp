@@ -297,6 +297,7 @@ void MainWindow::addproject2()
 				" typef INT DEFAULT 0,"
 				" ref_only INT DEFAULT 0,"
                 " splitchar VARCHAR(3000) NOT NULL DEFAULT '',"
+                " global BOOL NOT NULL DEFAULT 0"
                 " value INT NOT NULL DEFAULT -1)") );
 	if(!qry.exec())
 		qDebug() << "create question" << qry.lastError();

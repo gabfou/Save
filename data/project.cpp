@@ -106,10 +106,11 @@ int project::getNbqgroup() const
 }
 
 inline void project::addquestion(QString name, int group, unsigned int id, int qgroupid, QString sujet,
-                                 QString unit, int type, QString splitchar, int value, bool ref_only)
+                                 QString unit, int type, QString splitchar, int value, bool ref_only,
+                                 bool global)
 {
 	this->nbquestion++;
-    question ret(name, group, id, qgroupid, sujet, unit, type, splitchar, value, ref_only);
+    question ret(name, group, id, qgroupid, sujet, unit, type, splitchar, value, ref_only, global);
     while (this->listquestion.size() < id)
         this->listquestion.push_back(question());
 	this->listquestion.push_back(ret);
@@ -131,12 +132,12 @@ void project::addreponse(int id, string name, int time, int note, string date, i
 	}
 }
 
-inline void project::addgroup(QString name, int parentid, unsigned int id, int type, QString description)
+inline void project::addgroup(QString name, int parentid, unsigned int id, int type, QString description, bool gquestion)
 {
 	if (type == 0)
 	{
         this->nbgroup++;
-        group ret(name, parentid, id, (this->listgroup), type, description);
+        group ret(name, parentid, id, (this->listgroup), type, description, gquestion);
 		if (ret.getGeneration() > this->nbgeneration)
 			this->nbgeneration = ret.getGeneration();
 		while (this->listgroup.size() < id)
@@ -146,7 +147,7 @@ inline void project::addgroup(QString name, int parentid, unsigned int id, int t
 	else if (type == 1)
 	{
         this->nbqgroup++;
-        group ret(name, parentid, id, (this->listqgroup), type, description);
+        group ret(name, parentid, id, (this->listqgroup), type, description, gquestion);
 		if (ret.getGeneration() > this->nbgeneration) // changer nbgenaration par nbqgeneration
 			this->nbgeneration = ret.getGeneration();
 		while (this->listqgroup.size() < id)
@@ -198,9 +199,9 @@ void project::initoroject(QString fproject)
     this->listp.clear();
     this->listqgroup.clear();
     this->listquestion.clear();
-    this->addgroup("ALL", -1, 0, 0, "");
-    this->addgroup("ALL", -1, 0, 1, "");
-    if(query.exec(("SELECT groupname, groupparent, id, type, description FROM project_" + fproject + "_groupe")))
+    this->addgroup("ALL", -1, 0, 0, "", 0);
+    this->addgroup("ALL", -1, 0, 1, "", 0);
+    if(query.exec(("SELECT groupname, groupparent, id, type, description, gquestion FROM project_" + fproject + "_groupe")))
 	{
 		while(query.next())
 		{
@@ -208,7 +209,8 @@ void project::initoroject(QString fproject)
 						   query.value(1).toInt(),
 						   query.value(2).toInt(),
                            query.value(3).toInt(),
-                           query.value(4).toString());
+                           query.value(4).toString(),
+                           query.value(5).toBool());
 		}
 	}
 	else
@@ -226,7 +228,8 @@ void project::initoroject(QString fproject)
                               query.value(6).toInt(),
                               query.value(7).toString(),
                               query.value(8).toInt(),
-                              query.value(9).toBool());
+                              query.value(9).toBool(),
+                              0);
 		}
 	}
 	else

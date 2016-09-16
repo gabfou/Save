@@ -141,7 +141,7 @@ void	grouptree::addgroupintree2(QTreeWidgetItem *item, int column)
 	(void)column;
 	disconnect(cotmp);
 	qDebug() << item->text(0);
-    int niark = addgroup(&(m->current), m->namecurrent, item->text(0), tmpid, g[tmpid].type, "");
+    int niark = addgroup(&(m->current), m->namecurrent, item->text(0), tmpid, g[tmpid].type, "", 0);
     item->parent()->addChild(new grouptreeitem(QStringList(QString(g[niark].getName())), &(m->current), niark, g[niark].type, i, (QTreeWidget*)0));
 	delete item;
 	item = NULL;
@@ -173,7 +173,7 @@ void	grouptree::addquestintree()
 void	grouptree::addquestintree2(QTreeWidgetItem *item, int column)
 {
     //qDebug() << item->text(0);
-    int id = addquestion(&(m->current), item->text(0), 0, "", 0, "", 0, 0, 0, "", -1);
+    int id = addquestion(&(m->current), item->text(0), 0, "", 0, "", dynamic_cast<grouptreeitem*>(item->parent())->getId(), 0, 0, "", 1, 0, -1);
     item->parent()->addChild(new questiontreeitem(QStringList(item->text(0)) , id, (QTreeWidget*)0));
 
 	m->table->reinit(&(m->current), m);

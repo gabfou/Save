@@ -6,7 +6,7 @@
 #include "info.h"
 
 class listedit;
-class tablistedit;
+class listeditwval;
 
 class infoquestion : public info
 {
@@ -37,7 +37,7 @@ private:
     MainWindow *m;
 	question *q = NULL;
     listedit *selectlist;
-    tablistedit *selectlistval;
+    listeditwval *selectlistval;
     QLabel *selectlistlabel;
     QLabel *unitlabel;
 	int init;

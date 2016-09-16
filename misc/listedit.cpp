@@ -55,7 +55,6 @@ void listedit::edit(QListWidgetItem *item)
 void listedit::closeedit(QListWidgetItem *item)
 {
     list->closePersistentEditor(item);
-    emit newitemcreated();
 }
 
 void listedit::newitem()
@@ -63,6 +62,7 @@ void listedit::newitem()
     QListWidgetItem *newitem = new QListWidgetItem("");
     list->addItem(newitem);
     this->edit(newitem);
+    emit newitemcreated();
 }
 
 void newitemcreated()
@@ -82,6 +82,6 @@ QStringList listedit::getlstr()
 
 void listedit::supitem()
 {
-    delete list->currentItem();
+    delete list->item(list->count() - 1);
 }
 

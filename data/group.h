@@ -24,7 +24,7 @@ public:
 	group();
 	virtual ~group();
 
-    group(QString name, int parentid, int id, vector<group> &listgroup, int type, QString description);
+    group(QString name, int parentid, int id, vector<group> &listgroup, int type, QString description, bool gquestion);
 	void addperson(person p);
     QString getName() const;
 	void addqfils(int id);
@@ -45,6 +45,7 @@ public:
 	int id;
     QString name;
     QString description;
+    bool gquestion;
 	int type = -1;
 	std::list<int> getListqfils() const;
 	void addquestion(question q);

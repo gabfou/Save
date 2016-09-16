@@ -3,18 +3,19 @@
 #include "data/project.h"
 
 
-int	addgroup(project *p, QString nameproject, QString name, int groupparent, int type, QString description, int id)
+int	addgroup(project *p, QString nameproject, QString name, int groupparent, int type, QString description, bool gquestion, int id)
 {
 	QSqlQuery qry;
 
     if (id != -1)
-        qry.prepare(("UPDATE project_" + p->name + "_groupe Set groupname=?, groupparrent=?, type=?, description=? WHERE id=?;"));
+        qry.prepare(("UPDATE project_" + p->name + "_groupe Set groupname=?, groupparrent=?, type=?, description=?, gquestion=? WHERE id=?;"));
     else
-        qry.prepare( "INSERT INTO project_" + nameproject + "_groupe (groupname ,groupparent ,type, description) VALUES ( ? , ? , ? , ? );" );
+        qry.prepare( "INSERT INTO project_" + nameproject + "_groupe (groupname ,groupparent ,type, description, gquestion) VALUES ( ?, ?, ?, ?, ? );" );
 	qry.addBindValue(name);
 	qry.addBindValue(QString::number(groupparent));
 	qry.addBindValue(QString::number(type));
     qry.addBindValue(description);
+    qry.addBindValue(gquestion);
     if (id != -1)
         qry.addBindValue(id);
 	if( !qry.exec() )
@@ -22,7 +23,7 @@ int	addgroup(project *p, QString nameproject, QString name, int groupparent, int
 	else
 		qDebug() << "groupe insert success!";
     if (id == -1)
-        p->addgroup(name, groupparent, qry.lastInsertId().toInt(), type, description);
+        p->addgroup(name, groupparent, qry.lastInsertId().toInt(), type, description, gquestion);
     else
     {
         vector<group> *tmp = (type == 0) ? &p->listgroup : &p->listqgroup;
@@ -30,6 +31,7 @@ int	addgroup(project *p, QString nameproject, QString name, int groupparent, int
         (*tmp)[id].type = type;
         (*tmp)[id].description = description;
         (*tmp)[id].name = name;
+        (*tmp)[id].gquestion = gquestion;
     }
 	return (qry.lastInsertId().toInt());
 }
@@ -48,18 +50,18 @@ void	supgroup(QString nameproject, int id, vector<group> & g)
 }
 
 int	addquestion(project *p, QString name, int groupid, QString type, int note, QString description, int qgroupid,
-                int typef, bool ref_only, QString splitchar, int val, int id)
+                int typef, bool ref_only, QString splitchar, int val, bool global, int id) // global n'est pas integrer en sql
 {
 	QSqlQuery qry;
 
 	if (id != -1)
-        qry.prepare(("UPDATE project_" + p->name + "_question Set question=?, groupid=?, type=?, note=?, sujet=?, typef=?, qgroupid=?, ref_only=?, splitchar=?, val=? WHERE id=?;"));
+        qry.prepare(("UPDATE project_" + p->name + "_question Set question=?, groupid=?, type=?, note=?, sujet=?, typef=?, qgroupid=?, ref_only=?, splitchar=?, value=? WHERE id=?;"));
 	else
 	{
 //		qry.prepare( ("CREATE TABLE IF NOT EXISTS project_" + p->name + "_question (id INTEGER UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT, question VARCHAR(30), groupid INTEGER, type VARCHAR(30), note BOOLEAN DEFAULT 1, sujet VARCHAR(300), qgroupid INT DEFAULT 0, typef INT DEFAULT 0)") );
 //		if( !qry.exec() )
 //			qDebug() << qry.lastError();
-        qry.prepare( ("INSERT INTO project_" + p->name + "_question (question , groupid , type , note , sujet , typef, qgroupid, ref_only, splitchar, val ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ? );") );
+        qry.prepare( ("INSERT INTO project_" + p->name + "_question (question , groupid , type , note , sujet , typef, qgroupid, ref_only, splitchar, value ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ? );") );
 	}
 	qry.addBindValue(name);
 	qry.addBindValue(groupid);
@@ -71,6 +73,7 @@ int	addquestion(project *p, QString name, int groupid, QString type, int note, Q
 	qry.addBindValue(ref_only);
     qry.addBindValue(splitchar + " ");
     qry.addBindValue(val);
+    //qry.addBindValue(global);
 	if (id != -1)
 		qry.addBindValue(id);
 	if (!qry.exec())
@@ -79,7 +82,7 @@ int	addquestion(project *p, QString name, int groupid, QString type, int note, Q
 		qDebug() << "question insert success!";
 	if (id == -1)
 	{
-        p->addquestion(name, groupid, qry.lastInsertId().toInt(), qgroupid, description, type, typef, splitchar + " ", val, ref_only);
+        p->addquestion(name, groupid, qry.lastInsertId().toInt(), qgroupid, description, type, typef, splitchar + " ", val, ref_only, global);
 		p->listqgroup[qgroupid].addquestion(p->listquestion[qry.lastInsertId().toInt()]);
 	}
 	else
@@ -94,6 +97,7 @@ int	addquestion(project *p, QString name, int groupid, QString type, int note, Q
 		p->listquestion[id].liststr = splitchar.split(" ");
         p->listquestion[id].val = val;
         p->listquestion[id].ref_only = ref_only;
+        p->listquestion[id].global = global;
 	}
 	return (qry.lastInsertId().toInt());
 }

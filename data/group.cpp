@@ -61,7 +61,7 @@ void    group::supperson(int id)
     }
 }
 
-group::group(QString name, int parentid, int id, vector<group> & listgroup, int type, QString description) : type(type)
+group::group(QString name, int parentid, int id, vector<group> & listgroup, int type, QString description, bool gquestion) : type(type)
 {
     this->init = 1;
 	this->name = name;
@@ -69,6 +69,7 @@ group::group(QString name, int parentid, int id, vector<group> & listgroup, int 
 	this->id = id;
     this->description = description;
 	this->groupsetcolor(id);
+    this->gquestion = gquestion;
     if (parentid > -1 && (size_t)parentid < listgroup.size())
 	{
 		listgroup[parentid].addfils(id);
