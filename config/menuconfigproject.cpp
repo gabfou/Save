@@ -31,12 +31,14 @@ void menuconfigproject::configeneral()
 	QPushButton *b_annuler = new QPushButton("Fermer");
     QPushButton *tablesql = new QPushButton("table sql");
     QPushButton *sup_retour_chariot = new QPushButton("suprimer retour chariot");
+    QPushButton *noms_to_description = new QPushButton("noms to description");
 
 	//Connexions aux slots
 	//connect(b_valider, SIGNAL(clicked()), this, SLOT(changescope2()));
 	connect(b_annuler, SIGNAL(clicked()), this, SLOT(close()));
     connect(tablesql, SIGNAL(clicked(bool)), this, SLOT(showsql()));
     connect(sup_retour_chariot, SIGNAL(clicked(bool)), this, SLOT(sup_retour_chariot()));
+    connect(noms_to_description, SIGNAL(clicked(bool)), this, SLOT(noms_to_description()));
 
 	//Layout
 	QGroupBox *groupbox = new QGroupBox("");
@@ -54,8 +56,9 @@ void menuconfigproject::configeneral()
   //  layout->addWidget(b_annuler, 1, 0, Qt::AlignRight);
   //  layout->addWidget(b_actualiser, 1, 1, Qt::AlignRight);
   //  layout->addWidget(b_valider, 1, 2, Qt::AlignRight);
-      layout->addWidget(tablesql, 2, 2, Qt::AlignLeft);
-      layout->addWidget(sup_retour_chariot, 3, 2, Qt::AlignLeft);
+    layout->addWidget(tablesql, 2, 2, Qt::AlignCenter);
+    layout->addWidget(sup_retour_chariot, 3, 2, Qt::AlignCenter);
+    layout->addWidget(noms_to_description, 1, 1, Qt::AlignCenter);
 	//setLayout(layout);
 	win->setLayout(layout);
 	this->addTab(win, "general");
@@ -101,6 +104,25 @@ void menuconfigproject::configgroupe()
 	//setLayout(layout);
 	win->setLayout(layout);*/
 	this->addTab(new sqldatatable(QString("groupname, groupparent"), "project_" + this->name + "_groupe", 2), "groupe");
+}
+
+void menuconfigproject::noms_to_description()
+{
+    QSqlQuery query;
+    QSqlQuery query2;
+
+    if(query.exec(("SELECT groupname, id FROM project_" + p->name + "_groupe")))
+    {
+        while(query.next())
+        {
+            query2.prepare("UPDATE project_" + p->name + "_groupe Set description=? WHERE id=?;");
+            query2.addBindValue(query.value(0).toString());
+            query2.addBindValue(query.value(1).toInt());
+            query2.exec();
+        }
+    }
+    else
+        qDebug() << "error menuconfigproject::noms_to_description :" << query.lastError();
 }
 
 void menuconfigproject::sup_retour_chariot()

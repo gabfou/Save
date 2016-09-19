@@ -23,6 +23,7 @@ class grouptree : public QTreeWidget
     QAction *newp;
     QAction *supp;
     QAction *newqg;
+    QAction *persinit;
     QPlainTextEdit *texttmp;
     QAction *modifdg;
 	QMetaObject::Connection cotmp;
@@ -51,6 +52,7 @@ private slots:
     void suppersonintree();
     void addquestglobintree();
     void addquestglobintree2();
+    void initpersonintree();
 };
 
 #endif // GROUPTREE_H

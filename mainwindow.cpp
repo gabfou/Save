@@ -482,8 +482,7 @@ void MainWindow::addperson2()
 	if(!qry.exec() )
 		qDebug() << qry.lastError();
 	else
-	{
-		sendmail(this->emailtmp->text(), "Bonjour votre mot de passse tout au long de l'étude sera " + QString(mdp) + "\r\n");
+    {
 		qDebug() << "INSERT success!";
 		this->current.addperson(this->nametmp->text(), this->prenametmp->text(), this->emailtmp->text());
 	}

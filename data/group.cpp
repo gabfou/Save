@@ -22,7 +22,7 @@ void group::setColor(const QColor &value){color = value;}
 
 void	group::addfils(int id)
 {
-    qDebug() << this->name << " addfils: " << QString::number(id) << QString::number((long int)this);
+    //qDebug() << this->name << " addfils: " << QString::number(id) << QString::number((long int)this);
 	int dafuq = id;
 	if (this->listfils.empty())
 		qDebug() << "emptyfils";

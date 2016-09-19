@@ -26,6 +26,7 @@
 	</div>
 <?php
 	$error = 1;
+	$echopargroupe = array();
 	if (isset($_SESSION['project']) && isset($_SESSION['id_client']))
 	{
 		$error = 0;
@@ -41,30 +42,39 @@
 			{
 				if ($value['ref_only'] != 1 || $_SESSION['iteration'] == 0)
 				{
-					$echofinal = $echofinal.'<div id = "question'.$value['qgroupid'].'">';
-					$echofinal = $echofinal.'<fieldset class="field"><legend>'.$value['question'].'</legend>';
+					// $req_pre2 = $bdd->prepare('SELECT groupparent, gquestion FROM project_'.htmlspecialchars($_SESSION['project']).'_groupe WHERE id= '.$value['qgroupid'].";");
+					// $req_pre2->execute();
+					// $tabg = $req_pre2->fetch();
+					// $vqgroupid = ($tabg['gquestion'] != 0) ? $value['qgroupid'] : $tabg['groupparent'];
+					$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'<div>';
+					$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'<fieldset class="field"><legend>'.$value['question'].'</legend>';
 					if ($value['typef'] == 0)
-						$echofinal = $echofinal.'<label class="label" id="lab'.$value['question'].'" for "'.$value['question'].'#time"> '.$value['sujet'].' (en '.$value['type'].'): </label><input class = "reponse"  id="rep'.$value['question'].'" type="number" name="'.$value['question'].'#time" value="0" />';
+						$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'<label class="label" id="lab'.$value['question'].'" for "'.$value['question'].'#time"> '.$value['sujet'].' (en '.$value['type'].'): </label><input class = "reponse"  id="rep'.$value['question'].'" type="number" name="'.$value['question'].'#time" value="0" />';
 					else if ($value['typef'] == 1)
-						$echofinal = $echofinal.'<label class="label" id="lab'.$value['question'].'" for "'.$value['question'].'#time"> '.$value['sujet'].': </label><select class = "reponse" id="rep'.$value['question'].'" type="checkbox" name="'.$value['question'].'#time" ><option value = "1" name="'.$value['question'].'#time">oui</option><option value = "0" name="'.$value['question'].'#time">non</option></select>';
+						$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'<label class="label" id="lab'.$value['question'].'" for "'.$value['question'].'#time"> '.$value['sujet'].': </label><select class = "reponse" id="rep'.$value['question'].'" type="checkbox" name="'.$value['question'].'#time" ><option value = "1" name="'.$value['question'].'#time">oui</option><option value = "0" name="'.$value['question'].'#time">non</option></select>';
 					else if ($value['typef'] == 2)
 					{
-						$echofinal = $echofinal.'<label class="label" id="lab'.$value['question'].'" for "'.$value['question'].'#str"> '.$value['sujet'].': </label><select class = "reponse" id="rep'.$value['question'].'" name="'.$value['question'].'#str" >';
+						$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'<label class="label" id="lab'.$value['question'].'" for "'.$value['question'].'#str"> '.$value['sujet'].': </label><select class = "reponse" id="rep'.$value['question'].'" name="'.$value['question'].'#str" >';
 						$select = explode(" ", $value['splitchar']);
 						foreach ($select as $selectkey => $selectvalue)
 						{
-							$echofinal = $echofinal.'<option value = '.$selectvalue.' name="'.$value['question'].'#str">'.$selectvalue.'</option>';
+							$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'<option value = '.$selectvalue.' name="'.$value['question'].'#str">'.$selectvalue.'</option>';
 						}
-						$echofinal = $echofinal.'</select>';
+						$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'</select>';
 					}
 					if ($_SESSION['iteration'] == 0 && $value['note'])
-					 	$echofinal = $echofinal.'<label for "'.$value['question'].'#note" >interet : </label><select name="'.$value['question'].'#note" /><option value = "1" name="'.$value['question'].'#note">faible</option><option value = "3" name="'.$value['question'].'#note">moyen</option><option value = "5" name="'.$value['question'].'#note">fort</option><br><br><br></select>';
+					 	$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'<label for "'.$value['question'].'#note" >interet : </label><select name="'.$value['question'].'#note" /><option value = "1" name="'.$value['question'].'#note">faible</option><option value = "3" name="'.$value['question'].'#note">moyen</option><option value = "5" name="'.$value['question'].'#note">fort</option><br><br><br></select>';
 					// else
 					// 	continue ;
-					$echofinal = $echofinal.'<label id="resum'.$value['question'].'" class = "reponse">NA</label><br>';
-					$echofinal = $echofinal.'</fieldset>';
-					$echofinal = $echofinal.'</div>';
+					$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'<label id="resum'.$value['question'].'" class = "reponse">NA</label><br>';
+					$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'</fieldset>';
+					$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'</div>';
 					$arrayjson[] = $value['qgroupid'];
+					if ($tabg['gquestion'] != 0)
+					{
+						$arrayjson[] = $tabg['groupparent'];
+						// $arrayjsonsup[] = $value['qgroupid'];
+					}
 					$arrayjson2[] = $value['question'];
 					$numberoffield++;
 				}
@@ -86,19 +96,27 @@
 		echo '<ul id="menupbar">';
 		foreach ($arrayjson as $key => $value)
 		{
-			$req_pre = $bdd->prepare('SELECT groupname, description FROM project_'.htmlspecialchars($_SESSION['project']).'_groupe WHERE id= '.htmlspecialchars($value).";"); // changer user   
+			$req_pre = $bdd->prepare('SELECT groupname, description, groupparent, gquestion FROM project_'.htmlspecialchars($_SESSION['project']).'_groupe WHERE id= '.htmlspecialchars($value).";"); // changer user   
 			$req_pre->execute();
 			$str3 = $req_pre->fetch();
+			if ($str3['gquestion'] != 0)
+				$vqgroupid = $str3['groupparent'];
+			else
+				$vqgroupid = $value;
 			if ($value == 0)
 				$str3['groupname'] = "General";
-			echo '<li class="etape" id = "pbar'.$value.'"><span>'.$str3['groupname'].'</span></li>';
-			$introdesc = $introdesc.'<p id = gdesc'.$value.'>'.$str3['description'].'</p>';
+			// echo '<li class="etape" id = "pbar'.$value.'"><span>'.$str3['groupname'].'</span></li>';
+			$echofinal = $echofinal.'<p id = gdesc'.$vqgroupid.'>'.$str3['description'].'</p>'.'<div id = "question'.$vqgroupid.'">'.$echopargroupe[$value]."</div>";
+			if ($str3['gquestion'] != 0)
+				unset($arrayjson[$key]);
 		}
+		$arrayjson = array_unique($arrayjson);
+		$arrayjson = array_values($arrayjson);
 		echo '</ul>';
 		echo '<div id="progressbar"><div id="indicator"></div><div id="progressnum">0%</div></div>';
 		echo '<div class = "formulaire2">';
 		echo '<h2 id = bilan>BILAN</h1>';
-		echo $introdesc;
+		//echo $introdesc;
 		echo '<form action="updatetimesheet.php" method="post" id="formulaireid">';
 		echo $echofinal;
 		echo '<input type="button" class = "from_inputleft" id = "go_back" value="Retour">';
@@ -110,10 +128,10 @@
 	$(document).ready(function () {
 			(function() {
 					<?php
-					$js_array = json_encode($arrayjson);
-					echo "var array = ". $js_array . ";\n";
-					$js_array2 = json_encode($arrayjson2);
-					echo "var question_array = ". $js_array2 . ";\n";
+						$js_array = json_encode($arrayjson);
+						echo "var array = ".$js_array.";\n";
+						$js_array2 = json_encode($arrayjson2);
+						echo "var question_array = ".$js_array2.";\n";
 					?>
 					var maxprogress = 100; // total à atteindre
 					var actualprogress = 0; // valeur courante
@@ -231,6 +249,7 @@
 			echo("<p>cette page n'est pas disponible</p>");
 			die();
 	}
+	print_r($arrayjson);
 	?>
 </div>
 	</body>

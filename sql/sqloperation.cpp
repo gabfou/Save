@@ -123,7 +123,7 @@ int	addperson(project *p, QString firstname, QString lastname,
 	QSqlQuery qry;
 
 	if (id != -1)
-        qry.prepare(("UPDATE project_" + p->name + "_project Set firstname=?, lastname=?, email=?, groupid=?, passwd=? WHERE id=?;"));
+        qry.prepare(("UPDATE project_" + p->name + "_project Set firstname=?, lastname=?, email=?, groupid=? WHERE id=?;"));
 	else
 	{
 //		qry.prepare( ("CREATE TABLE IF NOT EXISTS project_" + p->name + "_project (id INTEGER UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT, person VARCHAR(30), groupid INTEGER, type VARCHAR(30), note BOOLEAN DEFAULT 1, sujet VARCHAR(300), qgroupid INT DEFAULT 0, typef INT DEFAULT 0)").c_str() );
@@ -137,13 +137,6 @@ int	addperson(project *p, QString firstname, QString lastname,
 	qry.addBindValue(groupid);
 	if (id != -1)
     {
-        char mdp[7];
-
-        gen_random(mdp, 6);
-        QString mdphash = "poke";
-        mdphash += mdp;
-        mdphash += "mon";
-        qry.addBindValue(QCryptographicHash::hash(mdphash.toUtf8(), QCryptographicHash::Sha384).toHex());
 		qry.addBindValue(id);
 	}
 	if (!qry.exec())

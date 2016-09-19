@@ -51,6 +51,10 @@ grouptree::grouptree(MainWindow *m, vector<group> & g, int i) : g(g), m(m), i(i)
 	this->addAction(supp);
 	connect(supp, SIGNAL(triggered()), this, SLOT(suppersonintree()));
 
+    persinit = new QAction(QString("initialiser personne"), this);
+    this->addAction(persinit);
+    connect(persinit, SIGNAL(triggered()), this, SLOT(initpersonintree()));
+
 	connect(this, SIGNAL(itemSelectionChanged()), this, SLOT(contextmenuselect()));
 	contextmenuselect();
 }
@@ -71,6 +75,7 @@ void	grouptree::contextmenuselect()
 	newp->setVisible(false);
 	supp->setVisible(false);
 	modifdg->setVisible(false);
+    persinit->setVisible(false);
     newqg->setVisible(false);
 	if (tmp)
 	{
@@ -93,9 +98,45 @@ void	grouptree::contextmenuselect()
 	}
 	else if (tmp3 && i == 1)
 	{
+        persinit->setVisible(true);
 		supp->setVisible(true);
 		return ;
 	}
+}
+
+void    grouptree::initpersonintree()
+{
+    char mdp[7];
+    QSqlQuery qry;
+
+    int id = (dynamic_cast<persontreeitem*>(this->currentItem())->id);
+    QString email = m->current.listp[id].email;
+
+    gen_random(mdp, 6);
+    QString mdphash = "poke";
+    mdphash += mdp;
+    mdphash += "mon";
+
+    qry.prepare(("UPDATE project_" + m->current.name + "_project Set password=? WHERE id=?;"));
+
+    qry.addBindValue(QCryptographicHash::hash(mdphash.toUtf8(), QCryptographicHash::Sha384).toHex());
+    qry.addBindValue(id);
+    if (!qry.exec())
+    {
+        qDebug() << qry.lastError() << "grouptree::initpersonintree";
+        return ;
+    }
+    sendmail(email, "Bonjour votre mot de passse tout au long de l'étude sera " + QString(mdp) + "\r\n");
+    qry.prepare( ("INSERT INTO project_all_user (idperson, email, password, name_table) VALUES ( ? , ? , ? , ? );") );
+    qry.addBindValue(id);
+    qry.addBindValue(email);
+    qry.addBindValue(QCryptographicHash::hash(mdphash.toUtf8(), QCryptographicHash::Sha384).toHex());
+    qry.addBindValue(m->current.name);
+    if (!qry.exec())
+    {
+        qDebug() << qry.lastError() << "grouptree::initpersonintree 2";
+        return ;
+    }
 }
 
 void grouptree::setcurrentgroup(int id, QTreeWidgetItem *dontgiveit)
