@@ -68,7 +68,7 @@ $tab = array_unique($tab);
 foreach ($tab as $name)
 {
 	//echo ($name);
-	$qry = 'INSERT INTO project_'.htmlspecialchars($_SESSION['project']).'_reponse (idperson , name, time, note, date_info, iteration) VALUE ('.htmlspecialchars($_SESSION['id_client']).' , "'.$name.'" , '.htmlspecialchars($_POST[$name.'#time']).', '.((isset($_POST[$name.'#note'])) ? htmlspecialchars($_POST[$name.'#note']) : '-1').' , NOW() , '.$_SESSION['iteration'].' );';
+	$qry = 'INSERT INTO project_'.htmlspecialchars($_SESSION['project']).'_reponse (idperson , idquestion, time, note, date_info, iteration) VALUE ('.htmlspecialchars($_SESSION['id_client']).' , "'.$name.'" , '.htmlspecialchars($_POST[$name.'#time']).', '.((isset($_POST[$name.'#note'])) ? htmlspecialchars($_POST[$name.'#note']) : '-1').' , NOW() , '.$_SESSION['iteration'].' );';
 	$bdd->exec($qry);
 	//echo 'INSERT INTO project_'.$_SESSION['project'].'_reponse ('.$_SESSION['id_client'].', '.$_POST[$name."_time"].', '.$_POST[$name."_note"].', NOW());';
 }

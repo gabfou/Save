@@ -281,7 +281,7 @@ void MainWindow::addproject2()
 				" groupid INTEGER,"
 				" password VARCHAR(1024),"
 				" refbool BOOLEAN DEFAULT 0,"
-				" questionbool BOOLEAN DEfAULT 0)") )
+                " questionbool BOOLEAN DEfAULT 0)") )
 		qDebug() << "create project" << qry.lastError();
 	else
 		qDebug() << "Table created!";
@@ -308,7 +308,7 @@ void MainWindow::addproject2()
 				" groupparent INTEGER DEFAULT 0,"
 				" type BOOLEAN DEFAULT 0,"
                 " description VARCHAR(300) NOT NULL DEFAULT '',"
-                " etape BOOLEAN DEFAULT 1)" );
+                " gquestion INT DEFAULT 0)" );
 	if(!qry.exec())
 		qDebug() << "create groupe" << qry.lastError();
 
