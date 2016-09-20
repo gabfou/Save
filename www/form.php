@@ -1,6 +1,17 @@
 <?php
 	include("testconect.php");
 	include("function.php");
+
+	function recupfirstdiv($str)
+	{
+		return (strstr($str, "</div>", true)."</div>");
+	}
+
+	function supfirstdiv($str)
+	{
+		return (substr(strstr($str, "</div>"), 6));
+	}
+
 	$req_pre = $bdd->prepare('SELECT questionbool, refbool, groupid FROM project_'.htmlspecialchars($_SESSION['project']).'_project WHERE id = '.htmlspecialchars($_SESSION['id_client']).";"); // changer user
 	$req_pre->execute();
 	($tab = $req_pre->fetch());
@@ -57,7 +68,7 @@
 					}
 					else if ($value['typef'] == 1)
 					{
-						$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'<label class="label" id="lab'.$value['id'].'" for="rep'.$value['id'].'"> '.$value['sujet'].': </label><select class = "reponse" id="rep'.$value['id'].'" type="checkbox" name="'.$value['id'].'#time" ><option value = "1" name="'.$value['id'].'#time">oui</option><option value = "0" name="'.$value['id'].'#time">non</option></select>';
+						$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'<label class="label" id="lab'.$value['id'].'" for="rep'.$value['id'].'"> '.$value['sujet'].': </label><select class = "reponse" id="rep'.$value['id'].'" type="checkbox" name="'.$value['id'].'#time" ><option value = "0" name="'.$value['id'].'#time">non</option><option value = "1" name="'.$value['id'].'#time">oui</option></select>';
 					}
 					else if ($value['typef'] == 2)
 					{
@@ -109,6 +120,7 @@
 		$echofinal = $echofinal.'<div id = "intro"><p>Bonjour et merci de participer à cette étude</p><p>Veuillez cliquer sur le bouton suivant et repondre aux questions en fonction de votre journée.</p></div>';
 		$introdesc = "";
 		echo '<ul id="menupbar">';
+		$i = 0;
 		foreach ($arrayjson as $key => $value)
 		{
 			$req_pre = $bdd->prepare('SELECT groupname, description, groupparent, gquestion FROM project_'.htmlspecialchars($_SESSION['project']).'_groupe WHERE id= '.htmlspecialchars($value).";"); 
@@ -127,8 +139,12 @@
 			// echo '<li class="etape" id = "pbar'.$value.'"><span>'.$str3['groupname'].'</span></li>';
 			if ($str3['gquestion'])
 			{
-				// if ($str3['gquestion'] == 2)
-				// 	$echofinal = $echofinal.'<div id= "question'.$vqgroupid.'"></div><div id = "question'.$vqgroupid.'"><fieldset><legend>'.$str3['description'].'</legend><div id = "question'.$vqgroupid.'">'.$echopargroupe[$value]."</fieldset></div>";
+				//echo "sup ". supfirstdiv($echopargroupe[$value])." add ".recupfirstdiv($echopargroupe[$value]);
+				if ($str3['gquestion'] == 2)
+				{
+					$arrayjson3[] = $i; 
+					$echofinal = $echofinal.'<div id= "question'.$vqgroupid.'" class="md_debut'.$i.'">'.recupfirstdiv($echopargroupe[$value]).'</div><div id = "question'.$vqgroupid.'" class="md_fin'.$i.'"><fieldset><legend>'.$str3['description'].'</legend><div id = "question'.$vqgroupid.'">'.supfirstdiv($echopargroupe[$value])."</fieldset></div>";
+				}
 				else
 					$echofinal = $echofinal.'<div id = "question'.$vqgroupid.'"><fieldset><legend>'.$str3['description'].'</legend><div id = "question'.$vqgroupid.'">'.$echopargroupe[$value]."</fieldset></div>";
 			}
@@ -136,6 +152,7 @@
 				$echofinal = $echofinal.'<p id = gdesc'.$vqgroupid.'>'.$str3['description'].'</p>'.'<div id = "question'.$vqgroupid.'">'.$echopargroupe[$value]."</div>";
 			if ($str3['gquestion'] != 0)
 				unset($arrayjson[$key]);
+			$i++;
 		}
 		$arraygrouparrent = array_unique($arraygrouparrent);
 		$arraygrouparrent = array_values($arraygrouparrent);
@@ -148,6 +165,8 @@
 		}
 		$arrayjson = array_unique($arrayjson);
 		$arrayjson = array_values($arrayjson);
+		$arrayjson3 = array_unique($arrayjson3);
+		$arrayjson3 = array_values($arrayjson3);
 		echo '</ul>';
 		echo '<div id="progressbar"><div id="indicator"></div><div id="progressnum">0%</div></div>';
 		echo '<div class = "formulaire2">';
@@ -169,6 +188,8 @@
 						echo "var array = ".$js_array.";\n";
 						$js_array2 = json_encode($arrayjson2);
 						echo "var question_array = ".$js_array2.";\n";
+						$js_array3 = json_encode($arrayjson3);
+						echo "var md_array = ".$js_array3.";\n";
 					?>
 					var maxprogress = 100; // total à atteindre
 					var actualprogress = 0; // valeur courante
@@ -258,6 +279,22 @@
 						$(str2).css('background-color', '#449CA3');
 						prog(nb);
 					}
+					$niark22 = 0;
+					function mdforeach(element, index, array)
+					{
+						$( ".md_debut" + element).on('change', function()
+						{
+							var str = ".md_debut";
+							str.concat(element);
+							var str2 = ".md_fin";
+							str2.concat(element);
+							if ($niark22 % 2 == 0)
+								$( ".md_fin" + element).show();
+							else
+								$( ".md_fin" + element).hide();
+							$niark22++;
+						});
+					}
 					var i = -1;
 					$("[id^=question]").hide();
 					$("[id^=gdesc]").hide();
@@ -266,6 +303,8 @@
 					$("[id^=pbar]").hide();
 					$("[id=next]").hide();
 					$("[id=bilan]").hide();
+					var j = -1;
+					md_array.forEach(mdforeach);
 					$( "#target" ).click(function()
 					{
 						etapemanageur(++i);
