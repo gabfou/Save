@@ -45,6 +45,8 @@
 		$numberoffield = 0;
 		$arrayjson = array();
 		$arrayjson2 = array();
+		$arrayjson3 = array();
+		$arraygrouparrent = array();
 		while ($groupid > -1)
 		{
 			$req_pre = $bdd->prepare('SELECT id, question, note, type, sujet, qgroupid, typef, ref_only, splitchar FROM project_'.htmlspecialchars($_SESSION['project']).'_question WHERE groupid = '.htmlspecialchars($groupid).";"); // changer user
@@ -60,7 +62,7 @@
 					$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'<div>';
 					if ($tabg['gquestion'] == 0)
 					{
-						$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'<fieldset class="field"><legend>'.$value['id'].'</legend>';
+						$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'<fieldset class="field"><legend>'.$value['question'].'</legend>';
 					}
 					if ($value['typef'] == 0)
 					{
@@ -143,13 +145,13 @@
 				if ($str3['gquestion'] == 2)
 				{
 					$arrayjson3[] = $i; 
-					$echofinal = $echofinal.'<div id= "question'.$vqgroupid.'" class="md_debut'.$i.'">'.recupfirstdiv($echopargroupe[$value]).'</div><div id = "question'.$vqgroupid.'" class="md_fin'.$i.'"><fieldset><legend>'.$str3['description'].'</legend><div id = "question'.$vqgroupid.'">'.supfirstdiv($echopargroupe[$value])."</fieldset></div>";
+					$echofinal = $echofinal.'<div id= "question'.$vqgroupid.'" style="display: hidden"><fieldset><legend>'.$str3['description'].'</legend><div class="md_debut'.$i.'">'.recupfirstdiv($echopargroupe[$value]).'</div><div id = "question'.$vqgroupid.'" class="md_fin'.$i.'" style="display: hidden"><div>'.supfirstdiv($echopargroupe[$value])."</div></fieldset></div>"; // j ai virer le duxieme div id (au cas ou sa bugerai)
 				}
 				else
-					$echofinal = $echofinal.'<div id = "question'.$vqgroupid.'"><fieldset><legend>'.$str3['description'].'</legend><div id = "question'.$vqgroupid.'">'.$echopargroupe[$value]."</fieldset></div>";
+					$echofinal = $echofinal.'<div id = "question'.$vqgroupid.'" style="display: hidden"><fieldset><legend>'.$str3['description'].'</legend><div>'.$echopargroupe[$value]."</fieldset></div>";
 			}
 			else
-				$echofinal = $echofinal.'<p id = gdesc'.$vqgroupid.'>'.$str3['description'].'</p>'.'<div id = "question'.$vqgroupid.'">'.$echopargroupe[$value]."</div>";
+				$echofinal = $echofinal.'<p id = gdesc'.$vqgroupid.'>'.$str3['description'].'</p>'.'<div id = "question'.$vqgroupid.'" style="display: hidden">'.$echopargroupe[$value]."</div>";
 			if ($str3['gquestion'] != 0)
 				unset($arrayjson[$key]);
 			$i++;
@@ -247,6 +249,14 @@
 						$("[id=bilan]").show();
 						question_array.forEach(bilanforeach);
 					}
+					function mdcheck(element, index, array)
+					{
+
+						if ($( ".md_debut" + element).find("select").val() != 0)
+							$( ".md_fin" + element).show();
+						else
+							$( "[class=md_fin" + element + "]").hide();
+					}
 					function etapemanageur(nb)
 					{
 						if (!(array[nb]))
@@ -277,22 +287,17 @@
 						$(str4).show();
 						$(str).show();
 						$(str2).css('background-color', '#449CA3');
+						md_array.forEach(mdcheck);
 						prog(nb);
 					}
-					$niark22 = 0;
 					function mdforeach(element, index, array)
 					{
-						$( ".md_debut" + element).on('change', function()
+						$( ".md_debut" + element).find("select").on("change", function()
 						{
-							var str = ".md_debut";
-							str.concat(element);
-							var str2 = ".md_fin";
-							str2.concat(element);
-							if ($niark22 % 2 == 0)
+							if (this.value != 0)
 								$( ".md_fin" + element).show();
 							else
 								$( ".md_fin" + element).hide();
-							$niark22++;
 						});
 					}
 					var i = -1;
@@ -333,4 +338,4 @@
 	//print_r($arrayjson);
 	?>
 </div>
-	</body>
+	</body>  
