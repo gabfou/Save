@@ -1,2 +1,6 @@
 <?php include("testconect.php"); ?>
-<html><p>erreur : il semblerait que vous ayez deja remplis le formulaire aujourd'hui</p></html>
+<head>
+<link rel="stylesheet" href="style.css" />
+<title>etude muranoconseil</title>
+</head>
+<html><body><p>erreur : il semblerait que vous n'ayez aucun questionaire à remplir</p></body></html>

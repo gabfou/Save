@@ -19,7 +19,7 @@ void bargraph::updateg(t_groupref g, int qgroup)
 
 void bargraph::selectq(int gqref)
 {
-    qDebug() << "trucyhgsadjfhgsafdghasfd";
+//    qDebug() << "trucyhgsadjfhgsafdghasfd";
 //    listqchild = p->questiongroupqchildnotopti(gqref);
 }
 
@@ -60,8 +60,8 @@ void bargraph::drawgraph(QPainter *qp)
     qp->rotate(45);
     qp->translate(-x, -start * h120);
     QList<float>::iterator tmp;
-	vector<question> listq = listqchild;
-	vector<question>::iterator tmp3;
+    QList<question> listq = listqchild;
+    QList<question>::iterator tmp3;
 
 	tmp = g.list.begin();
 	tmp3 = listq.begin();

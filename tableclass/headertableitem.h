@@ -17,16 +17,16 @@ public:
 	void setFormule(const QString &value);
 
     headertableitem(project *p, QString str, QString form = "", int id = -1);
-	QString formule = "";
-	int groupe = 0;
-	int id = -1;
-    int type = -1;
-	void *arg = NULL;
-	group argg;
-	person argp;
-	question argq;
-    QString argstr;
     project *p;
+    int type = -1;
+	int groupe = 0;
+	void *arg = NULL;
+    group argg;
+    person argp;
+    question argq;
+    QString argstr;
+    int id = -1;
+    QString formule = "";
     headertableitem(project *p, QString str, group arg, QString form = "");
     headertableitem(project *p, QString str, person arg, QString form = "");
     headertableitem(project *p, QString str, question arg, QString form = "");

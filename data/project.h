@@ -63,7 +63,7 @@ public:
     void groupchild(unsigned int id, QList<int> & ret, vector<group> &g) const;
     question getquestion(int id);
     void questiongroupqchild(int id, QList<int> &ret) const;
-    vector<question> questiongroupqchildnotopti(int id);
+    QList<question> questiongroupqchildnotopti(int id);
     person getperson(int id);
     int getNbqgroup() const;
 };

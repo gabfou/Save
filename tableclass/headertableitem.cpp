@@ -9,27 +9,29 @@
 QString headertableitem::getFormule() const{return formule;}
 void headertableitem::setFormule(const QString &value){formule = value;}
 
-headertableitem::headertableitem(project *p, QString str, QString form, int id) : QTableWidgetItem(str), formule(form), id(id), p(p), type(-1)
+
+headertableitem::headertableitem(project *p, QString str, QString form, int id)
+    : QTableWidgetItem(str), p(p), type(-1), id(id), formule(form)
 {
 }
 
 headertableitem::headertableitem(project *p, QString str, group arg, QString form)
-    : QTableWidgetItem(str), type(1), argg(arg), id(arg.id), formule(form), p(p)
+    : QTableWidgetItem(str), p(p), type(1), argg(arg), id(arg.id), formule(form)
 {
 }
 
 headertableitem::headertableitem(project *p, QString str, person arg, QString form)
-    : QTableWidgetItem(str), type(3), argp(arg), id(arg.id), formule(form), p(p)
+    : QTableWidgetItem(str), p(p), type(3), argp(arg), id(arg.id), formule(form)
 {
 }
 
 headertableitem::headertableitem(project *p, QString str, question arg, QString form)
-    : QTableWidgetItem(str), type(2), argq(arg), id(arg.id), formule(form), p(p)
+    : QTableWidgetItem(str), p(p), type(2), argq(arg), id(arg.id), formule(form)
 {
 }
 
 headertableitem::headertableitem(project *p, QString str, QString arg, QString form)
-    : QTableWidgetItem(str), type(4), argstr(arg), id(-1), formule(form), p(p)
+    : QTableWidgetItem(str), p(p), type(4), argstr(arg), id(-1), formule(form)
 {
 }
 
@@ -74,7 +76,7 @@ bool headertableitem::is_in(vector<group> &g, vector<group> &gq, QList<int> list
     }
     if (type == 1)
     {
-        qDebug() << "is_in" << argg.type << argg.getListp().empty() << argg.getListq().empty();
+//        qDebug() << "is_in" << argg.type << argg.getListp().empty() << argg.getListq().empty();
         if ((argg.type == 0 && argg.getListp().empty()) || (argg.type == 1 && argg.getListq().empty()))
             return (0);
         if (g[0].type != this->argg.type) // a enlever si en dessous finie

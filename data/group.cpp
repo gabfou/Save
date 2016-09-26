@@ -24,8 +24,8 @@ void	group::addfils(int id)
 {
     //qDebug() << this->name << " addfils: " << QString::number(id) << QString::number((long int)this);
 	int dafuq = id;
-	if (this->listfils.empty())
-		qDebug() << "emptyfils";
+//	if (this->listfils.empty())
+//		qDebug() << "emptyfils";
 	this->listfils.push_back(dafuq);
 }
 
@@ -88,14 +88,14 @@ void group::addperson(person p)
 {
 	person p2(p);
 	this->listp.push_back(p2);
-    qDebug() << p2.getName();
+    //qDebug() << p2.getName();
 }
 
 void group::addquestion(question q)
 {
 	question q2(q);
 	this->listq.push_back(q2);
-    qDebug() << q2.name;
+    //qDebug() << q2.name;
 }
 
 void group::debug()

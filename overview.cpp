@@ -17,8 +17,8 @@ overview::overview(MainWindow *m, project *p, int group, int *showmod) : p(p), s
     barref->setName("Escompté");
     table = new tableshow(m, p, 0);
     table->reinit();
-    vector<question> listqchild =  p->questiongroupqchildnotopti(0);
-    table->setverticalheader(listqchild, 0);
+    QList<question> listqchild =  p->questiongroupqchildnotopti(0);
+    //table->setverticalheader(listqchild, 0);
     table->sethorizontalheader(headertable, p->getNbgeneration());
     //table->showtable(0, 0);
     table->updateall();

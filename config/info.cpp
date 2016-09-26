@@ -9,12 +9,15 @@ info::info(project *p) : p(p)
     infog = new QVBoxLayout();
     infolabel = new QLabel("test");
     descriptiong = new QLineEdit();
+    gquestion = new QCheckBox();
     b_update = new QPushButton("Enregistrer");
 
     vboxinfo->addWidget(infolabel);
 
     infog->addWidget(new QLabel("description"));
     infog->addWidget(descriptiong);
+    infog->addWidget(new QLabel("question tiroir"));
+    infog->addWidget(gquestion);
     infog->addWidget(b_update);
     contg->setLayout(infog);
     vboxinfo->addWidget(contg);
@@ -53,5 +56,5 @@ void info::updatebddg()
         warning->show();
         return ;
     }
-    addgroup(p, p->name, current->name, current->parentid , current->type, descriptiong->text(), ((init) ? current->id : -1));
+    addgroup(p, p->name, current->name, current->parentid , current->type, descriptiong->text(), gquestion->isChecked(), ((init) ? current->id : -1));
 }

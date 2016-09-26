@@ -18,6 +18,7 @@ protected:
     QVBoxLayout *vboxinfo;
     QVBoxLayout *infog;
     project     *p;
+    QCheckBox   *gquestion;
 
 private:
     QLineEdit *descriptiong;

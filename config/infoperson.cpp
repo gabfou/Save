@@ -25,7 +25,9 @@ infoperson::infoperson(project *p, MainWindow *m) : info(p)
     contp->setLayout(vbox);
     vboxinfo->addWidget(contp);
 
-	//slot
+    contp->hide();
+
+    //slot
 
 	cotmp = connect(b_update, SIGNAL(clicked(bool)), this, SLOT(updatebdd()));
 }
@@ -43,8 +45,8 @@ void infoperson::updateib(QTreeWidgetItem * item)
         if (tmp2)
         {
             contp->hide();
+            this->updateibg(tmp2->getId(), 1);
             groupid = tmp2->getId();
-            infolabel->setText("Groupe");
         }
         else
         {

@@ -65,7 +65,6 @@ void project::addperson(QString name, QString lastname, QString email)
 inline void project::addperson(QString name, QString lastname, QString email, int id, vector<question> *listquestion, int groupid)
 {
 	this->nbperson++;
-    qDebug() << name;
 	person ret(name, lastname, email, id, listquestion, groupid);
     while (this->listp.size() < id)
         this->listp.push_back(person());
@@ -118,18 +117,7 @@ inline void project::addquestion(QString name, int group, unsigned int id, int q
 
 void project::addreponse(int id, string name, int time, int note, string date, int iteration, int idquestion) // opti
 {
-    vector<person>::iterator tmp;
-
-	tmp = listp.begin();
-	while (tmp != listp.end())
-	{
-		if ((*tmp).compare(id) == 0)
-		{
-            (*tmp).add_fact(name, time, note, date, iteration, idquestion);
-			return ;
-		}
-		tmp++;
-	}
+    listp[id].add_fact(name, time, note, date, iteration, idquestion);
 }
 
 inline void project::addgroup(QString name, int parentid, unsigned int id, int type, QString description, bool gquestion)
@@ -192,6 +180,7 @@ int listcompare(list<person> listp, QString line)
 
 void project::initoroject(QString fproject)
 {
+    QElapsedTimer timerdebug;
 	this->name = fproject;
 	QSqlQuery query;
 
@@ -201,6 +190,7 @@ void project::initoroject(QString fproject)
     this->listquestion.clear();
     this->addgroup("ALL", -1, 0, 0, "", 0);
     this->addgroup("ALL", -1, 0, 1, "", 0);
+    qDebug() << "init groupe";timerdebug.start();
     if(query.exec(("SELECT groupname, groupparent, id, type, description, gquestion FROM project_" + fproject + "_groupe")))
 	{
 		while(query.next())
@@ -215,6 +205,8 @@ void project::initoroject(QString fproject)
 	}
 	else
 		qDebug() << "error get group :" << query.lastError();
+    qDebug() << "init group time" << timerdebug.elapsed() << "milliseconds";
+    qDebug() << "init question";timerdebug.start();
     if(query.exec(("SELECT question,groupid,id,qgroupid,sujet,type,typef,splitchar,value,ref_only FROM project_" + fproject + "_question")))
 	{
 		while(query.next())
@@ -234,6 +226,8 @@ void project::initoroject(QString fproject)
 	}
 	else
 		qDebug() << "error get question :" << query.lastError();
+    qDebug() << "init persone";timerdebug.start();
+    qDebug() << "init question time" << timerdebug.elapsed() << "milliseconds";
     if(query.exec(("SELECT id, firstname,lastname,email,groupid FROM project_" + fproject + "_project")))
 	{
 		while(query.next())
@@ -248,6 +242,8 @@ void project::initoroject(QString fproject)
 	}
 	else
 		qDebug() << "error get user :" << query.lastError();
+    qDebug() << "init persone time" << timerdebug.elapsed() << "milliseconds";
+    qDebug() << "init fact";timerdebug.start();
     if(query.exec(("SELECT idperson,name,time,note,date_info, iteration, idquestion FROM project_" + fproject + "_reponse")))
 	{
 		while(query.next())
@@ -262,7 +258,9 @@ void project::initoroject(QString fproject)
 		}
 	}
 	else
-		qDebug() << "error get reponse :" << query.lastError();
+        qDebug() << "error get reponse :" << query.lastError();
+    qDebug() << "init reponse time" << timerdebug.elapsed() << "milliseconds";
+    qDebug() << "remplissage groupe persone";timerdebug.start();
     vector<person>::iterator tmp;
 	tmp = this->listp.begin();
 	while (tmp != this->listp.end())
@@ -271,6 +269,8 @@ void project::initoroject(QString fproject)
             this->listgroup[tmp->getGroupid()].addperson(*tmp);
 		tmp++;
 	}
+    qDebug() << "remplissage groupe personne time" << timerdebug.elapsed() << "milliseconds";
+    qDebug() << "remplissage groupe question";timerdebug.start();
 	vector<question>::iterator tmp2;
 	tmp2 = this->listquestion.begin();
 	while (tmp2 != this->listquestion.end())
@@ -279,6 +279,7 @@ void project::initoroject(QString fproject)
             this->listqgroup[tmp2->qgroupid].addquestion(*tmp2);
 		tmp2++;
 	}
+    qDebug() << "remplissage groupe question time" << timerdebug.elapsed() << "milliseconds";
 }
 
 void	project::groupchild(unsigned int id, QList<int> & ret) const
@@ -344,18 +345,18 @@ void	project::groupqchild(int id, QList<int> & ret) const
 	}
 }
 
-vector<question> project::questiongroupqchildnotopti(int id)
+QList<question> project::questiongroupqchildnotopti(int id)
 {
 
 	QList<int> listqchild;
-	vector<question> ret;
+    QList<question> ret;
     QList<int>::iterator tmp;
 	questiongroupqchild(id, listqchild);
 
 	tmp = listqchild.begin();
 	while (tmp != listqchild.end())
 	{
-        qDebug() << listquestion[(*tmp)].name;
+        //qDebug() << listquestion[(*tmp)].name;
         ret.push_back(listquestion[(*tmp)]);
 		tmp++;
 	}
