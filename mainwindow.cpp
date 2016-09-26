@@ -519,20 +519,22 @@ MainWindow::~MainWindow()
 void MainWindow::sendprojectauxi(QString str)
 {
 
-	QString body = "Bonjour dans le cadre de notre études veuillez repondre au formulaire à l'adresse suivante : http://www.muranoconseil.com/__DEV__/" + str + "?project__project=";
+    QString body = "Bonjour dans le cadre de notre études veuillez repondre au formulaire à l'adresse suivante : ";
 	QStringList listmail;
 
-	this->updateproject();
-	body.append(this->namecurrent);
-	body.append("&");
+//	this->updateproject();
+//	body.append(this->namecurrent);
+//	body.append("&");
 	// body.append(this->current->postquestion("ALL"));
 	listmail = this->current.sendproject(NULL);
-	QString bodytmp;
-	for (int i = 0; i < listmail.size(); ++i)
-	{
+    QString bodytmp;
+    int i = 0;
+    while (i < listmail.size())
+    {
+        qDebug() << listmail.at(i);
 		bodytmp = body + "\r\n";// + "person__person=" + listmail.at(i + 1) + "&";
 		sendmail(listmail.at(i), bodytmp); // OPTI
-		i++;
+        i += 2;
 	}
 }
 
@@ -650,8 +652,7 @@ void	MainWindow::changescopeq2(QTreeWidgetItem *item)
 	if ((tmp = dynamic_cast<grouptreeitem*>(item)) != NULL)
 	{
 		this->currentgqref = tmp->getId();
-		this->current.gqref = this->currentgqref;
-		qDebug() << "dsdsffdsfdsfserdwcdsgvbfd";
+        this->current.gqref = this->currentgqref;
 		emit gqrefchange(currentgqref);
 		this->showproject();
 	}

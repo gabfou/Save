@@ -1,2 +1,2 @@
 <?php include("testconect.php"); ?>
-<html><p>erreur : il semblerait que vous ayez deja remplis le formulaire aujourd'hui</p></html>
+<html><h1>erreur : il semblerait que vous ayez deja remplis le formulaire aujourd'hui</h1></html>

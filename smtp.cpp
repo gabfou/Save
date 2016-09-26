@@ -34,6 +34,7 @@ void Smtp::sendMail(const QString &from, const QString &to, const QString &subje
     message = "To: " + to + "\n";
     message.append("From: " + from + "\n");
     message.append("Subject: " + subject + "\n");
+    message.append("Content-Type: text/plain; charset=\"utf-8\" \n");
     message.append(body);
     message.replace( QString::fromLatin1( "\n" ), QString::fromLatin1( "\r\n" ) );
     message.replace( QString::fromLatin1( "\r\n.\r\n" ),
@@ -95,6 +96,7 @@ void Smtp::readyRead()
 
     qDebug() << "Server response code:" <<  responseLine;
     qDebug() << "Server response: " << response;
+    qDebug() << "state: " << debug[state];
 
     if ( state == Init && responseLine == "220" )
     {

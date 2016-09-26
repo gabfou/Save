@@ -84,12 +84,14 @@
 					}
 					else if ($value['typef'] == 3)
 					{
-						$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'<label class="label" id="lab'.$value['id'].'" for "'.$value['id'].'#str"> '.$value['sujet'].': </label><select class = "reponse" id="rep'.$value['id'].'" name="'.$value['id'].'#str" >';
+						$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'<label class="label" id="lab'.$value['id'].'" for "'.$value['id'].'#time"> '.$value['sujet'].': </label><select class = "reponse" id="rep'.$value['id'].'" name="'.$value['id'].'#time" >';
 						$select = explode(" ", $value['splitchar']);
 						$i = 0;
+
+						$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'<option value = -2 name="'.$value['id'].'#time"></option>';
 						while ($select[$i])
 						{
-							$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'<option value = '.$select[$i + 1].' name="'.$value['id'].'#str">'.$select[$i].'</option>';
+							$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'<option value = '.$select[$i + 1].' name="'.$value['id'].'#time">'.$select[$i].'</option>';
 							$i += 2;
 						}
 						$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'</select>';
@@ -133,38 +135,44 @@
 				$vqgroupid = $str3['groupparent'];
 				$arrayjson[] = $str3['groupparent'];
 				$arraygrouparrent[] = $str3['groupparent'];
-			}
-			else
-				$vqgroupid = $value;
-			if ($value == 0)
-				$str3['groupname'] = "General";
-			// echo '<li class="etape" id = "pbar'.$value.'"><span>'.$str3['groupname'].'</span></li>';
-			if ($str3['gquestion'])
-			{
 				//echo "sup ". supfirstdiv($echopargroupe[$value])." add ".recupfirstdiv($echopargroupe[$value]);
 				if ($str3['gquestion'] == 2)
 				{
 					$arrayjson3[] = $i; 
-					$echofinal = $echofinal.'<div id= "question'.$vqgroupid.'" style="display: hidden"><fieldset><legend>'.$str3['description'].'</legend><div class="md_debut'.$i.'">'.recupfirstdiv($echopargroupe[$value]).'</div><div id = "question'.$vqgroupid.'" class="md_fin'.$i.'" style="display: hidden"><div>'.supfirstdiv($echopargroupe[$value])."</div></fieldset></div>"; // j ai virer le duxieme div id (au cas ou sa bugerai)
+					$echopargroupe[$str3['groupparent']] = $echopargroupe[$str3['groupparent']].'<div id= "question'.$vqgroupid.'" style="display: hidden"><fieldset><legend>'.$str3['description'].'</legend><div class="md_debut'.$i.'">'.recupfirstdiv($echopargroupe[$value]).'</div><div id = "question'.$vqgroupid.'" class="md_fin'.$i.'" style="display: hidden"><div>'.supfirstdiv($echopargroupe[$value])."</div></fieldset></div>"; // j ai virer le duxieme div id (au cas ou sa bugerai)
 				}
 				else
-					$echofinal = $echofinal.'<div id = "question'.$vqgroupid.'" style="display: hidden"><fieldset><legend>'.$str3['description'].'</legend><div>'.$echopargroupe[$value]."</fieldset></div>";
-			}
-			else
-				$echofinal = $echofinal.'<p id = gdesc'.$vqgroupid.'>'.$str3['description'].'</p>'.'<div id = "question'.$vqgroupid.'" style="display: hidden">'.$echopargroupe[$value]."</div>";
-			if ($str3['gquestion'] != 0)
+					$echopargroupe[$str3['groupparent']] = $echopargroupe[$str3['groupparent']].'<div id = "question'.$vqgroupid.'" style="display: hidden"><fieldset><legend>'.$str3['description'].'</legend><div>'.$echopargroupe[$value]."</fieldset></div>";
 				unset($arrayjson[$key]);
+				$arrayjson[] = $str3['groupparent'];
+			}
 			$i++;
 		}
+		$arrayjson = array_unique($arrayjson);
+		$arrayjson = array_values($arrayjson);
 		$arraygrouparrent = array_unique($arraygrouparrent);
 		$arraygrouparrent = array_values($arraygrouparrent);
-		foreach ($arraygrouparrent as $key => $value)
+		foreach ($arrayjson as $key => $value)
 		{
-			$req_pre = $bdd->prepare('SELECT groupname, description, groupparent, gquestion FROM project_'.htmlspecialchars($_SESSION['project']).'_groupe WHERE id= '.htmlspecialchars($value).";");
+			$req_pre = $bdd->prepare('SELECT groupname, description, groupparent, gquestion FROM project_'.htmlspecialchars($_SESSION['project']).'_groupe WHERE id= '.htmlspecialchars($value).";"); 
 			$req_pre->execute();
 			$str3 = $req_pre->fetch();
-			$echofinal = '<p id = gdesc'.$value.'><h3 id = gdesc'.$value.'>'.$str3['description'].'</h3></p>'.$echofinal;
+			$vqgroupid = $value;
+			if ($value == 0)
+				$str3['groupname'] = "General";
+			// echo '<li class="etape" id = "pbar'.$value.'"><span>'.$str3['groupname'].'</span></li>';
+			
+			else
+				$echofinal = $echofinal.'<h3><p id = gdesc'.$vqgroupid.'>'.$str3['description'].'</p></h3>'.'<div id = "question'.$vqgroupid.'" style="display: hidden">'.$echopargroupe[$value]."</div>";
+
 		}
+		// foreach ($arraygrouparrent as $key => $value)
+		// {
+		// 	$req_pre = $bdd->prepare('SELECT groupname, description, groupparent, gquestion FROM project_'.htmlspecialchars($_SESSION['project']).'_groupe WHERE id= '.htmlspecialchars($value).";");
+		// 	$req_pre->execute();
+		// 	$str3 = $req_pre->fetch();
+		// 	$echofinal = '<p id = gdesc'.$value.'><h3 id = gdesc'.$value.'>'.$str3['description'].'</h3></p>'.$echofinal;
+		// }
 		$arrayjson = array_unique($arrayjson);
 		$arrayjson = array_values($arrayjson);
 		$arrayjson3 = array_unique($arrayjson3);
@@ -172,7 +180,7 @@
 		echo '</ul>';
 		echo '<div id="progressbar"><div id="indicator"></div><div id="progressnum">0%</div></div>';
 		echo '<div class = "formulaire2">';
-		echo '<h2 id = bilan>BILAN</h1>';
+		echo '<h1 id = bilan>BILAN</h1>';
 		//echo $introdesc;
 		echo '<form action="updatetimesheet.php" method="post" id="formulaireid">';
 		echo $echofinal;
@@ -214,13 +222,15 @@
 					}
 					function bilanforeach(element, index, array)
 					{
-						// console.log("a[" + index + "] = " + element);
 						var str3 = "[id=rep";
-						str3.concat(element);
-						str3.concat("]");
+						str3 = str3.concat(element);
+						str3 = str3.concat("]");
 						var str4 = "[id=resum";
-						str4.concat(element);
-						str4.concat("]");
+						str4 = str4.concat(element);
+						str4 = str4.concat("]");
+						var str5 = "[id=lab";
+						str5 = str5.concat(element);
+						str5 = str5.concat("]");
 						var rep = document.getElementById("rep" + element);
 						var resum = document.getElementById("resum" + element);
 						if (resum && rep)
@@ -233,19 +243,22 @@
 							else
 								resum.innerHTML = rep.value;
 						}
+						if ("".localeCompare(resum.innerHTML) == 0)
+						 	return ;
 						// else
 						// 	resum.innerHTML = "Vous n'avez pas repondu a cette question";
-						$(str3).show();
+						$(str5).show();
 						$(str4).show();
 					}
 					function bilan()
 					{
 						$("[id=next]").show();
-						$("[id=target]").hide();
-						$("[id^=resum]").show();
-						$("[id^=gdesc]").hide();
 						$("[id^=question]").show();
+						$("[id=target]").hide();
+						$("[id^=resum]").hide();
+						$("[id^=gdesc]").show();
 						$("[id^=rep]").hide();
+						$("[id^=lab]").hide();
 						$("[id=bilan]").show();
 						question_array.forEach(bilanforeach);
 					}
@@ -266,6 +279,7 @@
 							//$("[id=go_back]").hide();
 							return ;
 						}
+						$("[id^=lab]").show();
 						$("[id^=rep]").show();
 						$("[id=next]").hide();
 						$("[id^=gdesc]").hide();

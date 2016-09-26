@@ -291,13 +291,14 @@ void	tableshow::setverticalheader(vector<question> &q, int id)
 void	tableshow::setverticalheader(vector<group> &g, int id)
 {
     //qDebug() << "ok ";
-    int i = -1;
+    int i = 0;
     QList<int>::const_iterator listpg;
     QList<int> listint;
     if (g[0].type == 0)
         p->groupchild(id, listint);
     else
         p->groupqchild(id, listint);
+    qDebug() << listint;
     listpg = listint.begin();
     while (listpg != listint.end())
     {
@@ -379,29 +380,8 @@ void	tableshow::clearheader()
 
 void	tableshow::showtable(int id, int qid)
 {
-//	QList<int>::const_iterator listpg;
-//	QList<int> listint;
-//    if (mainp->showmod == 2)
-//        p->groupqchild(id, listint);
-//    else
-//        p->groupchild(id, listint);
-
-/*	this->clear(); // changer system
-    this->populate();
-    this->sethorizontalheader(main);
-    this->setverticaleheader(p->listgroup, id);
-    this->updateall();*/
     this->select(id, qid);
     qDebug() << "showtableshow";
-    /*listpg = listint.begin();
-    while (listpg != listint.end())
-    {
-        if (mainp->showmod == 1)
-            this->listgroup[(*listpg)].show(this, &i, this->listgroup, this->k);
-        else
-            this->listgroup[(*listpg)].showgroup(this, &i, this->listquestion, this->listgroup, this->k);
-        listpg++;
-    }*/
 }
 
 void    tableshow::saveqpoint()

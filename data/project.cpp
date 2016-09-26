@@ -426,16 +426,18 @@ QList<t_groupref> project::getgrouplistref(int id, int qid)
 
 QStringList	project::sendproject(Smtp * smtp)
 {
-    vector<person>::iterator tmp;
+    list<person> listtmp = listgroup[0].getListp();
+    list<person>::iterator tmp;
     QStringList listmail;
     QString post = (this->name);
     post.append("&");
     post.append(this->postquestion("ALL"));
 
-    tmp = this->listp.begin();
-    while (tmp != this->listp.end())
+    qDebug() << listtmp.size();
+    tmp = listtmp.begin();
+    while (tmp != listtmp.end())
     {
-        listmail.push_back((*tmp).personsend(smtp, post));
+        listmail.push_back((*tmp).email);
         listmail.push_back(QString::number((*tmp).id));
         tmp++;
     }

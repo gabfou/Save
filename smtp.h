@@ -54,6 +54,7 @@ private:
     QString host;
     int port;
     enum states{Tls, HandShake ,Auth,User,Pass,Rcpt,Mail,Data,Init,Body,Quit,Close};
+    QString debug[12] = {"Tls", "HandShake" ,"Auth","User","Pass","Rcpt","Mail","Data","Init","Body","Quit","Close"};
     int state;
 
 };

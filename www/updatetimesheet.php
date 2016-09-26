@@ -10,11 +10,13 @@ catch(Exception $e)
 {
 	die('Erreur : '.$e->getMessage());
 }
-try{
+try
+{
 	$req_pre = $bdd->prepare('SELECT questionbool, refbool FROM project_'.htmlspecialchars($_SESSION['project']).'_project WHERE id = '.htmlspecialchars($_SESSION['id_client']).";"); // changer user		  
 	$req_pre->execute();
-	}
-catch (PDOException $e) {
+}
+catch (PDOException $e)
+{
 	echo 'Error : '.$e->getMessage();
 	//die();
 }
@@ -67,10 +69,13 @@ $tab = array_unique($tab);
 
 foreach ($tab as $name)
 {
-	//echo ($name);
-	$qry = 'INSERT INTO project_'.htmlspecialchars($_SESSION['project']).'_reponse (idperson , idquestion, time, note, date_info, iteration) VALUE ('.htmlspecialchars($_SESSION['id_client']).' , "'.$name.'" , '.htmlspecialchars($_POST[$name.'#time']).', '.((isset($_POST[$name.'#note'])) ? htmlspecialchars($_POST[$name.'#note']) : '-1').' , NOW() , '.$_SESSION['iteration'].' );';
-	$bdd->exec($qry);
-	//echo 'INSERT INTO project_'.$_SESSION['project'].'_reponse ('.$_SESSION['id_client'].', '.$_POST[$name."_time"].', '.$_POST[$name."_note"].', NOW());';
+	if (htmlspecialchars($_POST[$name.'#time']) > -1)
+	{
+		//echo ($name);
+		$qry = 'INSERT INTO project_'.htmlspecialchars($_SESSION['project']).'_reponse (idperson , idquestion, time, note, date_info, iteration) VALUE ('.htmlspecialchars($_SESSION['id_client']).' , "'.$name.'" , '.htmlspecialchars($_POST[$name.'#time']).', '.((isset($_POST[$name.'#note'])) ? htmlspecialchars($_POST[$name.'#note']) : '-1').' , NOW() , '.$_SESSION['iteration'].' );';
+		$bdd->exec($qry);
+		//echo 'INSERT INTO project_'.$_SESSION['project'].'_reponse ('.$_SESSION['id_client'].', '.$_POST[$name."_time"].', '.$_POST[$name."_note"].', NOW());';
+	}
 }
 if ($_SESSION['iteration'] == 0)
 {
