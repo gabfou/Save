@@ -50,6 +50,7 @@ private:
     QPoint lastqpoint;
     void populate();
     void preinit();
+    void postinit();
 };
 
 #endif // TABLESHOW_H

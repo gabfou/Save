@@ -87,8 +87,6 @@ float	person::personrefshowcaseval(question &qname)
     return (this->personshowcaseval(qname, this->freflist));
 }
 
-
-
 float person::personshowcase(question & qname, list<fact> lf) const
 {
 	list<fact>::iterator tmp;

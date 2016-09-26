@@ -42,7 +42,7 @@ if (($tab['questionbool'] == 0 && $_SESSION['iteration'] >= 1) || ($tab['refbool
 </div>
 
 <p> Merci de votre de participation. </p>
-<p> Cordialement toute l'equipe de murano conseil </p>
+<p> Cordialement toute l'équipe de murano conseil </p>
 
 <?php
 

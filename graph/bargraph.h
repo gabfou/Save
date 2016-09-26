@@ -24,7 +24,7 @@ private:
 	t_groupref g;
 	project *p;
 	QString name = "non défini";
-	vector<question> listqchild;
+    QList<question> listqchild;
 };
 
 #endif // BARGRAPH_H

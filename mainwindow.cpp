@@ -374,10 +374,10 @@ void MainWindow::openproject()
 			listWidget->addItem(name_recuperator(qry.value(0).toString()));
 		}
 	}
+    QObject::connect(listWidget, SIGNAL(itemClicked(QListWidgetItem *)),
+                         listWidget, SLOT(close()));
 	QObject::connect(listWidget, SIGNAL(itemClicked(QListWidgetItem *)),
-						 this, SLOT(openproject2(QListWidgetItem *)));
-	QObject::connect(listWidget, SIGNAL(itemClicked(QListWidgetItem *)),
-						 listWidget, SLOT(close()));
+                         this, SLOT(openproject2(QListWidgetItem *)));
 	listWidget->show();
 }
 
