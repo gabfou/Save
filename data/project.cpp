@@ -66,7 +66,7 @@ inline void project::addperson(QString name, QString lastname, QString email, in
 {
 	this->nbperson++;
 	person ret(name, lastname, email, id, listquestion, groupid);
-    while (this->listp.size() < id)
+    while ((int)(this->listp.size()) < id)
         this->listp.push_back(person());
 	this->listp.push_back(ret);
 }
@@ -104,6 +104,16 @@ int project::getNbqgroup() const
     return nbqgroup;
 }
 
+int project::getNbfactref() const
+{
+    return nbfactref;
+}
+
+int project::getNbfactnref() const
+{
+    return nbfactnref;
+}
+
 inline void project::addquestion(QString name, int group, unsigned int id, int qgroupid, QString sujet,
                                  QString unit, int type, QString splitchar, int value, bool ref_only,
                                  bool global)
@@ -117,6 +127,10 @@ inline void project::addquestion(QString name, int group, unsigned int id, int q
 
 void project::addreponse(int id, string name, int time, int note, string date, int iteration, int idquestion) // opti
 {
+    if (iteration)
+        nbfactnref++;
+    else
+        nbfactref++;
     listp[id].add_fact(name, time, note, date, iteration, idquestion);
 }
 
@@ -265,7 +279,7 @@ void project::initoroject(QString fproject)
 	tmp = this->listp.begin();
 	while (tmp != this->listp.end())
 	{
-        if (tmp->groupid > -1 && tmp->groupid < listgroup.size())
+        if (tmp->groupid > -1 && tmp->groupid < (int)(listgroup.size()))
             this->listgroup[tmp->getGroupid()].addperson(*tmp);
 		tmp++;
 	}
@@ -425,7 +439,7 @@ QList<t_groupref> project::getgrouplistref(int id, int qid)
     return ret;
 }
 
-QStringList	project::sendproject(Smtp * smtp)
+QStringList	project::sendproject()
 {
     list<person> listtmp = listgroup[0].getListp();
     list<person>::iterator tmp;

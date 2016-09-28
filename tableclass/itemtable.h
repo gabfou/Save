@@ -6,6 +6,7 @@ template<typename T>
 class argtableitem;
 class group;
 class project;
+class person;
 class headertableitem;
 
 class itemtable : public QTableWidgetItem
@@ -24,6 +25,7 @@ private:
     void eval(QString val);
     void updateall(group *arg, question *head, QString form = "");
     void update(group *arg, QString *head, QString form = "");
+    void update(person *arg, question *head, QString form = "");
 };
 
 #endif // ITEMTABLE_H

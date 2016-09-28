@@ -79,9 +79,7 @@ bool headertableitem::is_in(vector<group> &g, vector<group> &gq, QList<int> list
 //        qDebug() << "is_in" << argg.type << argg.getListp().empty() << argg.getListq().empty();
         if ((argg.type == 0 && argg.getListp().empty()) || (argg.type == 1 && argg.getListq().empty()))
             return (0);
-        if (g[0].type != this->argg.type) // a enlever si en dessous finie
-            return (1);
-        if ((listint.contains(id)) || (listqint.contains(id))) // a finir
+        if ((argg.type == 0 && listint.contains(id)) || (argg.type == 1 && listqint.contains(id)))
             return (1);
         return (0);
     }

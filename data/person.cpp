@@ -64,14 +64,14 @@ float person::personshowcaseval(question & qname, list<fact> lf) const
     tmp = lf.begin();
     while (tmp != lf.end())
     {
-        if ((qname.type == 0 || qname.type == 1) && qname.val != -1)
+        if ((qname.type == 0 || qname.type == 1 || qname.type == 3) && qname.val != -1)
         {
             j += (*tmp).checkfacttime(qname.id ,l) * qname.val;
         }
         tmp++;
     }
     if (qname.type == 1)
-        j = j * 100.0;
+        j = j;
     if (l != 0)
         return(j / (float)l);
     return -1;
@@ -87,6 +87,14 @@ float	person::personrefshowcaseval(question &qname)
     return (this->personshowcaseval(qname, this->freflist));
 }
 
+float	person::personshowcaseval(question &qname, int ref)
+{
+    if (ref)
+       return (this->personshowcaseval(qname, this->freflist));
+    else
+       return (this->personshowcaseval(qname, this->flist));
+}
+
 float person::personshowcase(question & qname, list<fact> lf) const
 {
 	list<fact>::iterator tmp;
@@ -96,7 +104,7 @@ float person::personshowcase(question & qname, list<fact> lf) const
 	tmp = lf.begin();
 	while (tmp != lf.end())
 	{
-		if (qname.type == 0 || qname.type == 1)
+        if (qname.type == 0 || qname.type == 1 || qname.type == 3)
         {
             j += (*tmp).checkfacttime(qname.id ,l);
         }
@@ -119,7 +127,13 @@ float	person::personrefshowcase(question &qname)
 	return (this->personshowcase(qname, this->freflist));
 }
 
-
+float	person::personshowcase(question &qname, int ref)
+{
+    if (ref)
+       return (this->personshowcase(qname, this->freflist));
+    else
+       return (this->personshowcase(qname, this->flist));
+}
 
 QString	person::personsend(Smtp * smtp, QString post)
 {

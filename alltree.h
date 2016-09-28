@@ -9,11 +9,16 @@ class MainWindow;
 
 class Alltree : public QWidget
 {
+    Q_OBJECT
 public:
     Alltree(MainWindow *m, project *current);
+private slots:
+    void affichegroupp(bool b);
 private:
     project *p;
     grouptree *groupboxtmp;
+signals:
+     void grouppmodechanged(bool gref);
 };
 
 #endif // ALLTREE_H

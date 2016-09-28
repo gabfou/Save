@@ -20,6 +20,8 @@ private:
 	int nbgroup = 0;
 	int nbgeneration = 0;
     int nbqgroup = 0;
+    int nbfactref = 0;
+    int nbfactnref = 0;
 
 public:
     int val = 0;
@@ -44,7 +46,7 @@ public:
 	QString postquestion(QString group);
 	void addquestion(string name, string group);
     void addreponse(int id, string name, int time, int note, string date, int iteration, int idquestion);
-    QStringList sendproject(Smtp *smtp);
+    QStringList sendproject();
 	void convert_to_xlsx();
     void addgroup(QString name, int parentid, unsigned int id, int type, QString description, bool gquestion);
 	vector<group> getListgroup() const;
@@ -66,5 +68,7 @@ public:
     QList<question> questiongroupqchildnotopti(int id);
     person getperson(int id);
     int getNbqgroup() const;
+    int getNbfactref() const;
+    int getNbfactnref() const;
 };
 

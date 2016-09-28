@@ -12,7 +12,7 @@ class infoperson : public info
 {
 	Q_OBJECT
 public:
-    infoperson(project *p, MainWindow *m);
+    infoperson(project *p);
 
 public slots:
 	void updateib(QTreeWidgetItem *item);

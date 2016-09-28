@@ -33,7 +33,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
 	//menu
 
-	QMenu *menu_projet = menuBar()->addMenu("&Projet");
+	menu_projet = menuBar()->addMenu("&Projet");
 //	QAction *show = menu_projet->addAction("&Triage par individu");
 //	show->setCheckable(true);
 //	show->setChecked(false);
@@ -57,30 +57,34 @@ MainWindow::MainWindow(QWidget *parent) :
 
 	//QMenu *menu_selection = menuBar()->addMenu("&selection");
 
-	QMenu *menu_outil = menuBar()->addMenu("&Outils");
+	menu_outil = menuBar()->addMenu("&Outils");
 	QAction *xlsx_convert = menu_outil->addAction("&Convertir en xlsx");
 	QObject::connect(xlsx_convert, SIGNAL(triggered()), this, SLOT(convert_to_xlsx()));
 //	QAction *barchartref = menu_outil->addAction("&Graphique comparaison reference-donnée");
 //	QObject::connect(barchartref, SIGNAL(triggered()), this, SLOT(showbarchartref()));
 
-	QMenu *menu_affifchage = menuBar()->addMenu("&Affichage");
+	menu_affifchage = menuBar()->addMenu("&Affichage");
 	QAction *afficherref = menu_affifchage->addAction("&Données de références");
 	afficherref->setCheckable(true);
 	afficherref->setChecked(false);
 	QObject::connect(afficherref, SIGNAL(toggled(bool)), this, SLOT(refmodechange(bool)));
-    QAction *afficherval = menu_affifchage->addAction("&Ponderation");
-    afficherval->setCheckable(true);
-    afficherval->setChecked(false);
-    QObject::connect(afficherval, SIGNAL(toggled(bool)), this, SLOT(valmodechange(bool)));
-    QAction *afficherglobalrep = menu_affifchage->addAction("&afficher le tableaux global");
-    afficherglobalrep->setCheckable(true);
-    afficherglobalrep->setChecked(false);
-    QObject::connect(afficherglobalrep, SIGNAL(toggled(bool)), this, SLOT(globalrep(bool)));
+	QAction *afficherval = menu_affifchage->addAction("&Ponderation");
+	afficherval->setCheckable(true);
+	afficherval->setChecked(false);
+	QObject::connect(afficherval, SIGNAL(toggled(bool)), this, SLOT(valmodechange(bool)));
+	QAction *afficherglobalrep = menu_affifchage->addAction("&generer le tableaux global");
+	afficherglobalrep->setCheckable(true);
+	afficherglobalrep->setChecked(false);
+	QObject::connect(afficherglobalrep, SIGNAL(toggled(bool)), this, SLOT(globalrep(bool)));
+	QAction *afficherpers = menu_affifchage->addAction("&generer le tableaux individuel");
+	afficherpers->setCheckable(true);
+	afficherpers->setChecked(false);
+	QObject::connect(afficherpers, SIGNAL(toggled(bool)), this, SLOT(personrep(bool)));
 
 	//QAction *scope = menu_affifchage->addAction("&Périmetre"); // A
 	//QObject::connect(scope, SIGNAL(triggered()), this, SLOT(changescope()));
 
-	QMenu *menu_serveur = menuBar()->addMenu("&Serveur");
+	menu_serveur = menuBar()->addMenu("&Serveur");
 	QAction *send = menu_serveur->addAction("&Lancer sondage");
 	QObject::connect(send, SIGNAL(triggered()), this, SLOT(sendproject()));
 	QAction *send_ref = menu_serveur->addAction("&Lancer le premier sondage");
@@ -90,9 +94,11 @@ MainWindow::MainWindow(QWidget *parent) :
 	QAction *screenshoot = toolBarFichier->addAction("&Imprimer écran");
 	QObject::connect(screenshoot, SIGNAL(triggered()), this, SLOT(screenshootcurrent()));
 
-	//setLayout(parent);
-
-	//ajout table
+	menu_projet->actions().at(2)->setEnabled(0);
+	menu_projet->actions().at(3)->setEnabled(0);
+	menu_outil->setEnabled(0);
+	menu_affifchage->setEnabled(0);
+	menu_serveur->setEnabled(0);
 }
 
 
@@ -102,57 +108,9 @@ void MainWindow::checksqlconexion()
 {
 	QSqlQuery qry;
 
-	if( !qry.exec("SELECT 1") )
+	if(!qry.exec("SELECT 1"))
 		createConnection();
 }
-
-//ajout de groupe
-
-
-
-//void MainWindow::addgroupe()
-//{
-//	QWidget *win = new QWidget();
-//	QLabel *Labeljeu = new QLabel("Name :");
-//	this->nametmp = new QLineEdit;
-//	Labeljeu->setAlignment(Qt::AlignTop);
-//	QLabel *Labelgroup = new QLabel("Groupe :");
-//	this->groupboxtmp = new grouptree(this, this->current->listgroup);
-//	Labelgroup->setAlignment(Qt::AlignTop);
-
-//	//Boutons
-//	QPushButton *b_valider = new QPushButton("Valider");
-//	QPushButton *b_annuler = new QPushButton("Fermer");
-
-//	//Connexions aux slots
-//	connect(b_valider, SIGNAL(clicked()), this, SLOT(addgroupe2()));
-//	connect(b_annuler, SIGNAL(clicked()), win, SLOT(close()));
-
-//	//Layout
-//	QGroupBox *groupbox = new QGroupBox("");
-
-//	QGridLayout *layoutFormulaire = new QGridLayout();
-//	layoutFormulaire->addWidget(Labeljeu, 0, 0);
-//	layoutFormulaire->addWidget(this->nametmp, 0, 1);
-//	layoutFormulaire->addWidget(Labelgroup, 1, 0);
-//	layoutFormulaire->addWidget(this->groupboxtmp, 1, 1);
-
-//	groupbox->setLayout(layoutFormulaire);
-
-//	QGridLayout *layout = new QGridLayout();
-//	layout->setAlignment(Qt::AlignTop);
-//	layout->addWidget(groupbox, 0, 0, 1, 2, Qt::AlignTop);
-//	layout->addWidget(b_annuler, 1, 0, Qt::AlignLeft);
-//	layout->addWidget(b_valider, 1, 1, Qt::AlignRight);
-//	//setLayout(layout);
-//	win->setLayout(layout);
-//	win->show();
-//}
-
-//void MainWindow::addgroupe2()
-//{
-//	addgroup(this->namecurrent, this->nametmp->text(),dynamic_cast<grouptreeitem*>(this->groupboxtmp->currentItem())->getId(), 0, current);
-//}
 
 // ajout de question
 
@@ -281,7 +239,7 @@ void MainWindow::addproject2()
 				" groupid INTEGER,"
 				" password VARCHAR(1024),"
 				" refbool BOOLEAN DEFAULT 0,"
-                " questionbool BOOLEAN DEfAULT 0)") )
+				" questionbool BOOLEAN DEfAULT 0)") )
 		qDebug() << "create project" << qry.lastError();
 	else
 		qDebug() << "Table created!";
@@ -296,9 +254,9 @@ void MainWindow::addproject2()
 				" qgroupid INT DEFAULT 0,"
 				" typef INT DEFAULT 0,"
 				" ref_only INT DEFAULT 0,"
-                " splitchar VARCHAR(3000) NOT NULL DEFAULT '',"
-                " global BOOL NOT NULL DEFAULT 0"
-                " value INT NOT NULL DEFAULT -1)") );
+				" splitchar VARCHAR(3000) NOT NULL DEFAULT '',"
+				" global BOOL NOT NULL DEFAULT 0"
+				" value INT NOT NULL DEFAULT -1)") );
 	if(!qry.exec())
 		qDebug() << "create question" << qry.lastError();
 
@@ -307,8 +265,8 @@ void MainWindow::addproject2()
 				" groupname VARCHAR(500),"
 				" groupparent INTEGER DEFAULT 0,"
 				" type BOOLEAN DEFAULT 0,"
-                " description VARCHAR(300) NOT NULL DEFAULT '',"
-                " gquestion INT DEFAULT 0)" );
+				" description VARCHAR(300) NOT NULL DEFAULT '',"
+				" gquestion INT DEFAULT 0)" );
 	if(!qry.exec())
 		qDebug() << "create groupe" << qry.lastError();
 
@@ -341,13 +299,28 @@ void MainWindow::addproject2()
 				" id INTEGER UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT,"
 				" begin datetime NOT NULL DEFAULT NOW(),"
 				" iteration INTEGER,"
+                " groupid INTEGER NOT DEFAULT 0,"
 				" iteration_detail VARCHAR(3000));" );
 	if(!qry.exec())
-		qDebug() << "create etude" << qry.lastError();
-
-    this->current.initoroject(this->nametmp->text());
+        qDebug() << "create all etude" << qry.lastError();
+    qry.prepare( "CREATE TABLE IF NOT EXISTS all_etude ("
+                " id INTEGER UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT,"
+                " begin datetime NOT NULL DEFAULT NOW(),"
+                " iteration INTEGER,"
+                " groupid INTEGER NOT DEFAULT 0,"
+                " project_name VARCHAR(3000),"
+                " iteration_detail VARCHAR(3000));" );
+    if(!qry.exec())
+        qDebug() << "create etude" << qry.lastError();
+	this->current.initoroject(this->nametmp->text());
 	//this->current->projectshow(this, this->table, this->currentgref);
 	this->namecurrent = this->nametmp->text();
+	menu_projet->actions().at(2)->setEnabled(1);
+	menu_projet->actions().at(3)->setEnabled(1);
+	menu_outil->setEnabled(1);
+	menu_affifchage->setEnabled(1);
+	menu_serveur->setEnabled(1);
+
 }
 
 
@@ -374,11 +347,17 @@ void MainWindow::openproject()
 			listWidget->addItem(name_recuperator(qry.value(0).toString()));
 		}
 	}
-    QObject::connect(listWidget, SIGNAL(itemClicked(QListWidgetItem *)),
-                         listWidget, SLOT(close()));
 	QObject::connect(listWidget, SIGNAL(itemClicked(QListWidgetItem *)),
-                         this, SLOT(openproject2(QListWidgetItem *)));
+						 listWidget, SLOT(close()));
+	QObject::connect(listWidget, SIGNAL(itemClicked(QListWidgetItem *)),
+						 this, SLOT(openproject2(QListWidgetItem *)));
 	listWidget->show();
+	menu_projet->actions().at(2)->setEnabled(1);
+	menu_projet->actions().at(3)->setEnabled(1);
+	menu_outil->setEnabled(1);
+	menu_affifchage->setEnabled(1);
+	menu_serveur->setEnabled(1);
+
 }
 
 void MainWindow::openproject2(QListWidgetItem *item)
@@ -482,7 +461,7 @@ void MainWindow::addperson2()
 	if(!qry.exec() )
 		qDebug() << qry.lastError();
 	else
-    {
+	{
 		qDebug() << "INSERT success!";
 		this->current.addperson(this->nametmp->text(), this->prenametmp->text(), this->emailtmp->text());
 	}
@@ -501,7 +480,7 @@ void MainWindow::showproject()
 	}
 	if (this->table == NULL)
 	{
-        this->table = new tableshow(&(this->current), this, 0);
+		this->table = new tableshow(&(this->current), this, 0);
 		this->cw->addTab(this->table, "tableaux");
 	}
 	this->table->showtable(this->currentgref, this->currentgqref);
@@ -518,24 +497,32 @@ MainWindow::~MainWindow()
 
 void MainWindow::sendprojectauxi(QString str)
 {
+    QSqlQuery qry;
+	Q_UNUSED(str);
 
-    QString body = "Bonjour dans le cadre de notre études veuillez repondre au formulaire à l'adresse suivante : ";
-	QStringList listmail;
+/*	QString body = "Bonjour dans le cadre de notre études veuillez repondre au formulaire à l'adresse suivante : ";
+    QStringList listmail;
 
 //	this->updateproject();
 //	body.append(this->namecurrent);
 //	body.append("&");
-	// body.append(this->current->postquestion("ALL"));
-	listmail = this->current.sendproject(NULL);
+    // body.append(this->current->postquestion("ALL"));
+    listmail = this->current.sendproject();
     QString bodytmp;
     int i = 0;
     while (i < listmail.size())
     {
         qDebug() << listmail.at(i);
-		bodytmp = body + "\r\n";// + "person__person=" + listmail.at(i + 1) + "&";
-		sendmail(listmail.at(i), bodytmp); // OPTI
+        bodytmp = body + "\r\n";// + "person__person=" + listmail.at(i + 1) + "&";
+        sendmail(listmail.at(i), bodytmp); // OPTI
         i += 2;
-	}
+    }*/
+    qry.prepare( " INSERT INTO all_etude (iteration , groupid , project_name) VALUES ( ? , ? , ? );");
+    qry.addBindValue(1);
+    qry.addBindValue(0);
+    qry.addBindValue(this->current.name);
+    if(!qry.exec())
+        qDebug() << qry.lastError();
 }
 
 void MainWindow::sendproject()
@@ -562,7 +549,7 @@ void MainWindow::sendproject_ref()
 
 void MainWindow::mailSent(QString status)
 {
-    (void)status;
+	(void)status;
 //	if(status == "Message sent")
 //		QMessageBox::warning( 0, tr( "Qt Simple SMTP client" ), tr( "Message sent!\n\n" ) );
 }
@@ -571,14 +558,33 @@ void MainWindow::mailSent(QString status)
 
 void MainWindow::updateproject()
 {
-    this->current.initoroject(this->namecurrent);
-	delete this->table;
-    this->table = new tableshow(&(this->current), this, 0);
+	this->current.initoroject(this->namecurrent);
+    if (this->table)
+        delete this->table;
+    if (this->tableg)
+    {
+        delete this->tableg;
+        tableg = NULL;
+    }
+    if (this->tablep)
+    {
+        delete this->tablep;
+        tablep = NULL;
+    }
+	this->table = new tableshow(&(this->current), this, 0);
 	this->table->showtable(this->currentgref, this->currentgqref);
 	this->cw->addTab(table, "tableaux");
 	delete this->ov;
 	this->ov = NULL;
 	this->addock();
+
+    if (this->current.getNbfactnref() == 0)
+    {
+        this->menu_affifchage->actions().at(0)->setVisible(0);
+        refmodechange(1);
+    }
+    else
+        this->menu_affifchage->actions().at(0)->setVisible(1);
 }
 
 //void MainWindow::messageErreur(QNetworkReply::NetworkError)
@@ -610,26 +616,46 @@ void	MainWindow::refmodechange(bool checked)
 {
 	ref = (checked) ? 1 : 0;
 	current.ref = ref;
-	this->table->updateall();
-    this->table->showtable(currentgref, currentgqref);
+    //this->table->updateall();
+    emit refchanged(checked);
+	this->table->showtable(currentgref, currentgqref);
 }
 
 void	MainWindow::valmodechange(bool checked)
 {
-    val = (checked) ? 1 : 0;
-    current.val = val;
-    this->table->updateall();
-    this->table->showtable(currentgref, currentgqref);
+	val = (checked) ? 1 : 0;
+	current.val = val;
+	emit valchanged(val);
 }
 
-void    MainWindow::globalrep(bool checked)
+void	MainWindow::globalrep(bool checked)
 {
-    if (checked)
-    {
-        tableshow *tablegr = new tableshow(&(this->current), this, 2);
-        tablegr->select(0, 0);
-        cw->addTab(tablegr, "Tableau global");
-    }
+	if (checked)
+	{
+		tableg = new tableshow(&(this->current), this, 2);
+		tableg->select(currentgref, currentgqref);
+		cw->addTab(tableg, "Tableau global");
+	}
+	else if (tableg)
+	{
+		delete tableg;
+		tableg = NULL;
+	}
+}
+
+void	MainWindow::personrep(bool checked)
+{
+	if (checked)
+	{
+		tablep = new tableshow(&(this->current), this, 1);
+		tablep->select(currentgref, currentgqref);
+		cw->addTab(tablep, "Tableau individuel");
+	}
+	else if (tablep)
+	{
+		delete tablep;
+		tablep = NULL;
+	}
 }
 
 void	MainWindow::changescope2(QTreeWidgetItem *item)
@@ -641,7 +667,7 @@ void	MainWindow::changescope2(QTreeWidgetItem *item)
 		this->currentgref = tmp->getId();
 		this->current.gref = this->currentgref;
 		emit grefchange(currentgref);
-		this->showproject();
+//		this->showproject();
 	}
 }
 
@@ -652,9 +678,9 @@ void	MainWindow::changescopeq2(QTreeWidgetItem *item)
 	if ((tmp = dynamic_cast<grouptreeitem*>(item)) != NULL)
 	{
 		this->currentgqref = tmp->getId();
-        this->current.gqref = this->currentgqref;
+		this->current.gqref = this->currentgqref;
 		emit gqrefchange(currentgqref);
-		this->showproject();
+//		this->showproject();
 	}
 }
 

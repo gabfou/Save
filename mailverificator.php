@@ -1,0 +1,49 @@
+
+
+<?php
+	include("www/function.php");
+
+function maildebase($to, $subject, $body)
+{
+	$headers   = array();
+	$headers[] = "MIME-Version: 1.0";
+	$headers[] = "Content-type: text/plain; charset=utf-8";
+	$headers[] = "From: Etudesmuranoconseil <etudemurano@alwaysdata.net>";
+	//$headers[] = "Bcc: JJ Chong <bcc@domain2.com>";
+	//$headers[] = "Reply-To: Recipient Name <receiver@domain3.com>";
+	$headers[] = "Subject: {".$subject."}";
+	$headers[] = "X-Mailer: PHP/".phpversion();
+
+	mail($to, $subject, $body, implode("\r\n", $headers));
+}
+
+// maildebase("web-jbiqHB@mail-tester.com", "etude muranoconseil", "Bonjour dans le cadre de notre études veuillez repondre au formulaire à l'adresse suivante : http://etudemurano.alwaysdata.net/login.php"."\r\n\r\nMURAnO Conseil : Marketing / Retail / Supply Chain");
+
+$req_pre = $bdd->prepare('SELECT id, begin, iteration, groupid, project_name, iteration_detail FROM all_etude WHERE 1;');
+$req_pre->execute();
+$tabsondage = $req_pre->fetchall();
+foreach ($tabsondage as $key => $value)
+{
+	$req_pre = $bdd->prepare('SELECT email, refbool, questionbool FROM project_'.$value['project_name'].'_question WHERE groupid = '.htmlspecialchars($groupid).";");
+	$req_pre->execute();
+	$tabperson = $req_pre->fetchall();
+	$sondagefinish = 0;
+	$now = time();
+	$datediff = $now - $value['begin'];
+	if ($datediff / (60 * 60 * 24) > 7)
+	{
+		$req_pre->execute('DELETE FROM all_etude WHERE id='.$value['id'].';');
+		continue;
+	}
+	foreach ($tabperson as $keyp => $valuep)
+	{
+		if ($valuep['refbool'] || $valuep['questionbool'])
+		{
+			maildebase($valuep['email'], "etude muranoconseil", "Bonjour dans le cadre de notre études veuillez repondre au formulaire à l'adresse suivante : http://etudemurano.alwaysdata.net/login.php"."\r\n\r\nMURAnO Conseil : Marketing / Retail / Supply Chain");
+			$sondagefinish++;
+		}
+	}
+	if ($sondagefinish == 0)
+		$req_pre->execute('DELETE FROM all_etude WHERE id='.$value['id'].';');
+}
+?>

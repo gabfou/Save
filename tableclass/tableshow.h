@@ -18,7 +18,6 @@ public:
 
     void showtable(int id, int qid);
 	void sethorizontalheader(MainWindow *mainp);
-	void updateall();
 	void clearheader();
     void select(int gref, int gqref);
 	void setverticalheader(vector<question> &q, int id);
@@ -31,7 +30,11 @@ public:
     tableshow(MainWindow *m, QList<headertableitem *> &listv, QList<headertableitem *> &listh);
     void reinit();
 
+    void setverticalheader(vector<person> &g);
 public slots:
+    void selectp(int gref);
+    void selectq(int gqref);
+    void updateall();
 
 private slots:
     void saveqpoint(QPoint qpoint);

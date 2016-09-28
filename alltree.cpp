@@ -20,6 +20,7 @@ Alltree::Alltree(MainWindow *m, project *current) : p(current)
     tabgroup->addTab(groupboxtmp, "Groupe");
     connect(this->groupboxtmp, SIGNAL(itemClicked(QTreeWidgetItem *, int )), m, SLOT(changescope2(QTreeWidgetItem *)));
     connect(affichenongroup, SIGNAL(toggled(bool)), groupboxtmp, SLOT(setVisiblenongroup(bool)));
+    connect(affichenongroup, SIGNAL(toggled(bool)), this, SLOT(affichegroupp(bool)));
 
     groupboxtmp = new grouptree(m, p->listqgroup, 2);
     groupboxtmp->setVisiblenongroup(0);
@@ -30,4 +31,10 @@ Alltree::Alltree(MainWindow *m, project *current) : p(current)
 
     layout->addWidget(tabgroup);
 
+}
+
+
+void Alltree::affichegroupp(bool b)
+{
+    emit grouppmodechanged(b);
 }

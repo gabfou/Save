@@ -3,7 +3,7 @@
 #include "data/project.h"
 #include "mainwindow.h"
 
-bargraph::bargraph(t_groupref  g, project *p, MainWindow *m, QWidget *parent) : QWidget(parent), g(g), p(p)
+bargraph::bargraph(t_groupref  g, project *p, QWidget *parent) : QWidget(parent), g(g), p(p)
 {
     //setMinimumWidth(300);
 	listqchild = p->questiongroupqchildnotopti(0);
