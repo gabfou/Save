@@ -213,6 +213,7 @@ void	grouptree::addquestintree()
 
 void	grouptree::addquestintree2(QTreeWidgetItem *item, int column)
 {
+    Q_UNUSED(column);
     //qDebug() << item->text(0);
     int id = addquestion(&(m->current), item->text(0), 0, "", 0, "", dynamic_cast<grouptreeitem*>(item->parent())->getId(), 0, 0, "", 1, 0, -1);
     item->parent()->addChild(new questiontreeitem(QStringList(item->text(0)) , id, (QTreeWidget*)0));

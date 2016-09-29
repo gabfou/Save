@@ -26,7 +26,7 @@ public:
 	explicit MainWindow(QWidget *parent = 0);
 	~MainWindow();
 	void mailSent(QString status);
-    int showmod = 0;
+    int showmod = 1;
 	QString namecurrent;
 	QDockWidget *groupdock = NULL;
 	QTabWidget *cw;
@@ -34,6 +34,8 @@ public:
     int ref = 0;
     int val = 0;
 	tableshow *table = NULL;
+    tableshow *tableg = NULL;
+    tableshow *tablep = NULL;
 	int currentgref = 0;
     int currentgqref = 0;
 public slots:
@@ -64,6 +66,7 @@ private slots:
     void valmodechange(bool checked);
     void globalrep(bool checked);
     void configsondage();
+    void personrep(bool checked);
 private:
 	Ui::MainWindow *ui;
 	QWindow *addprojectwindow;
@@ -76,6 +79,10 @@ private:
 //	barref *d_chart;
 	QRadioButton *radiobuttontmp;
 	overview *ov = NULL;
+    QMenu *menu_affifchage;
+    QMenu *menu_outil;
+    QMenu *menu_projet;
+    QMenu *menu_serveur;
 
 
 	void sendprojectauxi(QString str);
@@ -84,6 +91,8 @@ private:
 signals:
      void grefchange(int gref);
      void gqrefchange(int gqref);
+     void valchanged(bool val);
+     void refchanged(bool ref);
 };
 
 	

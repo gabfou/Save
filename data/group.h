@@ -57,7 +57,7 @@ public:
     void supquestion(int id);
     void supperson(int id);
     QString grouprepval(question tmp2, int ref);
-    QString grouprep(QString tmp3, int ref);
+    QString grouprep(group &groupp, QString tmp3, int ref, question *ret = NULL);
 };
 
 #endif // GROUP_H

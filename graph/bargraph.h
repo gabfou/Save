@@ -9,7 +9,7 @@ class MainWindow;
 class bargraph : public QWidget
 {
 public:
-    bargraph(t_groupref g, project *q, MainWindow *m, QWidget *parent = 0);
+    bargraph(t_groupref g, project *q, QWidget *parent = 0);
     void updateg(t_groupref g, int qgroup);
 	void redraw();
 	QString getName() const;

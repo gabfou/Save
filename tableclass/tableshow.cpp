@@ -31,12 +31,15 @@ void tableshow::preinit()
     this->horizontalHeader()->addAction(tmp);
     connect(tmp, SIGNAL(triggered()), this, SLOT(suphheader()));
 
-    connect(this->horizontalHeader(), SIGNAL(sortIndicatorChanged(int,Qt::SortOrder)), this, SLOT(select()));
-/*  this->horizontalHeader()->setContextMenuPolicy(Qt::CustomContextMenu);
-    this->verticalHeader()->setContextMenuPolicy(Qt::CustomContextMenu);
-    this->verticalHeader()->addAction(modifier);
-    connect(this->horizontalHeader(), SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(clicked()));
-    connect(this->verticalHeader(), SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(clicked()));*/
+    connect(m, SIGNAL(gqrefchange(int)), this, SLOT(selectq(int)));
+    connect(m, SIGNAL(grefchange(int)), this, SLOT(selectp(int)));
+    connect(m, SIGNAL(valchanged(bool)), this, SLOT(updateall()));
+    connect(m, SIGNAL(refchanged(bool)), this, SLOT(updateall()));
+    if (showmode == 2)
+    {
+        connect(m, SIGNAL(grefchange(int)), this, SLOT(updateall()));
+    }
+    //connect(this->horizontalHeader(), SIGNAL(sortIndicatorChanged(int,Qt::SortOrder)), this, SLOT(select()));
 }
 void tableshow::postinit()
 {
@@ -44,7 +47,6 @@ void tableshow::postinit()
     this->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
     this->verticalHeader()->setContextMenuPolicy(Qt::CustomContextMenu);
     this->horizontalHeader()->setContextMenuPolicy(Qt::CustomContextMenu);
-    this->setSortingEnabled(true);
 }
 
 
@@ -85,38 +87,6 @@ void tableshow::setverticalheader(QList<headertableitem*> &listh, int nc)
         this->setHorizontalHeaderItem(i++, *tmp);
         tmp++;
     }
-
-//    int i = -1;
-//    group * gtmp = NULL;
-
-//    tmp = listh.begin();
-//    while (tmp != listh.end())
-//    {
-//        list<question> listq37 = p->listqgroup[(*tmp)->id].getListq();
-//        list<question>::iterator listqtmp = listq37.begin();
-//        while (listqtmp != listq37.end())
-//        {
-//            gtmp = &(p->listqgroup[((*listqtmp).qgroupid)]);
-//            if (gtmp == NULL || gtmp->type == -1)
-//            {
-//                qDebug() << "setvertical question group fail idgroup=" << (*tmp)->id;
-//                continue ;
-//            }
-//            if (p->listp.empty() == true)
-//                return ;
-//            int i37 = (gtmp->getGeneration() == -1) ? 0 : gtmp->getGeneration();
-//            while (gtmp->getGeneration() > 0)
-//            {
-//                this->setItem(i, gtmp->getGeneration() - 1, new QTableWidgetItem(gtmp->getName().c_str()));
-//                gtmp = &(p->listqgroup[gtmp->getParentid()]);
-//            }
-//            this->setVerticalHeaderItem(i++, new headertableitem(gtmp->getName().c_str(), *listqtmp));
-//            this->setItem(i, i37, new QTableWidgetItem(listqtmp->name.c_str()));
-//            listqtmp++;
-//        }
-//        tmp++;
-//        //gbox->verticalHeaderItem(i)->setBackgroundColor(gtmp->getColor());
-//    }
 }
 
 tableshow::tableshow(MainWindow *m, QList<headertableitem*> &listv, QList<headertableitem*> &listh) : m(m)
@@ -184,9 +154,14 @@ void tableshow::reinit(project * p, MainWindow *mainp)
         this->setRowCount(p->getNbperson());
         this->setColumnCount(p->getNbquestion() + i/* 2*/);
     }
-    if (showmode == 2)
+    else if (showmode == 2)
     {
         this->setRowCount(p->getNbqgroup());
+        this->setColumnCount(p->getNbquestion() + i/* 2*/);
+    }
+    else if (showmode == 1)
+    {
+        this->setRowCount(p->getNbperson());
         this->setColumnCount(p->getNbquestion() + i/* 2*/);
     }
     qDebug() << "set size time " << timerdebug.elapsed() <<"ms";
@@ -200,6 +175,11 @@ void tableshow::reinit(project * p, MainWindow *mainp)
     {
         this->sethorizontalheader(mainp);
         this->setverticalheader(p->listgroup, 0);
+    }
+    if (showmode == 1)
+    {
+        this->sethorizontalheader(mainp);
+        this->setverticalheader(p->listp);
     }
     else if (showmode == 2)
     {
@@ -215,6 +195,7 @@ void tableshow::reinit(project * p, MainWindow *mainp)
 
 void	tableshow::sethorizontalheader(MainWindow *mainp)
 {
+    Q_UNUSED(mainp);
     QElapsedTimer timerdebug;
     timerdebug.start();
     QList<question> listqchild = p->questiongroupqchildnotopti(0);
@@ -314,7 +295,7 @@ void	tableshow::setverticalheader(vector<question> &q, int id)
 void	tableshow::setverticalheader(vector<group> &g, int id)
 {
     //qDebug() << "ok ";
-    int i = -1;
+    int i = 0;
     QList<int>::const_iterator listpg;
     QList<int> listint;
     QElapsedTimer timerdebug;
@@ -347,6 +328,43 @@ void	tableshow::setverticalheader(vector<group> &g, int id)
     qDebug() << "vertical header 2 time " << timerdebug.elapsed() << "ms";
 }
 
+void	tableshow::setverticalheader(vector<person> &p)
+{
+    int i = 0;
+    vector<person>::const_iterator listpg;
+//    QList<int> listint;
+    QElapsedTimer timerdebug;
+
+    timerdebug.start();
+    listpg = p.begin();
+    while (listpg != p.end())
+    {
+//        qDebug() << "listpg" << *listpg << listint.size();
+        if (listpg->id == -1)
+        {
+            listpg++;
+            continue;
+        }
+        group * gtmp = &(this->p->listgroup[listpg->groupid]);
+        if (this->p->listp.empty() == true)
+        {
+            qDebug() << "aucune personne erreur";
+            return ;
+        }
+        this->setItem(i, gtmp->getGeneration(), new QTableWidgetItem(listpg->name));
+        while (gtmp->getGeneration() > 0)
+        {
+            this->setItem(i, gtmp->getGeneration() - 1, new QTableWidgetItem(gtmp->getName()));
+            gtmp = &(this->p->listgroup[gtmp->getParentid()]);
+        }
+        this->setVerticalHeaderItem(i++, new headertableitem(this->p, gtmp->getName(), (*listpg)));
+        listpg++;
+        //gbox->verticalHeaderItem(i)->setBackgroundColor(gtmp->getColor());
+    }
+    qDebug() << "vertical header 3 time " << timerdebug.elapsed() << "ms";
+}
+
+
 void	tableshow::populate()
 {
     int h = -1;
@@ -354,10 +372,20 @@ void	tableshow::populate()
 
     while (++h < this->rowCount())
     {
-        w = this->k - 1;
+        w = -1;
         while (++w < this->columnCount())
             this->setItem(h, w, new itemtable("test h:" + QString::number(h) + " w:" + QString::number(w), p));
     }
+}
+
+void	tableshow::selectq(int gqref)
+{
+    select(m->currentgref, gqref);
+}
+
+void	tableshow::selectp(int gref)
+{
+    select(gref, m->currentgqref);
 }
 
 void	tableshow::select(int gref, int gqref)
@@ -406,29 +434,8 @@ void	tableshow::clearheader()
 
 void	tableshow::showtable(int id, int qid)
 {
-//	QList<int>::const_iterator listpg;
-//	QList<int> listint;
-//    if (mainp->showmod == 2)
-//        p->groupqchild(id, listint);
-//    else
-//        p->groupchild(id, listint);
-
-/*	this->clear(); // changer system
-    this->populate();
-    this->sethorizontalheader(main);
-    this->setverticaleheader(p->listgroup, id);
-    this->updateall();*/
     this->select(id, qid);
     qDebug() << "showtableshow";
-    /*listpg = listint.begin();
-    while (listpg != listint.end())
-    {
-        if (mainp->showmod == 1)
-            this->listgroup[(*listpg)].show(this, &i, this->listgroup, this->k);
-        else
-            this->listgroup[(*listpg)].showgroup(this, &i, this->listquestion, this->listgroup, this->k);
-        listpg++;
-    }*/
 }
 
 void    tableshow::saveqpoint()
@@ -519,16 +526,18 @@ void	tableshow::updateall()
     int w;
 
     qDebug() << "updateall";
+    this->setSortingEnabled(false);
     while (++h < this->rowCount() + 1)
     {
         w = - 1;
         while (++w < this->columnCount() + 1)
         {
-            itemtable *tmp = dynamic_cast<itemtable *>(this->item(h, w));
+            itemtable *tmp = dynamic_cast<itemtable*>(this->item(h, w));
             if (tmp)
                 tmp->update();
         }
     }
+    this->setSortingEnabled(true);
 }
 
 

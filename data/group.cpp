@@ -204,14 +204,18 @@ QString group::grouprep(question tmp2, int ref)
         return ("NA");
 }
 
-QString group::grouprep(QString tmp3, int ref)
+QString group::grouprep(group & groupp, QString tmp3, int ref, question *ret)
 {
     list<question>::iterator tmp = listq.begin();
 
     while (tmp != listq.end())
     {
-        if (tmp3.compare(tmp->name))
-            return (this->grouprep(*tmp, ref));
+        if (tmp3.compare(tmp->name) == 0)
+        {
+            if (ret != NULL)
+                *ret = *tmp;
+            return (groupp.grouprep(*tmp, ref));
+        }
         tmp++;
     }
     return ("NA");
@@ -241,7 +245,7 @@ QList<float> group::grouprep(const vector<question> & questionlist, int ref, QLi
     tmp2 = listqchild.begin();
     while (tmp2 != listqchild.end())
 	{
-        qDebug() << "truc :" << *tmp2;
+        //qDebug() << "truc :" << *tmp2;
         ret << grouprep(questionlist[*tmp2], ref).toFloat();
 		tmp2++;
 	}

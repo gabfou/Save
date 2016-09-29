@@ -22,7 +22,7 @@ public:
     QString firstname;
     QString email;
     int groupid = -1;
-	int	id;
+    int	id = -1;
 	person();
 	virtual ~person();
 	void add_fact(string line);
@@ -50,4 +50,6 @@ public:
     float personshowcaseval(question &qname, list<fact> lf) const;
     float personshowcaseval(question &qname);
     float personrefshowcaseval(question &qname);
+    float personshowcaseval(question &qname, int ref);
+    float personshowcase(question &qname, int ref);
 };

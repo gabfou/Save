@@ -6,7 +6,7 @@
 #include "mainwindow.h"
 #include "misc/listedit.h"
 
-infoperson::infoperson(project *p, MainWindow *m) : info(p)
+infoperson::infoperson(project *p) : info(p)
 {
     vbox = new QVBoxLayout();
     contp = new QWidget();
@@ -78,8 +78,8 @@ void infoperson::updateib(QTreeWidgetItem * item)
 
 void infoperson::updatebdd()
 {
-    char mdp[7];
-    QString mdphash;
+//    char mdp[7];
+//    QString mdphash;
 
     if (!pe && init)
 	{
