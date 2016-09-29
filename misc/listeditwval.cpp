@@ -21,7 +21,7 @@ listeditwval::listeditwval()
     hbox->addWidget(listoption);
     hbox->addWidget(listval);
     connect(add, SIGNAL(pressed()), listoption, SLOT(newitem()));
-    connect(listoption, SIGNAL(newitemcreated()), this, SLOT(newval()));
+    conewval = connect(listoption, SIGNAL(newitemcreated()), this, SLOT(newval()));
     connect(sup, SIGNAL(pressed()), this, SLOT(supline()));
     vbox->addLayout(hbox);
     vbox->addLayout(hbox2);
@@ -57,4 +57,23 @@ QStringList listeditwval::getlstr()
         ret << dynamic_cast<QSpinBox*>(listval->itemWidget(listval->item(row++)))->text();
     }
     return (ret);
+}
+
+void listeditwval::update(QStringList & l)
+{
+    QList<QString>::iterator i = l.begin();
+
+    disconnect(conewval);
+
+    listoption->list->clear();
+    listval->clear();
+    while(i != l.end() && i + 1 != l.end())
+    {
+        listoption->list->addItem(*i);
+        i++;
+        listval->addItem(*i);
+        i++;
+    }
+
+    conewval = connect(listoption, SIGNAL(newitemcreated()), this, SLOT(newval()));
 }

@@ -80,6 +80,12 @@ QStringList listedit::getlstr()
     return (ret);
 }
 
+void listedit::update(QStringList & l)
+{
+    list->clear();
+    list->addItems(l);
+}
+
 void listedit::supitem()
 {
     delete list->item(list->count() - 1);

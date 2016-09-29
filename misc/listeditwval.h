@@ -13,9 +13,11 @@ class listeditwval : public QWidget
     QListWidget *listval;
     QPushButton *add;
     QPushButton *sup;
+    QMetaObject::Connection conewval;
 public:
     listeditwval();
     QStringList getlstr();
+    void update(QStringList &l);
 public slots:
     void supline();
 private slots:

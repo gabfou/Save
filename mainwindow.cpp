@@ -3,12 +3,13 @@
 #include <QMessageBox>
 #include "data/project.h"
 #include "grouptree.h"
-//#include "barref.h"
+#include "barref.h"
 #include "config/menuconfigproject.h"
 #include "grouptreeitem.h"
 #include "tableclass/tableshow.h"
 #include "overview.h"
 #include "alltree.h"
+#include "config/menuconfigsondage.h"
 
 MainWindow::MainWindow(QWidget *parent) :
 	QMainWindow(parent),
@@ -23,7 +24,7 @@ MainWindow::MainWindow(QWidget *parent) :
 //	this->table = new QTableWidget(this);
 	// default display
 
-	this->resize(1000,600);
+    this->resize(1000, 600);
 
 	// timer
 
@@ -90,7 +91,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	QAction *send_ref = menu_serveur->addAction("&Lancer le premier sondage");
 	QObject::connect(send_ref, SIGNAL(triggered()), this, SLOT(sendproject_ref()));
     QAction *config_sondage = menu_serveur->addAction("&nouveaux sondage");
-    QObject::connect(config_sondage, SIGNAL(triggered()), this, SLOT(menuconfigsondage()));
+    QObject::connect(config_sondage, SIGNAL(triggered()), this, SLOT(configsondage()));
 
 	QToolBar *toolBarFichier = addToolBar("Fichier");
 	QAction *screenshoot = toolBarFichier->addAction("&Imprimer écran");
@@ -257,7 +258,7 @@ void MainWindow::addproject2()
 				" typef INT DEFAULT 0,"
 				" ref_only INT DEFAULT 0,"
 				" splitchar VARCHAR(3000) NOT NULL DEFAULT '',"
-				" global BOOL NOT NULL DEFAULT 0"
+                " global BOOL NOT NULL DEFAULT 0,"
 				" value INT NOT NULL DEFAULT -1)") );
 	if(!qry.exec())
 		qDebug() << "create question" << qry.lastError();
@@ -285,36 +286,39 @@ void MainWindow::addproject2()
 	if(!qry.exec())
 		qDebug() << "create reponse" << qry.lastError();
 
-	qry.prepare( "CREATE TABLE IF NOT EXISTS project_all_user ("
+	qry.prepare(" CREATE TABLE IF NOT EXISTS project_all_user ("
 				" id INTEGER UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT,"
 				" idperson INTEGER,"
 				" email VARCHAR(90),"
 				" password VARCHAR(1024),"
 				" name_table VARCHAR(200),"
 				" date_last_etude datetime,"
-				" valid_code varchar(256)"
+                " valid_code varchar(256),"
 				" iteration INTEGER NOT NULL DEFAULT 0);" );
 	if(!qry.exec())
 		qDebug() << "create master table user" << qry.lastError();
 
-	qry.prepare( "CREATE TABLE IF NOT EXISTS project_" +  this->nametmp->text() + "_etude ("
+	qry.prepare(" CREATE TABLE IF NOT EXISTS project_" +  this->nametmp->text() + "_etude ("
 				" id INTEGER UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT,"
 				" begin datetime NOT NULL DEFAULT NOW(),"
 				" iteration INTEGER,"
-                " groupid INTEGER NOT DEFAULT 0,"
+                " groupid INTEGER NOT NULL DEFAULT 0,"
 				" iteration_detail VARCHAR(3000));" );
 	if(!qry.exec())
         qDebug() << "create all etude" << qry.lastError();
-    qry.prepare( "CREATE TABLE IF NOT EXISTS all_etude ("
+
+    qry.prepare(" CREATE TABLE IF NOT EXISTS all_etude ("
                 " id INTEGER UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT,"
                 " begin datetime NOT NULL DEFAULT NOW(),"
                 " iteration INTEGER,"
-                " groupid INTEGER NOT DEFAULT 0,"
+                " groupid INTEGER NOT NULL DEFAULT 0,"
                 " project_name VARCHAR(3000),"
+                " ref BOOLEAN NOT NULL DEFAULT 0,"
                 " iteration_detail VARCHAR(3000));" );
     if(!qry.exec())
         qDebug() << "create etude" << qry.lastError();
-	this->current.initoroject(this->nametmp->text());
+
+    this->current.initoroject(this->nametmp->text());
 	//this->current->projectshow(this, this->table, this->currentgref);
 	this->namecurrent = this->nametmp->text();
 	menu_projet->actions().at(2)->setEnabled(1);
@@ -694,11 +698,10 @@ void	MainWindow::showbarchartref()
 
 void	MainWindow::configproject(){menuconfigproject *m = new menuconfigproject(this->namecurrent, &(this->current), this);m->show();}
 
-void	MainWindow::configsondage(){menuconfigsondage *m = new menuconfigsondage(this->namecurrent, &(this->current), this);m->show();}
+void	MainWindow::configsondage(){menuconfigsondage *m = new menuconfigsondage(this);m->show();}
 
 void	MainWindow::screenshootcurrent()
 {
-	// Shoot the screen
 	QScreen *screen = QGuiApplication::primaryScreen();
 	if (const QWindow *window = windowHandle())
 		screen = window->screen();
@@ -707,7 +710,6 @@ void	MainWindow::screenshootcurrent()
 	QPixmap pixmap = QPixmap();
 	pixmap = screen->grabWindow(this->centralWidget()->winId());
 
-	// - Save this picture
 	const QString format = "png";
 		QString initialPath = QStandardPaths::writableLocation(QStandardPaths::PicturesLocation);
 		if (initialPath.isEmpty())

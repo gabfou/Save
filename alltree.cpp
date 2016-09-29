@@ -30,7 +30,6 @@ Alltree::Alltree(MainWindow *m, project *current) : p(current)
     connect(affichenongroup, SIGNAL(toggled(bool)), groupboxtmp, SLOT(setVisiblenongroup(bool)));
 
     layout->addWidget(tabgroup);
-
 }
 
 

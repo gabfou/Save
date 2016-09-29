@@ -143,11 +143,16 @@ void infoquestion::updateib(QTreeWidgetItem * item)
 		this->q = new question(p->getquestion(tmp->id));
 	}
     type->setCurrentIndex(q->type);
+    typeshow(q->type);
     name->setText(q->name);
 	description->setText(q->sujet);
 	unit->setText(q->unit);
     groupbox->setcurrentgroup(q->group);
     ref_only->setChecked(q->ref_only);
+    if (q->type == 2)
+        selectlist->update(q->liststr);
+    if (q->type == 3)
+        selectlistval->update(q->liststr);
 //    listchar =
 //	value->setText(q.value);
 }

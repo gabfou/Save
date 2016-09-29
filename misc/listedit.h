@@ -17,6 +17,7 @@ public:
     void init(QStringList &str);
     void preinit(int co = 1);
     QStringList getlstr();
+    void update(QStringList &l);
 public slots:
     void edit(QListWidgetItem *item);
     void newitem();
