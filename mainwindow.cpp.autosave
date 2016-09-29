@@ -86,7 +86,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	QAction *send_ref = menu_serveur->addAction("&Lancer le premier sondage");
 	QObject::connect(send_ref, SIGNAL(triggered()), this, SLOT(sendproject_ref()));
     QAction *config_sondage = menu_serveur->addAction("&nouveaux sondage");
-    QObject::connect(config_sondage, SIGNAL(triggered()), this, SLOT(menuconfigsondage()));
+    QObject::connect(config_sondage, SIGNAL(triggered()), this, SLOT(configsondage()));
 
 	QToolBar *toolBarFichier = addToolBar("Fichier");
 	QAction *screenshoot = toolBarFichier->addAction("&Imprimer écran");
@@ -667,7 +667,7 @@ void	MainWindow::showbarchartref()
 
 void	MainWindow::configproject(){menuconfigproject *m = new menuconfigproject(this->namecurrent, &(this->current), this);m->show();}
 
-void	MainWindow::configproject(){menuconfigproject *m = new menuconfigsondage(this->namecurrent, &(this->current), this);m->show();}
+void	MainWindow::configsondage(){menuconfigsondage *m = new menuconfigsondage(this->namecurrent, &(this->current), this);m->show();}
 
 void	MainWindow::screenshootcurrent()
 {

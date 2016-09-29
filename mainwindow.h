@@ -63,6 +63,7 @@ private slots:
     void configproject();
     void valmodechange(bool checked);
     void globalrep(bool checked);
+    void configsondage();
 private:
 	Ui::MainWindow *ui;
 	QWindow *addprojectwindow;
