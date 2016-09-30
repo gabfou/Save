@@ -48,9 +48,7 @@ void person::add_fact(string name, int time, int note, string date, int iteratio
 	if (iteration)
         (this->flist).push_back(newfact(name, time, note, date, idquestion));
 	else
-	{
         (this->freflist).push_back(newfact(name, time, note, date, idquestion));
-	}
 }
 
 

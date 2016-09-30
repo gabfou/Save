@@ -5,9 +5,10 @@
 info::info(project *p) : p(p)
 {
     vboxinfo = new QVBoxLayout();
+    vboxinfo->setAlignment(Qt::AlignTop);
     contg = new QWidget();
     infog = new QVBoxLayout();
-    infolabel = new QLabel("test");
+    infolabel = new QLabel("");
     descriptiong = new QLineEdit();
     gquestion = new QCheckBox();
     b_update = new QPushButton("Enregistrer");
@@ -16,9 +17,14 @@ info::info(project *p) : p(p)
 
     infog->addWidget(new QLabel("description"));
     infog->addWidget(descriptiong);
-    infog->addWidget(new QLabel("question tiroir"));
-    infog->addWidget(gquestion);
+
+    gquestionbox = new QHBoxLayout();
+    gquestionbox->addWidget(new QLabel("question tiroir :"));
+    gquestionbox->addWidget(gquestion, Qt::AlignLeft);
+    infog->addLayout(gquestionbox);
+
     infog->addWidget(b_update);
+
     contg->setLayout(infog);
     vboxinfo->addWidget(contg);
     this->setLayout(vboxinfo);
@@ -38,9 +44,14 @@ void info::updateibg(int id, int type)
     }
     init = 1;
     if (type == 0)
+    {
+
         current = &(p->listgroup[id]);
+    }
     if (type == 1)
+    {
         current = &(p->listqgroup[id]);
+    }
     infolabel->setText("groupe");
     contg->show();
 }

@@ -19,7 +19,7 @@ overview::overview(MainWindow *m, project *p, int group, int *showmod) : p(p), s
     table->reinit();
     QList<question> listqchild =  p->questiongroupqchildnotopti(0);
     //table->setverticalheader(listqchild, 0);
-    table->sethorizontalheader(headertable, p->getNbgeneration());
+    table->sethorizontalheader(headertable, p->getNbpgeneration());
     //table->showtable(0, 0);
     table->updateall();
     table->select(0, 0);

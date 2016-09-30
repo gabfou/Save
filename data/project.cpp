@@ -32,11 +32,6 @@ int project::getNbgroup() const
 	return nbgroup;
 }
 
-int project::getNbgeneration() const
-{
-	return nbgeneration;
-}
-
 void project::checkmailcalendar()
 {
 
@@ -66,14 +61,14 @@ inline void project::addperson(QString name, QString lastname, QString email, in
 {
 	this->nbperson++;
 	person ret(name, lastname, email, id, listquestion, groupid);
-    while ((int)(this->listp.size()) < id)
-        this->listp.push_back(person());
+	while ((int)(this->listp.size()) < id)
+		this->listp.push_back(person());
 	this->listp.push_back(ret);
 }
 
 question project::getquestion(int id)
 {
-    vector<question> ql = this->listquestion;
+	vector<question> ql = this->listquestion;
 	vector<question>::iterator q = ql.begin();
 
 	while (q != ql.end())
@@ -87,71 +82,81 @@ question project::getquestion(int id)
 
 person project::getperson(int id)
 {
-    vector<person> pl = this->listp;
-    vector<person>::iterator p = pl.begin();
+	vector<person> pl = this->listp;
+	vector<person>::iterator p = pl.begin();
 
-    while (p != pl.end())
-    {
-        if (p->id == id)
-            return (*p);
-        p++;
-    }
-    return(*(pl.begin()));
+	while (p != pl.end())
+	{
+		if (p->id == id)
+			return (*p);
+		p++;
+	}
+	return(*(pl.begin()));
 }
 
 int project::getNbqgroup() const
 {
-    return nbqgroup;
+	return nbqgroup;
 }
 
 int project::getNbfactref() const
 {
-    return nbfactref;
+	return nbfactref;
 }
 
 int project::getNbfactnref() const
 {
-    return nbfactnref;
+	return nbfactnref;
+}
+
+int project::getNbpgeneration() const
+{
+	return nbpgeneration;
+}
+
+int project::getNbqgeneration() const
+{
+	return nbqgeneration;
 }
 
 inline void project::addquestion(QString name, int group, unsigned int id, int qgroupid, QString sujet,
-                                 QString unit, int type, QString splitchar, int value, bool ref_only,
-                                 bool global)
+								 QString unit, int type, QString splitchar, int value, bool ref_only,
+								 bool global)
 {
 	this->nbquestion++;
-    question ret(name, group, id, qgroupid, sujet, unit, type, splitchar, value, ref_only, global);
-    while (this->listquestion.size() < id)
-        this->listquestion.push_back(question());
+	question ret(name, group, id, qgroupid, sujet, unit, type, splitchar, value, ref_only, global);
+	while (this->listquestion.size() < id)
+		this->listquestion.push_back(question());
 	this->listquestion.push_back(ret);
 }
 
 void project::addreponse(int id, string name, int time, int note, string date, int iteration, int idquestion) // opti
 {
-    if (iteration)
-        nbfactnref++;
-    else
-        nbfactref++;
-    listp[id].add_fact(name, time, note, date, iteration, idquestion);
+	if (iteration)
+		nbfactnref++;
+	else
+		nbfactref++;
+	listp[id].add_fact(name, time, note, date, iteration, idquestion);
 }
 
 inline void project::addgroup(QString name, int parentid, unsigned int id, int type, QString description, bool gquestion)
 {
 	if (type == 0)
 	{
-        this->nbgroup++;
-        group ret(name, parentid, id, (this->listgroup), type, description, gquestion);
-		if (ret.getGeneration() > this->nbgeneration)
-			this->nbgeneration = ret.getGeneration();
+		this->nbgroup++;
+		group ret(name, parentid, id, (this->listgroup), type, description, gquestion);
+		if (ret.getGeneration() > this->nbpgeneration)
+			this->nbpgeneration = ret.getGeneration();
 		while (this->listgroup.size() < id)
 			this->listgroup.push_back(group());
 		this->listgroup.push_back(ret);
 	}
 	else if (type == 1)
 	{
-        this->nbqgroup++;
-        group ret(name, parentid, id, (this->listqgroup), type, description, gquestion);
-		if (ret.getGeneration() > this->nbgeneration) // changer nbgenaration par nbqgeneration
-			this->nbgeneration = ret.getGeneration();
+		this->nbqgroup++;
+		group ret(name, parentid, id, (this->listqgroup), type, description, gquestion);
+		if (ret.getGeneration() > this->nbqgeneration) // changer nbgenaration par nbqgeneration
+			this->nbqgeneration = ret.getGeneration();
 		while (this->listqgroup.size() < id)
 			this->listqgroup.push_back(group());
 		this->listqgroup.push_back(ret);
@@ -192,63 +197,80 @@ int listcompare(list<person> listp, QString line)
 	return (0);
 }
 
+void project::initvar()
+{
+	nbperson = 0;
+	nbfact = 0;
+	nbquestion = 0;
+	nbgroup = 0;
+	nbpgeneration = -1;
+	nbqgeneration = -1;
+	nbqgroup = 0;
+	nbfactref = 0;
+	nbfactnref = 0;
+	listgroup.clear();
+	listp.clear();
+	listqgroup.clear();
+	listquestion.clear();
+}
+
 void project::initoroject(QString fproject)
 {
-    QElapsedTimer timerdebug;
+	QElapsedTimer timerdebug;
 	this->name = fproject;
 	QSqlQuery query;
 
-    this->listgroup.clear();
-    this->listp.clear();
-    this->listqgroup.clear();
-    this->listquestion.clear();
-    this->addgroup("ALL", -1, 0, 0, "", 0);
-    this->addgroup("ALL", -1, 0, 1, "", 0);
-    qDebug() << "init groupe";timerdebug.start();
-    if(query.exec(("SELECT groupname, groupparent, id, type, description, gquestion FROM project_" + fproject + "_groupe")))
+	initvar();
+	this->addgroup("ALL", -1, 0, 0, "", 0);
+	this->addgroup("ALL", -1, 0, 1, "", 0);
+
+	qDebug() << "init groupe";timerdebug.start();
+	if(query.exec(("SELECT groupname, groupparent, id, type, description, gquestion FROM project_" + fproject + "_groupe")))
 	{
 		while(query.next())
 		{
-            this->addgroup(query.value(0).toString(),
+			this->addgroup(query.value(0).toString(),
 						   query.value(1).toInt(),
 						   query.value(2).toInt(),
-                           query.value(3).toInt(),
-                           query.value(4).toString(),
-                           query.value(5).toBool());
+						   query.value(3).toInt(),
+						   query.value(4).toString(),
+						   query.value(5).toBool());
 		}
 	}
 	else
 		qDebug() << "error get group :" << query.lastError();
-    qDebug() << "init group time" << timerdebug.elapsed() << "milliseconds";
-    qDebug() << "init question";timerdebug.start();
-    if(query.exec(("SELECT question,groupid,id,qgroupid,sujet,type,typef,splitchar,value,ref_only FROM project_" + fproject + "_question")))
+	qDebug() << "init group time" << timerdebug.elapsed() << "milliseconds";
+
+	qDebug() << "init question";timerdebug.start();
+	if(query.exec(("SELECT question,groupid,id,qgroupid,sujet,type,typef,splitchar,value,ref_only FROM project_" + fproject + "_question")))
 	{
 		while(query.next())
 		{
-            this->addquestion(query.value(0).toString(),
+			this->addquestion(query.value(0).toString(),
 							  query.value(1).toInt(),
 							  query.value(2).toInt(),
 							  query.value(3).toInt(),
 							  query.value(4).toString(),
-                              query.value(5).toString(),
-                              query.value(6).toInt(),
-                              query.value(7).toString(),
-                              query.value(8).toInt(),
-                              query.value(9).toBool(),
-                              0);
+							  query.value(5).toString(),
+							  query.value(6).toInt(),
+							  query.value(7).toString(),
+							  query.value(8).toInt(),
+							  query.value(9).toBool(),
+							  0);
 		}
 	}
 	else
 		qDebug() << "error get question :" << query.lastError();
-    qDebug() << "init persone";timerdebug.start();
-    qDebug() << "init question time" << timerdebug.elapsed() << "milliseconds";
-    if(query.exec(("SELECT id, firstname,lastname,email,groupid FROM project_" + fproject + "_project")))
+	qDebug() << "init question time" << timerdebug.elapsed() << "milliseconds";
+
+	qDebug() << "init persone";timerdebug.start();
+	if(query.exec(("SELECT id, firstname,lastname,email,groupid FROM project_" + fproject + "_project")))
 	{
 		while(query.next())
 		{
-            this->addperson(query.value(1).toString(),
-                            query.value(2).toString(),
-                            query.value(3).toString(),
+			this->addperson(query.value(1).toString(),
+							query.value(2).toString(),
+							query.value(3).toString(),
 							query.value(0).toInt(),
 							&listquestion,
 							query.value(4).toInt());
@@ -256,10 +278,12 @@ void project::initoroject(QString fproject)
 	}
 	else
 		qDebug() << "error get user :" << query.lastError();
-    qDebug() << "init persone time" << timerdebug.elapsed() << "milliseconds";
-    qDebug() << "init fact";timerdebug.start();
-    if(query.exec(("SELECT idperson,name,time,note,date_info, iteration, idquestion FROM project_" + fproject + "_reponse")))
+	qDebug() << "init persone time" << timerdebug.elapsed() << "milliseconds";
+
+	qDebug() << "init fact";timerdebug.start();
+	if(query.exec(("SELECT idperson,name,time,note,date_info, iteration, idquestion FROM project_" + fproject + "_reponse")))
 	{
+		qDebug() << "query select reponse time" << timerdebug.elapsed() << "milliseconds";
 		while(query.next())
 		{
 			this->addreponse(query.value(0).toInt(),
@@ -267,33 +291,35 @@ void project::initoroject(QString fproject)
 							 query.value(2).toInt(),
 							 query.value(3).toInt(),
 							 query.value(4).toString().toStdString(),
-                             query.value(5).toInt(),
-                             query.value(6).toInt());
+							 query.value(5).toInt(),
+							 query.value(6).toInt());
 		}
 	}
 	else
-        qDebug() << "error get reponse :" << query.lastError();
-    qDebug() << "init reponse time" << timerdebug.elapsed() << "milliseconds";
-    qDebug() << "remplissage groupe persone";timerdebug.start();
-    vector<person>::iterator tmp;
+		qDebug() << "error get reponse :" << query.lastError();
+	qDebug() << "init all reponse time" << timerdebug.elapsed() << "milliseconds";
+
+	qDebug() << "remplissage groupe persone";timerdebug.start();
+	vector<person>::iterator tmp;
 	tmp = this->listp.begin();
 	while (tmp != this->listp.end())
 	{
-        if (tmp->groupid > -1 && tmp->groupid < (int)(listgroup.size()))
-            this->listgroup[tmp->getGroupid()].addperson(*tmp);
+		if (tmp->groupid > -1 && tmp->groupid < (int)(listgroup.size()))
+			this->listgroup[tmp->getGroupid()].addperson(*tmp);
 		tmp++;
 	}
-    qDebug() << "remplissage groupe personne time" << timerdebug.elapsed() << "milliseconds";
-    qDebug() << "remplissage groupe question";timerdebug.start();
+	qDebug() << "remplissage groupe personne time" << timerdebug.elapsed() << "milliseconds";
+
+	qDebug() << "remplissage groupe question";timerdebug.start();
 	vector<question>::iterator tmp2;
 	tmp2 = this->listquestion.begin();
 	while (tmp2 != this->listquestion.end())
-    {
-        if (tmp2->qgroupid > -1 && tmp2->qgroupid < listqgroup.size())
-            this->listqgroup[tmp2->qgroupid].addquestion(*tmp2);
+	{
+		if (tmp2->qgroupid > -1 && tmp2->qgroupid < listqgroup.size())
+			this->listqgroup[tmp2->qgroupid].addquestion(*tmp2);
 		tmp2++;
 	}
-    qDebug() << "remplissage groupe question time" << timerdebug.elapsed() << "milliseconds";
+	qDebug() << "remplissage groupe question time" << timerdebug.elapsed() << "milliseconds";
 }
 
 void	project::groupchild(unsigned int id, QList<int> & ret) const
@@ -301,17 +327,17 @@ void	project::groupchild(unsigned int id, QList<int> & ret) const
 	list<int>::iterator listpg;
 	list<int> listint;// = listgroup[id].getListfils();
 
-    if (listgroup.empty())
-    {
-         qDebug() << "project->listgroup empty project pas init?";
-         return ;
-    }
-    if (id >= listgroup.size() || listgroup[id].init == 0)
-    {
-         qDebug() << "group with id =" << id << " doesn't exist but is call in project::groupchild";
-         return ;
-    }
-    ret << id;
+	if (listgroup.empty())
+	{
+		 qDebug() << "project->listgroup empty project pas init?";
+		 return ;
+	}
+	if (id >= listgroup.size() || listgroup[id].init == 0)
+	{
+		 qDebug() << "group with id =" << id << " doesn't exist but is call in project::groupchild";
+		 return ;
+	}
+	ret << id;
 	listint = this->listgroup[id].getListfils();
 	listpg = listint.begin();
 	while (listpg != listint.end())
@@ -325,10 +351,10 @@ void	project::groupchild(unsigned int id, QList<int> & ret) const
 void	project::groupchild(unsigned int id, QList<int> & ret, vector<group> &g) const
 {
 	list<int>::iterator listpg;
-    list<int> listint;// = listgroup[id].getListfils();
+	list<int> listint;// = listgroup[id].getListfils();
 
 	ret << id;
-    if (g[id].type == -1)
+	if (g[id].type == -1)
 	{
 		qDebug() << "groupchild bug id =" << id;
 		return ;
@@ -353,7 +379,7 @@ void	project::groupqchild(int id, QList<int> & ret) const
 	listpg = listint.begin();
 	while (listpg != listint.end())
 	{
-        //qDebug() << "groupqchild number group: " << QString::number(*listpg);
+		//qDebug() << "groupqchild number group: " << QString::number(*listpg);
 		this->groupqchild(*listpg, ret);
 		listpg++;
 	}
@@ -363,15 +389,15 @@ QList<question> project::questiongroupqchildnotopti(int id)
 {
 
 	QList<int> listqchild;
-    QList<question> ret;
-    QList<int>::iterator tmp;
+	QList<question> ret;
+	QList<int>::iterator tmp;
 	questiongroupqchild(id, listqchild);
 
 	tmp = listqchild.begin();
 	while (tmp != listqchild.end())
 	{
-        //qDebug() << listquestion[(*tmp)].name;
-        ret.push_back(listquestion[(*tmp)]);
+		//qDebug() << listquestion[(*tmp)].name;
+		ret.push_back(listquestion[(*tmp)]);
 		tmp++;
 	}
 	return (ret);
@@ -379,26 +405,26 @@ QList<question> project::questiongroupqchildnotopti(int id)
 
 void	project::questiongroupqchild(int id, QList<int> & ret) const
 {
-    list<int>::iterator listpg;
-    list<question> listq = listqgroup[id].getListq();
-    list<question>::iterator listqi;
-    list<int> listint = listqgroup[id].getListfils();
+	list<int>::iterator listpg;
+	list<question> listq = listqgroup[id].getListq();
+	list<question>::iterator listqi;
+	list<int> listint = listqgroup[id].getListfils();
 
-    listqi = listq.begin();
-    while (listqi != listq.end())
-    {
-        //qDebug() << "questiongroupchild : " << listqi->id;
-        ret << listqi->id;
-        listqi++;
-    }
-    listint = this->listqgroup[id].getListfils();
-    listpg = listint.begin();
-    while (listpg != listint.end())
-    {
-        //qDebug() << "questiongroupchild number group: " << QString::number(*listpg);
-        this->questiongroupqchild(*listpg, ret);
-        listpg++;
-    }
+	listqi = listq.begin();
+	while (listqi != listq.end())
+	{
+		//qDebug() << "questiongroupchild : " << listqi->id;
+		ret << listqi->id;
+		listqi++;
+	}
+	listint = this->listqgroup[id].getListfils();
+	listpg = listint.begin();
+	while (listpg != listint.end())
+	{
+		//qDebug() << "questiongroupchild number group: " << QString::number(*listpg);
+		this->questiongroupqchild(*listpg, ret);
+		listpg++;
+	}
 }
 
 QList<t_groupref> project::getgrouplist(int id, int qid)
@@ -406,15 +432,15 @@ QList<t_groupref> project::getgrouplist(int id, int qid)
 	QList<t_groupref> ret;
 	QList<int> listchild;
 	QList<int>::iterator i;
-    QList<int> listqchild;
+	QList<int> listqchild;
 
 	groupchild(id, listchild);
-    questiongroupqchild(qid, listqchild);
-    qDebug() << "machin" << listqchild;
+	questiongroupqchild(qid, listqchild);
+	qDebug() << "machin" << listqchild;
 	i = listchild.begin();
 	while (i != listchild.end())
 	{
-        ret << this->listgroup[*i].groupnamerep(this->listquestion, 0, listqchild);
+		ret << this->listgroup[*i].groupnamerep(this->listquestion, 0, listqchild);
 		i++;
 	}
 	return ret;
@@ -422,41 +448,41 @@ QList<t_groupref> project::getgrouplist(int id, int qid)
 
 QList<t_groupref> project::getgrouplistref(int id, int qid)
 {
-    QList<t_groupref> ret;
-    QList<int> listchild;
-    QList<int>::iterator i;
-    QList<int> listqchild;
+	QList<t_groupref> ret;
+	QList<int> listchild;
+	QList<int>::iterator i;
+	QList<int> listqchild;
 
-    groupchild(id, listchild);
-    questiongroupqchild(qid, listqchild);
-    qDebug() << "machin" << listqchild;
-    i = listchild.begin();
-    while (i != listchild.end())
-    {
-        ret << this->listgroup[*i].groupnamerep(this->listquestion, 1, listqchild);
-        i++;
-    }
-    return ret;
+	groupchild(id, listchild);
+	questiongroupqchild(qid, listqchild);
+	qDebug() << "machin" << listqchild;
+	i = listchild.begin();
+	while (i != listchild.end())
+	{
+		ret << this->listgroup[*i].groupnamerep(this->listquestion, 1, listqchild);
+		i++;
+	}
+	return ret;
 }
 
 QStringList	project::sendproject()
 {
-    list<person> listtmp = listgroup[0].getListp();
-    list<person>::iterator tmp;
-    QStringList listmail;
-    QString post = (this->name);
-    post.append("&");
-    post.append(this->postquestion("ALL"));
+	list<person> listtmp = listgroup[0].getListp();
+	list<person>::iterator tmp;
+	QStringList listmail;
+	QString post = (this->name);
+	post.append("&");
+	post.append(this->postquestion("ALL"));
 
-    qDebug() << listtmp.size();
-    tmp = listtmp.begin();
-    while (tmp != listtmp.end())
-    {
-        listmail.push_back((*tmp).email);
-        listmail.push_back(QString::number((*tmp).id));
-        tmp++;
-    }
-    return (listmail);
+	qDebug() << listtmp.size();
+	tmp = listtmp.begin();
+	while (tmp != listtmp.end())
+	{
+		listmail.push_back((*tmp).email);
+		listmail.push_back(QString::number((*tmp).id));
+		tmp++;
+	}
+	return (listmail);
 }
 
 QString	project::postquestion(QString group) //creation de l url
@@ -467,7 +493,7 @@ QString	project::postquestion(QString group) //creation de l url
 	tmp = this->listquestion.begin();
 	while (tmp != this->listquestion.end())
 	{
-        ret.append(((*tmp).name + "=0&"));
+		ret.append(((*tmp).name + "=0&"));
 		tmp++;
 	}
 	return ret;

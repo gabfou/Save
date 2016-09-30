@@ -14,15 +14,17 @@ class project
  //   Q_OBJECT
 
 private:
-	int nbperson = 0;
-	int nbfact = 0;
-	int nbquestion = 0;
-	int nbgroup = 0;
-	int nbgeneration = 0;
-    int nbqgroup = 0;
-    int nbfactref = 0;
-    int nbfactnref = 0;
+	int nbperson;
+	int nbfact;
+	int nbquestion;
+	int nbgroup;
+    int nbpgeneration;
+    int nbqgeneration;
+    int nbqgroup;
+    int nbfactref;
+    int nbfactnref;
 
+    void initvar();
 public:
     int val = 0;
     int ref = 0;
@@ -70,5 +72,7 @@ public:
     int getNbqgroup() const;
     int getNbfactref() const;
     int getNbfactnref() const;
+    int getNbpgeneration() const;
+    int getNbqgeneration() const;
 };
 

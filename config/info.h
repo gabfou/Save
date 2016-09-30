@@ -23,6 +23,7 @@ protected:
 private:
     QLineEdit *descriptiong;
     QPushButton *b_update;
+    QHBoxLayout *gquestionbox;
     group *current;
     int init = 0;
 

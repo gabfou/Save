@@ -54,6 +54,7 @@ private:
     void populate();
     void preinit();
     void postinit();
+    void prepostinit();
 };
 
 #endif // TABLESHOW_H

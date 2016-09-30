@@ -24,7 +24,7 @@ MainWindow::MainWindow(QWidget *parent) :
 //	this->table = new QTableWidget(this);
 	// default display
 
-    this->resize(1000, 600);
+	this->resize(1000, 600);
 
 	// timer
 
@@ -90,8 +90,8 @@ MainWindow::MainWindow(QWidget *parent) :
 	QObject::connect(send, SIGNAL(triggered()), this, SLOT(sendproject()));
 	QAction *send_ref = menu_serveur->addAction("&Lancer le premier sondage");
 	QObject::connect(send_ref, SIGNAL(triggered()), this, SLOT(sendproject_ref()));
-    QAction *config_sondage = menu_serveur->addAction("&nouveaux sondage");
-    QObject::connect(config_sondage, SIGNAL(triggered()), this, SLOT(configsondage()));
+	QAction *config_sondage = menu_serveur->addAction("&nouveaux sondage");
+	QObject::connect(config_sondage, SIGNAL(triggered()), this, SLOT(configsondage()));
 
 	QToolBar *toolBarFichier = addToolBar("Fichier");
 	QAction *screenshoot = toolBarFichier->addAction("&Imprimer écran");
@@ -258,7 +258,7 @@ void MainWindow::addproject2()
 				" typef INT DEFAULT 0,"
 				" ref_only INT DEFAULT 0,"
 				" splitchar VARCHAR(3000) NOT NULL DEFAULT '',"
-                " global BOOL NOT NULL DEFAULT 0,"
+				" global BOOL NOT NULL DEFAULT 0,"
 				" value INT NOT NULL DEFAULT -1)") );
 	if(!qry.exec())
 		qDebug() << "create question" << qry.lastError();
@@ -293,7 +293,7 @@ void MainWindow::addproject2()
 				" password VARCHAR(1024),"
 				" name_table VARCHAR(200),"
 				" date_last_etude datetime,"
-                " valid_code varchar(256),"
+				" valid_code varchar(256),"
 				" iteration INTEGER NOT NULL DEFAULT 0);" );
 	if(!qry.exec())
 		qDebug() << "create master table user" << qry.lastError();
@@ -302,23 +302,23 @@ void MainWindow::addproject2()
 				" id INTEGER UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT,"
 				" begin datetime NOT NULL DEFAULT NOW(),"
 				" iteration INTEGER,"
-                " groupid INTEGER NOT NULL DEFAULT 0,"
+				" groupid INTEGER NOT NULL DEFAULT 0,"
 				" iteration_detail VARCHAR(3000));" );
 	if(!qry.exec())
-        qDebug() << "create all etude" << qry.lastError();
+		qDebug() << "create all etude" << qry.lastError();
 
-    qry.prepare(" CREATE TABLE IF NOT EXISTS all_etude ("
-                " id INTEGER UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT,"
-                " begin datetime NOT NULL DEFAULT NOW(),"
-                " iteration INTEGER,"
-                " groupid INTEGER NOT NULL DEFAULT 0,"
-                " project_name VARCHAR(3000),"
-                " ref BOOLEAN NOT NULL DEFAULT 0,"
-                " iteration_detail VARCHAR(3000));" );
-    if(!qry.exec())
-        qDebug() << "create etude" << qry.lastError();
+	qry.prepare(" CREATE TABLE IF NOT EXISTS all_etude ("
+				" id INTEGER UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT,"
+				" begin datetime NOT NULL DEFAULT NOW(),"
+				" iteration INTEGER,"
+				" groupid INTEGER NOT NULL DEFAULT 0,"
+				" project_name VARCHAR(3000),"
+				" ref BOOLEAN NOT NULL DEFAULT 0,"
+				" iteration_detail VARCHAR(3000));" );
+	if(!qry.exec())
+		qDebug() << "create etude" << qry.lastError();
 
-    this->current.initoroject(this->nametmp->text());
+	this->current.initoroject(this->nametmp->text());
 	//this->current->projectshow(this, this->table, this->currentgref);
 	this->namecurrent = this->nametmp->text();
 	menu_projet->actions().at(2)->setEnabled(1);
@@ -473,26 +473,7 @@ void MainWindow::addperson2()
 	}
 }
 
-void MainWindow::showproject()
-{
-	if (this->ov == NULL)
-	{
-		this->ov = new overview(this, &(this->current), this->currentgref, &(this->showmod));//, "overview";
-		this->cw->addTab(this->ov, "resumé");
-	}
-	else
-	{
-		this->ov->updateov(this->currentgref, currentgqref); //opti
-	}
-	if (this->table == NULL)
-	{
-		this->table = new tableshow(&(this->current), this, 0);
-		this->cw->addTab(this->table, "tableaux");
-	}
-	this->table->showtable(this->currentgref, this->currentgqref);
 
-	//this->current->projectshow(this, this->table, this->currentgref);
-}
 
 MainWindow::~MainWindow()
 {
@@ -503,32 +484,32 @@ MainWindow::~MainWindow()
 
 void MainWindow::sendprojectauxi(QString str)
 {
-    QSqlQuery qry;
+	QSqlQuery qry;
 	Q_UNUSED(str);
 
 /*	QString body = "Bonjour dans le cadre de notre études veuillez repondre au formulaire à l'adresse suivante : ";
-    QStringList listmail;
+	QStringList listmail;
 
 //	this->updateproject();
 //	body.append(this->namecurrent);
 //	body.append("&");
-    // body.append(this->current->postquestion("ALL"));
-    listmail = this->current.sendproject();
-    QString bodytmp;
-    int i = 0;
-    while (i < listmail.size())
-    {
-        qDebug() << listmail.at(i);
-        bodytmp = body + "\r\n";// + "person__person=" + listmail.at(i + 1) + "&";
-        sendmail(listmail.at(i), bodytmp); // OPTI
-        i += 2;
-    }*/
-    qry.prepare( " INSERT INTO all_etude (iteration , groupid , project_name) VALUES ( ? , ? , ? );");
-    qry.addBindValue(1);
-    qry.addBindValue(0);
-    qry.addBindValue(this->current.name);
-    if(!qry.exec())
-        qDebug() << qry.lastError();
+	// body.append(this->current->postquestion("ALL"));
+	listmail = this->current.sendproject();
+	QString bodytmp;
+	int i = 0;
+	while (i < listmail.size())
+	{
+		qDebug() << listmail.at(i);
+		bodytmp = body + "\r\n";// + "person__person=" + listmail.at(i + 1) + "&";
+		sendmail(listmail.at(i), bodytmp); // OPTI
+		i += 2;
+	}*/
+	qry.prepare( " INSERT INTO all_etude (iteration , groupid , project_name) VALUES ( ? , ? , ? );");
+	qry.addBindValue(1);
+	qry.addBindValue(0);
+	qry.addBindValue(this->current.name);
+	if(!qry.exec())
+		qDebug() << qry.lastError();
 }
 
 void MainWindow::sendproject()
@@ -565,18 +546,23 @@ void MainWindow::mailSent(QString status)
 void MainWindow::updateproject()
 {
 	this->current.initoroject(this->namecurrent);
-    if (this->table)
-        delete this->table;
-    if (this->tableg)
-    {
-        delete this->tableg;
-        tableg = NULL;
-    }
-    if (this->tablep)
-    {
-        delete this->tablep;
-        tablep = NULL;
-    }
+	if (this->ov == NULL)
+	{
+		this->ov = new overview(this, &(this->current), this->currentgref, &(this->showmod));//, "overview";
+		this->cw->addTab(this->ov, "resumé");
+	}
+	if (this->table)
+		delete this->table;
+	if (this->tableg)
+	{
+		delete this->tableg;
+		tableg = NULL;
+	}
+	if (this->tablep)
+	{
+		delete this->tablep;
+		tablep = NULL;
+	}
 	this->table = new tableshow(&(this->current), this, 0);
 	this->table->showtable(this->currentgref, this->currentgqref);
 	this->cw->addTab(table, "tableaux");
@@ -584,13 +570,13 @@ void MainWindow::updateproject()
 	this->ov = NULL;
 	this->addock();
 
-    if (this->current.getNbfactnref() == 0)
-    {
-        this->menu_affifchage->actions().at(0)->setVisible(0);
-        refmodechange(1);
-    }
-    else
-        this->menu_affifchage->actions().at(0)->setVisible(1);
+	if (this->current.getNbfactnref() == 0)
+	{
+		this->menu_affifchage->actions().at(0)->setVisible(0);
+		refmodechange(1);
+	}
+	else
+		this->menu_affifchage->actions().at(0)->setVisible(1);
 }
 
 //void MainWindow::messageErreur(QNetworkReply::NetworkError)
@@ -615,15 +601,15 @@ void MainWindow::convert_to_xlsx()
 void	MainWindow::modechange(bool checked)
 {
 	this->showmod = (checked) ? 1 : 0;
-	this->showproject();
+	this->updateproject();
 }
 
 void	MainWindow::refmodechange(bool checked)
 {
 	ref = (checked) ? 1 : 0;
 	current.ref = ref;
-    //this->table->updateall();
-    emit refchanged(checked);
+	//this->table->updateall();
+	emit refchanged(checked);
 	this->table->showtable(currentgref, currentgqref);
 }
 

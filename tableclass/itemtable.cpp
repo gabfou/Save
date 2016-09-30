@@ -84,7 +84,7 @@ void itemtable::update(person *arg, question *head, QString form) // opti passer
         //this->setBackgroundColor(arg->getColor()); //remettre les couleur
     }
     val = (valfloat > -0.1) ? QString::number(valfloat) : "NA";
-    this->eval(val, *head);
+    this->eval(val, *q);
 }
 
 void itemtable::update(group *arg, QString *head, QString form)

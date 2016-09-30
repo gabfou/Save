@@ -43,7 +43,7 @@ public slots:
     void screenshootcurrent();
     void changescopeq2(QTreeWidgetItem *item);
 private slots:
-	void showproject();
+    //void showproject();
 	void sendproject();
 	void addquestion();
 	void addproject();
