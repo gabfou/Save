@@ -28,7 +28,9 @@ menuconfigsondage::menuconfigsondage(MainWindow *m) : m(m)  // opti list a la pl
     refbox->addWidget(refcheck);
 
     QPushButton *newsondage = new QPushButton("nouveaux");
+    connect(newsondage, SIGNAL(pressed()), this, SLOT(newsondage()));
     QPushButton *supsondage = new QPushButton("supprimer");
+    connect(supsondage, SIGNAL(pressed()), this, SLOT(supsondage()));
 
     QHBoxLayout *newsupbox = new QHBoxLayout();
     newsupbox->addWidget(newsondage);
@@ -60,7 +62,7 @@ void menuconfigsondage::newsondage()
     (qry.prepare("INSERT INTO all_etude (iteration , project_name , ref ) VALUES ( ?, ?, ? );"));
     qry.addBindValue(nbiteration->text());
     qry.addBindValue(m->namecurrent);
-    qry.addBindValue(refcheck->text());
+    qry.addBindValue(refcheck->isChecked());
     if (!(qry.exec()))
         qDebug() << "menu config sondage 3" << qry.lastError();
     listid << qry.lastInsertId().toInt();

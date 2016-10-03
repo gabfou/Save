@@ -19,31 +19,46 @@ function maildebase($to, $subject, $body)
 
 // maildebase("web-jbiqHB@mail-tester.com", "etude muranoconseil", "Bonjour dans le cadre de notre études veuillez repondre au formulaire à l'adresse suivante : http://etudemurano.alwaysdata.net/login.php"."\r\n\r\nMURAnO Conseil : Marketing / Retail / Supply Chain");
 
-$req_pre = $bdd->prepare('SELECT id, begin, iteration, groupid, project_name, iteration_detail FROM all_etude WHERE 1;');
+function prepperson($groupid, $project_name, $bdd, $ref)
+{
+	$req_pre = $bdd->prepare('SELECT id, email FROM project_'.$project_name.'_project WHERE groupid = '.$groupid.";");
+	$req_pre->execute();
+	$tabperson = $req_pre->fetchall();
+	foreach ($tabperson as $keyp => $valuep)
+	{
+		if ($ref)
+			$req_pre = $bdd->prepare('UPDATE project_'.$project_name.'_project SET refbool = 1 WHERE id = '.$valuep['id'].';');
+		else
+			$req_pre = $bdd->prepare('UPDATE project_'.$project_name.'_project SET questionbool = 1 WHERE id = '.$valuep['id'].';');
+		$req_pre->execute();
+		maildebase($valuep['email'], "etude muranoconseil", "Bonjour dans le cadre de notre études veuillez repondre au formulaire à l'adresse suivante : http://etudemurano.alwaysdata.net/directlogin.php?p=".$valuep['id']."&s=".$project_name."\r\n\r\nMURAnO Conseil : Marketing / Retail / Supply Chain");
+	}
+}
+
+function isWeekend($date)
+{
+    return (date('N', strtotime($date)) >= 6);
+}
+
+if (isWeekend($date))
+	die();
+
+$req_pre = $bdd->prepare('DELETE FROM all_etude WHERE iteration < 1;');
+$req_pre->execute();
+$req_pre = $bdd->prepare('SELECT id, begin, iteration, groupid, project_name, iteration_detail, ref FROM all_etude WHERE 1;');
 $req_pre->execute();
 $tabsondage = $req_pre->fetchall();
 foreach ($tabsondage as $key => $value)
 {
-	$req_pre = $bdd->prepare('SELECT email, refbool, questionbool FROM project_'.$value['project_name'].'_question WHERE groupid = '.htmlspecialchars($groupid).";");
-	$req_pre->execute();
-	$tabperson = $req_pre->fetchall();
-	$sondagefinish = 0;
-	$now = time();
-	$datediff = $now - $value['begin'];
-	if ($datediff / (60 * 60 * 24) > 7)
+	if ($value['ref'])
 	{
-		$req_pre->execute('DELETE FROM all_etude WHERE id='.$value['id'].';');
-		continue;
+		$req_pre = $bdd->prepare('UPDATE all_etude SET ref = 0 WHERE id = '.$value['id'].';');
+		$req_pre->execute();
+		prepperson($value['groupid'], $value['project_name'], $bdd, 1);
+		continue ;
 	}
-	foreach ($tabperson as $keyp => $valuep)
-	{
-		if ($valuep['refbool'] || $valuep['questionbool'])
-		{
-			maildebase($valuep['email'], "etude muranoconseil", "Bonjour dans le cadre de notre études veuillez repondre au formulaire à l'adresse suivante : http://etudemurano.alwaysdata.net/login.php"."\r\n\r\nMURAnO Conseil : Marketing / Retail / Supply Chain");
-			$sondagefinish++;
-		}
-	}
-	if ($sondagefinish == 0)
-		$req_pre->execute('DELETE FROM all_etude WHERE id='.$value['id'].';');
+	prepperson($value['groupid'], $value['project_name'], $bdd, 0);
 }
+$req_pre = $bdd->prepare('UPDATE all_etude SET iteration = iteration - 1 WHERE 1;');
+$req_pre->execute();
 ?>
