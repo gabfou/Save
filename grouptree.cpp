@@ -1,6 +1,8 @@
 #include "grouptree.h"
 #include "data/project.h"
 #include "data/group.h"
+#include "data/person.h"
+#include "data/question.h"
 #include "grouptreeitem.h"
 #include "mainwindow.h"
 #include "questiontreeitem.h"
@@ -182,7 +184,7 @@ void	grouptree::addgroupintree2(QTreeWidgetItem *item, int column)
 	(void)column;
 	disconnect(cotmp);
 	qDebug() << item->text(0);
-    int niark = addgroup(&(m->current), m->namecurrent, item->text(0), tmpid, g[tmpid].type, "", 0);
+    int niark = sqlo::addgroup(&(m->current), m->namecurrent, item->text(0), tmpid, g[tmpid].type, "", 0);
     item->parent()->addChild(new grouptreeitem(QStringList(QString(g[niark].getName())), &(m->current), niark, g[niark].type, i, (QTreeWidget*)0));
 	delete item;
 	item = NULL;
@@ -215,7 +217,7 @@ void	grouptree::addquestintree2(QTreeWidgetItem *item, int column)
 {
     Q_UNUSED(column);
     //qDebug() << item->text(0);
-    int id = addquestion(&(m->current), item->text(0), 0, "", 0, "", dynamic_cast<grouptreeitem*>(item->parent())->getId(), 0, 0, "", 1, 0, -1);
+    int id = sqlo::addquestion(&(m->current), item->text(0), 0, "", 0, "", dynamic_cast<grouptreeitem*>(item->parent())->getId(), 0, 0, "", 1, 0, -1);
     item->parent()->addChild(new questiontreeitem(QStringList(item->text(0)) , id, (QTreeWidget*)0));
 
 	m->table->reinit(&(m->current), m);
@@ -262,7 +264,7 @@ void	grouptree::addpersonintree2(QTreeWidgetItem *item, int column)
 {
 //	qDebug() << item->text(0);
 
-    int id = addperson(&(m->current), item->text(0).section(" ", 0, 0), item->text(0).section(" ", 1, 1), "not defined", 0);
+    int id = sqlo::addperson(&(m->current), item->text(0).section(" ", 0, 0), item->text(0).section(" ", 1, 1), "not defined", 0);
     item->parent()->addChild(new persontreeitem(QStringList(item->text(0)) , id, (QTreeWidget*)0));
 	m->table->reinit(&(m->current), m);
 	m->table->showtable(m->currentgref, m->currentgqref);
@@ -272,7 +274,7 @@ void	grouptree::addpersonintree2(QTreeWidgetItem *item, int column)
 
 void	grouptree::supgroupintree()
 {
-	supgroup(m->namecurrent, dynamic_cast<grouptreeitem*>(this->currentItem())->getId(), g);
+    sqlo::supgroup(m->namecurrent, dynamic_cast<grouptreeitem*>(this->currentItem())->getId(), g);
 	QTreeWidgetItem *item = this->currentItem();
 	delete item;
 	item = NULL;
@@ -305,13 +307,13 @@ void	grouptree::modifdgroupintree()
 
 void	grouptree::modifdgroupintree2()
 {
-    sqlupdate(("project_" + m->current.name + "_groupe"), "description", texttmp->toPlainText(), dynamic_cast<grouptreeitem*>(this->currentItem())->getId());
+    sqlo::sqlupdate(("project_" + m->current.name + "_groupe"), "description", texttmp->toPlainText(), dynamic_cast<grouptreeitem*>(this->currentItem())->getId());
 	g[dynamic_cast<grouptreeitem*>(this->currentItem())->getId()].description = texttmp->toPlainText();
 }
 
 void	grouptree::supquestintree()
 {
-	supquest(&(m->current), m->namecurrent, dynamic_cast<questiontreeitem*>(this->currentItem())->id);
+    sqlo::supquest(&(m->current), m->namecurrent, dynamic_cast<questiontreeitem*>(this->currentItem())->id);
 	QTreeWidgetItem *item = this->currentItem();
 	delete item;
 	item = NULL;
@@ -321,7 +323,7 @@ void	grouptree::supquestintree()
 
 void	grouptree::suppersonintree()
 {
-	supperson(&(m->current), m->namecurrent, dynamic_cast<persontreeitem*>(this->currentItem())->id);
+    sqlo::supperson(&(m->current), m->namecurrent, dynamic_cast<persontreeitem*>(this->currentItem())->id);
 	QTreeWidgetItem *item = this->currentItem();
 	delete item;
 	item = NULL;

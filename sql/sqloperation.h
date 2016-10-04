@@ -1,0 +1,5 @@
+#ifndef SQLOPERATION_H
+#define SQLOPERATION_H
+
+
+#endif // SQLOPERATION_H

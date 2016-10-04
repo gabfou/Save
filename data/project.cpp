@@ -4,7 +4,8 @@
 #include <string.h>
 #include "barref.h"
 #include "../mainwindow.h"
-#include "le.h"
+#include "person.h"
+#include "group.h"
 
 #include <QThread>
 

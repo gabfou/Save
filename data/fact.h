@@ -1,7 +1,5 @@
 #pragma once
 #include "le.h"
-#include <QGridLayout>
-#include <QString>
 typedef struct tm t_tm;
 
 class fact

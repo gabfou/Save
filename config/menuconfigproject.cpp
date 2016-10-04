@@ -3,6 +3,9 @@
 #include "menuconfigquestion.h"
 #include "menuconfigperson.h"
 #include "data/project.h"
+#include "data/group.h"
+#include "data/question.h"
+#include "data/person.h"
 
 menuconfigproject::menuconfigproject(QString name, project *p, MainWindow *m) : name(name), p(p)
 {

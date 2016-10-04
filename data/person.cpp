@@ -1,7 +1,6 @@
 #include "person.h"
 #include "group.h"
-#include <Qlabel>
-#include <QString>
+#include "fact.h"
 #include "question.h"
 
 int person::getId() const{return id;}

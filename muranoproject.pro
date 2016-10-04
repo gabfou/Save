@@ -25,7 +25,6 @@ SOURCES += main.cpp\
     data/question.cpp \
     graph/bargraph.cpp \
     sql/sqldatatable.cpp \
-    sql/sqloperation.cpp \
     sql/sqltableitem.cpp \
     tableclass/headertableitem.cpp \
     tableclass/itemtable.cpp \
@@ -49,7 +48,8 @@ SOURCES += main.cpp\
     config/info.cpp \
     misc/tablistedit.cpp \
     misc/listeditwval.cpp \
-    config/menuconfigsondage.cpp
+    config/menuconfigsondage.cpp \
+    sql/sqloperation.cpp
 
 HEADERS  += mainwindow.h \
     data/fact.h \
@@ -88,36 +88,12 @@ FORMS    += mainwindow.ui
 DISTFILES += \
     libmysql.lib \
     mysqlclient.lib \
-    plugins/sqldrivers/qsqlite.dll \
-    plugins/sqldrivers/qsqlited.dll \
     plugins/sqldrivers/qsqlmysql.dll \
     plugins/sqldrivers/qsqlmysqld.dll \
-    plugins/sqldrivers/qsqlodbc.dll \
-    plugins/sqldrivers/qsqlodbcd.dll \
-    plugins/sqldrivers/qsqlpsql.dll \
-    plugins/sqldrivers/qsqlpsqld.dll \
-    plugins/qsqlite.dll \
-    plugins/qsqlited.dll \
     plugins/qsqlmysql.dll \
     plugins/qsqlmysqld.dll \
-    plugins/qsqlodbc.dll \
-    plugins/qsqlodbcd.dll \
-    plugins/qsqlpsql.dll \
-    plugins/qsqlpsqld.dll \
-    sqldrivers/qsqlite.dll \
-    sqldrivers/qsqlited.dll \
     sqldrivers/qsqlmysql.dll \
     sqldrivers/qsqlmysqld.dll \
-    sqldrivers/qsqlodbc.dll \
-    sqldrivers/qsqlodbcd.dll \
-    sqldrivers/qsqlpsql.dll \
-    sqldrivers/qsqlpsqld.dll \
     libmysql.dll \
-    qsqlite.dll \
-    qsqlited.dll \
     qsqlmysql.dll \
     qsqlmysqld.dll \
-    qsqlodbc.dll \
-    qsqlodbcd.dll \
-    qsqlpsql.dll \
-    qsqlpsqld.dll

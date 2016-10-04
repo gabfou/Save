@@ -1,11 +1,8 @@
-#pragma once
+#ifndef PROJECT_H
+#define PROJECT_H
+
 #include "le.h"
-#include "person.h"
-#include "group.h"
-#include <QObject>
-#include <QString>
-#include "group.h"
-//#include "../../graphique/graphique/mainwindow.h"
+class person;
 
 class MainWindow;
 
@@ -76,3 +73,4 @@ public:
     int getNbqgeneration() const;
 };
 
+#endif

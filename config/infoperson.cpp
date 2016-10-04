@@ -87,5 +87,5 @@ void infoperson::updatebdd()
 		warning->show();
 		return ;
 	}
-    addperson(p, name->text(), lastname->text(), email->text(), groupid, ((init) ? pe->id : -1));
+    sqlo::addperson(p, name->text(), lastname->text(), email->text(), groupid, ((init) ? pe->id : -1));
 }

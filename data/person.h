@@ -1,13 +1,10 @@
 #pragma once
 #include "le.h"
-#include "fact.h"
-#include "question.h"
-#include <QVBoxLayout>
-#include <QHBoxLayout>
-#include <QTableWidget>
-#include "smtp.h"
 
 class group;
+class fact;
+class question;
+class Smtp;
 
 class person
 {

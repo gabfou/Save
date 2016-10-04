@@ -67,5 +67,5 @@ void info::updatebddg()
         warning->show();
         return ;
     }
-    addgroup(p, p->name, current->name, current->parentid , current->type, descriptiong->text(), gquestion->isChecked(), ((init) ? current->id : -1));
+    sqlo::addgroup(p, p->name, current->name, current->parentid , current->type, descriptiong->text(), gquestion->isChecked(), ((init) ? current->id : -1));
 }

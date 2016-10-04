@@ -52,5 +52,5 @@ void sqldatatable::sqlupdateitem(QTableWidgetItem* item)
 		qDebug() << "dinamic cast fail sqlupdateitem";
 		return ;
 	}
-    sqlupdate(tmp->getTablename(), tmp->getColname(), tmp->text(), tmp->getId().toInt());
+    sqlo::sqlupdate(tmp->getTablename(), tmp->getColname(), tmp->text(), tmp->getId().toInt());
 }

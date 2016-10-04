@@ -1,6 +1,7 @@
 #include "grouptreeitem.h"
 #include "data/group.h"
 #include "data/question.h"
+#include "data/person.h"
 #include "data/project.h"
 #include "questiontreeitem.h"
 #include "persontreeitem.h"
@@ -81,7 +82,7 @@ void    grouptreeitem::addquestglobinttree(const question &q)
     if (nbgchild == 0)
     {
         this->addChild(new questiontreeitem(QStringList(q.name),
-                                                        addquestion(p, q.name, q.group, q.unit, q.note, q.sujet,
+                                                        sqlo::addquestion(p, q.name, q.group, q.unit, q.note, q.sujet,
                                                                     this->getId(),
                                                                     q.type, q.ref_only, q.liststr.join(" "), q.val, q.global),
                                                         (QTreeWidget*)0));
