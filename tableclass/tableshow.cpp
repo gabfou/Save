@@ -10,7 +10,7 @@
 void tableshow::preinit()
 {
 	this->verticalHeader()->setContextMenuPolicy(Qt::CustomContextMenu);
-	this->horizontalHeader()->setContextMenuPolicy(Qt::CustomContextMenu);
+    this->horizontalHeader()->setContextMenuPolicy(Qt::CustomContextMenu);
 	menuhead = new QMenu(this->horizontalHeader());
 
 	connect(this, SIGNAL(customContextMenuRequested(QPoint)), this, SLOT(saveqpoint(QPoint)));
@@ -46,17 +46,13 @@ void tableshow::preinit()
 
 void tableshow::prepostinit()
 {
-	this->verticalHeader()->setSectionResizeMode(QHeaderView::Fixed);
-	this->horizontalHeader()->setSectionResizeMode(QHeaderView::Fixed);
-//	this->verticalHeader()->setContextMenuPolicy(Qt::CustomContextMenu);
-//	this->horizontalHeader()->setContextMenuPolicy(Qt::CustomContextMenu);
 	this->setSortingEnabled(false);
 }
 
 void tableshow::postinit()
 {
-	this->verticalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
-	this->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeToContents);
+    this->resizeColumnsToContents();
+    this->resizeRowsToContents();
 	this->setSortingEnabled(true);
 }
 
@@ -546,7 +542,7 @@ void	tableshow::updateall()
 
 	qDebug() << "updateall";
 	timerdebug.start();
-	this->setSortingEnabled(false);
+    this->prepostinit();
 	while (++h < this->rowCount() + 1)
 	{
 		w = - 1;
@@ -558,5 +554,5 @@ void	tableshow::updateall()
 		}
 	}
 	qDebug() << "updateall time " << timerdebug.elapsed() <<"ms";
-	this->setSortingEnabled(true);
+    this->postinit();
 }

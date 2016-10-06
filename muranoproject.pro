@@ -49,7 +49,8 @@ SOURCES += main.cpp\
     misc/tablistedit.cpp \
     misc/listeditwval.cpp \
     config/menuconfigsondage.cpp \
-    sql/sqloperation.cpp
+    sql/sqloperation.cpp \
+    tableclass/tableau_brut.cpp
 
 HEADERS  += mainwindow.h \
     data/fact.h \
@@ -81,7 +82,8 @@ HEADERS  += mainwindow.h \
     config/info.h \
     misc/tablistedit.h \
     misc/listeditwval.h \
-    config/menuconfigsondage.h
+    config/menuconfigsondage.h \
+    tableclass/tableau_brut.h
 
 FORMS    += mainwindow.ui
 

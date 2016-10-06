@@ -10,9 +10,9 @@ QString person::getEmail() const{return email;}
 QString person::getLastname() const{return lastname;}
 QString person::getName() const{return name;}
 std::vector<question> *person::getQuestionlist() const{return questionlist;}
-std::list<fact> person::getFlist() const{return flist;}
+QList<fact> person::getFlist() const{return flist;}
 
-std::list<fact> person::getFreflist() const
+QList<fact> person::getFreflist() const
 {
 	return freflist;
 }
@@ -52,9 +52,9 @@ void person::add_fact(string name, int time, int note, string date, int iteratio
 
 
 
-float person::personshowcaseval(question & qname, list<fact> lf) const
+float person::personshowcaseval(question & qname, QList<fact> lf) const
 {
-    list<fact>::iterator tmp;
+    QList<fact>::iterator tmp;
     float j = 0;
     int l = 0;
 
@@ -92,9 +92,9 @@ float	person::personshowcaseval(question &qname, int ref)
        return (this->personshowcaseval(qname, this->flist));
 }
 
-float person::personshowcase(question & qname, list<fact> lf) const
+float person::personshowcase(question & qname, QList<fact> lf) const
 {
-	list<fact>::iterator tmp;
+    QList<fact>::iterator tmp;
     float j = 0;
     int l = 0;
 

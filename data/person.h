@@ -9,10 +9,10 @@ class Smtp;
 class person
 {
 private:
-	std::list<fact> flist;
-	std::list<fact> freflist;
+    QList<fact> flist;
+    QList<fact> freflist;
 	std::vector<question> *questionlist;
-    float personshowcase(question &qname, list<fact> lf) const;
+    float personshowcase(question &qname, QList<fact> lf) const;
 public:
     QString name;
     QString lastname;
@@ -39,12 +39,12 @@ public:
     QString getLastname() const;
     QString getName() const;
 	std::vector<question> *getQuestionlist() const;
-	std::list<fact> getFlist() const;
+    QList<fact> getFlist() const;
 	void personadd(QTableWidget *gbox, int i, group &g);
     float personshowcase(question &qname);
     float personrefshowcase(question & qname);
-    std::list<fact> getFreflist() const;
-    float personshowcaseval(question &qname, list<fact> lf) const;
+    QList<fact> getFreflist() const;
+    float personshowcaseval(question &qname, QList<fact> lf) const;
     float personshowcaseval(question &qname);
     float personrefshowcaseval(question &qname);
     float personshowcaseval(question &qname, int ref);

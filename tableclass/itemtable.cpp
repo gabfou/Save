@@ -10,6 +10,7 @@ itemtable::itemtable(QString placeholder, project *p, QString form) : placeholde
     //this->setText(placeholder);
     //this->update();
 	//conect(this->tableWidget()->verticalHeaderItem(int));
+    //this->set
 }
 
 void itemtable::update()

@@ -6,6 +6,7 @@
 #include "data/group.h"
 #include "data/question.h"
 #include "data/person.h"
+#include "tableclass/tableau_brut.h"
 
 menuconfigproject::menuconfigproject(QString name, project *p, MainWindow *m) : name(name), p(p)
 {
@@ -33,8 +34,9 @@ void menuconfigproject::configeneral()
 	QPushButton *b_actualiser = new QPushButton("Actualiser");
 	QPushButton *b_annuler = new QPushButton("Fermer");
     QPushButton *tablesql = new QPushButton("table sql");
-    QPushButton *sup_retour_chariot = new QPushButton("suprimer retour chariot");
-    QPushButton *noms_to_description = new QPushButton("noms to description");
+    QPushButton *sup_retour_chariot = new QPushButton("suprimer retour chariot dans base de donnée");
+    QPushButton *noms_to_description = new QPushButton("copier les noms vers les descriptions pour les questions");
+    QPushButton *showtableau_brut = new QPushButton("generer tableaux brut");
 
 	//Connexions aux slots
 	//connect(b_valider, SIGNAL(clicked()), this, SLOT(changescope2()));
@@ -42,6 +44,7 @@ void menuconfigproject::configeneral()
     connect(tablesql, SIGNAL(clicked(bool)), this, SLOT(showsql()));
     connect(sup_retour_chariot, SIGNAL(clicked(bool)), this, SLOT(sup_retour_chariot()));
     connect(noms_to_description, SIGNAL(clicked(bool)), this, SLOT(noms_to_description()));
+    connect(showtableau_brut, SIGNAL(clicked(bool)), this, SLOT(showtableau_brut()));
 
 	//Layout
 	QGroupBox *groupbox = new QGroupBox("");
@@ -52,17 +55,13 @@ void menuconfigproject::configeneral()
 
 	groupbox->setLayout(layoutFormulaire);
 
-	QGridLayout *layout = new QGridLayout();
+    QVBoxLayout *layout = new QVBoxLayout();
 	layout->setAlignment(Qt::AlignTop);
-    layout->addWidget(groupbox, 0, 0, 3, 3, Qt::AlignTop);
-	//QGroupBox *gr = new QGroupBox("");
-  //  layout->addWidget(b_annuler, 1, 0, Qt::AlignRight);
-  //  layout->addWidget(b_actualiser, 1, 1, Qt::AlignRight);
-  //  layout->addWidget(b_valider, 1, 2, Qt::AlignRight);
-    layout->addWidget(tablesql, 2, 2, Qt::AlignCenter);
-    layout->addWidget(sup_retour_chariot, 3, 2, Qt::AlignCenter);
-    layout->addWidget(noms_to_description, 1, 1, Qt::AlignCenter);
-	//setLayout(layout);
+    //layout->addWidget(groupbox);
+    layout->addWidget(tablesql);
+    layout->addWidget(sup_retour_chariot);
+    layout->addWidget(noms_to_description);
+    layout->addWidget(showtableau_brut);
 	win->setLayout(layout);
 	this->addTab(win, "general");
 }
@@ -75,38 +74,6 @@ void menuconfigproject::showsql()
     win->addTab(new sqldatatable(QString("lastname, firstname, email, groupid, refbool, questionbool"), "project_" + this->name + "_project", 6), "personne");
     win->addTab(new sqldatatable(QString("question, groupid, type, note, sujet, qgroupid, typef, ref_only, splitchar"), "project_" + this->name + "_question", 9), "question");
     win->show();
-}
-
-// onglet groupe
-
-void menuconfigproject::configgroupe()
-{
-	/*QWidget *win = new QWidget;
-	QPushButton *b_valider = new QPushButton("Valider");
-	QPushButton *b_actualiser = new QPushButton("Actualiser");
-	QPushButton *b_annuler = new QPushButton("Fermer");
-
-	//Connexions aux slots
-	//connect(b_valider, SIGNAL(clicked()), this, SLOT(changescope2()));
-	connect(b_annuler, SIGNAL(clicked()), this, SLOT(close()));
-
-	//Layout
-	QGroupBox *groupbox = new QGroupBox("");
-
-	QGridLayout *layoutFormulaire = new QGridLayout();
-	//layoutFormulaire->addWidget(Labelgroup, 1, 0);
-	//layoutFormulaire->addWidget(this->groupboxtmp, 1, 1);
-
-	groupbox->setLayout(layoutFormulaire);
-	QGridLayout *layout = new QGridLayout();
-	layout->setAlignment(Qt::AlignTop);
-	layout->addWidget(new sqldatatable(QString("groupname, parrent"), "project_" + this->name + "_groupe", 2), 0, 0, 1, 2, Qt::AlignTop);
-	layout->addWidget(b_annuler, 1, 0, Qt::AlignLeft);
-	layout->addWidget(b_actualiser, 1, 1, Qt::AlignRight);
-	layout->addWidget(b_valider, 1, 2, Qt::AlignRight);
-	//setLayout(layout);
-	win->setLayout(layout);*/
-	this->addTab(new sqldatatable(QString("groupname, groupparent"), "project_" + this->name + "_groupe", 2), "groupe");
 }
 
 void menuconfigproject::noms_to_description()
@@ -158,4 +125,10 @@ void menuconfigproject::sup_retour_chariot()
                 qDebug() << qry.lastError();
         }
     }
+}
+
+void menuconfigproject::showtableau_brut()
+{
+    tableau_brut *tabb = new tableau_brut(p);
+    tabb->show();
 }

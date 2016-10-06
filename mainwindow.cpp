@@ -82,14 +82,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	afficherpers->setChecked(false);
 	QObject::connect(afficherpers, SIGNAL(toggled(bool)), this, SLOT(personrep(bool)));
 
-	//QAction *scope = menu_affifchage->addAction("&Périmetre"); // A
-	//QObject::connect(scope, SIGNAL(triggered()), this, SLOT(changescope()));
-
 	menu_serveur = menuBar()->addMenu("&Serveur");
-	QAction *send = menu_serveur->addAction("&Lancer sondage");
-	QObject::connect(send, SIGNAL(triggered()), this, SLOT(sendproject()));
-	QAction *send_ref = menu_serveur->addAction("&Lancer le premier sondage");
-	QObject::connect(send_ref, SIGNAL(triggered()), this, SLOT(sendproject_ref()));
 	QAction *config_sondage = menu_serveur->addAction("&nouveaux sondage");
 	QObject::connect(config_sondage, SIGNAL(triggered()), this, SLOT(configsondage()));
 

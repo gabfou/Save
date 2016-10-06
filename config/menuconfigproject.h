@@ -15,6 +15,7 @@ private slots:
     void showsql();
     void sup_retour_chariot();
     void noms_to_description();
+    void showtableau_brut();
 private:
 	QTabWidget *tab;
 	void configeneral();
