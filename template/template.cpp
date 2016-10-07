@@ -40,7 +40,7 @@ void createquestiontemplate(project *p)
 
         while (gtmp->getGeneration() > 0)
         {
-            xlsx.write(indextocase(++x, y), gtmp->name);
+            xlsx.write(indextocase(gtmp->getGeneration(), y), gtmp->name);
             gtmp = &(p->listqgroup[gtmp->getParentid()]);
         }
         xlsx.write(indextocase(++x, y), qli->name);
@@ -50,7 +50,7 @@ void createquestiontemplate(project *p)
         xlsx.write(indextocase(++x, y), QString::number(qli->ref_only));
         qli++;
     }
-    if (xlsx.saveAs(p->name + "_question") == 0)
+    if (xlsx.saveAs(p->name + "_question.xlsx") == 0)
         qDebug() << "erreur create question template";
     qDebug() <<p->name + "_question";
 }
