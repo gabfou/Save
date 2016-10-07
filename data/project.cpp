@@ -37,6 +37,13 @@ void project::checkmailcalendar()
 
 }
 
+void project::init()
+{
+    mtypeq[0] = "nombre";
+    mtypeq[1] = "oui/non";
+    mtypeq[2] = "question";
+    mtypeq[3] = "nombre";
+}
 
 // constructeur et destructeur
 
@@ -203,8 +210,8 @@ void project::initvar()
 	nbfact = 0;
 	nbquestion = 0;
 	nbgroup = 0;
-	nbpgeneration = -1;
-	nbqgeneration = -1;
+    nbpgeneration = 0;
+    nbqgeneration = 0;
 	nbqgroup = 0;
 	nbfactref = 0;
 	nbfactnref = 0;

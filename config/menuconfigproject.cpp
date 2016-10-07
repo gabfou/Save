@@ -37,6 +37,7 @@ void menuconfigproject::configeneral()
     QPushButton *sup_retour_chariot = new QPushButton("suprimer retour chariot dans base de donnée");
     QPushButton *noms_to_description = new QPushButton("copier les noms vers les descriptions pour les questions");
     QPushButton *showtableau_brut = new QPushButton("generer tableaux brut");
+    QPushButton *newtq = new QPushButton("Sauvegarder un template de question");
 
 	//Connexions aux slots
 	//connect(b_valider, SIGNAL(clicked()), this, SLOT(changescope2()));
@@ -45,6 +46,7 @@ void menuconfigproject::configeneral()
     connect(sup_retour_chariot, SIGNAL(clicked(bool)), this, SLOT(sup_retour_chariot()));
     connect(noms_to_description, SIGNAL(clicked(bool)), this, SLOT(noms_to_description()));
     connect(showtableau_brut, SIGNAL(clicked(bool)), this, SLOT(showtableau_brut()));
+    connect(newtq, SIGNAL(clicked(bool)), this, SLOT(newtemplateq()));
 
 	//Layout
 	QGroupBox *groupbox = new QGroupBox("");
@@ -62,7 +64,8 @@ void menuconfigproject::configeneral()
     layout->addWidget(sup_retour_chariot);
     layout->addWidget(noms_to_description);
     layout->addWidget(showtableau_brut);
-	win->setLayout(layout);
+    layout->addWidget(newtq);
+    win->setLayout(layout);
 	this->addTab(win, "general");
 }
 
@@ -131,4 +134,9 @@ void menuconfigproject::showtableau_brut()
 {
     tableau_brut *tabb = new tableau_brut(p);
     tabb->show();
+}
+
+void menuconfigproject::newtemplateq()
+{
+    createquestiontemplate(p);
 }

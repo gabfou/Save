@@ -50,7 +50,8 @@ SOURCES += main.cpp\
     misc/listeditwval.cpp \
     config/menuconfigsondage.cpp \
     sql/sqloperation.cpp \
-    tableclass/tableau_brut.cpp
+    tableclass/tableau_brut.cpp \
+    template/template.cpp
 
 HEADERS  += mainwindow.h \
     data/fact.h \
@@ -99,3 +100,4 @@ DISTFILES += \
     libmysql.dll \
     qsqlmysql.dll \
     qsqlmysqld.dll \
+    template/test

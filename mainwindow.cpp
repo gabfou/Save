@@ -708,7 +708,8 @@ void	MainWindow::screenshootcurrent()
 		if (fileDialog.exec() != QDialog::Accepted)
 			return;
 		const QString fileName = fileDialog.selectedFiles().first();
-		if (!pixmap.save(fileName)) {
+        if (!pixmap.save(fileName))
+        {
 		//	QMessageBox::warning(this, tr("Save Error"), tr("The image could not be saved to \"%1\".")
 		//						 .arg(QDir::toNativeSeparators(fileName)));
 			qDebug() << tr("The image could not be saved to \"%1\".").arg(QDir::toNativeSeparators(fileName));

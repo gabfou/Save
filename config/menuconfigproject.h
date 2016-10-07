@@ -16,6 +16,7 @@ private slots:
     void sup_retour_chariot();
     void noms_to_description();
     void showtableau_brut();
+    void newtemplateq();
 private:
 	QTabWidget *tab;
 	void configeneral();

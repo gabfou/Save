@@ -82,6 +82,7 @@ typedef struct  s_groupref
     float			 total = 0;
 }			   t_groupref;
 
+
 using namespace std;
 
 void ft_error(string error);
@@ -97,6 +98,7 @@ t_groupref syntheselistgroup(QList<t_groupref> listg);
 void gen_random(char *s, const int len);
 void sendmail(QString mail, QString body);
 QList<int> QStrltoQil(QStringList &src);
+void createquestiontemplate(project *p);
 
 namespace sqlo
 {

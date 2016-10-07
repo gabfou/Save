@@ -22,7 +22,11 @@ private:
     int nbfactnref;
 
     void initvar();
+    void init();
 public:
+
+    QString mtypeq[4];
+
     int val = 0;
     int ref = 0;
     int gref = 0;

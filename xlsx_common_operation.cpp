@@ -13,7 +13,7 @@ QString indextocase(int x, int y)
 			++len;
 	while ((p26 /= 26) > 0)
 		xstr.push_front(tab[x % 26]);
-	qDebug() << (xstr + QString::number(y + 1));
+    //`qDebug() << (xstr + QString::number(y + 1));
 	return (xstr + QString::number(y + 1));
 }
 
