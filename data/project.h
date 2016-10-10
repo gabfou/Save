@@ -75,6 +75,7 @@ public:
     int getNbfactnref() const;
     int getNbpgeneration() const;
     int getNbqgeneration() const;
+    group *groupsearch(QString name, group *g);
 };
 
 #endif

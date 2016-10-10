@@ -49,11 +49,12 @@ void project::init()
 
 project::project()
 {
-
+    init();
 }
 
 project::project(QString fproject)
 {
+    init();
 	this->initoroject(fproject);
 }
 
@@ -471,6 +472,50 @@ QList<t_groupref> project::getgrouplistref(int id, int qid)
 	}
 	return ret;
 }
+
+group    *project::groupsearch(QString name, group *g)
+{
+    vector<group> gv = (g.type) ? listqgroup : listgroup;
+    list<int> lf;
+    list<int>::iterator lfi;
+    group *ret;
+
+    if (name.compare(g.name))
+        return (g);
+    if (g->getListfils().empty())
+        return (NULL);
+    lf = g->getListfils();
+    lfi = lf.begin();
+    while (lfi != lf.end())
+    {
+        ret = groupsearch(name, &gv[*lfi]);
+        if (ret)
+            return (ret);
+        lfi++;
+    }
+    return (NULL);
+}
+
+void    project::addqgroup(QString name, QString parrent)
+{
+    group *p = groupsearch(parrent, &listqgroup[0]);
+    list<int> lf;
+    list<int>::iterator lfi;
+
+    if (p)
+    {
+        lf = p->getListfils();
+        lfi = lf.begin();
+        while(lfi != lf.end())
+        {
+            if (listqgroup[*lfi].name.compare(name) == 0)
+                return ;
+            lfi++;
+        }
+        sqlo::addgroup(this, this->name, name, p->id, p->type, name, 0);
+    }
+}
+
 
 QStringList	project::sendproject()
 {
