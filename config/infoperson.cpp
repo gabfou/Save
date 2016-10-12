@@ -6,7 +6,7 @@
 #include "mainwindow.h"
 #include "misc/listedit.h"
 
-infoperson::infoperson(project *p) : info(p)
+infoperson::infoperson(MainWindow *m, project *p) : info(p), m(m)
 {
     vbox = new QVBoxLayout();
     contp = new QWidget();
@@ -14,13 +14,15 @@ infoperson::infoperson(project *p) : info(p)
 	lastname = new QLineEdit();
 	email = new QLineEdit();
     b_update = new QPushButton("Enregistrer");
+    changegroup = new QPushButton("Modifier le groupe parrent");
     
     vbox->addWidget(new QLabel("Noms"));
 	vbox->addWidget(name);
 	vbox->addWidget(new QLabel("Noms de fammille"));
 	vbox->addWidget(lastname);
 	vbox->addWidget(new QLabel("Email"));
-	vbox->addWidget(email);
+    vbox->addWidget(email);
+    vbox->addWidget(changegroup);
     vbox->addWidget(b_update);
     contp->setLayout(vbox);
     vboxinfo->addWidget(contp);
@@ -30,6 +32,29 @@ infoperson::infoperson(project *p) : info(p)
     //slot
 
 	cotmp = connect(b_update, SIGNAL(clicked(bool)), this, SLOT(updatebdd()));
+    connect(changegroup, SIGNAL(clicked(bool)), this, SLOT(changegroupparent()));
+}
+
+void infoperson::changegroupparent()
+{
+    grouptree *gt = new grouptree(m, p->listgroup, 1);
+
+    connect(gt, SIGNAL(itemClicked(QTreeWidgetItem*,int)), this, SLOT(changegroupparent2(QTreeWidgetItem*)));
+    connect(gt, SIGNAL(itemClicked(QTreeWidgetItem*,int)), gt, SLOT(close()));
+}
+
+void infoperson::changegroupparent2(QTreeWidgetItem *item)
+{
+    grouptreeitem* tmp =  dynamic_cast<grouptreeitem*>(item);
+
+    if (tmp)
+    {
+        sqlo::addperson(p, pe->firstname, pe->lastname, pe->email, tmp->getId(), pe->id);
+        p->listp[pe->id].groupid = tmp->getId();
+        int i = pe->id;
+        delete pe;
+        this->pe = new person(p->getperson(i));
+    }
 }
 
 void infoperson::updateib(QTreeWidgetItem * item)
@@ -45,7 +70,7 @@ void infoperson::updateib(QTreeWidgetItem * item)
         if (tmp2)
         {
             contp->hide();
-            this->updateibg(tmp2->getId(), 1);
+            this->updateibg(tmp2->getId(), 0);
             groupid = tmp2->getId();
         }
         else
@@ -69,6 +94,8 @@ void infoperson::updateib(QTreeWidgetItem * item)
 	else
 	{
 		init = 1;
+        if (pe)
+            delete pe;
         this->pe = new person(p->getperson(tmp->id));
 	}
     name->setText(pe->firstname);

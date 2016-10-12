@@ -20,6 +20,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	ui->setupUi(this);
 	this->cw = new QTabWidget();
 	this->setCentralWidget(cw);
+    this->setWindowTitle("outils murano");
 //	this->current = new project;
 //	this->table = new QTableWidget(this);
 	// default display
@@ -43,6 +44,8 @@ MainWindow::MainWindow(QWidget *parent) :
 	QObject::connect(new_projet, SIGNAL(triggered()), this, SLOT(addproject()));
 	QAction *open_projet = menu_projet->addAction("Ouvrir");
 	QObject::connect(open_projet, SIGNAL(triggered()), this, SLOT(openproject()));
+    QAction *sup_projet = menu_projet->addAction("Supprimer projet");
+    QObject::connect(sup_projet, SIGNAL(triggered()), this, SLOT(supproject()));
 	QAction *update = menu_projet->addAction("&Actualiser");
 	QObject::connect(update, SIGNAL(triggered()), this, SLOT(updateproject()));
 	QAction *configp = menu_projet->addAction("&Configuration projet");
@@ -90,8 +93,8 @@ MainWindow::MainWindow(QWidget *parent) :
 	QAction *screenshoot = toolBarFichier->addAction("&Imprimer écran");
 	QObject::connect(screenshoot, SIGNAL(triggered()), this, SLOT(screenshootcurrent()));
 
-	menu_projet->actions().at(2)->setEnabled(0);
-	menu_projet->actions().at(3)->setEnabled(0);
+    menu_projet->actions().at(3)->setEnabled(0);
+    menu_projet->actions().at(4)->setEnabled(0);
 	menu_outil->setEnabled(0);
 	menu_affifchage->setEnabled(0);
 	menu_serveur->setEnabled(0);
@@ -191,7 +194,7 @@ void MainWindow::addproject() // empecher charactere speciaux
 	QLabel *description = new QLabel("Le nom du nouveau projet ne peux pas contenir d'espace, de ; et '");
 	QWidget *win = new QWidget();
 	QLabel *Labeljeu = new QLabel("Name :");
-	this->nametmp = new QLineEdit;
+    this->nametmp = new QLineEdit();
 	Labeljeu->setAlignment(Qt::AlignTop);
 
 	//Boutons
@@ -227,7 +230,7 @@ void MainWindow::addproject2()
 {
 	QSqlQuery qry;
 
-	if( !qry.exec("CREATE TABLE IF NOT EXISTS project_" + this->nametmp->text() + "_project ("
+    if ( !qry.exec("CREATE TABLE IF NOT EXISTS project_" + this->nametmp->text() + "_project ("
 				" id INTEGER UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT,"
 				" firstname VARCHAR(30),"
 				" lastname VARCHAR(30),"
@@ -240,7 +243,7 @@ void MainWindow::addproject2()
 	else
 		qDebug() << "Table created!";
 
-	qry.prepare( ("CREATE TABLE IF NOT EXISTS project_" +  this->nametmp->text() + "_question ("
+    qry.prepare(" CREATE TABLE IF NOT EXISTS project_" +  this->nametmp->text() + "_question ("
 				" id INTEGER UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT,"
 				" question VARCHAR(30),"
 				" groupid INTEGER,"
@@ -252,21 +255,21 @@ void MainWindow::addproject2()
 				" ref_only INT DEFAULT 0,"
 				" splitchar VARCHAR(3000) NOT NULL DEFAULT '',"
 				" global BOOL NOT NULL DEFAULT 0,"
-				" value INT NOT NULL DEFAULT -1)") );
-	if(!qry.exec())
+                " value INT NOT NULL DEFAULT -1)");
+    if (!qry.exec())
 		qDebug() << "create question" << qry.lastError();
 
-	qry.prepare( "CREATE TABLE IF NOT EXISTS project_" +  this->nametmp->text() + "_groupe ("
+    qry.prepare(" CREATE TABLE IF NOT EXISTS project_" +  this->nametmp->text() + "_groupe ("
 				" id INTEGER UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT,"
 				" groupname VARCHAR(500),"
 				" groupparent INTEGER DEFAULT 0,"
 				" type BOOLEAN DEFAULT 0,"
 				" description VARCHAR(300) NOT NULL DEFAULT '',"
 				" gquestion INT DEFAULT 0)" );
-	if(!qry.exec())
+    if (!qry.exec())
 		qDebug() << "create groupe" << qry.lastError();
 
-	qry.prepare( "CREATE TABLE IF NOT EXISTS project_" +  this->nametmp->text() + "_reponse ("
+    qry.prepare(" CREATE TABLE IF NOT EXISTS project_" +  this->nametmp->text() + "_reponse ("
 				" id INTEGER UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT,"
 				" idperson INTEGER,"
 				" name VARCHAR(100),"
@@ -276,7 +279,7 @@ void MainWindow::addproject2()
 				" iteration INTEGER,"
 				" str VARCHAR(100) NOT NULL DEFAULT '',"
 				" idquestion INT NOT NULL DEFAULT -1);" );
-	if(!qry.exec())
+    if (!qry.exec())
 		qDebug() << "create reponse" << qry.lastError();
 
 	qry.prepare(" CREATE TABLE IF NOT EXISTS project_all_user ("
@@ -288,7 +291,7 @@ void MainWindow::addproject2()
 				" date_last_etude datetime,"
 				" valid_code varchar(256),"
 				" iteration INTEGER NOT NULL DEFAULT 0);" );
-	if(!qry.exec())
+    if (!qry.exec())
 		qDebug() << "create master table user" << qry.lastError();
 
 	qry.prepare(" CREATE TABLE IF NOT EXISTS project_" +  this->nametmp->text() + "_etude ("
@@ -297,7 +300,7 @@ void MainWindow::addproject2()
 				" iteration INTEGER,"
 				" groupid INTEGER NOT NULL DEFAULT 0,"
 				" iteration_detail VARCHAR(3000));" );
-	if(!qry.exec())
+    if (!qry.exec())
 		qDebug() << "create all etude" << qry.lastError();
 
 	qry.prepare(" CREATE TABLE IF NOT EXISTS all_etude ("
@@ -308,18 +311,18 @@ void MainWindow::addproject2()
 				" project_name VARCHAR(3000),"
 				" ref BOOLEAN NOT NULL DEFAULT 0,"
 				" iteration_detail VARCHAR(3000));" );
-	if(!qry.exec())
+    if (!qry.exec())
 		qDebug() << "create etude" << qry.lastError();
 
 	this->current.initoroject(this->nametmp->text());
 	//this->current->projectshow(this, this->table, this->currentgref);
 	this->namecurrent = this->nametmp->text();
-	menu_projet->actions().at(2)->setEnabled(1);
-	menu_projet->actions().at(3)->setEnabled(1);
+    menu_projet->actions().at(3)->setEnabled(1);
+    menu_projet->actions().at(4)->setEnabled(1);
 	menu_outil->setEnabled(1);
 	menu_affifchage->setEnabled(1);
 	menu_serveur->setEnabled(1);
-
+    this->configproject();
 }
 
 
@@ -351,11 +354,6 @@ void MainWindow::openproject()
 	QObject::connect(listWidget, SIGNAL(itemClicked(QListWidgetItem *)),
 						 this, SLOT(openproject2(QListWidgetItem *)));
 	listWidget->show();
-	menu_projet->actions().at(2)->setEnabled(1);
-	menu_projet->actions().at(3)->setEnabled(1);
-	menu_outil->setEnabled(1);
-	menu_affifchage->setEnabled(1);
-	menu_serveur->setEnabled(1);
 
 }
 
@@ -369,7 +367,53 @@ void MainWindow::openproject2(QListWidgetItem *item)
 //	this->current->projectshow(this, this->table, this->currentgref);
 	this->namecurrent = item->text();
 	this->updateproject();
+    menu_projet->actions().at(3)->setEnabled(1);
+    menu_projet->actions().at(4)->setEnabled(1);
+    menu_outil->setEnabled(1);
+    menu_affifchage->setEnabled(1);
+    menu_serveur->setEnabled(1);
 	//this->addock();
+}
+
+void MainWindow::supproject()
+{
+    QSqlQuery qry;
+    QListWidget *listWidget = new QListWidget();
+
+
+    if(qry.exec("SELECT table_name FROM INFORMATION_SCHEMA.TABLES WHERE table_name LIKE 'project_%_project'"))
+    {
+        while(qry.next())
+        {
+            listWidget->addItem(name_recuperator(qry.value(0).toString()));
+        }
+    }
+    QObject::connect(listWidget, SIGNAL(itemClicked(QListWidgetItem *)),
+                         this, SLOT(supproject2(QListWidgetItem *)));
+    QObject::connect(listWidget, SIGNAL(itemClicked(QListWidgetItem *)),
+                         listWidget, SLOT(close()));
+    listWidget->show();
+}
+
+void MainWindow::supproject2(QListWidgetItem *item)
+{
+    QSqlQuery qry;
+
+    qry.prepare( "DROP TABLE project_" + item->text() + "_project;" );
+    if( !qry.exec() )
+        qDebug() << qry.lastError();
+    qry.prepare( "DROP TABLE project_" + item->text() + "_question;" );
+    if( !qry.exec() )
+        qDebug() << qry.lastError();
+    qry.prepare( "DROP TABLE project_" + item->text() + "_reponse;" );
+    if( !qry.exec() )
+        qDebug() << qry.lastError();
+    qry.prepare( "DROP TABLE project_" + item->text() + "_groupe;" );
+    if( !qry.exec() )
+        qDebug() << qry.lastError();
+    qry.prepare( "DROP TABLE project_" + item->text() + "_etude;" );
+    if( !qry.exec() )
+        qDebug() << qry.lastError();
 }
 
 void MainWindow::addock()

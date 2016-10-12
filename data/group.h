@@ -12,7 +12,7 @@ private:
 	int generation = 0;
 	std::list<person> listp;
 	std::list<question> listq;
-	std::list<int> listfils;
+    QList<int> listfils;
 	QColor color;
 	//	std::list<fact> listf;
 	void showgroupauxi(QTableWidget *gbox, int *i, int *k, group gtmp, int ref, vector<question>::iterator tmp2);
@@ -37,7 +37,7 @@ public:
 	void groupsetcolor(int i);
 	QColor getColor() const;
 	void setColor(const QColor &value);
-	std::list<int> getListfils() const;
+    QList<int> getListfils() const;
     QList<float> grouprep(const vector<question> & questionlist, int ref, QList<int> listqchild);
 
     t_groupref groupnamerep(const vector<question> & questionlist, int ref, QList<int> listqchild);

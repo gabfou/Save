@@ -23,6 +23,8 @@ public slots:
 private slots:
     void updatebdd();
     void typeshow(int type);
+    void changegroupparent();
+    void changegroupparent2(QTreeWidgetItem *item);
 private:
     QWidget *contq;
     QHBoxLayout *hbox;
@@ -44,6 +46,8 @@ private:
 	int qgroupid;
     QStringList listchar;
     QCheckBox *ref_only;
+    QPushButton *changegroup;
+    QLabel * changegrouplabel;
 
     void prephide();
 };

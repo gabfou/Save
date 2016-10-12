@@ -17,7 +17,9 @@ private slots:
     void noms_to_description();
     void showtableau_brut();
     void newtemplateq();
+    void addtemplateq();
 private:
+    MainWindow *m;
 	QTabWidget *tab;
 	void configeneral();
 	void configgroupe();

@@ -8,7 +8,7 @@
 #include "data/person.h"
 #include "tableclass/tableau_brut.h"
 
-menuconfigproject::menuconfigproject(QString name, project *p, MainWindow *m) : name(name), p(p)
+menuconfigproject::menuconfigproject(QString name, project *p, MainWindow *m) : name(name), p(p), m(m)
 {
 	//QLabel *Labelgroup = new QLabel("group :");
 	//this->groupboxtmp = new grouptree(this->current);
@@ -38,6 +38,7 @@ void menuconfigproject::configeneral()
     QPushButton *noms_to_description = new QPushButton("copier les noms vers les descriptions pour les questions");
     QPushButton *showtableau_brut = new QPushButton("generer tableaux brut");
     QPushButton *newtq = new QPushButton("Sauvegarder un template de question");
+    QPushButton *addtq = new QPushButton("ajouter des question a partir d'un template");
 
 	//Connexions aux slots
 	//connect(b_valider, SIGNAL(clicked()), this, SLOT(changescope2()));
@@ -47,6 +48,7 @@ void menuconfigproject::configeneral()
     connect(noms_to_description, SIGNAL(clicked(bool)), this, SLOT(noms_to_description()));
     connect(showtableau_brut, SIGNAL(clicked(bool)), this, SLOT(showtableau_brut()));
     connect(newtq, SIGNAL(clicked(bool)), this, SLOT(newtemplateq()));
+    connect(addtq, SIGNAL(clicked(bool)), this, SLOT(addtemplateq()));
 
 	//Layout
 	QGroupBox *groupbox = new QGroupBox("");
@@ -65,6 +67,7 @@ void menuconfigproject::configeneral()
     layout->addWidget(noms_to_description);
     layout->addWidget(showtableau_brut);
     layout->addWidget(newtq);
+    layout->addWidget(addtq);
     win->setLayout(layout);
 	this->addTab(win, "general");
 }
@@ -138,5 +141,11 @@ void menuconfigproject::showtableau_brut()
 
 void menuconfigproject::newtemplateq()
 {
-    createquestiontemplate(p);
+    createquestiontemplate(m, p);
+}
+
+void menuconfigproject::addtemplateq()
+{
+    QString fichier = QFileDialog::getOpenFileName(0, "Open a file", "~", "Excell files (*.xlsx)");
+    recupquestiontemplate(fichier, p);
 }

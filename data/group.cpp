@@ -110,9 +110,9 @@ void group::debug()
 	}
 }
 
-std::list<int> group::getListfils() const
+QList<int> group::getListfils() const
 {
-	return listfils;
+    return this->listfils;
 }
 
 
@@ -223,7 +223,7 @@ QString group::grouprep(group & groupp, QString tmp3, int ref, question *ret)
 
 float group::grouprepall(question tmp2, vector<group> &g) // opti qstring neccessaire
 {
-    list<int>::iterator tmp = listfils.begin();
+    QList<int>::iterator tmp = listfils.begin();
     float val = 0;
 
     val += grouprep(tmp2, 0).toInt();

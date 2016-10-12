@@ -2,6 +2,12 @@
 #include "data/project.h"
 #include "data/group.h"
 
+void info::prephide()
+{
+    gquestion->hide();
+    gquestionlabel->hide();
+}
+
 info::info(project *p) : p(p)
 {
     vboxinfo = new QVBoxLayout();
@@ -19,7 +25,8 @@ info::info(project *p) : p(p)
     infog->addWidget(descriptiong);
 
     gquestionbox = new QHBoxLayout();
-    gquestionbox->addWidget(new QLabel("question tiroir :"));
+    gquestionlabel = new QLabel("question tiroir :");
+    gquestionbox->addWidget(gquestionlabel);
     gquestionbox->addWidget(gquestion, Qt::AlignLeft);
     infog->addLayout(gquestionbox);
 
@@ -33,10 +40,12 @@ info::info(project *p) : p(p)
     //slot
 
     connect(b_update, SIGNAL(clicked(bool)), this, SLOT(updatebddg()));
+    prephide();
 }
 
 void info::updateibg(int id, int type)
 {
+    prephide();
     if (id == -1)
     {
         init = -1;
@@ -50,6 +59,8 @@ void info::updateibg(int id, int type)
     }
     if (type == 1)
     {
+        gquestion->show();
+        gquestionlabel->show();
         current = &(p->listqgroup[id]);
     }
     infolabel->setText("groupe");

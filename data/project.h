@@ -76,6 +76,8 @@ public:
     int getNbpgeneration() const;
     int getNbqgeneration() const;
     group *groupsearch(QString name, group *g);
+    int addqgroup(QString name, QString parrent);
+    int mytypqinv(QString type);
 };
 
 #endif

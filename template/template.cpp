@@ -6,16 +6,16 @@
 
 QTXLSX_USE_NAMESPACE
 
-void createquestiontemplate(project *p)
+void createquestiontemplate(MainWindow *m, project *p)
 {
     Document xlsx;
-    int x = 0;
+    int x = -1;
     int y = 1;
     int j = -1;
     const int nbg = p->getNbqgeneration();
 
     qDebug() <<"dsf";
-    while(++j < nbg)
+    while(++j < nbg + 1)
         xlsx.write(indextocase(++x, y), "groupe");
     xlsx.write(indextocase(++x, y), "question");
     xlsx.write(indextocase(++x, y), "description");
@@ -39,7 +39,7 @@ void createquestiontemplate(project *p)
         x = nbg;
         gtmp = &(p->listqgroup[qli->qgroupid]);
 
-        while (gtmp->getGeneration() > 0)
+        while (gtmp->getGeneration() > -1)
         {
             xlsx.write(indextocase(gtmp->getGeneration(), y), gtmp->name);
             gtmp = &(p->listqgroup[gtmp->getParentid()]);
@@ -52,35 +52,44 @@ void createquestiontemplate(project *p)
         xlsx.write(indextocase(++x, y), QString::number(qli->ref_only));
         qli++;
     }
-    if (xlsx.saveAs(p->name + "_question.xlsx") == 0)
+    QString fichier = QFileDialog::getSaveFileName(0, "Save a file", "~", "Excell files (*.xlsx)");
+    if (xlsx.saveAs(fichier) == 0)
         qDebug() << "erreur create question template";
-    qDebug() <<p->name + "_question";
+    qDebug() << p->name + "_question";
 }
 
 void recupquestiontemplate(QString name, project *p)
 {
-    Document xlsx = Document(name);
+    Document xlsx(name);
     int x;
     int y = 1;
     int lastgid = -1;
     int nbg = 0;
     QString oldg;
 
-
-    while ((nbg < 5) || (xlsx.read(1, nbg).toString().compare("question") != 0 && xlsx.read(1, nbg).toString().compare("") != 0))
+    while (nbg < 50 && xlsx.read(indextocase(nbg, 1)).toString().isEmpty())
+        nbg++;
+    qDebug() << "hasgdghfasghf 0.1" << nbg;
+    while (xlsx.read(indextocase(nbg, 1)).toString().compare("question") != 0 && xlsx.read(indextocase(nbg, 1)).toString().isEmpty() == 0)
        nbg++;
-    while (xlsx.read(++y, nbg).toString().compare("") != 0)
+    qDebug() << "hasgdghfasghf" << nbg;
+    while (xlsx.read(indextocase(nbg, ++y)).toString().compare("") != 0)
     {
         x = -1;
         oldg = "ALL";
         while (++x < nbg)
         {
-            lastgid = p->addgroup(xlsx.read(y, x).toString(), oldg);
-            oldg = xlsx.read(y, x).toString();
+            lastgid = p->addqgroup(xlsx.read(indextocase(x, y)).toString(), oldg);
+            if (lastgid != -1)
+                oldg = xlsx.read(indextocase(x, y)).toString();
         }
-        x--;
-        p->addquestion(xlsx.read(y, ++x).toString(), 0, lastid, lastgid, xlsx.read(y, ++x).toString(), "",
-                       p->mtypeqinv(xlsx.read(y, ++x).toString()), xlsx.read(y, ++x).toString(), xlsx.read(y, ++x).toString(),
-                       xlsx.read(y, ++x).toString(), 0);
+        if (lastgid == -1)
+        {
+            continue ;
+        }
+        x = nbg;
+        p->addquestion(xlsx.read(indextocase(++x, y)).toString(), 0, -1, lastgid, xlsx.read(indextocase(++x, y)).toString(), "",
+                       p->mytypqinv(xlsx.read(indextocase(++x, y)).toString()), xlsx.read(indextocase(++x, y)).toString(), xlsx.read(indextocase(++x, y)).toString().toInt(),
+                       xlsx.read(indextocase(++x, y)).toString().toInt(), 0);
     }
 }

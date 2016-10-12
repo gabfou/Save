@@ -12,14 +12,17 @@ class infoperson : public info
 {
 	Q_OBJECT
 public:
-    infoperson(project *p);
+    infoperson(MainWindow *m, project *p);
 
 public slots:
 	void updateib(QTreeWidgetItem *item);
 
 private slots:
     void updatebdd();
+    void changegroupparent();
+    void changegroupparent2(QTreeWidgetItem *item);
 private:
+    MainWindow *m;
     QWidget *contp;
 	QMetaObject::Connection cotmp;
 	QLineEdit *name;
@@ -30,6 +33,7 @@ private:
 	int init;
 	int groupid;
     QVBoxLayout *vbox;
+    QPushButton *changegroup;
     void prephide();
 };
 

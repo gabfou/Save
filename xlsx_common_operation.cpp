@@ -6,13 +6,12 @@ QTXLSX_USE_NAMESPACE
 QString indextocase(int x, int y)
 {
 	QString xstr;
-	int	 p26 = 1;
-	int	 len = 1;
 	static char tab[26] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H' , 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
-	while (x / (p26 *= 26))
-			++len;
-	while ((p26 /= 26) > 0)
+    while ((x / 26) > 0)
+    {
 		xstr.push_front(tab[x % 26]);
+        x = x / 26;
+    }
     //`qDebug() << (xstr + QString::number(y + 1));
 	return (xstr + QString::number(y + 1));
 }

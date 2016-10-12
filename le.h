@@ -74,6 +74,7 @@
 class question;
 class group;
 class project;
+class MainWindow;
 
 typedef struct  s_groupref
 {
@@ -98,7 +99,8 @@ t_groupref syntheselistgroup(QList<t_groupref> listg);
 void gen_random(char *s, const int len);
 void sendmail(QString mail, QString body);
 QList<int> QStrltoQil(QStringList &src);
-void createquestiontemplate(project *p);
+void createquestiontemplate(MainWindow *m, project *p);
+void recupquestiontemplate(QString name, project *p);
 
 namespace sqlo
 {

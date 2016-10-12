@@ -37,12 +37,25 @@ void project::checkmailcalendar()
 
 }
 
+int project::mytypqinv(QString type)
+{
+    if (type.compare("Nombre") == 0)
+        return (0);
+    if (type.compare("Oui/non") == 0)
+        return (1);
+    if (type.compare("Option") == 0)
+        return (2);
+    if (type.compare("Option avec valeur") == 0)
+        return (3);
+    return (-1);
+}
+
 void project::init()
 {
-    mtypeq[0] = "nombre";
-    mtypeq[1] = "oui/non";
-    mtypeq[2] = "question";
-    mtypeq[3] = "nombre";
+    mtypeq[0] = "Nombre";
+    mtypeq[1] = "Oui/non";
+    mtypeq[2] = "Option";
+    mtypeq[3] = "Option avec valeur";
 }
 
 // constructeur et destructeur
@@ -131,6 +144,10 @@ inline void project::addquestion(QString name, int group, unsigned int id, int q
 								 QString unit, int type, QString splitchar, int value, bool ref_only,
 								 bool global)
 {
+    if (id == -1)
+    {
+        id = sqlo::addquestion(this, name, group, unit, 0, sujet, qgroupid, type, ref_only, splitchar, value, global);
+    }
 	this->nbquestion++;
 	question ret(name, group, id, qgroupid, sujet, unit, type, splitchar, value, ref_only, global);
 	while (this->listquestion.size() < id)
@@ -332,8 +349,8 @@ void project::initoroject(QString fproject)
 
 void	project::groupchild(unsigned int id, QList<int> & ret) const
 {
-	list<int>::iterator listpg;
-	list<int> listint;// = listgroup[id].getListfils();
+    QList<int>::iterator listpg;
+    QList<int> listint;// = listgroup[id].getListfils();
 
 	if (listgroup.empty())
 	{
@@ -358,8 +375,8 @@ void	project::groupchild(unsigned int id, QList<int> & ret) const
 
 void	project::groupchild(unsigned int id, QList<int> & ret, vector<group> &g) const
 {
-	list<int>::iterator listpg;
-	list<int> listint;// = listgroup[id].getListfils();
+    QList<int>::iterator listpg;
+    QList<int> listint;// = listgroup[id].getListfils();
 
 	ret << id;
 	if (g[id].type == -1)
@@ -367,7 +384,7 @@ void	project::groupchild(unsigned int id, QList<int> & ret, vector<group> &g) co
 		qDebug() << "groupchild bug id =" << id;
 		return ;
 	}
-	listint = g[id].getListfils();
+    listint = g[id].getListfils();
 	listpg = listint.begin();
 	while (listpg != listint.end())
 	{
@@ -379,8 +396,8 @@ void	project::groupchild(unsigned int id, QList<int> & ret, vector<group> &g) co
 
 void	project::groupqchild(int id, QList<int> & ret) const
 {
-	list<int>::iterator listpg;
-	list<int> listint = listqgroup[id].getListfils();
+    QList<int>::iterator listpg;
+    QList<int> listint = listqgroup[id].getListfils();
 
 	ret << id;
 	listint = this->listqgroup[id].getListfils();
@@ -413,10 +430,10 @@ QList<question> project::questiongroupqchildnotopti(int id)
 
 void	project::questiongroupqchild(int id, QList<int> & ret) const
 {
-	list<int>::iterator listpg;
+    QList<int>::iterator listpg;
 	list<question> listq = listqgroup[id].getListq();
 	list<question>::iterator listqi;
-	list<int> listint = listqgroup[id].getListfils();
+    QList<int> listint = listqgroup[id].getListfils();
 
 	listqi = listq.begin();
 	while (listqi != listq.end())
@@ -475,15 +492,15 @@ QList<t_groupref> project::getgrouplistref(int id, int qid)
 
 group    *project::groupsearch(QString name, group *g)
 {
-    vector<group> gv = (g.type) ? listqgroup : listgroup;
-    list<int> lf;
-    list<int>::iterator lfi;
-    group *ret;
+    vector<group> & gv = (g->type) ? listqgroup : listgroup;
+    QList<int> lf;
+    QList<int>::iterator lfi;
+    group *ret = NULL;
 
-    if (name.compare(g.name))
+    if (name.compare(g->name) == 0)
         return (g);
-    if (g->getListfils().empty())
-        return (NULL);
+//    if (g->getListfils().empty())
+//        return (NULL);
     lf = g->getListfils();
     lfi = lf.begin();
     while (lfi != lf.end())
@@ -496,11 +513,13 @@ group    *project::groupsearch(QString name, group *g)
     return (NULL);
 }
 
-void    project::addqgroup(QString name, QString parrent)
+int project::addqgroup(QString name, QString parrent)
 {
+    if(name.isEmpty())
+        return (-1);
     group *p = groupsearch(parrent, &listqgroup[0]);
-    list<int> lf;
-    list<int>::iterator lfi;
+    QList<int> lf;
+    QList<int>::iterator lfi;
 
     if (p)
     {
@@ -509,11 +528,12 @@ void    project::addqgroup(QString name, QString parrent)
         while(lfi != lf.end())
         {
             if (listqgroup[*lfi].name.compare(name) == 0)
-                return ;
+                return (listqgroup[*lfi].id);
             lfi++;
         }
-        sqlo::addgroup(this, this->name, name, p->id, p->type, name, 0);
+        return (sqlo::addgroup(this, this->name, name, p->id, p->type, name, 0));
     }
+    return (-1);
 }
 
 

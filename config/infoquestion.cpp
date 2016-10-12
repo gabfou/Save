@@ -62,6 +62,7 @@ infoquestion::infoquestion(project *p, MainWindow *m, int con) : info(p), m(m)
     selectlistval = new listeditwval();
     selectlistlabel = new QLabel("Option");
     unitlabel = new QLabel("Unitée");
+    changegroup = new QPushButton("Modifier le groupe parrent");
     groupbox = new grouptree(m, p->listgroup, 0);
     groupbox->headerItem()->setText(0, "Groupe cible");
 
@@ -79,6 +80,7 @@ infoquestion::infoquestion(project *p, MainWindow *m, int con) : info(p), m(m)
     vbox->addWidget(ref_only);
     vbox->addWidget(new QLabel("Valeur"));
     vbox->addWidget(value);
+    vbox->addWidget(changegroup);
     vbox->addWidget(b_update);
     hbox->addLayout(vbox);
     hbox->addWidget(groupbox);
@@ -92,6 +94,31 @@ infoquestion::infoquestion(project *p, MainWindow *m, int con) : info(p), m(m)
     if (con)
         cotmp = connect(b_update, SIGNAL(clicked(bool)), this, SLOT(updatebdd()));
     connect(type, SIGNAL(currentIndexChanged(int)), this, SLOT(typeshow(int)));
+    connect(changegroup, SIGNAL(clicked(bool)), this, SLOT(changegroupparent()));
+}
+
+void infoquestion::changegroupparent()
+{
+    grouptree *gt = new grouptree(m, p->listqgroup, 1);
+
+    connect(gt, SIGNAL(itemClicked(QTreeWidgetItem*,int)), this, SLOT(changegroupparent2(QTreeWidgetItem*)));
+    connect(gt, SIGNAL(itemClicked(QTreeWidgetItem*,int)), gt, SLOT(close()));
+}
+
+void infoquestion::changegroupparent2(QTreeWidgetItem *item)
+{
+    grouptreeitem* tmp =  dynamic_cast<grouptreeitem*>(item);
+
+    if (tmp)
+    {
+        sqlo::addquestion(p, q->name, tmp->getId(), q->unit, q->bnote, q->sujet,
+                          q->qgroupid, q->type, q->ref_only, q->liststr.join(" "),
+                          q->val, q->global, q->id);
+        p->listquestion[q->id].group = tmp->getId();
+        int i = q->id;
+        delete q;
+        this->q = new question(p->getquestion(i));
+    }
 }
 
 void infoquestion::setquestionmod(int qgroupid)
@@ -140,6 +167,8 @@ void infoquestion::updateib(QTreeWidgetItem * item)
 	else
 	{
 		init = 1;
+        if (q)
+            delete q;
 		this->q = new question(p->getquestion(tmp->id));
 	}
     type->setCurrentIndex(q->type);

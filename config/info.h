@@ -19,14 +19,16 @@ protected:
     QVBoxLayout *infog;
     project     *p;
     QCheckBox   *gquestion;
+    QLabel      *gquestionlabel;
 
 private:
-    QLineEdit *descriptiong;
+    QLineEdit   *descriptiong;
     QPushButton *b_update;
     QHBoxLayout *gquestionbox;
-    group *current;
+    group       *current;
     int init = 0;
 
+    void prephide();
 };
 
 #endif // INFO_H

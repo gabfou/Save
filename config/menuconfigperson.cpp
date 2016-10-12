@@ -13,7 +13,7 @@ menuconfigperson::menuconfigperson(project *p, MainWindow *m) : p(p)
 	groupbox->setSizePolicy(spgroupbox);
 	hlayout->addWidget(groupbox);
 
-    infoperson *infobox = new infoperson(p);
+    infoperson *infobox = new infoperson(m, p);
 	QSizePolicy spinfobox(QSizePolicy::Preferred, QSizePolicy::Preferred);
 	spinfobox.setHorizontalStretch(1);
 	infobox->setSizePolicy(spinfobox);

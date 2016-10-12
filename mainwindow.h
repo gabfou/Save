@@ -67,6 +67,8 @@ private slots:
     void globalrep(bool checked);
     void configsondage();
     void personrep(bool checked);
+    void supproject();
+    void supproject2(QListWidgetItem *item);
 private:
 	Ui::MainWindow *ui;
 	QWindow *addprojectwindow;

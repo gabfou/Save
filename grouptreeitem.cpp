@@ -32,8 +32,8 @@ void grouptreeitem::setVisiblenongroup(bool v)
 grouptreeitem::grouptreeitem(QStringList str, project * p, int id, int type, int mod, QTreeWidget *parent) : QTreeWidgetItem(parent, str), typeg(type), p(p)
 {
 	vector<group> &g = (type == 0) ? p->listgroup : p->listqgroup;
-	list<int>::iterator listpg;
-	list<int> listint =  g[id].getListfils();
+    QList<int>::iterator listpg;
+    QList<int> listint =  g[id].getListfils();
 
 	listpg = listint.begin();
 	this->id = id;

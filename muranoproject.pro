@@ -100,4 +100,5 @@ DISTFILES += \
     libmysql.dll \
     qsqlmysql.dll \
     qsqlmysqld.dll \
-    template/test
+    template/test \
+    misc/ssh.py
