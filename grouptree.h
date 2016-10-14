@@ -43,7 +43,7 @@ public slots:
     void setVisiblenongroup(bool v);
 private slots:
 	void addgroupintree();
-    void addgroupintree2();
+    void addgroupintree2(QTreeWidgetItem *item);
 	void addquestintree2(QTreeWidgetItem *item, int column);
     void addquestintree();
     void modifdgroupintree2();

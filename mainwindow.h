@@ -38,10 +38,12 @@ public:
     tableshow *tablep = NULL;
 	int currentgref = 0;
     int currentgqref = 0;
+    void updatetable();
 public slots:
 	void updateproject();
     void screenshootcurrent();
     void changescopeq2(QTreeWidgetItem *item);
+    void Backroundchange();
 private slots:
     //void showproject();
 	void sendproject();

@@ -170,7 +170,7 @@ void	grouptree::addgroupintree()
 	this->openPersistentEditor(this->tmp);
 	this->tmpid = dynamic_cast<grouptreeitem*>(this->currentItem())->getId();
 	this->setCurrentItem(this->tmp);
-    cotmp = connect(this, SIGNAL(itemChanged(QTreeWidgetItem *, int)), this, SLOT(addgroupintree2()));
+    cotmp = connect(this, SIGNAL(itemChanged(QTreeWidgetItem *, int)), this, SLOT(addgroupintree2(QTreeWidgetItem *)), Qt::UniqueConnection);
 	/*if (this->nametmp != NULL)
 		delete this->nametmp;
 	this->nametmp = new QLineEdit();
@@ -180,20 +180,16 @@ void	grouptree::addgroupintree()
 	this->nametmp->show();*/
 }
 
-void	grouptree::addgroupintree2()
+void	grouptree::addgroupintree2(QTreeWidgetItem *item)
 {
-	disconnect(cotmp);
-	qDebug() << this->tmp->text(0);
-    int niark = sqlo::addgroup(&(m->current), m->namecurrent, this->tmp->text(0), tmpid, g[tmpid].type, "", 0);
-    this->tmp->parent()->addChild(new grouptreeitem(QStringList(QString(g[niark].getName())), &(m->current), niark, g[niark].type, i, (QTreeWidget*)0));
-	delete this->tmp;
-	this->tmp = NULL;
+    disconnect(cotmp);
+	qDebug() << item->text(0);
+    int niark = sqlo::addgroup(&(m->current), m->namecurrent, item->text(0), tmpid, g[tmpid].type, "", 0);
+    item->parent()->addChild(new grouptreeitem(QStringList(QString(g[niark].getName())), &(m->current), niark, g[niark].type, i, (QTreeWidget*)0));
+	delete item;
+	item = NULL;
 	qDebug() << "upadte ?";
-    if (m->table)
-    {
-        m->table->reinit(&(m->current), m);
-        m->table->showtable(m->currentgref, m->currentgqref);
-    }
+    m->updatetable();
 	qDebug() << "upadte";
 }
 
@@ -219,14 +215,11 @@ void	grouptree::addquestintree2(QTreeWidgetItem *item, int column)
 {
     Q_UNUSED(column);
     //qDebug() << item->text(0);
+    disconnect(cotmp);
     int id = sqlo::addquestion(&(m->current), item->text(0), 0, "", 0, "", dynamic_cast<grouptreeitem*>(item->parent())->getId(), 0, 0, "", 1, 0, -1);
     item->parent()->addChild(new questiontreeitem(QStringList(item->text(0)) , id, (QTreeWidget*)0));
 
-    if (m->table)
-    {
-        m->table->reinit(&(m->current), m);
-        m->table->showtable(m->currentgref, m->currentgqref);
-    }
+    m->updatetable();
 	delete item;
 	item = NULL;
 }
@@ -243,11 +236,7 @@ void	grouptree::addquestglobintree()
 void	grouptree::addquestglobintree2()
 {
     dynamic_cast<grouptreeitem*>(this->currentItem())->addquestglobinttree(infoqtmp->getquestioncopy());
-    if (m->table)
-    {
-        m->table->reinit(&(m->current), m);
-        m->table->showtable(m->currentgref, m->currentgqref);
-    }
+    m->updatetable();
 }
 
 void	grouptree::addpersonintree()
@@ -270,15 +259,12 @@ void	grouptree::addpersonintree()
 
 void	grouptree::addpersonintree2(QTreeWidgetItem *item, int column)
 {
-//	qDebug() << item->text(0);
+    qDebug() << item->text(0);
 
+    disconnect(cotmp);
     int id = sqlo::addperson(&(m->current), item->text(0).section(" ", 0, 0), item->text(0).section(" ", 1, 1), "not defined", dynamic_cast<grouptreeitem*>(item->parent())->getId());
     item->parent()->addChild(new persontreeitem(QStringList(item->text(0)) , id, (QTreeWidget*)0));
-    if (m->table)
-    {
-        m->table->reinit(&(m->current), m);
-        m->table->showtable(m->currentgref, m->currentgqref);
-    }
+    m->updatetable();
 	delete item;
 	item = NULL;
 }
@@ -333,11 +319,7 @@ void	grouptree::supquestintree()
 	QTreeWidgetItem *item = this->currentItem();
 	delete item;
 	item = NULL;
-    if (m->table)
-    {
-        m->table->reinit(&(m->current), m);
-        m->table->showtable(m->currentgref, m->currentgqref);
-    }
+    m->updatetable();
 }
 
 void	grouptree::suppersonintree()
@@ -346,11 +328,7 @@ void	grouptree::suppersonintree()
 	QTreeWidgetItem *item = this->currentItem();
 	delete item;
 	item = NULL;
-    if (m->table)
-    {
-        m->table->reinit(&(m->current), m);
-        m->table->showtable(m->currentgref, m->currentgqref);
-    }
+    m->updatetable();
 }
 
 grouptree::~grouptree()

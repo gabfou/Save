@@ -16,6 +16,7 @@ menuconfigproject::menuconfigproject(QString name, project *p, MainWindow *m) : 
 
 	//Boutons
 	//this->tab = new QTabWidget(this);
+    this->setWindowModality(Qt::ApplicationModal);
 	if (name.isEmpty())
 		return ;
     this->resize(700, 500);

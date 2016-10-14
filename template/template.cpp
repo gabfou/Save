@@ -9,7 +9,7 @@ QTXLSX_USE_NAMESPACE
 void createquestiontemplate(MainWindow *m, project *p)
 {
     Document xlsx;
-    int x = -1;
+    int x = 0;
     int y = 1;
     int j = -1;
     const int nbg = p->getNbqgeneration();
@@ -36,12 +36,12 @@ void createquestiontemplate(MainWindow *m, project *p)
             continue ;
         }
         y++;
-        x = nbg;
+        x = nbg + 1;
         gtmp = &(p->listqgroup[qli->qgroupid]);
 
         while (gtmp->getGeneration() > -1)
         {
-            xlsx.write(indextocase(gtmp->getGeneration(), y), gtmp->name);
+            xlsx.write(indextocase(gtmp->getGeneration() + 1, y), gtmp->name);
             gtmp = &(p->listqgroup[gtmp->getParentid()]);
         }
         xlsx.write(indextocase(++x, y), qli->name);
@@ -53,7 +53,7 @@ void createquestiontemplate(MainWindow *m, project *p)
         qli++;
     }
     QString fichier = QFileDialog::getSaveFileName(0, "Save a file", "~", "Excell files (*.xlsx)");
-    if (xlsx.saveAs(fichier) == 0)
+    if (!(xlsx.saveAs(fichier)))
         qDebug() << "erreur create question template";
     qDebug() << p->name + "_question";
 }
@@ -75,9 +75,9 @@ void recupquestiontemplate(QString name, project *p)
     qDebug() << "hasgdghfasghf" << nbg;
     while (xlsx.read(indextocase(nbg, ++y)).toString().compare("") != 0)
     {
-        x = -1;
+        x = 0;
         oldg = "ALL";
-        while (++x < nbg)
+        while (++x < nbg && xlsx.read(indextocase(x, y)).toString().isEmpty() == 0)
         {
             lastgid = p->addqgroup(xlsx.read(indextocase(x, y)).toString(), oldg);
             if (lastgid != -1)
@@ -87,9 +87,15 @@ void recupquestiontemplate(QString name, project *p)
         {
             continue ;
         }
-        x = nbg;
-        p->addquestion(xlsx.read(indextocase(++x, y)).toString(), 0, -1, lastgid, xlsx.read(indextocase(++x, y)).toString(), "",
-                       p->mytypqinv(xlsx.read(indextocase(++x, y)).toString()), xlsx.read(indextocase(++x, y)).toString(), xlsx.read(indextocase(++x, y)).toString().toInt(),
-                       xlsx.read(indextocase(++x, y)).toString().toInt(), 0);
+        x = nbg - 1;
+        qDebug() << x;
+        QString name = xlsx.read(indextocase(++x, y)).toString();
+        QString sujet = xlsx.read(indextocase(++x, y)).toString();
+        int type = p->mytypqinv(xlsx.read(indextocase(++x, y)).toString());
+        QString splitchar = xlsx.read(indextocase(++x, y)).toString();
+        int value = xlsx.read(indextocase(++x, y)).toString().toInt();
+        bool ref_only = xlsx.read(indextocase(++x, y)).toString().toInt();
+        p->addquestion(name, 0, -1, lastgid, sujet, "",
+                       type, splitchar, value, ref_only, 0);
     }
 }

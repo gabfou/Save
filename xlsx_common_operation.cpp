@@ -7,12 +7,12 @@ QString indextocase(int x, int y)
 {
 	QString xstr;
 	static char tab[26] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H' , 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
-    while ((x / 26) > 0)
+    while (x > 0)
     {
 		xstr.push_front(tab[x % 26]);
         x = x / 26;
     }
-    //`qDebug() << (xstr + QString::number(y + 1));
+    //qDebug() << (xstr + QString::number(y + 1));
 	return (xstr + QString::number(y + 1));
 }
 

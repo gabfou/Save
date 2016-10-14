@@ -51,7 +51,8 @@ SOURCES += main.cpp\
     config/menuconfigsondage.cpp \
     sql/sqloperation.cpp \
     tableclass/tableau_brut.cpp \
-    template/template.cpp
+    template/template.cpp \
+    misc/uploader.cpp
 
 HEADERS  += mainwindow.h \
     data/fact.h \
@@ -84,7 +85,8 @@ HEADERS  += mainwindow.h \
     misc/tablistedit.h \
     misc/listeditwval.h \
     config/menuconfigsondage.h \
-    tableclass/tableau_brut.h
+    tableclass/tableau_brut.h \
+    misc/uploader.h
 
 FORMS    += mainwindow.ui
 

@@ -41,6 +41,7 @@
 #include "xlsxcellrange.h"
 #include "xlsxworksheet.h"
 #include <QColor>
+#include <QProgressDialog>
 #include <QSpinBox>
 //#include <qwt_plot_renderer.h>
 //#include <qwt_plot_canvas.h>

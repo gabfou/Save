@@ -10,6 +10,7 @@
 #include "overview.h"
 #include "alltree.h"
 #include "config/menuconfigsondage.h"
+#include "misc/uploader.h"
 
 MainWindow::MainWindow(QWidget *parent) :
 	QMainWindow(parent),
@@ -20,10 +21,11 @@ MainWindow::MainWindow(QWidget *parent) :
 	ui->setupUi(this);
 	this->cw = new QTabWidget();
 	this->setCentralWidget(cw);
-    this->setWindowTitle("outils murano");
+    this->setWindowTitle("Outils sondage (WIP)");
+//    this->setWindowModality(Qt::ApplicationModal);
 //	this->current = new project;
 //	this->table = new QTableWidget(this);
-	// default display
+    // default display
 
 	this->resize(1000, 600);
 
@@ -86,8 +88,12 @@ MainWindow::MainWindow(QWidget *parent) :
 	QObject::connect(afficherpers, SIGNAL(toggled(bool)), this, SLOT(personrep(bool)));
 
 	menu_serveur = menuBar()->addMenu("&Serveur");
-	QAction *config_sondage = menu_serveur->addAction("&nouveaux sondage");
+    QAction *config_sondage = menu_serveur->addAction("&programer une serie de sondage");
 	QObject::connect(config_sondage, SIGNAL(triggered()), this, SLOT(configsondage()));
+    QAction *new_sondage = menu_serveur->addAction("&lancer un sondage");
+    QObject::connect(new_sondage, SIGNAL(triggered()), this, SLOT(sendproject()));
+    QAction *new_sondage_ref = menu_serveur->addAction("&lancer un sondage de reference");
+    QObject::connect(new_sondage_ref, SIGNAL(triggered()), this, SLOT(sendproject_ref()));
 
 	QToolBar *toolBarFichier = addToolBar("Fichier");
 	QAction *screenshoot = toolBarFichier->addAction("&Imprimer écran");
@@ -341,7 +347,7 @@ void MainWindow::openproject()
 	QSqlQuery qry;
 	QListWidget *listWidget = new QListWidget();
 
-
+    listWidget->setWindowModality(Qt::ApplicationModal);
 	if(qry.exec("SELECT table_name FROM INFORMATION_SCHEMA.TABLES WHERE table_name LIKE 'project_%_project'"))
 	{
 		while(qry.next())
@@ -380,7 +386,7 @@ void MainWindow::supproject()
     QSqlQuery qry;
     QListWidget *listWidget = new QListWidget();
 
-
+    listWidget->setWindowModality(Qt::ApplicationModal);
     if(qry.exec("SELECT table_name FROM INFORMATION_SCHEMA.TABLES WHERE table_name LIKE 'project_%_project'"))
     {
         while(qry.next())
@@ -522,9 +528,8 @@ MainWindow::~MainWindow()
 void MainWindow::sendprojectauxi(QString str)
 {
 	QSqlQuery qry;
-	Q_UNUSED(str);
 
-/*	QString body = "Bonjour dans le cadre de notre études veuillez repondre au formulaire à l'adresse suivante : ";
+    QString body = "Bonjour dans le cadre de notre études veuillez repondre au formulaire à l'adresse suivante : " + str;
 	QStringList listmail;
 
 //	this->updateproject();
@@ -537,14 +542,14 @@ void MainWindow::sendprojectauxi(QString str)
 	while (i < listmail.size())
 	{
 		qDebug() << listmail.at(i);
-		bodytmp = body + "\r\n";// + "person__person=" + listmail.at(i + 1) + "&";
+        bodytmp = body + "?p=" + listmail.at(i + 1) + "&s=" + namecurrent;
 		sendmail(listmail.at(i), bodytmp); // OPTI
 		i += 2;
-	}*/
-	qry.prepare( " INSERT INTO all_etude (iteration , groupid , project_name) VALUES ( ? , ? , ? );");
+    }
+    /*qry.prepare( " INSERT INTO all_etude (iteration , groupid , project_name) VALUES ( ? , ? , ? );");
 	qry.addBindValue(1);
 	qry.addBindValue(0);
-	qry.addBindValue(this->current.name);
+    qry.addBindValue(this->current.name);*/
 	if(!qry.exec())
 		qDebug() << qry.lastError();
 }
@@ -719,6 +724,15 @@ void	MainWindow::showbarchartref()
 //	d_chart->show();
 }
 
+void MainWindow::updatetable()
+{
+    if (table)
+    {
+        table->reinit(&(current), this);
+        table->showtable(currentgref, currentgqref);
+    }
+}
+
 void	MainWindow::configproject(){menuconfigproject *m = new menuconfigproject(this->namecurrent, &(this->current), this);m->show();}
 
 void	MainWindow::configsondage(){menuconfigsondage *m = new menuconfigsondage(this);m->show();}
@@ -758,4 +772,24 @@ void	MainWindow::screenshootcurrent()
 		//						 .arg(QDir::toNativeSeparators(fileName)));
 			qDebug() << tr("The image could not be saved to \"%1\".").arg(QDir::toNativeSeparators(fileName));
 		}
+}
+
+void    MainWindow::Backroundchange()
+{
+    QString file = QFileDialog::getSaveFileName(this, "Choisiser une nouvelle image", "~", "Image (*.png)");
+    Uploader u;
+
+    u.start(file);
+//    QProgressDialog progress("Copying files...", "Abort Copy", 0, u., this);
+//    progress.setWindowModality(Qt::WindowModal);
+
+//    for (int i = 0; i < numFiles; i++)
+//    {
+//        progress.setValue(i);
+
+//        if (progress.wasCanceled())
+//            break;
+//        //... copy one file
+//    }
+//    progress.setValue(numFiles);
 }
