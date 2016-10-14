@@ -529,7 +529,8 @@ void MainWindow::sendprojectauxi(QString str)
 {
 	QSqlQuery qry;
 
-    QString body = "Bonjour dans le cadre de notre études veuillez repondre au formulaire à l'adresse suivante : " + str;
+    QString body = "Bonjour dans le cadre de notre études veuillez repondre "
+                   "au formulaire à l'adresse suivante : etudemurano.alwaysdata.net/" + str;
 	QStringList listmail;
 
 //	this->updateproject();
@@ -562,7 +563,7 @@ void MainWindow::sendproject()
 	if(!qry.exec() )
 		qDebug() << qry.lastError();
 	else
-		this->sendprojectauxi("login.php");
+        this->sendprojectauxi("directlogin.php");
 }
 
 void MainWindow::sendproject_ref()
@@ -573,7 +574,7 @@ void MainWindow::sendproject_ref()
 	if(!qry.exec() )
 		qDebug() << qry.lastError();
 	else
-		this->sendprojectauxi("login.php");
+        this->sendprojectauxi("directlogin.php");
 }
 
 void MainWindow::mailSent(QString status)
@@ -632,9 +633,18 @@ void MainWindow::updateproject()
 
 void MainWindow::convert_to_xlsx()
 {
-	QString fichier = QFileDialog::getSaveFileName(this, "Open a file", QString());
-	if (this->table)
-		tab_to_fichier(fichier, this->table);
+    tableshow * tmp;
+    if (this->cw->currentWidget() == this->table)
+        tmp = table;
+    else if (this->cw->currentWidget() == this->tableg)
+        tmp = tableg;
+    else if (this->cw->currentWidget() == this->tablep)
+        tmp = tablep;
+    else
+        warning("no table selected");
+    QString fichier = QFileDialog::getSaveFileName(this, "Destination", "Save", "Excell files (*.xlsx)");
+    if (tmp)
+        tab_to_fichier(fichier, tmp);
 	else
 		//QMessageBox::Warning(this, tr("warning"), tr("aucun projet selectioné"));
 		qDebug() << "no project selected";

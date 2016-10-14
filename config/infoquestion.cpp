@@ -99,10 +99,12 @@ infoquestion::infoquestion(project *p, MainWindow *m, int con) : info(p), m(m)
 
 void infoquestion::changegroupparent()
 {
-    grouptree *gt = new grouptree(m, p->listqgroup, 1);
+    grouptree *gt = new grouptree(m, p->listqgroup, 0);
 
+    gt->setWindowModality(Qt::ApplicationModal);
     connect(gt, SIGNAL(itemClicked(QTreeWidgetItem*,int)), this, SLOT(changegroupparent2(QTreeWidgetItem*)));
     connect(gt, SIGNAL(itemClicked(QTreeWidgetItem*,int)), gt, SLOT(close()));
+    gt->show();
 }
 
 void infoquestion::changegroupparent2(QTreeWidgetItem *item)
@@ -111,10 +113,10 @@ void infoquestion::changegroupparent2(QTreeWidgetItem *item)
 
     if (tmp)
     {
-        sqlo::addquestion(p, q->name, tmp->getId(), q->unit, q->bnote, q->sujet,
-                          q->qgroupid, q->type, q->ref_only, q->liststr.join(" "),
+        sqlo::addquestion(p, q->name, q->group, q->unit, q->bnote, q->sujet,
+                          tmp->getId(), q->type, q->ref_only, q->liststr.join(" "),
                           q->val, q->global, q->id);
-        p->listquestion[q->id].group = tmp->getId();
+        p->listquestion[q->id].qgroupid = tmp->getId();
         int i = q->id;
         delete q;
         this->q = new question(p->getquestion(i));

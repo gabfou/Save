@@ -107,9 +107,9 @@ QList<int> QStrltoQil(QStringList &src)
 
 void sendmail(QString mail, QString body)
 {
-	QString username = "etudes@muranoconseil.com";
-	QString passwd = "etudes564";
-	QString server = "SSL0.OVH.NET";
+    QString username = "etudemurano@alwaysdata.net";
+    QString passwd = "t4x5akda";
+    QString server = "smtp-etudemurano.alwaysdata.net";
 	Smtp	*smtp = new Smtp(username, passwd, server);
-	smtp->sendMail("etudes@muranoconseil.com", mail , "Etude muranoconseil",  body + "\r\n\r\nMURAnO Conseil : Marketing / Retail / Supply Chain");
+    smtp->sendMail("etudemurano@alwaysdata.net", mail , "Etude muranoconseil",  body + "\r\n\r\nMURAnO Conseil : Marketing / Retail / Supply Chain");
 }

@@ -52,7 +52,7 @@ void createquestiontemplate(MainWindow *m, project *p)
         xlsx.write(indextocase(++x, y), QString::number(qli->ref_only));
         qli++;
     }
-    QString fichier = QFileDialog::getSaveFileName(0, "Save a file", "~", "Excell files (*.xlsx)");
+    QString fichier = QFileDialog::getSaveFileName(0, "Créer template", "~", "Excell files (*.xlsx)");
     if (!(xlsx.saveAs(fichier)))
         qDebug() << "erreur create question template";
     qDebug() << p->name + "_question";

@@ -37,10 +37,12 @@ infoperson::infoperson(MainWindow *m, project *p) : info(p), m(m)
 
 void infoperson::changegroupparent()
 {
-    grouptree *gt = new grouptree(m, p->listgroup, 1);
+    grouptree *gt = new grouptree(m, p->listgroup, 0);
 
+    gt->setWindowModality(Qt::ApplicationModal);
     connect(gt, SIGNAL(itemClicked(QTreeWidgetItem*,int)), this, SLOT(changegroupparent2(QTreeWidgetItem*)));
     connect(gt, SIGNAL(itemClicked(QTreeWidgetItem*,int)), gt, SLOT(close()));
+    gt->show();
 }
 
 void infoperson::changegroupparent2(QTreeWidgetItem *item)
