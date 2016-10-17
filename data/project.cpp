@@ -80,6 +80,8 @@ void project::addperson(QString name, QString lastname, QString email)
 
 inline void project::addperson(QString name, QString lastname, QString email, int id, vector<question> *listquestion, int groupid)
 {
+    if (id == -1)
+        sqlo::addperson(this, name, lastname, email, groupid);
 	this->nbperson++;
 	person ret(name, lastname, email, id, listquestion, groupid);
 	while ((int)(this->listp.size()) < id)
@@ -237,6 +239,7 @@ void project::initvar()
 	listp.clear();
 	listqgroup.clear();
 	listquestion.clear();
+    default_table = -1;
 }
 
 void project::initoroject(QString fproject)
@@ -536,6 +539,28 @@ int project::addqgroup(QString name, QString parrent)
     return (-1);
 }
 
+int project::addpgroup(QString name, QString parrent)
+{
+    if (name.isEmpty())
+        return (-1);
+    group *p = groupsearch(parrent, &listgroup[0]);
+    QList<int> lf;
+    QList<int>::iterator lfi;
+
+    if (p)
+    {
+        lf = p->getListfils();
+        lfi = lf.begin();
+        while(lfi != lf.end())
+        {
+            if (listgroup[*lfi].name.compare(name) == 0)
+                return (listgroup[*lfi].id);
+            lfi++;
+        }
+        return (sqlo::addgroup(this, this->name, name, p->id, p->type, name, 0));
+    }
+    return (-1);
+}
 
 QStringList	project::sendproject()
 {

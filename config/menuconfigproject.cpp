@@ -40,6 +40,8 @@ void menuconfigproject::configeneral()
     QPushButton *showtableau_brut = new QPushButton("generer tableaux brut");
     QPushButton *newtq = new QPushButton("Sauvegarder un template de question");
     QPushButton *addtq = new QPushButton("ajouter des question a partir d'un template");
+    QPushButton *newtp = new QPushButton("Sauvegarder un template de personne");
+    QPushButton *addtp = new QPushButton("ajouter des personne a partir d'un template");
 
 	//Connexions aux slots
 	//connect(b_valider, SIGNAL(clicked()), this, SLOT(changescope2()));
@@ -50,6 +52,8 @@ void menuconfigproject::configeneral()
     connect(showtableau_brut, SIGNAL(clicked(bool)), this, SLOT(showtableau_brut()));
     connect(newtq, SIGNAL(clicked(bool)), this, SLOT(newtemplateq()));
     connect(addtq, SIGNAL(clicked(bool)), this, SLOT(addtemplateq()));
+    connect(newtp, SIGNAL(clicked(bool)), this, SLOT(newtemplatep()));
+    connect(addtp, SIGNAL(clicked(bool)), this, SLOT(addtemplatep()));
 
 	//Layout
 	QGroupBox *groupbox = new QGroupBox("");
@@ -69,6 +73,8 @@ void menuconfigproject::configeneral()
     layout->addWidget(showtableau_brut);
     layout->addWidget(newtq);
     layout->addWidget(addtq);
+    layout->addWidget(newtp);
+    layout->addWidget(addtp);
     win->setLayout(layout);
 	this->addTab(win, "general");
 }
@@ -149,4 +155,15 @@ void menuconfigproject::addtemplateq()
 {
     QString fichier = QFileDialog::getOpenFileName(0, "Open a file", "~", "Excell files (*.xlsx)");
     recupquestiontemplate(fichier, p);
+}
+
+void menuconfigproject::newtemplatep()
+{
+    createpersonnetemplate(m, p);
+}
+
+void menuconfigproject::addtemplatep()
+{
+    QString fichier = QFileDialog::getOpenFileName(0, "Open a file", "~", "Excell files (*.xlsx)");
+    recuppersonnetemplate(fichier, p);
 }

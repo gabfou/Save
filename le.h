@@ -102,6 +102,8 @@ void sendmail(QString mail, QString body);
 QList<int> QStrltoQil(QStringList &src);
 void createquestiontemplate(MainWindow *m, project *p);
 void recupquestiontemplate(QString name, project *p);
+void createpersonnetemplate(MainWindow *m, project *p);
+void recuppersonnetemplate(QString name, project *p);
 
 namespace sqlo
 {

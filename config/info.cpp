@@ -63,6 +63,8 @@ void info::updateibg(int id, int type)
         gquestionlabel->show();
         current = &(p->listqgroup[id]);
     }
+    gquestion->setChecked(current->gquestion);
+    descriptiong->setText(current->description);
     infolabel->setText("groupe");
     contg->show();
 }

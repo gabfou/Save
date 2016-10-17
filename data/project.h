@@ -31,6 +31,7 @@ public:
     int ref = 0;
     int gref = 0;
     int gqref = 0;
+    int default_table = 0;
     void addquestion(QString name, int group, unsigned int id, int qgroupid, QString sujet, QString unit, int type, QString splitchar, int value, bool ref_only, bool global);
     QString name;
     vector<person> listp;
@@ -78,6 +79,7 @@ public:
     group *groupsearch(QString name, group *g);
     int addqgroup(QString name, QString parrent);
     int mytypqinv(QString type);
+    int addpgroup(QString name, QString parrent);
 };
 
 #endif

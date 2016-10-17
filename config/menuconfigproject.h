@@ -18,6 +18,8 @@ private slots:
     void showtableau_brut();
     void newtemplateq();
     void addtemplateq();
+    void newtemplatep();
+    void addtemplatep();
 private:
     MainWindow *m;
 	QTabWidget *tab;

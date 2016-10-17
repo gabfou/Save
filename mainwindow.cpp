@@ -190,27 +190,50 @@ void MainWindow::addquestion2()
 		qDebug() << qry.lastError();
 	else
 		qDebug() << "question insert success!";
-
 }
 
 //ajout de projet
 
+void MainWindow::checkprojectname()
+{
+    QRegExp regex("^[^,;' ]+$");
+    QString name = nametmp->text();
+
+    if (name.contains(regex) == 0)
+    {
+        buttontmp->setDisabled(1);
+        labeltmp->setText("<font color='red'>Le nom du nouveau projet ne peux pas contenir d'espace, de ; de ', et ne peut pas être vide</font>");
+    }
+    else
+    {
+        buttontmp->setEnabled(1);
+        labeltmp->setText("<font color='black'>Le nom du nouveau projet ne peux pas contenir d'espace, de ; de ', et ne peut pas être vide</font>");
+    }
+}
+
 void MainWindow::addproject() // empecher charactere speciaux
 {
-	QLabel *description = new QLabel("Le nom du nouveau projet ne peux pas contenir d'espace, de ; et '");
+    labeltmp = new QLabel("Le nom du nouveau projet ne peux pas contenir d'espace, de ; de ', et ne peut pas être vide");
 	QWidget *win = new QWidget();
 	QLabel *Labeljeu = new QLabel("Name :");
     this->nametmp = new QLineEdit();
-	Labeljeu->setAlignment(Qt::AlignTop);
+
+    Labeljeu->setAlignment(Qt::AlignTop);
 
 	//Boutons
-	QPushButton *b_valider = new QPushButton("Valider");
+    buttontmp = new QPushButton("Valider");
 	QPushButton *b_annuler = new QPushButton("Annuler");
 
 	//Connexions aux slots
-	connect(b_valider, SIGNAL(clicked()), this, SLOT(addproject2()));
-	connect(b_valider, SIGNAL(clicked()), win, SLOT(close()));
+    connect(buttontmp, SIGNAL(clicked()), this, SLOT(addproject2()));
+    connect(buttontmp, SIGNAL(clicked()), win, SLOT(close()));
 	connect(b_annuler, SIGNAL(clicked()), win, SLOT(close()));
+
+    //timer name error
+
+    timertmp = new QTimer(this);
+    connect(timertmp, SIGNAL(timeout()), this, SLOT(checkprojectname()));
+    timertmp->start(10);
 
 	//Layout
 	QGroupBox *groupbox = new QGroupBox("");
@@ -223,18 +246,34 @@ void MainWindow::addproject() // empecher charactere speciaux
 
 	QGridLayout *layout = new QGridLayout();
 	layout->setAlignment(Qt::AlignTop);
-	layout->addWidget(description, 0, 0, 1, 2);
-	layout->addWidget(groupbox, 1, 0, 1, 2, Qt::AlignTop);
-	layout->addWidget(b_annuler, 2, 0, Qt::AlignLeft);
-	layout->addWidget(b_valider, 2, 1, Qt::AlignRight);
+    layout->addWidget(labeltmp, 1, 0, 1, 2);
+    layout->addWidget(groupbox,2, 0, 1, 2, Qt::AlignTop);
+    layout->addWidget(b_annuler, 3, 0, Qt::AlignLeft);
+    layout->addWidget(buttontmp, 3, 1, Qt::AlignRight);
 	//setLayout(layout);
 	win->setLayout(layout);
 	win->show();
+    error = 0;
 }
 
 void MainWindow::addproject2()
 {
 	QSqlQuery qry;
+
+    QRegExp regex("^[^,;' ]+$");
+    QString name = nametmp->text();
+
+    if (name.contains(regex) == 0)
+    {
+        if (timertmp)
+        {
+            delete timertmp;
+            timertmp == NULL;
+        }
+        error = 1;
+        addproject();
+        return ;
+    }
 
     if ( !qry.exec("CREATE TABLE IF NOT EXISTS project_" + this->nametmp->text() + "_project ("
 				" id INTEGER UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT,"
@@ -255,11 +294,11 @@ void MainWindow::addproject2()
 				" groupid INTEGER,"
 				" type VARCHAR(30),"
 				" note BOOLEAN DEFAULT 1,"
-				" sujet VARCHAR(300),"
+                " sujet TEXT,"
 				" qgroupid INT DEFAULT 0,"
 				" typef INT DEFAULT 0,"
 				" ref_only INT DEFAULT 0,"
-				" splitchar VARCHAR(3000) NOT NULL DEFAULT '',"
+                " splitchar TEXT NOT NULL DEFAULT '',"
 				" global BOOL NOT NULL DEFAULT 0,"
                 " value INT NOT NULL DEFAULT -1)");
     if (!qry.exec())
@@ -270,7 +309,7 @@ void MainWindow::addproject2()
 				" groupname VARCHAR(500),"
 				" groupparent INTEGER DEFAULT 0,"
 				" type BOOLEAN DEFAULT 0,"
-				" description VARCHAR(300) NOT NULL DEFAULT '',"
+                " description TEXT NOT NULL DEFAULT '',"
 				" gquestion INT DEFAULT 0)" );
     if (!qry.exec())
 		qDebug() << "create groupe" << qry.lastError();
@@ -283,7 +322,7 @@ void MainWindow::addproject2()
 				" note INTEGER,"
 				" date_info datetime,"
 				" iteration INTEGER,"
-				" str VARCHAR(100) NOT NULL DEFAULT '',"
+                " str TEXT NOT NULL DEFAULT '',"
 				" idquestion INT NOT NULL DEFAULT -1);" );
     if (!qry.exec())
 		qDebug() << "create reponse" << qry.lastError();
@@ -302,10 +341,10 @@ void MainWindow::addproject2()
 
 	qry.prepare(" CREATE TABLE IF NOT EXISTS project_" +  this->nametmp->text() + "_etude ("
 				" id INTEGER UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT,"
-				" begin datetime NOT NULL DEFAULT NOW(),"
+                " default_table INTEGER NOT NULL DEFAULT 0,"
 				" iteration INTEGER,"
 				" groupid INTEGER NOT NULL DEFAULT 0,"
-				" iteration_detail VARCHAR(3000));" );
+                " iteration_detail TEXT);" );
     if (!qry.exec())
 		qDebug() << "create all etude" << qry.lastError();
 
@@ -316,7 +355,7 @@ void MainWindow::addproject2()
 				" groupid INTEGER NOT NULL DEFAULT 0,"
 				" project_name VARCHAR(3000),"
 				" ref BOOLEAN NOT NULL DEFAULT 0,"
-				" iteration_detail VARCHAR(3000));" );
+                " iteration_detail TEXT);" );
     if (!qry.exec())
 		qDebug() << "create etude" << qry.lastError();
 
@@ -328,6 +367,11 @@ void MainWindow::addproject2()
 	menu_outil->setEnabled(1);
 	menu_affifchage->setEnabled(1);
 	menu_serveur->setEnabled(1);
+    if (timertmp)
+    {
+        delete timertmp;
+        timertmp == NULL;
+    }
     this->configproject();
 }
 
@@ -405,6 +449,10 @@ void MainWindow::supproject2(QListWidgetItem *item)
 {
     QSqlQuery qry;
 
+    if (item->text().compare(namecurrent) == 0)
+    {
+        return ;
+    }
     qry.prepare( "DROP TABLE project_" + item->text() + "_project;" );
     if( !qry.exec() )
         qDebug() << qry.lastError();
@@ -529,8 +577,8 @@ void MainWindow::sendprojectauxi(QString str)
 {
 	QSqlQuery qry;
 
-    QString body = "Bonjour dans le cadre de notre études veuillez repondre "
-                   "au formulaire à l'adresse suivante : etudemurano.alwaysdata.net/" + str;
+    QString body = "<p>Madame/Monsieur,</p><p>Dans le cadre de l'étude murano veuiller répondre au formulaire"
+                   "en cliquant <a href=\"etudemurano.alwaysdata.net/" + str;
 	QStringList listmail;
 
 //	this->updateproject();
@@ -543,7 +591,7 @@ void MainWindow::sendprojectauxi(QString str)
 	while (i < listmail.size())
 	{
 		qDebug() << listmail.at(i);
-        bodytmp = body + "?p=" + listmail.at(i + 1) + "&s=" + namecurrent;
+        bodytmp = body + "?p=" + listmail.at(i + 1) + "&s=" + namecurrent + "\">ici</a></p>";
 		sendmail(listmail.at(i), bodytmp); // OPTI
 		i += 2;
     }

@@ -34,7 +34,7 @@ void Smtp::sendMail(const QString &from, const QString &to, const QString &subje
     message = "To: " + to + "\n";
     message.append("From: " + from + "\n");
     message.append("Subject: " + subject + "\n");
-    message.append("Content-Type: text/plain; charset=\"utf-8\" \n");
+    message.append("Content-Type: text/html; charset=utf-8\n");
     message.append(body);
     message.replace( QString::fromLatin1( "\n" ), QString::fromLatin1( "\r\n" ) );
     message.replace( QString::fromLatin1( "\r\n.\r\n" ),
@@ -49,6 +49,7 @@ void Smtp::sendMail(const QString &from, const QString &to, const QString &subje
     }
 
     t = new QTextStream( socket );
+    t->setCodec("UTF-8");
 }
 
 Smtp::~Smtp()
@@ -187,7 +188,7 @@ void Smtp::readyRead()
     else if (state == Body && responseLine == "354")
     {
 
-        *t << message << "\r\n.\r\n";
+        *t << message.toUtf8() << "\r\n.\r\n";
         t->flush();
         state = Quit;
     }

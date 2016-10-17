@@ -71,12 +71,16 @@ private slots:
     void personrep(bool checked);
     void supproject();
     void supproject2(QListWidgetItem *item);
+    void checkprojectname();
 private:
 	Ui::MainWindow *ui;
 	QWindow *addprojectwindow;
 	QLineEdit *nametmp;
 	QLineEdit *prenametmp;
 	QLineEdit *emailtmp;
+    QTimer *timertmp;
+    QLabel *labeltmp;
+    QPushButton *buttontmp;
 
     Alltree *alltreetmp = NULL;
     grouptree *groupboxtmp;
@@ -87,6 +91,7 @@ private:
     QMenu *menu_outil;
     QMenu *menu_projet;
     QMenu *menu_serveur;
+    int error = 0;
 
 
 	void sendprojectauxi(QString str);

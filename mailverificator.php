@@ -35,14 +35,6 @@ function prepperson($groupid, $project_name, $bdd, $ref)
 	}
 }
 
-function isWeekend($date)
-{
-    return (date('N', strtotime($date)) >= 6);
-}
-
-if (isWeekend($date))
-	die();
-
 $req_pre = $bdd->prepare('DELETE FROM all_etude WHERE iteration < 1;');
 $req_pre->execute();
 $req_pre = $bdd->prepare('SELECT id, begin, iteration, groupid, project_name, iteration_detail, ref FROM all_etude WHERE 1;');
