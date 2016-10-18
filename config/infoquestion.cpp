@@ -56,7 +56,7 @@ infoquestion::infoquestion(project *p, MainWindow *m, int con) : info(p), m(m)
 	unit = new QLineEdit();
 	value = new QSpinBox();
     value->setValue(1);
-    ref_only = new QCheckBox("A poser qu'une seul fois");
+    ref_only = new QCheckBox("Question unique");
 	b_update = new QPushButton("Enregistrer");
     selectlist = new listedit();
     selectlistval = new listeditwval();
@@ -78,7 +78,7 @@ infoquestion::infoquestion(project *p, MainWindow *m, int con) : info(p), m(m)
     vbox->addWidget(unitlabel);
 	vbox->addWidget(unit);
     vbox->addWidget(ref_only);
-    vbox->addWidget(new QLabel("Valeur"));
+    vbox->addWidget(new QLabel("Ponderation"));
     vbox->addWidget(value);
     vbox->addWidget(changegroup);
     vbox->addWidget(b_update);

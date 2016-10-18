@@ -676,9 +676,6 @@ void MainWindow::updateproject()
 //	QMessageBox::critical(this, "Erreur", "Erreur lors du chargement. Vérifiez votre connexion internet ou réessayez plus tard <br /><br /> Code de l'erreur : <br /><em>" + r->errorString() + "</em>");
 //}
 
-#include <QApplication>
-#include <QMessageBox>
-
 void MainWindow::convert_to_xlsx()
 {
     tableshow * tmp;
