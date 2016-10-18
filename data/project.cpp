@@ -564,17 +564,21 @@ int project::addpgroup(QString name, QString parrent)
 
 QStringList	project::sendproject()
 {
-	list<person> listtmp = listgroup[0].getListp();
-	list<person>::iterator tmp;
+    vector<person>::iterator tmp;
 	QStringList listmail;
 	QString post = (this->name);
 	post.append("&");
 	post.append(this->postquestion("ALL"));
 
-	qDebug() << listtmp.size();
-	tmp = listtmp.begin();
-	while (tmp != listtmp.end())
+//	qDebug() << listtmp.size();
+    tmp = listp.begin();
+    while (tmp != listp.end())
 	{
+        if (tmp->id == -1)
+        {
+            tmp++;
+            continue ;
+        }
 		listmail.push_back((*tmp).email);
 		listmail.push_back(QString::number((*tmp).id));
 		tmp++;

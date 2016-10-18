@@ -209,6 +209,7 @@ void Smtp::readyRead()
     {
         // something broke.
         //QMessageBox::warning( 0, tr( "Qt Simple SMTP client" ), tr( "Unexpected reply from SMTP server:\n\n" ) + response );
+        qDebug() << tr( "Unexpected reply from SMTP server:\n\n" ) + response;
         state = Close;
         emit status( tr( "Failed to send message" ) );
     }
