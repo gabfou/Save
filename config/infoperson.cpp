@@ -5,6 +5,7 @@
 #include "grouptreeitem.h"
 #include "mainwindow.h"
 #include "misc/listedit.h"
+#include "grouptree.h"
 
 infoperson::infoperson(MainWindow *m, project *p) : info(p), m(m)
 {

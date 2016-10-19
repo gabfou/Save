@@ -52,7 +52,8 @@ SOURCES += main.cpp\
     sql/sqloperation.cpp \
     tableclass/tableau_brut.cpp \
     template/template.cpp \
-    misc/uploader.cpp
+    misc/uploader.cpp \
+    graph/comparrefdo.cpp
 
 HEADERS  += mainwindow.h \
     data/fact.h \
@@ -86,7 +87,8 @@ HEADERS  += mainwindow.h \
     misc/listeditwval.h \
     config/menuconfigsondage.h \
     tableclass/tableau_brut.h \
-    misc/uploader.h
+    misc/uploader.h \
+    graph/comparrefdo.h
 
 FORMS    += mainwindow.ui
 

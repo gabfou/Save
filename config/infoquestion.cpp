@@ -6,6 +6,7 @@
 #include "mainwindow.h"
 #include "misc/listedit.h"
 #include "misc/listeditwval.h"
+#include "grouptree.h"
 
 void infoquestion::prephide()
 {

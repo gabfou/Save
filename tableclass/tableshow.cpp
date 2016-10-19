@@ -6,6 +6,7 @@
 #include "mainwindow.h"
 #include "headertableitem.h"
 #include "itemtable.h"
+#include "grouptree.h"
 
 void tableshow::preinit()
 {

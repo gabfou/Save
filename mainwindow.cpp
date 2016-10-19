@@ -1,6 +1,5 @@
 #include "mainwindow.h"
 #include "smtp.h"
-#include "data/project.h"
 #include "grouptree.h"
 #include "barref.h"
 #include "config/menuconfigproject.h"
@@ -10,6 +9,7 @@
 #include "alltree.h"
 #include "config/menuconfigsondage.h"
 #include "misc/uploader.h"
+#include "graph/comparrefdo.h"
 
 MainWindow::MainWindow(QWidget *parent) :
 	QMainWindow(parent),
@@ -81,9 +81,13 @@ MainWindow::MainWindow(QWidget *parent) :
 	afficherbasetable->setCheckable(true);
 	afficherbasetable->setChecked(false);
 	QObject::connect(afficherbasetable, SIGNAL(toggled(bool)), this, SLOT(baserep(bool)));
+    afficherpers = menu_affifchage->addAction("&generer le tableaux individuelle");
+    afficherpers->setCheckable(true);
+    afficherpers->setChecked(false);
+    QObject::connect(afficherpers, SIGNAL(toggled(bool)), this, SLOT(personrep(bool)));
 	afficherglobalrep = menu_affifchage->addAction("&generer le tableaux global");
 	afficherglobalrep->setCheckable(true);
-	afficherglobalrep->setChecked(false);
+    afficherglobalrep->setChecked(false);
 	QObject::connect(afficherglobalrep, SIGNAL(toggled(bool)), this, SLOT(globalrep(bool)));
 
     menu_graphique = menuBar()->addMenu("&Graphique");
@@ -109,6 +113,7 @@ MainWindow::MainWindow(QWidget *parent) :
 	menu_outil->setEnabled(0);
 	menu_affifchage->setEnabled(0);
 	menu_serveur->setEnabled(0);
+    menu_graphique->setEnabled(0);
 }
 
 
@@ -374,6 +379,7 @@ void MainWindow::addproject2()
 	menu_outil->setEnabled(1);
 	menu_affifchage->setEnabled(1);
 	menu_serveur->setEnabled(1);
+    menu_graphique->setEnabled(1);
 	if (timertmp)
 	{
 		delete timertmp;
@@ -429,7 +435,8 @@ void MainWindow::openproject2(QListWidgetItem *item)
 	menu_outil->setEnabled(1);
 	menu_affifchage->setEnabled(1);
 	menu_serveur->setEnabled(1);
-	//this->addock();
+    menu_graphique->setEnabled(1);
+    //this->addock();
 }
 
 void MainWindow::supproject()
@@ -661,6 +668,8 @@ void MainWindow::updateproject()
 		afficherglobalrep->trigger();
 	if (this->tablep)
 		afficherpers->trigger();
+    if (this->crd)
+        affichergraphiquecompare->trigger();
 
 	this->current.initoroject(this->namecurrent);
 
@@ -774,13 +783,13 @@ void MainWindow::graphiquecrd(bool checked)
 {
     if (checked)
     {
-        this->ov = new overview(this, &(this->current), this->currentgref, &(this->showmod));
-        this->cw->addTab(this->ov, "Comparaison reference donnée");
+        this->crd = new Comparrefdo(this, 0);
+        this->cw->addTab(this->crd, "Comparaison reference donnée");
     }
-    else if (ov)
+    else if (crd)
     {
-        delete ov;
-        ov = NULL;
+        delete crd;
+        crd = NULL;
     }
 }
 

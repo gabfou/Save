@@ -1,13 +1,20 @@
 #include "bargraph.h"
 #include "data/question.h"
-#include "data/project.h"
+//#include "data/project.h"
+#include "data/group.h"
 #include "mainwindow.h"
 
 bargraph::bargraph(t_groupref  g, project *p, QWidget *parent) : QWidget(parent), g(g), p(p)
 {
     //setMinimumWidth(300);
-	listqchild = p->questiongroupqchildnotopti(0);
+    listqchild = p->questiongroupqchildnotopti(p->gqref);
 //    connect(m, SIGNAL(gqrefchange(int)), this, SLOT(selectq(int)));
+}
+
+void bargraph::mousePressEvent(QMouseEvent *event)
+{
+    if (event->button() == Qt::LeftButton)
+        emit isclicked();
 }
 
 void bargraph::updateg(t_groupref g, int qgroup)
@@ -45,7 +52,7 @@ void bargraph::drawgraph(QPainter *qp)
 
 	if (d == 0 || h120 == 0)
 	{
-		qDebug() << "drawgraph nop";
+        qDebug() << "drawgraph nop d =" << d << " h120=" << d;
 		return ;
 	}
 	d /= 100;
@@ -79,7 +86,11 @@ void bargraph::drawgraph(QPainter *qp)
         qp->drawText(x, tmp37 * h120, width, ((*tmp) / d) * h120, Qt::AlignCenter | Qt::TextWrapAnywhere, QString::number((int)((*tmp) / d)) + "%");
         qp->translate(x, start * h120);
         qp->rotate(-45);
-        qp->drawText(0, 0, 80, (width > 50) ? 50 : width, Qt::AlignCenter | Qt::TextWordWrap | Qt::TextDontClip, tmp3->name); // pourrai peut etre simplifier
+        if (p->listqgroup[tmp3->qgroupid].gquestion)
+            qp->drawText(0, 0, 80, (width > 50) ? 50 : width, Qt::AlignCenter | Qt::TextWordWrap | Qt::TextDontClip,
+                         p->listqgroup[tmp3->qgroupid].name + ":\n" + tmp3->name); // pourrai peut etre simplifier
+        else
+            qp->drawText(0, 0, 80, (width > 50) ? 50 : width, Qt::AlignCenter | Qt::TextWordWrap | Qt::TextDontClip, tmp3->name); // pourrai peut etre simplifier
         qp->rotate(45);
         qp->translate(-x, -start * h120);
         tmp37 += ((*tmp) / d);

@@ -8,7 +8,10 @@ t_groupref syntheselistgroup(QList<t_groupref> listg)
 	t_groupref ret;
 
     if (listg.empty())
+    {
+        qDebug() << "listempty in syntheselistgroup";
         return (ret);
+    }
 
 	QList<t_groupref>::iterator  tmp;
     float tabi[listg.begin()->list.size() + 1];

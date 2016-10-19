@@ -174,7 +174,6 @@ QString group::grouprep(question tmp2, int ref)
 
     if (tmp2.type == 2)
         return ("reponse non chiffrer");
-    // int
     nb = 0;
     l = 0;
     tmp = this->listp.begin();

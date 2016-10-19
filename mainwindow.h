@@ -3,12 +3,12 @@
 #include "ui_mainwindow.h"
 #include "le.h"
 
-#include "grouptree.h"
-
 //class barref;
 class tableshow;
 class overview;
 class Alltree;
+class Comparrefdo;
+class grouptree;
 
 #include "data/project.h"
 
@@ -89,6 +89,7 @@ private:
 //	barref *d_chart;
 	QRadioButton *radiobuttontmp;
 	overview *ov = NULL;
+    Comparrefdo *crd = NULL;
     QMenu *menu_affifchage;
     QMenu *menu_outil;
     QMenu *menu_projet;

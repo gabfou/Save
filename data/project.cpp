@@ -473,7 +473,6 @@ QList<t_groupref> project::getgrouplist(int id, int qid)
 
 	groupchild(id, listchild);
 	questiongroupqchild(qid, listqchild);
-	qDebug() << "machin" << listqchild;
 	i = listchild.begin();
 	while (i != listchild.end())
 	{
@@ -492,7 +491,6 @@ QList<t_groupref> project::getgrouplistref(int id, int qid)
 
 	groupchild(id, listchild);
 	questiongroupqchild(qid, listqchild);
-	qDebug() << "machin" << listqchild;
 	i = listchild.begin();
 	while (i != listchild.end())
 	{

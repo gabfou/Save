@@ -2,11 +2,12 @@
 #define INFOPERSON_H
 
 #include "le.h"
-#include "grouptree.h"
-#include "info.h"
 
 class listedit;
 class person;
+
+#include "info.h"
+#include "grouptree.h"
 
 class infoperson : public info
 {

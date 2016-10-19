@@ -2,11 +2,11 @@
 #define INFOQUESTION_H
 
 #include "le.h"
-#include "grouptree.h"
-#include "info.h"
 
 class listedit;
 class listeditwval;
+#include "grouptree.h"
+#include "info.h"
 
 class infoquestion : public info
 {

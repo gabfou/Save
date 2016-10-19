@@ -1,7 +1,6 @@
 #ifndef LE_H
 #define LE_H
 
-#include "QMenu"
 #include <QPlainTextEdit>
 #include <QtSql>
 #include <QDockWidget>

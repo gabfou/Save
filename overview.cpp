@@ -4,11 +4,10 @@
 #include "tableclass/tableshow.h"
 #include "tableclass/headertableitem.h"
 
+//obselete upadate avec comparefdo si util
 
 overview::overview(MainWindow *m, project *p, int group, int *showmod) : p(p), showmod(showmod)
 {
-    if (*showmod == 2) // provisoire la meme en dessous
-        group = 0;
     QList<headertableitem*> headertable;
     headertable.push_back(new headertableitem(p, p->listgroup[group].name, p->listgroup[group]));
     bar = new bargraph(syntheselistgroup(p->getgrouplist(group)), p);
@@ -17,7 +16,7 @@ overview::overview(MainWindow *m, project *p, int group, int *showmod) : p(p), s
     barref->setName("Escompté");
     table = new tableshow(m, p, 0);
     table->reinit();
-    QList<question> listqchild =  p->questiongroupqchildnotopti(0);
+    //QList<question> listqchild =  p->questiongroupqchildnotopti(0);
     //table->setverticalheader(listqchild, 0);
     table->sethorizontalheader(headertable, p->getNbpgeneration());
     //table->showtable(0, 0);
@@ -37,7 +36,7 @@ void overview::updateov(int group, int qgroup)
 {
 //    if (*showmod == 2) // provisoire la meme au dessus
 //        group = 0;
-	qDebug() << "updateov";
+    qDebug() << "updateov";
     bar->updateg(syntheselistgroup(p->getgrouplist(group, qgroup)), qgroup);
     barref->updateg(syntheselistgroup(p->getgrouplistref(group, qgroup)), qgroup);
     table->updateall();
