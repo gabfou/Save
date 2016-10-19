@@ -1,6 +1,5 @@
 #include "mainwindow.h"
 #include "smtp.h"
-#include <QMessageBox>
 #include "data/project.h"
 #include "grouptree.h"
 #include "barref.h"
@@ -21,11 +20,11 @@ MainWindow::MainWindow(QWidget *parent) :
 	ui->setupUi(this);
 	this->cw = new QTabWidget();
 	this->setCentralWidget(cw);
-    this->setWindowTitle("Outils sondage (WIP)");
-//    this->setWindowModality(Qt::ApplicationModal);
+	this->setWindowTitle("Outils sondage (WIP)");
+//	this->setWindowModality(Qt::ApplicationModal);
 //	this->current = new project;
 //	this->table = new QTableWidget(this);
-    // default display
+	// default display
 
 	this->resize(1000, 600);
 
@@ -46,8 +45,8 @@ MainWindow::MainWindow(QWidget *parent) :
 	QObject::connect(new_projet, SIGNAL(triggered()), this, SLOT(addproject()));
 	QAction *open_projet = menu_projet->addAction("Ouvrir");
 	QObject::connect(open_projet, SIGNAL(triggered()), this, SLOT(openproject()));
-    QAction *sup_projet = menu_projet->addAction("Supprimer projet");
-    QObject::connect(sup_projet, SIGNAL(triggered()), this, SLOT(supproject()));
+	QAction *sup_projet = menu_projet->addAction("Supprimer projet");
+	QObject::connect(sup_projet, SIGNAL(triggered()), this, SLOT(supproject()));
 	QAction *update = menu_projet->addAction("&Actualiser");
 	QObject::connect(update, SIGNAL(triggered()), this, SLOT(updateproject()));
 	QAction *configp = menu_projet->addAction("&Configuration projet");
@@ -78,29 +77,35 @@ MainWindow::MainWindow(QWidget *parent) :
 	afficherval->setCheckable(true);
 	afficherval->setChecked(false);
 	QObject::connect(afficherval, SIGNAL(toggled(bool)), this, SLOT(valmodechange(bool)));
-	QAction *afficherglobalrep = menu_affifchage->addAction("&generer le tableaux global");
+	afficherbasetable = menu_affifchage->addAction("&generer le tableaux par groupe");
+	afficherbasetable->setCheckable(true);
+	afficherbasetable->setChecked(false);
+	QObject::connect(afficherbasetable, SIGNAL(toggled(bool)), this, SLOT(baserep(bool)));
+	afficherglobalrep = menu_affifchage->addAction("&generer le tableaux global");
 	afficherglobalrep->setCheckable(true);
 	afficherglobalrep->setChecked(false);
 	QObject::connect(afficherglobalrep, SIGNAL(toggled(bool)), this, SLOT(globalrep(bool)));
-	QAction *afficherpers = menu_affifchage->addAction("&generer le tableaux individuel");
-	afficherpers->setCheckable(true);
-	afficherpers->setChecked(false);
-	QObject::connect(afficherpers, SIGNAL(toggled(bool)), this, SLOT(personrep(bool)));
+
+    menu_graphique = menuBar()->addMenu("&Graphique");
+	affichergraphiquecompare = menu_graphique->addAction("&generer un graphique de comparaison référence-données");
+	affichergraphiquecompare->setCheckable(true);
+	affichergraphiquecompare->setChecked(false);
+    QObject::connect(affichergraphiquecompare, SIGNAL(toggled(bool)), this, SLOT(graphiquecrd(bool)));
 
 	menu_serveur = menuBar()->addMenu("&Serveur");
-    QAction *config_sondage = menu_serveur->addAction("&programer une serie de sondage");
+	QAction *config_sondage = menu_serveur->addAction("&programer une serie de sondage");
 	QObject::connect(config_sondage, SIGNAL(triggered()), this, SLOT(configsondage()));
-    QAction *new_sondage = menu_serveur->addAction("&lancer un sondage");
-    QObject::connect(new_sondage, SIGNAL(triggered()), this, SLOT(sendproject()));
-    QAction *new_sondage_ref = menu_serveur->addAction("&lancer un sondage de reference");
-    QObject::connect(new_sondage_ref, SIGNAL(triggered()), this, SLOT(sendproject_ref()));
+	QAction *new_sondage = menu_serveur->addAction("&lancer un sondage");
+	QObject::connect(new_sondage, SIGNAL(triggered()), this, SLOT(sendproject()));
+	QAction *new_sondage_ref = menu_serveur->addAction("&lancer un sondage de reference");
+	QObject::connect(new_sondage_ref, SIGNAL(triggered()), this, SLOT(sendproject_ref()));
 
 	QToolBar *toolBarFichier = addToolBar("Fichier");
 	QAction *screenshoot = toolBarFichier->addAction("&Imprimer écran");
 	QObject::connect(screenshoot, SIGNAL(triggered()), this, SLOT(screenshootcurrent()));
 
-    menu_projet->actions().at(3)->setEnabled(0);
-    menu_projet->actions().at(4)->setEnabled(0);
+	menu_projet->actions().at(3)->setEnabled(0);
+	menu_projet->actions().at(4)->setEnabled(0);
 	menu_outil->setEnabled(0);
 	menu_affifchage->setEnabled(0);
 	menu_serveur->setEnabled(0);
@@ -196,44 +201,44 @@ void MainWindow::addquestion2()
 
 void MainWindow::checkprojectname()
 {
-    QRegExp regex("^[^,;' ]+$");
-    QString name = nametmp->text();
+	QRegExp regex("^[^,;' ]+$");
+	QString name = nametmp->text();
 
-    if (name.contains(regex) == 0)
-    {
-        buttontmp->setDisabled(1);
-        labeltmp->setText("<font color='red'>Le nom du nouveau projet ne peux pas contenir d'espace, de ; de ', et ne peut pas être vide</font>");
-    }
-    else
-    {
-        buttontmp->setEnabled(1);
-        labeltmp->setText("<font color='black'>Le nom du nouveau projet ne peux pas contenir d'espace, de ; de ', et ne peut pas être vide</font>");
-    }
+	if (name.contains(regex) == 0)
+	{
+		buttontmp->setDisabled(1);
+		labeltmp->setText("<font color='red'>Le nom du nouveau projet ne peux pas contenir d'espace, de ; de ', et ne peut pas être vide</font>");
+	}
+	else
+	{
+		buttontmp->setEnabled(1);
+		labeltmp->setText("<font color='black'>Le nom du nouveau projet ne peux pas contenir d'espace, de ; de ', et ne peut pas être vide</font>");
+	}
 }
 
 void MainWindow::addproject() // empecher charactere speciaux
 {
-    labeltmp = new QLabel("Le nom du nouveau projet ne peux pas contenir d'espace, de ; de ', et ne peut pas être vide");
+	labeltmp = new QLabel("Le nom du nouveau projet ne peux pas contenir d'espace, de ; de ', et ne peut pas être vide");
 	QWidget *win = new QWidget();
 	QLabel *Labeljeu = new QLabel("Name :");
-    this->nametmp = new QLineEdit();
+	this->nametmp = new QLineEdit();
 
-    Labeljeu->setAlignment(Qt::AlignTop);
+	Labeljeu->setAlignment(Qt::AlignTop);
 
 	//Boutons
-    buttontmp = new QPushButton("Valider");
+	buttontmp = new QPushButton("Valider");
 	QPushButton *b_annuler = new QPushButton("Annuler");
 
 	//Connexions aux slots
-    connect(buttontmp, SIGNAL(clicked()), this, SLOT(addproject2()));
-    connect(buttontmp, SIGNAL(clicked()), win, SLOT(close()));
+	connect(buttontmp, SIGNAL(clicked()), this, SLOT(addproject2()));
+	connect(buttontmp, SIGNAL(clicked()), win, SLOT(close()));
 	connect(b_annuler, SIGNAL(clicked()), win, SLOT(close()));
 
-    //timer name error
+	//timer name error
 
-    timertmp = new QTimer(this);
-    connect(timertmp, SIGNAL(timeout()), this, SLOT(checkprojectname()));
-    timertmp->start(10);
+	timertmp = new QTimer(this);
+	connect(timertmp, SIGNAL(timeout()), this, SLOT(checkprojectname()));
+	timertmp->start(10);
 
 	//Layout
 	QGroupBox *groupbox = new QGroupBox("");
@@ -246,36 +251,36 @@ void MainWindow::addproject() // empecher charactere speciaux
 
 	QGridLayout *layout = new QGridLayout();
 	layout->setAlignment(Qt::AlignTop);
-    layout->addWidget(labeltmp, 1, 0, 1, 2);
-    layout->addWidget(groupbox,2, 0, 1, 2, Qt::AlignTop);
-    layout->addWidget(b_annuler, 3, 0, Qt::AlignLeft);
-    layout->addWidget(buttontmp, 3, 1, Qt::AlignRight);
+	layout->addWidget(labeltmp, 1, 0, 1, 2);
+	layout->addWidget(groupbox,2, 0, 1, 2, Qt::AlignTop);
+	layout->addWidget(b_annuler, 3, 0, Qt::AlignLeft);
+	layout->addWidget(buttontmp, 3, 1, Qt::AlignRight);
 	//setLayout(layout);
 	win->setLayout(layout);
 	win->show();
-    error = 0;
+	error = 0;
 }
 
 void MainWindow::addproject2()
 {
 	QSqlQuery qry;
 
-    QRegExp regex("^[^,;' ]+$");
-    QString name = nametmp->text();
+	QRegExp regex("^[^,;' ]+$");
+	QString name = nametmp->text();
 
-    if (name.contains(regex) == 0)
-    {
-        if (timertmp)
-        {
-            delete timertmp;
-            timertmp == NULL;
-        }
-        error = 1;
-        addproject();
-        return ;
-    }
+	if (name.contains(regex) == 0)
+	{
+		if (timertmp)
+		{
+			delete timertmp;
+			timertmp == NULL;
+		}
+		error = 1;
+		addproject();
+		return ;
+	}
 
-    if ( !qry.exec("CREATE TABLE IF NOT EXISTS project_" + this->nametmp->text() + "_project ("
+	if ( !qry.exec("CREATE TABLE IF NOT EXISTS project_" + this->nametmp->text() + "_project ("
 				" id INTEGER UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT,"
 				" firstname VARCHAR(30),"
 				" lastname VARCHAR(30),"
@@ -288,33 +293,33 @@ void MainWindow::addproject2()
 	else
 		qDebug() << "Table created!";
 
-    qry.prepare(" CREATE TABLE IF NOT EXISTS project_" +  this->nametmp->text() + "_question ("
+	qry.prepare(" CREATE TABLE IF NOT EXISTS project_" +  this->nametmp->text() + "_question ("
 				" id INTEGER UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT,"
 				" question VARCHAR(30),"
 				" groupid INTEGER,"
 				" type VARCHAR(30),"
 				" note BOOLEAN DEFAULT 1,"
-                " sujet TEXT,"
+				" sujet VARCHAR(MAX),"
 				" qgroupid INT DEFAULT 0,"
 				" typef INT DEFAULT 0,"
 				" ref_only INT DEFAULT 0,"
-                " splitchar TEXT NOT NULL DEFAULT '',"
+				" splitchar VARCHAR(MAX) NOT NULL DEFAULT '',"
 				" global BOOL NOT NULL DEFAULT 0,"
-                " value INT NOT NULL DEFAULT -1)");
-    if (!qry.exec())
+				" value INT NOT NULL DEFAULT -1)");
+	if (!qry.exec())
 		qDebug() << "create question" << qry.lastError();
 
-    qry.prepare(" CREATE TABLE IF NOT EXISTS project_" +  this->nametmp->text() + "_groupe ("
+	qry.prepare(" CREATE TABLE IF NOT EXISTS project_" +  this->nametmp->text() + "_groupe ("
 				" id INTEGER UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT,"
 				" groupname VARCHAR(500),"
 				" groupparent INTEGER DEFAULT 0,"
 				" type BOOLEAN DEFAULT 0,"
-                " description TEXT NOT NULL DEFAULT '',"
+				" description VARCHAR(MAX) NOT NULL DEFAULT '',"
 				" gquestion INT DEFAULT 0)" );
-    if (!qry.exec())
+	if (!qry.exec())
 		qDebug() << "create groupe" << qry.lastError();
 
-    qry.prepare(" CREATE TABLE IF NOT EXISTS project_" +  this->nametmp->text() + "_reponse ("
+	qry.prepare(" CREATE TABLE IF NOT EXISTS project_" +  this->nametmp->text() + "_reponse ("
 				" id INTEGER UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT,"
 				" idperson INTEGER,"
 				" name VARCHAR(100),"
@@ -322,9 +327,9 @@ void MainWindow::addproject2()
 				" note INTEGER,"
 				" date_info datetime,"
 				" iteration INTEGER,"
-                " str TEXT NOT NULL DEFAULT '',"
+				" str VARCHAR(MAX) NOT NULL DEFAULT '',"
 				" idquestion INT NOT NULL DEFAULT -1);" );
-    if (!qry.exec())
+	if (!qry.exec())
 		qDebug() << "create reponse" << qry.lastError();
 
 	qry.prepare(" CREATE TABLE IF NOT EXISTS project_all_user ("
@@ -336,17 +341,19 @@ void MainWindow::addproject2()
 				" date_last_etude datetime,"
 				" valid_code varchar(256),"
 				" iteration INTEGER NOT NULL DEFAULT 0);" );
-    if (!qry.exec())
+	if (!qry.exec())
 		qDebug() << "create master table user" << qry.lastError();
 
-	qry.prepare(" CREATE TABLE IF NOT EXISTS project_" +  this->nametmp->text() + "_etude ("
+	qry.prepare(" CREATE TABLE IF NOT EXISTS all_config ("
 				" id INTEGER UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT,"
-                " default_table INTEGER NOT NULL DEFAULT 0,"
-				" iteration INTEGER,"
-				" groupid INTEGER NOT NULL DEFAULT 0,"
-                " iteration_detail TEXT);" );
-    if (!qry.exec())
-		qDebug() << "create all etude" << qry.lastError();
+				" project_name VARCHAR(3000),"
+				" default_table INTEGER NOT NULL DEFAULT 0);" );
+	if (!qry.exec())
+		qDebug() << "create all config" << qry.lastError();
+	qry.prepare(" INSERT INTO all_config ("
+				" project_name=?);" );
+	if (!qry.exec(this->nametmp->text()))
+		qDebug() << "insert all config" << qry.lastError();
 
 	qry.prepare(" CREATE TABLE IF NOT EXISTS all_etude ("
 				" id INTEGER UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT,"
@@ -355,24 +362,24 @@ void MainWindow::addproject2()
 				" groupid INTEGER NOT NULL DEFAULT 0,"
 				" project_name VARCHAR(3000),"
 				" ref BOOLEAN NOT NULL DEFAULT 0,"
-                " iteration_detail TEXT);" );
-    if (!qry.exec())
+				" iteration_detail VARCHAR(MAX));" );
+	if (!qry.exec())
 		qDebug() << "create etude" << qry.lastError();
 
 	this->current.initoroject(this->nametmp->text());
 	//this->current->projectshow(this, this->table, this->currentgref);
 	this->namecurrent = this->nametmp->text();
-    menu_projet->actions().at(3)->setEnabled(1);
-    menu_projet->actions().at(4)->setEnabled(1);
+	menu_projet->actions().at(3)->setEnabled(1);
+	menu_projet->actions().at(4)->setEnabled(1);
 	menu_outil->setEnabled(1);
 	menu_affifchage->setEnabled(1);
 	menu_serveur->setEnabled(1);
-    if (timertmp)
-    {
-        delete timertmp;
-        timertmp == NULL;
-    }
-    this->configproject();
+	if (timertmp)
+	{
+		delete timertmp;
+		timertmp == NULL;
+	}
+	this->configproject();
 }
 
 
@@ -391,7 +398,7 @@ void MainWindow::openproject()
 	QSqlQuery qry;
 	QListWidget *listWidget = new QListWidget();
 
-    listWidget->setWindowModality(Qt::ApplicationModal);
+	listWidget->setWindowModality(Qt::ApplicationModal);
 	if(qry.exec("SELECT table_name FROM INFORMATION_SCHEMA.TABLES WHERE table_name LIKE 'project_%_project'"))
 	{
 		while(qry.next())
@@ -417,57 +424,57 @@ void MainWindow::openproject2(QListWidgetItem *item)
 //	this->current->projectshow(this, this->table, this->currentgref);
 	this->namecurrent = item->text();
 	this->updateproject();
-    menu_projet->actions().at(3)->setEnabled(1);
-    menu_projet->actions().at(4)->setEnabled(1);
-    menu_outil->setEnabled(1);
-    menu_affifchage->setEnabled(1);
-    menu_serveur->setEnabled(1);
+	menu_projet->actions().at(3)->setEnabled(1);
+	menu_projet->actions().at(4)->setEnabled(1);
+	menu_outil->setEnabled(1);
+	menu_affifchage->setEnabled(1);
+	menu_serveur->setEnabled(1);
 	//this->addock();
 }
 
 void MainWindow::supproject()
 {
-    QSqlQuery qry;
-    QListWidget *listWidget = new QListWidget();
+	QSqlQuery qry;
+	QListWidget *listWidget = new QListWidget();
 
-    listWidget->setWindowModality(Qt::ApplicationModal);
-    if(qry.exec("SELECT table_name FROM INFORMATION_SCHEMA.TABLES WHERE table_name LIKE 'project_%_project'"))
-    {
-        while(qry.next())
-        {
-            listWidget->addItem(name_recuperator(qry.value(0).toString()));
-        }
-    }
-    QObject::connect(listWidget, SIGNAL(itemClicked(QListWidgetItem *)),
-                         this, SLOT(supproject2(QListWidgetItem *)));
-    QObject::connect(listWidget, SIGNAL(itemClicked(QListWidgetItem *)),
-                         listWidget, SLOT(close()));
-    listWidget->show();
+	listWidget->setWindowModality(Qt::ApplicationModal);
+	if(qry.exec("SELECT table_name FROM INFORMATION_SCHEMA.TABLES WHERE table_name LIKE 'project_%_project'"))
+	{
+		while(qry.next())
+		{
+			listWidget->addItem(name_recuperator(qry.value(0).toString()));
+		}
+	}
+	QObject::connect(listWidget, SIGNAL(itemClicked(QListWidgetItem *)),
+						 this, SLOT(supproject2(QListWidgetItem *)));
+	QObject::connect(listWidget, SIGNAL(itemClicked(QListWidgetItem *)),
+						 listWidget, SLOT(close()));
+	listWidget->show();
 }
 
 void MainWindow::supproject2(QListWidgetItem *item)
 {
-    QSqlQuery qry;
+	QSqlQuery qry;
 
-    if (item->text().compare(namecurrent) == 0)
-    {
-        return ;
-    }
-    qry.prepare( "DROP TABLE project_" + item->text() + "_project;" );
-    if( !qry.exec() )
-        qDebug() << qry.lastError();
-    qry.prepare( "DROP TABLE project_" + item->text() + "_question;" );
-    if( !qry.exec() )
-        qDebug() << qry.lastError();
-    qry.prepare( "DROP TABLE project_" + item->text() + "_reponse;" );
-    if( !qry.exec() )
-        qDebug() << qry.lastError();
-    qry.prepare( "DROP TABLE project_" + item->text() + "_groupe;" );
-    if( !qry.exec() )
-        qDebug() << qry.lastError();
-    qry.prepare( "DROP TABLE project_" + item->text() + "_etude;" );
-    if( !qry.exec() )
-        qDebug() << qry.lastError();
+	if (item->text().compare(namecurrent) == 0)
+	{
+		return ;
+	}
+	qry.prepare( "DROP TABLE project_" + item->text() + "_project;" );
+	if( !qry.exec() )
+		qDebug() << qry.lastError();
+	qry.prepare( "DROP TABLE project_" + item->text() + "_question;" );
+	if( !qry.exec() )
+		qDebug() << qry.lastError();
+	qry.prepare( "DROP TABLE project_" + item->text() + "_reponse;" );
+	if( !qry.exec() )
+		qDebug() << qry.lastError();
+	qry.prepare( "DROP TABLE project_" + item->text() + "_groupe;" );
+	if( !qry.exec() )
+		qDebug() << qry.lastError();
+	qry.prepare( "DROP TABLE project_" + item->text() + "_etude;" );
+	if( !qry.exec() )
+		qDebug() << qry.lastError();
 }
 
 void MainWindow::addock()
@@ -577,8 +584,8 @@ void MainWindow::sendprojectauxi(QString str)
 {
 	QSqlQuery qry;
 
-    QString body = "<p>Madame/Monsieur,</p><p>Dans le cadre de l'étude murano veuiller répondre au formulaire"
-                   "en cliquant <a href=\"etudemurano.alwaysdata.net/" + str;
+	QString body = "<p>Madame/Monsieur,</p><p>Dans le cadre de l'étude murano veuiller répondre au formulaire"
+				   "en cliquant <a href=\"etudemurano.alwaysdata.net/" + str;
 	QStringList listmail;
 
 //	this->updateproject();
@@ -591,14 +598,14 @@ void MainWindow::sendprojectauxi(QString str)
 	while (i < listmail.size())
 	{
 		qDebug() << listmail.at(i);
-        bodytmp = body + "?p=" + listmail.at(i + 1) + "&s=" + namecurrent + "\">ici</a></p>";
+		bodytmp = body + "?p=" + listmail.at(i + 1) + "&s=" + namecurrent + "\">ici</a></p>";
 		sendmail(listmail.at(i), bodytmp); // OPTI
 		i += 2;
-    }
-    /*qry.prepare( " INSERT INTO all_etude (iteration , groupid , project_name) VALUES ( ? , ? , ? );");
+	}
+	/*qry.prepare( " INSERT INTO all_etude (iteration , groupid , project_name) VALUES ( ? , ? , ? );");
 	qry.addBindValue(1);
 	qry.addBindValue(0);
-    qry.addBindValue(this->current.name);*/
+	qry.addBindValue(this->current.name);*/
 	if(!qry.exec())
 		qDebug() << qry.lastError();
 }
@@ -611,7 +618,7 @@ void MainWindow::sendproject()
 	if(!qry.exec() )
 		qDebug() << qry.lastError();
 	else
-        this->sendprojectauxi("directlogin.php");
+		this->sendprojectauxi("directlogin.php");
 }
 
 void MainWindow::sendproject_ref()
@@ -622,7 +629,7 @@ void MainWindow::sendproject_ref()
 	if(!qry.exec() )
 		qDebug() << qry.lastError();
 	else
-        this->sendprojectauxi("directlogin.php");
+		this->sendprojectauxi("directlogin.php");
 }
 
 void MainWindow::mailSent(QString status)
@@ -634,31 +641,30 @@ void MainWindow::mailSent(QString status)
 
 //recuperation des donnee en ligne
 
+void MainWindow::select_first_table()
+{
+	if (current.default_table == 0)
+		afficherbasetable->trigger();
+	if (current.default_table == 1)
+		afficherpers->trigger();
+	if (current.default_table == 2)
+		afficherpers->trigger();
+}
+
 void MainWindow::updateproject()
 {
-	this->current.initoroject(this->namecurrent);
-	if (this->ov == NULL)
-	{
-		this->ov = new overview(this, &(this->current), this->currentgref, &(this->showmod));//, "overview";
-		this->cw->addTab(this->ov, "resumé");
-	}
+	if (this->ov)
+		affichergraphiquecompare->trigger();
 	if (this->table)
-		delete this->table;
+		afficherbasetable->trigger();
 	if (this->tableg)
-	{
-		delete this->tableg;
-		tableg = NULL;
-	}
+		afficherglobalrep->trigger();
 	if (this->tablep)
-	{
-		delete this->tablep;
-		tablep = NULL;
-	}
-	this->table = new tableshow(&(this->current), this, 0);
-	this->table->showtable(this->currentgref, this->currentgqref);
-	this->cw->addTab(table, "tableaux");
-	delete this->ov;
-	this->ov = NULL;
+		afficherpers->trigger();
+
+	this->current.initoroject(this->namecurrent);
+
+	select_first_table();
 	this->addock();
 
 	if (this->current.getNbfactnref() == 0)
@@ -678,18 +684,18 @@ void MainWindow::updateproject()
 
 void MainWindow::convert_to_xlsx()
 {
-    tableshow * tmp;
-    if (this->cw->currentWidget() == this->table)
-        tmp = table;
-    else if (this->cw->currentWidget() == this->tableg)
-        tmp = tableg;
-    else if (this->cw->currentWidget() == this->tablep)
-        tmp = tablep;
-    else
-        warning("no table selected");
-    QString fichier = QFileDialog::getSaveFileName(this, "Destination", "Save", "Excell files (*.xlsx)");
-    if (tmp)
-        tab_to_fichier(fichier, tmp);
+	tableshow * tmp;
+	if (this->cw->currentWidget() == this->table)
+		tmp = table;
+	else if (this->cw->currentWidget() == this->tableg)
+		tmp = tableg;
+	else if (this->cw->currentWidget() == this->tablep)
+		tmp = tablep;
+	else
+		warning("no table selected");
+	QString fichier = QFileDialog::getSaveFileName(this, "Destination", "Save", "Excell files (*.xlsx)");
+	if (tmp)
+		tab_to_fichier(fichier, tmp);
 	else
 		//QMessageBox::Warning(this, tr("warning"), tr("aucun projet selectioné"));
 		qDebug() << "no project selected";
@@ -716,6 +722,23 @@ void	MainWindow::valmodechange(bool checked)
 	current.val = val;
 	emit valchanged(val);
 }
+
+
+void	MainWindow::baserep(bool checked)
+{
+	if (checked)
+	{
+		this->table = new tableshow(&(this->current), this, 0);
+		this->table->showtable(this->currentgref, this->currentgqref);
+		this->cw->addTab(table, "tableaux");
+	}
+	else if (table)
+	{
+		delete table;
+		table = NULL;
+	}
+}
+
 
 void	MainWindow::globalrep(bool checked)
 {
@@ -745,6 +768,20 @@ void	MainWindow::personrep(bool checked)
 		delete tablep;
 		tablep = NULL;
 	}
+}
+
+void MainWindow::graphiquecrd(bool checked)
+{
+    if (checked)
+    {
+        this->ov = new overview(this, &(this->current), this->currentgref, &(this->showmod));
+        this->cw->addTab(this->ov, "Comparaison reference donnée");
+    }
+    else if (ov)
+    {
+        delete ov;
+        ov = NULL;
+    }
 }
 
 void	MainWindow::changescope2(QTreeWidgetItem *item)
@@ -781,11 +818,11 @@ void	MainWindow::showbarchartref()
 
 void MainWindow::updatetable()
 {
-    if (table)
-    {
-        table->reinit(&(current), this);
-        table->showtable(currentgref, currentgqref);
-    }
+	if (table)
+	{
+		table->reinit(&(current), this);
+		table->showtable(currentgref, currentgqref);
+	}
 }
 
 void	MainWindow::configproject(){menuconfigproject *m = new menuconfigproject(this->namecurrent, &(this->current), this);m->show();}
@@ -821,30 +858,30 @@ void	MainWindow::screenshootcurrent()
 		if (fileDialog.exec() != QDialog::Accepted)
 			return;
 		const QString fileName = fileDialog.selectedFiles().first();
-        if (!pixmap.save(fileName))
-        {
+		if (!pixmap.save(fileName))
+		{
 		//	QMessageBox::warning(this, tr("Save Error"), tr("The image could not be saved to \"%1\".")
 		//						 .arg(QDir::toNativeSeparators(fileName)));
 			qDebug() << tr("The image could not be saved to \"%1\".").arg(QDir::toNativeSeparators(fileName));
 		}
 }
 
-void    MainWindow::Backroundchange()
+void	MainWindow::Backroundchange()
 {
-    QString file = QFileDialog::getSaveFileName(this, "Choisiser une nouvelle image", "~", "Image (*.png)");
-    Uploader u;
+	QString file = QFileDialog::getSaveFileName(this, "Choisiser une nouvelle image", "~", "Image (*.png)");
+	Uploader u;
 
-    u.start(file);
-//    QProgressDialog progress("Copying files...", "Abort Copy", 0, u., this);
-//    progress.setWindowModality(Qt::WindowModal);
+	u.start(file);
+//	QProgressDialog progress("Copying files...", "Abort Copy", 0, u., this);
+//	progress.setWindowModality(Qt::WindowModal);
 
-//    for (int i = 0; i < numFiles; i++)
-//    {
-//        progress.setValue(i);
+//	for (int i = 0; i < numFiles; i++)
+//	{
+//		progress.setValue(i);
 
-//        if (progress.wasCanceled())
-//            break;
-//        //... copy one file
-//    }
-//    progress.setValue(numFiles);
+//		if (progress.wasCanceled())
+//			break;
+//		//... copy one file
+//	}
+//	progress.setValue(numFiles);
 }

@@ -239,7 +239,7 @@ void project::initvar()
 	listp.clear();
 	listqgroup.clear();
 	listquestion.clear();
-    default_table = -1;
+    default_table = 0;
 }
 
 void project::initoroject(QString fproject)
@@ -252,8 +252,17 @@ void project::initoroject(QString fproject)
 	this->addgroup("ALL", -1, 0, 0, "", 0);
 	this->addgroup("ALL", -1, 0, 1, "", 0);
 
+    if(query.exec("SELECT default_table FROM all_config WHERE project_name=" + fproject))
+    {
+        while(query.next())
+        {
+            default_table = (query.value(0).toInt());
+        }
+    }
+    else
+        qDebug() << "error get info_project :" << query.lastError();
 	qDebug() << "init groupe";timerdebug.start();
-	if(query.exec(("SELECT groupname, groupparent, id, type, description, gquestion FROM project_" + fproject + "_groupe")))
+    if(query.exec("SELECT groupname, groupparent, id, type, description, gquestion FROM project_" + fproject + "_groupe"))
 	{
 		while(query.next())
 		{
@@ -270,7 +279,7 @@ void project::initoroject(QString fproject)
 	qDebug() << "init group time" << timerdebug.elapsed() << "milliseconds";
 
 	qDebug() << "init question";timerdebug.start();
-	if(query.exec(("SELECT question,groupid,id,qgroupid,sujet,type,typef,splitchar,value,ref_only FROM project_" + fproject + "_question")))
+    if(query.exec("SELECT question,groupid,id,qgroupid,sujet,type,typef,splitchar,value,ref_only FROM project_" + fproject + "_question"))
 	{
 		while(query.next())
 		{
@@ -292,7 +301,7 @@ void project::initoroject(QString fproject)
 	qDebug() << "init question time" << timerdebug.elapsed() << "milliseconds";
 
 	qDebug() << "init persone";timerdebug.start();
-	if(query.exec(("SELECT id, firstname,lastname,email,groupid FROM project_" + fproject + "_project")))
+    if(query.exec("SELECT id, firstname,lastname,email,groupid FROM project_" + fproject + "_project"))
 	{
 		while(query.next())
 		{
@@ -309,7 +318,7 @@ void project::initoroject(QString fproject)
 	qDebug() << "init persone time" << timerdebug.elapsed() << "milliseconds";
 
 	qDebug() << "init fact";timerdebug.start();
-	if(query.exec(("SELECT idperson,name,time,note,date_info, iteration, idquestion FROM project_" + fproject + "_reponse")))
+    if(query.exec("SELECT idperson,name,time,note,date_info, iteration, idquestion FROM project_" + fproject + "_reponse"))
 	{
 		qDebug() << "query select reponse time" << timerdebug.elapsed() << "milliseconds";
 		while(query.next())

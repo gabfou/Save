@@ -72,6 +72,8 @@ private slots:
     void supproject();
     void supproject2(QListWidgetItem *item);
     void checkprojectname();
+    void baserep(bool checked);
+    void graphiquecrd(bool checked);
 private:
 	Ui::MainWindow *ui;
 	QWindow *addprojectwindow;
@@ -91,12 +93,18 @@ private:
     QMenu *menu_outil;
     QMenu *menu_projet;
     QMenu *menu_serveur;
+    QMenu *menu_graphique;
     int error = 0;
+    QAction *afficherglobalrep;
+    QAction *afficherpers;
+    QAction *afficherbasetable;
+    QAction *affichergraphiquecompare;
 
 
 	void sendprojectauxi(QString str);
 	void addock();
 
+    void select_first_table();
 signals:
      void grefchange(int gref);
      void gqrefchange(int gqref);
