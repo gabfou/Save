@@ -14,7 +14,7 @@ grouptree::grouptree(MainWindow *m, vector<group> & g, int i) : g(g), m(m), i(i)
 {
 	if (g.empty())
 		this->addTopLevelItem(new QTreeWidgetItem((QTreeWidget*)0, QStringList(QString("Aucun projet ouvert"))));
-    this->addTopLevelItem(new grouptreeitem(QStringList(QString(g[0].getName())), &(m->current), 0, g[0].type, i, (QTreeWidget*)0));
+	this->addTopLevelItem(new grouptreeitem(QStringList(QString(g[0].getName())), &(m->current), 0, g[0].type, i, (QTreeWidget*)0));
 
 	this->setCurrentItem(this->topLevelItem(0));
 
@@ -25,9 +25,9 @@ grouptree::grouptree(MainWindow *m, vector<group> & g, int i) : g(g), m(m), i(i)
 	this->addAction(newg);
 	connect(newg, SIGNAL(triggered()), this, SLOT(addgroupintree()));
 
-    newqg = new QAction(QString("Nouvelle question globale"), this);
-    this->addAction(newqg);
-    connect(newqg, SIGNAL(triggered()), this, SLOT(addquestglobintree()));
+	newqg = new QAction(QString("Nouvelle question globale"), this);
+	this->addAction(newqg);
+	connect(newqg, SIGNAL(triggered()), this, SLOT(addquestglobintree()));
 
 	supg = new QAction(QString("Suprimer"), this);
 	this->addAction(supg);
@@ -53,9 +53,9 @@ grouptree::grouptree(MainWindow *m, vector<group> & g, int i) : g(g), m(m), i(i)
 	this->addAction(supp);
 	connect(supp, SIGNAL(triggered()), this, SLOT(suppersonintree()));
 
-    persinit = new QAction(QString("initialiser personne"), this);
-    this->addAction(persinit);
-    connect(persinit, SIGNAL(triggered()), this, SLOT(initpersonintree()));
+	persinit = new QAction(QString("initialiser personne"), this);
+	this->addAction(persinit);
+	connect(persinit, SIGNAL(triggered()), this, SLOT(initpersonintree()));
 
 	connect(this, SIGNAL(itemSelectionChanged()), this, SLOT(contextmenuselect()));
 	contextmenuselect();
@@ -77,19 +77,19 @@ void	grouptree::contextmenuselect()
 	newp->setVisible(false);
 	supp->setVisible(false);
 	modifdg->setVisible(false);
-    persinit->setVisible(false);
-    newqg->setVisible(false);
+	persinit->setVisible(false);
+	newqg->setVisible(false);
 	if (tmp)
 	{
 		newg->setVisible(true);
-        if (tmp->getId() > 0)
-            supg->setVisible(true);
+		if (tmp->getId() > 0)
+			supg->setVisible(true);
 		modifdg->setVisible(true);
 		if (g[0].type == 1 && i == 1)
-        {
-            newqg->setVisible(true);
+		{
+			newqg->setVisible(true);
 			newq->setVisible(true);
-        }
+		}
 		else if (g[0].type == 0 && i == 1)
 			newp->setVisible(true);
 		return ;
@@ -101,45 +101,45 @@ void	grouptree::contextmenuselect()
 	}
 	else if (tmp3 && i == 1)
 	{
-        persinit->setVisible(true);
+		persinit->setVisible(true);
 		supp->setVisible(true);
 		return ;
 	}
 }
 
-void    grouptree::initpersonintree()
+void	grouptree::initpersonintree()
 {
-    char mdp[7];
-    QSqlQuery qry;
+	char mdp[7];
+	QSqlQuery qry;
 
-    int id = (dynamic_cast<persontreeitem*>(this->currentItem())->id);
-    QString email = m->current.listp[id].email;
+	int id = (dynamic_cast<persontreeitem*>(this->currentItem())->id);
+	QString email = m->current.listp[id].email;
 
-    gen_random(mdp, 6);
-    QString mdphash = "poke";
-    mdphash += mdp;
-    mdphash += "mon";
+	gen_random(mdp, 6);
+	QString mdphash = "poke";
+	mdphash += mdp;
+	mdphash += "mon";
 
-    qry.prepare(("UPDATE project_" + m->current.name + "_project Set password=? WHERE id=?;"));
+	qry.prepare(("UPDATE project_" + m->current.name + "_project Set password=? WHERE id=?;"));
 
-    qry.addBindValue(QCryptographicHash::hash(mdphash.toUtf8(), QCryptographicHash::Sha384).toHex());
-    qry.addBindValue(id);
-    if (!qry.exec())
-    {
-        qDebug() << qry.lastError() << "grouptree::initpersonintree";
-        return ;
-    }
-    sendmail(email, "Bonjour votre mot de passse tout au long de l'étude sera " + QString(mdp) + "\r\n");
-    qry.prepare( ("INSERT INTO project_all_user (idperson, email, password, name_table) VALUES ( ? , ? , ? , ? );") );
-    qry.addBindValue(id);
-    qry.addBindValue(email);
-    qry.addBindValue(QCryptographicHash::hash(mdphash.toUtf8(), QCryptographicHash::Sha384).toHex());
-    qry.addBindValue(m->current.name);
-    if (!qry.exec())
-    {
-        qDebug() << qry.lastError() << "grouptree::initpersonintree 2";
-        return ;
-    }
+	qry.addBindValue(QCryptographicHash::hash(mdphash.toUtf8(), QCryptographicHash::Sha384).toHex());
+	qry.addBindValue(id);
+	if (!qry.exec())
+	{
+		qDebug() << qry.lastError() << "grouptree::initpersonintree";
+		return ;
+	}
+	sendmail(email, "Bonjour votre mot de passse tout au long de l'étude sera " + QString(mdp) + "\r\n");
+	qry.prepare( ("INSERT INTO project_all_user (idperson, email, password, name_table) VALUES ( ? , ? , ? , ? );") );
+	qry.addBindValue(id);
+	qry.addBindValue(email);
+	qry.addBindValue(QCryptographicHash::hash(mdphash.toUtf8(), QCryptographicHash::Sha384).toHex());
+	qry.addBindValue(m->current.name);
+	if (!qry.exec())
+	{
+		qDebug() << qry.lastError() << "grouptree::initpersonintree 2";
+		return ;
+	}
 }
 
 void grouptree::setcurrentgroup(int id, QTreeWidgetItem *dontgiveit)
@@ -157,9 +157,9 @@ void grouptree::setcurrentgroup(int id, QTreeWidgetItem *dontgiveit)
 		setcurrentgroup(id, dontgiveit->child(i));
 }
 
-void    grouptree::setVisiblenongroup(bool v)
+void	grouptree::setVisiblenongroup(bool v)
 {
-        dynamic_cast<grouptreeitem*>(this->topLevelItem(0))->setVisiblenongroup(v);
+		dynamic_cast<grouptreeitem*>(this->topLevelItem(0))->setVisiblenongroup(v);
 }
 
 void	grouptree::addgroupintree()
@@ -170,7 +170,7 @@ void	grouptree::addgroupintree()
 	this->openPersistentEditor(this->tmp);
 	this->tmpid = dynamic_cast<grouptreeitem*>(this->currentItem())->getId();
 	this->setCurrentItem(this->tmp);
-    cotmp = connect(this, SIGNAL(itemChanged(QTreeWidgetItem *, int)), this, SLOT(addgroupintree2(QTreeWidgetItem *)), Qt::UniqueConnection);
+	cotmp = connect(this, SIGNAL(itemChanged(QTreeWidgetItem *, int)), this, SLOT(addgroupintree2(QTreeWidgetItem *)), Qt::UniqueConnection);
 	/*if (this->nametmp != NULL)
 		delete this->nametmp;
 	this->nametmp = new QLineEdit();
@@ -182,14 +182,14 @@ void	grouptree::addgroupintree()
 
 void	grouptree::addgroupintree2(QTreeWidgetItem *item)
 {
-    disconnect(cotmp);
+	disconnect(cotmp);
 	qDebug() << item->text(0);
-    int niark = sqlo::addgroup(&(m->current), m->namecurrent, item->text(0), tmpid, g[tmpid].type, "", 0);
-    item->parent()->addChild(new grouptreeitem(QStringList(QString(g[niark].getName())), &(m->current), niark, g[niark].type, i, (QTreeWidget*)0));
+	int niark = sqlo::addgroup(&(m->current), m->namecurrent, item->text(0), tmpid, g[tmpid].type, "", 0);
+	item->parent()->addChild(new grouptreeitem(QStringList(QString(g[niark].getName())), &(m->current), niark, g[niark].type, i, (QTreeWidget*)0));
 	delete item;
 	item = NULL;
 	qDebug() << "upadte ?";
-    m->updatetable();
+	m->updatetable();
 	qDebug() << "upadte";
 }
 
@@ -213,30 +213,30 @@ void	grouptree::addquestintree()
 
 void	grouptree::addquestintree2(QTreeWidgetItem *item, int column)
 {
-    Q_UNUSED(column);
-    //qDebug() << item->text(0);
-    disconnect(cotmp);
-    int id = sqlo::addquestion(&(m->current), item->text(0), 0, "", 0, "", dynamic_cast<grouptreeitem*>(item->parent())->getId(), 0, 0, "", 1, 0, -1);
-    item->parent()->addChild(new questiontreeitem(QStringList(item->text(0)) , id, (QTreeWidget*)0));
+	Q_UNUSED(column);
+	//qDebug() << item->text(0);
+	disconnect(cotmp);
+	int id = sqlo::addquestion(&(m->current), item->text(0), 0, "", 0, "", dynamic_cast<grouptreeitem*>(item->parent())->getId(), 0, 0, "", 1, 0, -1);
+	item->parent()->addChild(new questiontreeitem(QStringList(item->text(0)) , id, (QTreeWidget*)0));
 
-    m->updatetable();
+	m->updatetable();
 	delete item;
 	item = NULL;
 }
 
 void	grouptree::addquestglobintree()
 {
-    infoqtmp = new infoquestion(&(m->current), m, 0);
-    infoqtmp->setquestionmod(dynamic_cast<grouptreeitem*>(this->currentItem())->getId());
-    infoqtmp->show();
+	infoqtmp = new infoquestion(&(m->current), m, 0);
+	infoqtmp->setquestionmod(dynamic_cast<grouptreeitem*>(this->currentItem())->getId());
+	infoqtmp->show();
 
-    connect(infoqtmp->b_update, SIGNAL(clicked(bool)), this, SLOT(addquestglobintree2()));
+	connect(infoqtmp->b_update, SIGNAL(clicked(bool)), this, SLOT(addquestglobintree2()));
 }
 
 void	grouptree::addquestglobintree2()
 {
-    dynamic_cast<grouptreeitem*>(this->currentItem())->addquestglobinttree(infoqtmp->getquestioncopy());
-    m->updatetable();
+	dynamic_cast<grouptreeitem*>(this->currentItem())->addquestglobinttree(infoqtmp->getquestioncopy());
+	m->updatetable();
 }
 
 void	grouptree::addpersonintree()
@@ -259,29 +259,29 @@ void	grouptree::addpersonintree()
 
 void	grouptree::addpersonintree2(QTreeWidgetItem *item, int column)
 {
-    qDebug() << item->text(0);
+	qDebug() << item->text(0);
 
-    disconnect(cotmp);
-    int id = sqlo::addperson(&(m->current), item->text(0).section(" ", 0, 0), item->text(0).section(" ", 1, 1), "not defined", dynamic_cast<grouptreeitem*>(item->parent())->getId());
-    item->parent()->addChild(new persontreeitem(QStringList(item->text(0)) , id, (QTreeWidget*)0));
-    m->updatetable();
+	disconnect(cotmp);
+	int id = sqlo::addperson(&(m->current), item->text(0).section(" ", 0, 0), item->text(0).section(" ", 1, 1), "not defined", dynamic_cast<grouptreeitem*>(item->parent())->getId());
+	item->parent()->addChild(new persontreeitem(QStringList(item->text(0)) , id, (QTreeWidget*)0));
+	m->updatetable();
 	delete item;
 	item = NULL;
 }
 
 void	grouptree::supgroupintree()
 {
-    if (dynamic_cast<grouptreeitem*>(this->currentItem())->getId() < 1)
-        return ;
-    sqlo::supgroup(m->namecurrent, dynamic_cast<grouptreeitem*>(this->currentItem())->getId(), g);
+	if (dynamic_cast<grouptreeitem*>(this->currentItem())->getId() < 1)
+		return ;
+	sqlo::supgroup(m->namecurrent, dynamic_cast<grouptreeitem*>(this->currentItem())->getId(), g);
 	QTreeWidgetItem *item = this->currentItem();
 	delete item;
 	item = NULL;
-    if (m->table)
-    {
-        m->table->reinit(&(m->current), m);
-        m->table->showtable( m->currentgref, m->currentgqref);
-    }
+	if (m->table)
+	{
+		m->table->reinit(&(m->current), m);
+		m->table->showtable( m->currentgref, m->currentgqref);
+	}
 }
 
 void	grouptree::modifdgroupintree()
@@ -294,7 +294,7 @@ void	grouptree::modifdgroupintree()
 	//Boutons
 	QPushButton *b_valider = new QPushButton("Valider");
 
-    //Connexions aux slots
+	//Connexions aux slots
 	connect(b_valider, SIGNAL(clicked()), this, SLOT(modifdgroupintree2()));
 	connect(b_valider, SIGNAL(clicked()), win, SLOT(close()));
 
@@ -309,26 +309,26 @@ void	grouptree::modifdgroupintree()
 
 void	grouptree::modifdgroupintree2()
 {
-    sqlo::sqlupdate(("project_" + m->current.name + "_groupe"), "description", texttmp->toPlainText(), dynamic_cast<grouptreeitem*>(this->currentItem())->getId());
+	sqlo::sqlupdate(("project_" + m->current.name + "_groupe"), "description", texttmp->toPlainText(), dynamic_cast<grouptreeitem*>(this->currentItem())->getId());
 	g[dynamic_cast<grouptreeitem*>(this->currentItem())->getId()].description = texttmp->toPlainText();
 }
 
 void	grouptree::supquestintree()
 {
-    sqlo::supquest(&(m->current), m->namecurrent, dynamic_cast<questiontreeitem*>(this->currentItem())->id);
+	sqlo::supquest(&(m->current), m->namecurrent, dynamic_cast<questiontreeitem*>(this->currentItem())->id);
 	QTreeWidgetItem *item = this->currentItem();
 	delete item;
 	item = NULL;
-    m->updatetable();
+	m->updatetable();
 }
 
 void	grouptree::suppersonintree()
 {
-    sqlo::supperson(&(m->current), m->namecurrent, dynamic_cast<persontreeitem*>(this->currentItem())->id);
+	sqlo::supperson(&(m->current), m->namecurrent, dynamic_cast<persontreeitem*>(this->currentItem())->id);
 	QTreeWidgetItem *item = this->currentItem();
 	delete item;
 	item = NULL;
-    m->updatetable();
+	m->updatetable();
 }
 
 grouptree::~grouptree()

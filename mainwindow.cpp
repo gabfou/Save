@@ -304,11 +304,11 @@ void MainWindow::addproject2()
 				" groupid INTEGER,"
 				" type VARCHAR(30),"
 				" note BOOLEAN DEFAULT 1,"
-				" sujet VARCHAR(MAX),"
+				" sujet TEXT,"
 				" qgroupid INT DEFAULT 0,"
 				" typef INT DEFAULT 0,"
 				" ref_only INT DEFAULT 0,"
-				" splitchar VARCHAR(MAX) NOT NULL DEFAULT '',"
+				" splitchar TEXT NOT NULL DEFAULT '',"
 				" global BOOL NOT NULL DEFAULT 0,"
 				" value INT NOT NULL DEFAULT -1)");
 	if (!qry.exec())
@@ -319,7 +319,7 @@ void MainWindow::addproject2()
 				" groupname VARCHAR(500),"
 				" groupparent INTEGER DEFAULT 0,"
 				" type BOOLEAN DEFAULT 0,"
-				" description VARCHAR(MAX) NOT NULL DEFAULT '',"
+				" description TEXT NOT NULL DEFAULT '',"
 				" gquestion INT DEFAULT 0)" );
 	if (!qry.exec())
 		qDebug() << "create groupe" << qry.lastError();
@@ -332,7 +332,7 @@ void MainWindow::addproject2()
 				" note INTEGER,"
 				" date_info datetime,"
 				" iteration INTEGER,"
-				" str VARCHAR(MAX) NOT NULL DEFAULT '',"
+				" str TEXT NOT NULL DEFAULT '',"
 				" idquestion INT NOT NULL DEFAULT -1);" );
 	if (!qry.exec())
 		qDebug() << "create reponse" << qry.lastError();
@@ -367,7 +367,7 @@ void MainWindow::addproject2()
 				" groupid INTEGER NOT NULL DEFAULT 0,"
 				" project_name VARCHAR(3000),"
 				" ref BOOLEAN NOT NULL DEFAULT 0,"
-				" iteration_detail VARCHAR(MAX));" );
+				" iteration_detail TEXT);" );
 	if (!qry.exec())
 		qDebug() << "create etude" << qry.lastError();
 
