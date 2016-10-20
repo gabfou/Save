@@ -622,7 +622,7 @@ int	sqlo::addgroup(project *p, QString nameproject, QString name, int groupparen
     QSqlQuery qry;
 
     if (id != -1)
-        qry.prepare(("UPDATE project_" + p->name + "_groupe Set groupname=?, groupparrent=?, type=?, description=?, gquestion=? WHERE id=?;"));
+        qry.prepare(("UPDATE project_" + p->name + "_groupe Set groupname=?, groupparent=?, type=?, description=?, gquestion=? WHERE id=?;"));
     else
         qry.prepare( "INSERT INTO project_" + nameproject + "_groupe (groupname ,groupparent ,type, description, gquestion) VALUES ( ?, ?, ?, ?, ? );" );
     qry.addBindValue(name);

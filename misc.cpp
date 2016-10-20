@@ -91,7 +91,6 @@ void gen_random(char *s, const int len)
     {
 		s[i] = alphanum[rand() % (sizeof(alphanum) - 1)];
 	}
-
 	s[len] = 0;
 }
 
@@ -110,10 +109,15 @@ QList<int> QStrltoQil(QStringList &src)
 
 void sendmail(QString mail, QString body)
 {
+    QString signature = "<Br/><p><b>MURAnO Conseil</b><Br/>"
+                        "www.muranoconseil.com<Br/>"
+                        "21, rue Vauthier<Br/>"
+                        "92100 Boulogne-Billancourt<Br/>"
+                        "<img src=\"http://etudemurano.alwaysdata.net/logomieux.jpg\" alt=\"logo murano\" class = logo></p>";
     QString username = "etudemurano@alwaysdata.net";
     QString passwd = "t4x5akda";
     QString server = "smtp-etudemurano.alwaysdata.net";
     Smtp	*smtp = new Smtp(username, passwd, server);
-    smtp->sendMail("etudemurano@alwaysdata.net", mail, "Etude muranoconseil",  body + "\r\n\r\nMURAnO Conseil : Marketing / Retail / Supply Chain");
+    smtp->sendMail("etudemurano@alwaysdata.net", mail, "Etude muranoconseil",  body + signature);
     //delete smtp;
 }

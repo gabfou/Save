@@ -591,8 +591,14 @@ void MainWindow::sendprojectauxi(QString str)
 {
 	QSqlQuery qry;
 
-	QString body = "<p>Madame/Monsieur,</p><p>Dans le cadre de l'étude murano veuiller répondre au formulaire"
-				   "en cliquant <a href=\"etudemurano.alwaysdata.net/" + str;
+    QString body = "<p>Bonjour,</p><Br/>"
+                   "<p>Nous effectuons actuellement une mission pour le compte de votre société.</p>"
+                   "<p>Dans ce cadre, le cabinet Murano vous donne la parole !</p>"
+                   "<p>Merci de prendre quelques minutes de votre temps pour répondre à notre questionnaire :</p>"
+                   "<a href=\"etudemurano.alwaysdata.net/" + str;
+    QString bodyend = "<p>Si vous avez des questions ou des difficultés avec le lien, n’hésitez pas à nous contacter.</p><Br/>"
+                      "<p>Nous vous remercions de votre participation !</p>"
+                      "<p>L’équipe MURAnO</p>";
 	QStringList listmail;
 
 //	this->updateproject();
@@ -605,7 +611,7 @@ void MainWindow::sendprojectauxi(QString str)
 	while (i < listmail.size())
 	{
 		qDebug() << listmail.at(i);
-		bodytmp = body + "?p=" + listmail.at(i + 1) + "&s=" + namecurrent + "\">ici</a></p>";
+        bodytmp = body + "?p=" + listmail.at(i + 1) + "&s=" + namecurrent + "\"><u>ACCEDER AU QUESTIONNAIRE<u/></a></p>" + bodyend;
 		sendmail(listmail.at(i), bodytmp); // OPTI
 		i += 2;
 	}
