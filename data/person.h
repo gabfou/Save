@@ -49,4 +49,6 @@ public:
     float personrefshowcaseval(question &qname);
     float personshowcaseval(question &qname, int ref);
     float personshowcase(question &qname, int ref);
+    float personshowcasevaltype2(question &qname, QList<fact> lf, QVector<int> *nb) const;
+    float personshowcasevaltype2(question &qname, int ref, QVector<int> *nb);
 };

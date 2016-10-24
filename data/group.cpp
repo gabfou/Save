@@ -126,6 +126,35 @@ t_groupref group::groupnamerep(const vector<question> &questionlist, int ref, QL
 	return ret;
 }
 
+QString group::grouprepvaltype2(question tmp2, int ref)
+{
+    list<person>::iterator tmp;
+    QVector<int> nb(tmp2.liststr.size() + 1);
+    float l;
+    QString ret;
+
+    l = 0;
+    tmp = this->listp.begin();
+    while (tmp != this->listp.end())
+    {
+        if (((*tmp).personshowcasevaltype2(tmp2, ref, &nb)) > -0.1)
+            l++;
+        tmp++;
+    }
+    qDebug() << "niark 1";
+    if (l == 0)
+        return ("NA");
+    qDebug() << "niark 2";
+    int i = -1;
+    while(++i < tmp2.liststr.size() + 1)
+    {
+        if (i != 0)
+            ret += " | ";
+        ret += QString::number(nb[i] *100 / l) + "%";
+    }
+    return (ret);
+}
+
 QString group::grouprepval(question tmp2, int ref)
 {
     list<person>::iterator tmp;
@@ -134,28 +163,17 @@ QString group::grouprepval(question tmp2, int ref)
     float inttmp;
 
     if (tmp2.type == 2)
-        return ("reponse non chiffrer");
+        return (grouprepvaltype2(tmp2, ref));
     // int
     nb = 0;
     l = 0;
     tmp = this->listp.begin();
     while (tmp != this->listp.end())
     {
-        if (ref == 0)
+        if ((inttmp = (*tmp).personshowcaseval(tmp2, ref)) > -0.1)
         {
-            if ((inttmp = (*tmp).personshowcaseval(tmp2)) > -0.1)
-            {
-                l++;
-                nb += inttmp;
-            }
-        }
-        else
-        {
-            if ((inttmp = (*tmp).personrefshowcaseval(tmp2)) > -0.1)
-            {
-                l++;
-                nb += inttmp;
-            }
+            l++;
+            nb += inttmp;
         }
         tmp++;
     }
@@ -173,7 +191,7 @@ QString group::grouprep(question tmp2, int ref)
     float inttmp;
 
     if (tmp2.type == 2)
-        return ("reponse non chiffrer");
+        return (grouprepvaltype2(tmp2, ref));
     nb = 0;
     l = 0;
     tmp = this->listp.begin();

@@ -11,6 +11,7 @@ itemtable::itemtable(QString placeholder, project *p, QString form) : placeholde
     //this->update();
 	//conect(this->tableWidget()->verticalHeaderItem(int));
     //this->set
+    this->setTextAlignment(Qt::AlignHCenter);
 }
 
 void itemtable::update()
@@ -129,7 +130,7 @@ void itemtable::eval(QString val, question &q)
     else if (q.type == 1 && val.compare("NA") != 0)
     {
         if (q.val)
-            this->setText(val);
+            this->setText(val + "%");
         else
             this->setText(QString::number(val.toFloat() * 100) + "%");
     }

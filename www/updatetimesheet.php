@@ -4,7 +4,7 @@ include("testconect.php");
 try
 {
 	new PDO('mysql:host=mysql1.paris1.alwaysdata.com;dbname=etudemurano_project;charset=utf8', '127008_johann', 't4x5akda');
-	//$bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
+	// $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
 }
 catch(Exception $e)
 {
@@ -69,10 +69,12 @@ $tab = array_unique($tab);
 
 foreach ($tab as $name)
 {
+	if (!(isset($_POST[$name.'#str'])))
+		$_POST[$name.'#str'] = "NA";
+	if (!(isset($_POST[$name.'#time'])))
+		$_POST[$name.'#time'] = 0;
 	if (htmlspecialchars($_POST[$name.'#time']) > -1)
-	{
-		//echo ($name);
-		$qry = 'INSERT INTO project_'.htmlspecialchars($_SESSION['project']).'_reponse (idperson , idquestion, time, note, date_info, iteration) VALUE ('.htmlspecialchars($_SESSION['id_client']).' , "'.$name.'" , '.htmlspecialchars($_POST[$name.'#time']).', '.((isset($_POST[$name.'#note'])) ? htmlspecialchars($_POST[$name.'#note']) : '-1').' , NOW() , '.$_SESSION['iteration'].' );';
+	{		$qry = 'INSERT INTO project_'.htmlspecialchars($_SESSION['project']).'_reponse (idperson , idquestion, time, note, date_info, iteration, str) VALUE ('.htmlspecialchars($_SESSION['id_client']).' , "'.$name.'" , '.htmlspecialchars($_POST[$name.'#time']).', '.((isset($_POST[$name.'#note'])) ? htmlspecialchars($_POST[$name.'#note']) : '-1').' , NOW() , '.$_SESSION['iteration'].' , "'.htmlspecialchars($_POST[$name.'#str']).'" );';
 		$bdd->exec($qry);
 		//echo 'INSERT INTO project_'.$_SESSION['project'].'_reponse ('.$_SESSION['id_client'].', '.$_POST[$name."_time"].', '.$_POST[$name."_note"].', NOW());';
 	}

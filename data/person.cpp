@@ -37,11 +37,6 @@ inline fact newfact(string name, int time, int note, string date, int idquestion
 	return(ret);
 }
 
-void person::add_fact(string line)
-{
-	(this->flist).push_back(newfact(line));
-}
-
 void person::add_fact(string name, int time, int note, string date, int iteration, int idquestion)
 {
 	if (iteration)
@@ -67,8 +62,6 @@ float person::personshowcaseval(question & qname, QList<fact> lf) const
         }
         tmp++;
     }
-    if (qname.type == 1)
-        j = j;
     if (l != 0)
         return(j / (float)l);
     return -1;
@@ -90,6 +83,42 @@ float	person::personshowcaseval(question &qname, int ref)
        return (this->personshowcaseval(qname, this->freflist));
     else
        return (this->personshowcaseval(qname, this->flist));
+}
+
+float person::personshowcasevaltype2(question & qname, QList<fact> lf, QVector<int> *nb) const
+{
+    QList<fact>::iterator tmp;
+    int j;
+    int l = 0;
+    QVector<int> nbl(qname.liststr.size() + 1);
+
+    tmp = lf.begin();
+    while (tmp != lf.end())
+    {
+        (*tmp).checkfactstr(qname.id , l, qname.liststr, nb, &nbl);
+        tmp++;
+    }
+    if (l != 0)
+    {
+        j = -1;
+        while (++j < qname.liststr.size() + 1)
+        {
+            if (nbl[j] != 0)
+                (*nb)[j] = (*nb)[j] / nbl[j];
+            else
+                (*nb)[j] = 0;
+        }
+        return (1);
+    }
+    return -1;
+}
+
+float	person::personshowcasevaltype2(question &qname, int ref, QVector<int> *nb)
+{
+    if (ref)
+       return (this->personshowcasevaltype2(qname, this->freflist, nb));
+    else
+       return (this->personshowcasevaltype2(qname, this->flist, nb));
 }
 
 float person::personshowcase(question & qname, QList<fact> lf) const

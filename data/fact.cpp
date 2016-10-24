@@ -18,38 +18,6 @@ fact::fact()
 {
 }
 
-fact::fact(string line)
-{
-	int i = -1;
-	
-	while(line[++i] && line[i] != ' ')
-		this->factname += line[i];
-	if (line[i])
-		i++;
-	else
-		return;
-	//	this->time = -1;
-	this->time = atoi(&line[i]);
-	//this->timestr = this->time;
-	while (line[i] && line[i] != ' ')
-		i++;
-	if (line[i])
-		i++;
-	else
-		return;
-	//	this->note = -1;
-	this->note = atoi(&line[i]);
-	//this->notestr = this->note;
-	while (line[i] && line[i] != ' ')
-		i++;
-	if (line[i])
-		i++;
-	else
-		return;
-	//	this->date = -1;
-	this->date = &line[i];
-}
-
 fact::fact(string name, int time, int note, string date, int idquestion)
 {
 	this->factname = name;
@@ -72,6 +40,28 @@ int fact::checkfacttime(int idquestion, int &counter) const
 		return (this->time);
 	}
 	return (0);
+}
+
+void fact::checkfactstr(int idquestion, int &counter, QStringList &list, QVector<int> *nb, QVector<int> *nbl) const
+{
+    QStringList::iterator i;
+    int j = -1;
+    if (this->idquestion == idquestion)
+    {
+        counter++;
+        i = list.begin();
+        while (i != list.end())
+        {
+            ++j;
+            if (i->compare(this->timestr) == 0)
+            {
+                (*nb)[j]++;
+                (*nbl)[j]++;
+                return ;
+            }
+            i++;
+        }
+    }
 }
 
 int fact::showfact(QGridLayout *gbox, int i, int j)

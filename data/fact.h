@@ -30,6 +30,7 @@ public:
 	string getFactname() const;
 	void setFactname(const string &value);
     fact(string name, int time, int note, string date, int idquestion);
+    void checkfactstr(int idquestion, int &counter, QStringList &list, QVector<int> *nb, QVector<int> *nbl) const;
 };
 
 ostream & operator<<(ostream &o, fact const & rhs);

@@ -23,6 +23,7 @@
 #include <QPushButton>
 #include <QCheckBox>
 #include <QTWidgets/QMessageBox>
+#include <stdlib.h>
 //#include <QtGui/QMessageBox>
 #include <QDialog>
 #include <iostream>

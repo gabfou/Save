@@ -70,13 +70,13 @@
 					}
 					else if ($value['typef'] == 1)
 					{
-						$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'<label class="label" id="lab'.$value['id'].'" for="rep'.$value['id'].'"> '.$value['sujet'].': </label><select class = "reponse" id="rep'.$value['id'].'" type="checkbox" name="'.$value['id'].'#time" ><option value = -2 name="'.$value['id'].'#time">NA</option><option value = "0" name="'.$value['id'].'#time">non</option><option value = "1" name="'.$value['id'].'#time">oui</option></select>';
+						$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'<label class="label" id="lab'.$value['id'].'" for="rep'.$value['id'].'"> '.$value['sujet'].': </label><select class = "reponse" id="rep'.$value['id'].'" type="checkbox" name="'.$value['id'].'#time" ><option value = -2 name="'.$value['id'].'#time">je ne sais pas</option><option value = "0" name="'.$value['id'].'#time">non</option><option value = "1" name="'.$value['id'].'#time">oui</option></select>';
 					}
 					else if ($value['typef'] == 2)
 					{
 						$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'<label class="label" id="lab'.$value['id'].'" for "'.$value['id'].'#str"> '.$value['sujet'].': </label><select class = "reponse" id="rep'.$value['id'].'" name="'.$value['id'].'#str" >';
-						$select = explode(" ", $value['splitchar']);
-						$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'<option value = -2 name="'.$value['id'].'#time">NA</option>';
+						$select = array_filter(explode(" ", $value['splitchar']));
+						$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'<option value = -2 name="'.$value['id'].'#str">je ne sais pas</option>';
 						foreach ($select as $selectkey => $selectvalue)
 						{
 							$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'<option value = '.$selectvalue.' name="'.$value['id'].'#str">'.$selectvalue.'</option>';
@@ -86,10 +86,10 @@
 					else if ($value['typef'] == 3)
 					{
 						$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'<label class="label" id="lab'.$value['id'].'" for "'.$value['id'].'#time"> '.$value['sujet'].': </label><select class = "reponse" id="rep'.$value['id'].'" name="'.$value['id'].'#time" >';
-						$select = explode(" ", $value['splitchar']);
+						$select = array_filter(explode(" ", $value['splitchar']));
 						$i = 0;
 
-						$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'<option value = -2 name="'.$value['id'].'#time">NA</option>';
+						$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'<option value = -2 name="'.$value['id'].'#time">je ne sais pas</option>';
 						while ($select[$i])
 						{
 							$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'<option value = '.$select[$i + 1].' name="'.$value['id'].'#time">'.$select[$i].'</option>';
@@ -140,7 +140,7 @@
 				if ($str3['gquestion'] == 2)
 				{
 					$arrayjson3[] = $i; 
-					$echopargroupe[$str3['groupparent']] = $echopargroupe[$str3['groupparent']].'<div id= "question'.$vqgroupid.'" style="display: hidden"><fieldset><legend>'.$str3['description'].'</legend><div class="md_debut'.$i.'">'.recupfirstdiv($echopargroupe[$value]).'</div><div id = "question'.$vqgroupid.'" class="md_fin'.$i.'" style="display: hidden"><div>'.supfirstdiv($echopargroupe[$value])."</div></fieldset></div>";
+					$echopargroupe[$str3['groupparent']] = $echopargroupe[$str3['groupparent']].'<div id= "question'.$vqgroupid.'" style="display: hidden"><fieldset><legend>'.$str3['description'].'</legend><div class="md_debut'.$i.'">'.recupfirstdiv($echopargroupe[$value]).'</div><div id = "question'.$vqgroupid.'" class="md_fin'.$i.'" style="display: hidden"><div>'.supfirstdiv($echopargroupe[$value])."</div></fieldset></div>"; // j ai virer le duxieme div id (au cas ou sa bugerai)
 				}
 				else
 					$echopargroupe[$str3['groupparent']] = $echopargroupe[$str3['groupparent']].'<div id = "question'.$vqgroupid.'" style="display: hidden"><fieldset><legend>'.$str3['description'].'</legend><div>'.$echopargroupe[$value]."</fieldset></div>";
@@ -160,9 +160,10 @@
 			$str3 = $req_pre->fetch();
 			$vqgroupid = $value;
 			if ($value == 0)
-				$str3['groupname'] = "General";
-			// echo '<li class="etape" id = "pbar'.$value.'"><span>'.$str3['groupname'].'</span></li>';
-			
+			{
+				//$str3['groupname'] = "General";
+				$echofinal = $echofinal.'<h3><p id = gdesc'.$vqgroupid.'>'.$str3['description'].'</p></h3>'.'<div id = "question'.$vqgroupid.'" style="display: hidden">'.$echopargroupe[$value]."</div>";
+			}
 			else
 				$echofinal = $echofinal.'<h3><p id = gdesc'.$vqgroupid.'>'.$str3['description'].'</p></h3>'.'<div id = "question'.$vqgroupid.'" style="display: hidden">'.$echopargroupe[$value]."</div>";
 
@@ -258,10 +259,10 @@
 						$("[id=target]").hide();
 						$("[id^=resum]").hide();
 						$("[id^=gdesc]").show();
-						$("[id^=rep]").hide();
-						$("[id^=lab]").hide();
+						$("[id^=rep]").show();
+						$("[id^=lab]").show();
 						$("[id=bilan]").show();
-						question_array.forEach(bilanforeach);
+						//question_array.forEach(bilanforeach);
 					}
 					function mdcheck(element, index, array)
 					{
@@ -305,10 +306,6 @@
 						md_array.forEach(mdcheck);
 						prog(nb);
 					}
-					function etapevalide(nb)
-					{
-						
-					}
 					function mdforeach(element, index, array)
 					{
 						$( ".md_debut" + element).find("select").on("change", function()
@@ -331,8 +328,7 @@
 					md_array.forEach(mdforeach);
 					$( "#target" ).click(function()
 					{
-						if (etapevalide(i))
-							etapemanageur(++i);
+						etapemanageur(++i);
 					});
 					$( "#go_back" ).click(function()
 					{
