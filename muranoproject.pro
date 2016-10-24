@@ -53,7 +53,8 @@ SOURCES += main.cpp\
     tableclass/tableau_brut.cpp \
     template/template.cpp \
     misc/uploader.cpp \
-    graph/comparrefdo.cpp
+    graph/comparrefdo.cpp \
+    misc/menusondage.cpp
 
 HEADERS  += mainwindow.h \
     data/fact.h \
@@ -88,7 +89,8 @@ HEADERS  += mainwindow.h \
     config/menuconfigsondage.h \
     tableclass/tableau_brut.h \
     misc/uploader.h \
-    graph/comparrefdo.h
+    graph/comparrefdo.h \
+    misc/menusondage.h
 
 FORMS    += mainwindow.ui
 

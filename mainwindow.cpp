@@ -10,6 +10,7 @@
 #include "config/menuconfigsondage.h"
 #include "misc/uploader.h"
 #include "graph/comparrefdo.h"
+#include "misc/menusondage.h"
 
 MainWindow::MainWindow(QWidget *parent) :
 	QMainWindow(parent),
@@ -611,7 +612,7 @@ void MainWindow::sendprojectauxi(QString str)
 	while (i < listmail.size())
 	{
 		qDebug() << listmail.at(i);
-        bodytmp = body + "?p=" + listmail.at(i + 1) + "&s=" + namecurrent + "\"><u>ACCEDER AU QUESTIONNAIRE<u/></a></p>" + bodyend;
+        bodytmp = body + "?p=" + listmail.at(i + 1) + "&s=" + namecurrent + "\"><u>ACCEDER AU QUESTIONNAIRE</u></a></p>" + bodyend;
 		sendmail(listmail.at(i), bodytmp); // OPTI
 		i += 2;
 	}
@@ -648,8 +649,6 @@ void MainWindow::sendproject_ref()
 void MainWindow::mailSent(QString status)
 {
 	(void)status;
-//	if(status == "Message sent")
-//		QMessageBox::warning( 0, tr( "Qt Simple SMTP client" ), tr( "Message sent!\n\n" ) );
 }
 
 //recuperation des donnee en ligne
@@ -842,7 +841,7 @@ void MainWindow::updatetable()
 
 void	MainWindow::configproject(){menuconfigproject *m = new menuconfigproject(this->namecurrent, &(this->current), this);m->show();}
 
-void	MainWindow::configsondage(){menuconfigsondage *m = new menuconfigsondage(this);m->show();}
+void	MainWindow::configsondage(){menusondage *m = new menusondage(this);m->show();}
 
 void	MainWindow::screenshootcurrent()
 {

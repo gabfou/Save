@@ -5,6 +5,7 @@ menuconfigsondage::menuconfigsondage(MainWindow *m) : m(m)  // opti list a la pl
 {
     QSqlQuery qry;
     listWidget = new QListWidget();
+    QHBoxLayout *hbox = new QHBoxLayout();
 
     if(qry.exec("SELECT begin, id FROM all_etude WHERE project_name='" + m->namecurrent + "';"))
     {
@@ -39,10 +40,22 @@ menuconfigsondage::menuconfigsondage(MainWindow *m) : m(m)  // opti list a la pl
 
     QVBoxLayout *layout = new QVBoxLayout();
     layout->addWidget(listWidget);
-    layout->addLayout(nbiterationbox);
-    layout->addLayout(refbox);
-    layout->addLayout(newsupbox);
-    this->setLayout(layout);
+//    layout->addLayout(nbiterationbox);
+//    layout->addLayout(refbox);
+//    layout->addLayout(newsupbox);
+    hbox->addLayout(layout, 2);
+
+
+    QGroupBox programer = new QGroupBox("Programmer plusieurs sondages");
+    QVBoxLayout *programerlayout = new QVBoxLayout();
+    programer.setLayout(programerlayout);
+    programerlayout->addLayout(nbiterationbox);
+    programerlayout->addLayout(refbox);
+    programerlayout->addLayout(newsupbox);
+
+    hbox->addWidjet(programer);
+
+    this->setLayout(hbox);
 }
 
 void menuconfigsondage::supsondage()
