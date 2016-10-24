@@ -25,24 +25,18 @@ person::~person()
 {
 }
 
-inline fact newfact(string line)
+inline fact newfact(string name, int time, int note, string date, int idquestion, QString timestr)
 {
-	fact ret(line);
+    fact ret(name, time, note, date, idquestion, timestr);
 	return(ret);
 }
 
-inline fact newfact(string name, int time, int note, string date, int idquestion)
-{
-    fact ret(name, time, note, date, idquestion);
-	return(ret);
-}
-
-void person::add_fact(string name, int time, int note, string date, int iteration, int idquestion)
+void person::add_fact(string name, int time, int note, string date, int iteration, int idquestion, QString timestr)
 {
 	if (iteration)
-        (this->flist).push_back(newfact(name, time, note, date, idquestion));
+        (this->flist).push_back(newfact(name, time, note, date, idquestion, timestr));
 	else
-        (this->freflist).push_back(newfact(name, time, note, date, idquestion));
+        (this->freflist).push_back(newfact(name, time, note, date, idquestion, timestr));
 }
 
 

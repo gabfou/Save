@@ -100,6 +100,7 @@ private:
     QAction *afficherpers;
     QAction *afficherbasetable;
     QAction *affichergraphiquecompare;
+    QAction *afficherref;
 
 
 	void sendprojectauxi(QString str);

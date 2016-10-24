@@ -115,7 +115,7 @@ void infoquestion::changegroupparent2(QTreeWidgetItem *item)
     if (tmp)
     {
         sqlo::addquestion(p, q->name, q->group, q->unit, q->bnote, q->sujet,
-                          tmp->getId(), q->type, q->ref_only, q->liststr.join(" "),
+                          tmp->getId(), q->type, q->ref_only, q->liststr.join("\n"),
                           q->val, q->global, q->id);
         p->listquestion[q->id].qgroupid = tmp->getId();
         int i = q->id;
@@ -191,7 +191,7 @@ void infoquestion::updateib(QTreeWidgetItem * item)
 
 question infoquestion::getquestioncopy()
 {
-    QString splitchar = (type->currentIndex() == 3) ? selectlistval->getlstr().join(" ") : selectlist->getlstr().join(" ");
+    QString splitchar = (type->currentIndex() == 3) ? selectlistval->getlstr().join("\n") : selectlist->getlstr().join("\n");
 
     question ret = question(name->text(), dynamic_cast<grouptreeitem*>(groupbox->currentItem())->getId(), -1,
                               qgroupid, description->text(), unit->text(), type->currentIndex(),
@@ -201,7 +201,7 @@ question infoquestion::getquestioncopy()
 
 void infoquestion::updatebdd()
 {
-    QString splitchar = (type->currentIndex() == 3) ? selectlistval->getlstr().join(" ") : selectlist->getlstr().join(" ");
+    QString splitchar = (type->currentIndex() == 3) ? selectlistval->getlstr().join("\n") : selectlist->getlstr().join("\n");
 	if (!q && init)
 	{
 		QLabel *warning = new QLabel("Aucun objet selectioné");

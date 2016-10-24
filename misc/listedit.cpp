@@ -26,7 +26,7 @@ void listedit::preinit(int co)
         hbox->addWidget(add);
     }
     QVBoxLayout *vbox = new QVBoxLayout();
-    list->setContentsMargins(0,0,0,0);
+    list->setContentsMargins(0, 0, 0, 0);
     vbox->addWidget(list);
     vbox->addLayout(hbox);
     connect(list, SIGNAL(itemDoubleClicked(QListWidgetItem*)), this, SLOT(edit(QListWidgetItem*)));
@@ -88,6 +88,9 @@ void listedit::update(QStringList & l)
 
 void listedit::supitem()
 {
-    delete list->item(list->count() - 1);
+    if (list->currentItem() == 0)
+        delete list->item(list->count() - 1);
+    else
+        delete list->currentItem();
 }
 

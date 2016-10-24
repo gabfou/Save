@@ -18,13 +18,14 @@ fact::fact()
 {
 }
 
-fact::fact(string name, int time, int note, string date, int idquestion)
+fact::fact(string name, int time, int note, string date, int idquestion, QString timestr)
 {
 	this->factname = name;
 	this->note = note;
 	this->time = time;
 	this->date = date;
     this->idquestion = idquestion;
+    this->timestr = timestr;
 }
 
 fact::~fact()
@@ -52,6 +53,7 @@ void fact::checkfactstr(int idquestion, int &counter, QStringList &list, QVector
         i = list.begin();
         while (i != list.end())
         {
+            qDebug() << "fgqqsjhdg" << timestr << *i;
             ++j;
             if (i->compare(this->timestr) == 0)
             {

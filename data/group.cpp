@@ -141,16 +141,14 @@ QString group::grouprepvaltype2(question tmp2, int ref)
             l++;
         tmp++;
     }
-    qDebug() << "niark 1";
     if (l == 0)
         return ("NA");
-    qDebug() << "niark 2";
     int i = -1;
     while(++i < tmp2.liststr.size() + 1)
     {
         if (i != 0)
             ret += " | ";
-        ret += QString::number(nb[i] *100 / l) + "%";
+        ret += QString::number(nb[i] * 100 / l) + "%";
     }
     return (ret);
 }

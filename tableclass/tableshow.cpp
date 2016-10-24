@@ -234,10 +234,23 @@ void	tableshow::sethorizontalheader(MainWindow *mainp)
 		qDebug() << "horizontal header 1 time 1 " << timerdebug.elapsed() << "ms";
 		while (tmp2 != listqchild.end())
 		{
+            QString questioninfo = tmp2->name;
             if (p->listqgroup[tmp2->qgroupid].gquestion)
-                this->setHorizontalHeaderItem(i++, new headertableitem(p, p->listqgroup[tmp2->qgroupid].name + " : " + (tmp2->name), *tmp2, "%"));
-            else
-                this->setHorizontalHeaderItem(i++, new headertableitem(p, (tmp2->name), *tmp2, "%"));
+                questioninfo = p->listqgroup[tmp2->qgroupid].name + " : " + questioninfo;
+            if (tmp2->type == 2)
+            {
+                questioninfo += "\n";
+                QStringList::const_iterator j = tmp2->liststr.begin();
+                while(j != tmp2->liststr.end())
+                {
+                    if (j != tmp2->liststr.begin())
+                        questioninfo += " | ";
+                    questioninfo += *j;
+                    j++;
+                }
+                questioninfo += " | NA";
+            }
+            this->setHorizontalHeaderItem(i++, new headertableitem(p, questioninfo, *tmp2, "%"));
 			//this->setHorizontalHeaderItem(i++, new QTableWidgetItem(("temps a " + tmp2->name + " reel").c_str()));
 			tmp2++;
 		}

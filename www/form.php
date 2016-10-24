@@ -75,7 +75,7 @@
 					else if ($value['typef'] == 2)
 					{
 						$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'<label class="label" id="lab'.$value['id'].'" for "'.$value['id'].'#str"> '.$value['sujet'].': </label><select class = "reponse" id="rep'.$value['id'].'" name="'.$value['id'].'#str" >';
-						$select = array_filter(explode(" ", $value['splitchar']));
+						$select = array_filter(explode("\n", $value['splitchar']));
 						$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'<option value = -2 name="'.$value['id'].'#str">je ne sais pas</option>';
 						foreach ($select as $selectkey => $selectvalue)
 						{
@@ -86,7 +86,7 @@
 					else if ($value['typef'] == 3)
 					{
 						$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'<label class="label" id="lab'.$value['id'].'" for "'.$value['id'].'#time"> '.$value['sujet'].': </label><select class = "reponse" id="rep'.$value['id'].'" name="'.$value['id'].'#time" >';
-						$select = array_filter(explode(" ", $value['splitchar']));
+						$select = array_filter(explode("\n", $value['splitchar']));
 						$i = 0;
 
 						$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'<option value = -2 name="'.$value['id'].'#time">je ne sais pas</option>';

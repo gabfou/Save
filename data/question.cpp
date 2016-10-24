@@ -15,7 +15,7 @@ question::question(QString name, int groupcible, int id, int qgroupid, QString s
 	this->sujet = sujet;
 	this->unit = unit;
     this->type = type;
-    this->liststr = splitchar.split(" ");
+    this->liststr = splitchar.split("\n");
     this->val = value;
     this->ref_only = ref_only;
     this->global = global;

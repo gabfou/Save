@@ -31,7 +31,7 @@ public:
 	int getId() const;
 	void setId(int value);
 	int compare(int id);
-    void add_fact(string name, int time, int note, string date, int iteration, int idquestion);
+    void add_fact(string name, int time, int note, string date, int iteration, int idquestion, QString timestr);
     QString personsend(Smtp *smtp, QString post);
 	int getGroupid() const;
 	person(const person &person);

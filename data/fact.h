@@ -29,7 +29,7 @@ public:
 	void setDate(const string &value);
 	string getFactname() const;
 	void setFactname(const string &value);
-    fact(string name, int time, int note, string date, int idquestion);
+    fact(string name, int time, int note, string date, int idquestion, QString timestr);
     void checkfactstr(int idquestion, int &counter, QStringList &list, QVector<int> *nb, QVector<int> *nbl) const;
 };
 

@@ -69,7 +69,7 @@ MainWindow::MainWindow(QWidget *parent) :
 //	QObject::connect(barchartref, SIGNAL(triggered()), this, SLOT(showbarchartref()));
 
 	menu_affifchage = menuBar()->addMenu("&Affichage");
-	QAction *afficherref = menu_affifchage->addAction("&Données de références");
+    afficherref = menu_affifchage->addAction("&Données de références");
 	afficherref->setCheckable(true);
 	afficherref->setChecked(false);
 	QObject::connect(afficherref, SIGNAL(toggled(bool)), this, SLOT(refmodechange(bool)));
@@ -619,8 +619,8 @@ void MainWindow::sendprojectauxi(QString str)
 	qry.addBindValue(1);
 	qry.addBindValue(0);
 	qry.addBindValue(this->current.name);*/
-	if(!qry.exec())
-		qDebug() << qry.lastError();
+//	if(!qry.exec())
+//		qDebug() << qry.lastError();
 }
 
 void MainWindow::sendproject()
@@ -684,8 +684,8 @@ void MainWindow::updateproject()
 
 	if (this->current.getNbfactnref() == 0)
 	{
-		this->menu_affifchage->actions().at(0)->setVisible(0);
-		refmodechange(1);
+        this->menu_affifchage->actions().at(0)->setVisible(0);
+        afficherref->trigger();
 	}
 	else
 		this->menu_affifchage->actions().at(0)->setVisible(1);

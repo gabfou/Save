@@ -7,6 +7,10 @@ QString indextocase(int x, int y)
 {
 	QString xstr;
 	static char tab[26] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H' , 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
+    if (x == 0)
+    {
+        xstr.push_front(tab[x % 26]);
+    }
     while (x > 0)
     {
 		xstr.push_front(tab[x % 26]);
@@ -20,10 +24,14 @@ void tab_to_xlsx(const QTableWidget *table, Document & xlsx)
 {
 	int x = -1;
 	int y = -2;
+    int y2 = -2;
 	QTableWidgetItem *item;
 
 	while (++y < table->rowCount())
 	{
+        if (y != -1 && table->isRowHidden(y))
+            continue;
+        y2++;
 		x = -2;
 		while (++x < table->columnCount())
 		{
@@ -36,15 +44,12 @@ void tab_to_xlsx(const QTableWidget *table, Document & xlsx)
 			else
 				item = table->item(y, x);
 			if (item && (x == -1 || y == -1))
-				xlsx.write(indextocase(x + 1, y + 1), item->text());
+                xlsx.write(y2 + 2, x + 2, item->text());
 			else if (item)
-			{
-				xlsx.write(indextocase(x + 1, y + 1), item->text());
-				qDebug() << item->text();
-			}
+                xlsx.write(y2 + 2, x + 2, item->text());
 			else
-				 xlsx.write(indextocase(y + 1, x + 1), "");
-		}
+                xlsx.write(y2 + 2, x + 2, item->text());
+        }
 	}
 	qDebug() << "tab xlsx fin";
 }

@@ -157,13 +157,13 @@ inline void project::addquestion(QString name, int group, unsigned int id, int q
 	this->listquestion.push_back(ret);
 }
 
-void project::addreponse(int id, string name, int time, int note, string date, int iteration, int idquestion) // opti
+void project::addreponse(int id, string name, int time, int note, string date, int iteration, int idquestion, QString timestr)
 {
 	if (iteration)
 		nbfactnref++;
 	else
 		nbfactref++;
-	listp[id].add_fact(name, time, note, date, iteration, idquestion);
+    listp[id].add_fact(name, time, note, date, iteration, idquestion, timestr);
 }
 
 inline void project::addgroup(QString name, int parentid, unsigned int id, int type, QString description, bool gquestion)
@@ -318,7 +318,7 @@ void project::initoroject(QString fproject)
 	qDebug() << "init persone time" << timerdebug.elapsed() << "milliseconds";
 
 	qDebug() << "init fact";timerdebug.start();
-    if(query.exec("SELECT idperson,name,time,note,date_info, iteration, idquestion FROM project_" + fproject + "_reponse"))
+    if(query.exec("SELECT idperson,name,time,note,date_info, iteration, idquestion, str FROM project_" + fproject + "_reponse"))
 	{
 		qDebug() << "query select reponse time" << timerdebug.elapsed() << "milliseconds";
 		while(query.next())
@@ -329,7 +329,8 @@ void project::initoroject(QString fproject)
 							 query.value(3).toInt(),
 							 query.value(4).toString().toStdString(),
 							 query.value(5).toInt(),
-							 query.value(6).toInt());
+                             query.value(6).toInt(),
+                             query.value(7).toString());
 		}
 	}
 	else
@@ -708,7 +709,7 @@ int	sqlo::addquestion(project *p, QString name, int groupid, QString type, int n
         p->listquestion[id].sujet = description;
         p->listquestion[id].qgroupid = qgroupid;
         p->listquestion[id].type = typef;
-        p->listquestion[id].liststr = splitchar.split(" ");
+        p->listquestion[id].liststr = splitchar.split("\n");
         p->listquestion[id].val = val;
         p->listquestion[id].ref_only = ref_only;
         p->listquestion[id].global = global;
