@@ -14,6 +14,12 @@ class menuconfigsondage : public QWidget
     QCheckBox *refcheck;
     QSpinBox *nbiteration;
     MainWindow *m;
+    QCalendarWidget *calendar;
+    QDateTimeEdit *timecalendar;
+    QRadioButton *listday[7] = {new QRadioButton("Lundi"), new QRadioButton("Mardi"),
+                             new QRadioButton("Mercredi"), new QRadioButton("Jeudi"),
+                             new QRadioButton("Vendredi"), new QRadioButton("Samedi"),
+                             new QRadioButton("Dimanche")};
 public:
     menuconfigsondage(MainWindow *m);
 private slots:

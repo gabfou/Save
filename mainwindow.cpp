@@ -353,7 +353,7 @@ void MainWindow::addproject2()
 	qry.prepare(" CREATE TABLE IF NOT EXISTS all_config ("
 				" id INTEGER UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT,"
 				" project_name VARCHAR(3000),"
-				" default_table INTEGER NOT NULL DEFAULT 0);" );
+                " default_table INTEGER NOT NULL DEFAULT 0);");
 	if (!qry.exec())
 		qDebug() << "create all config" << qry.lastError();
 	qry.prepare(" INSERT INTO all_config ("

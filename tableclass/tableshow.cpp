@@ -144,7 +144,7 @@ void tableshow::reinit(QList<headertableitem*> &listv, QList<headertableitem*> &
 
 //void tableshow::reinit
 
-void tableshow::reinit(project * p, MainWindow *mainp)
+void tableshow::reinit(project *p, MainWindow *mainp)
 {
 	QElapsedTimer timerdebug;
 	this->p = p;

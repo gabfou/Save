@@ -1,6 +1,7 @@
 #ifndef LE_H
 #define LE_H
 
+#include <QDateTimeEdit>
 #include <QPlainTextEdit>
 #include <QtSql>
 #include <QDockWidget>
@@ -31,6 +32,7 @@
 #include <list>
 #include <cstdlib>
 #include <fstream>
+#include <QCalendarWidget>
 #include <QComboBox>
 #include <QListWidget>
 //#include <random>

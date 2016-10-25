@@ -6,6 +6,28 @@ menuconfigsondage::menuconfigsondage(MainWindow *m) : m(m)  // opti list a la pl
     QSqlQuery qry;
     listWidget = new QListWidget();
     QHBoxLayout *hbox = new QHBoxLayout();
+    calendar = new QCalendarWidget(this);
+    timecalendar = new QDateTimeEdit(this);
+    QHBoxLayout *weeklayout = new QHBoxLayout();
+    weeklayout->addWidget(listday[0]);
+    weeklayout->addWidget(listday[1]);
+    weeklayout->addWidget(listday[2]);
+    weeklayout->addWidget(listday[3]);
+    weeklayout->addWidget(listday[4]);
+    weeklayout->addWidget(listday[5]);
+    weeklayout->addWidget(listday[6]);
+    listday[0]->setChecked(1);
+    listday[1]->setChecked(1);
+    listday[2]->setChecked(1);
+    listday[3]->setChecked(1);
+    listday[4]->setChecked(1);
+    listday[0]->setAutoExclusive(0);
+    listday[1]->setAutoExclusive(0);
+    listday[2]->setAutoExclusive(0);
+    listday[3]->setAutoExclusive(0);
+    listday[4]->setAutoExclusive(0);
+    listday[5]->setAutoExclusive(0);
+    listday[6]->setAutoExclusive(0);
 
     if(qry.exec("SELECT begin, id FROM all_etude WHERE project_name='" + m->namecurrent + "';"))
     {
@@ -21,6 +43,7 @@ menuconfigsondage::menuconfigsondage(MainWindow *m) : m(m)  // opti list a la pl
     QHBoxLayout *nbiterationbox = new QHBoxLayout();
     nbiterationbox->addWidget(new QLabel("Nombre de sondage:"));
     nbiteration =  new QSpinBox();
+    nbiteration->setValue(1);
     nbiterationbox->addWidget(nbiteration);
 
     QHBoxLayout *refbox = new QHBoxLayout();
@@ -36,48 +59,90 @@ menuconfigsondage::menuconfigsondage(MainWindow *m) : m(m)  // opti list a la pl
     QHBoxLayout *newsupbox = new QHBoxLayout();
     newsupbox->addWidget(newsondage);
     newsupbox->addWidget(supsondage);
-//    connect(listWidget, SIGNAL)
 
     QVBoxLayout *layout = new QVBoxLayout();
     layout->addWidget(listWidget);
-//    layout->addLayout(nbiterationbox);
-//    layout->addLayout(refbox);
-//    layout->addLayout(newsupbox);
     hbox->addLayout(layout, 2);
 
 
-    QGroupBox programer = new QGroupBox("Programmer plusieurs sondages");
+    QGroupBox *programer = new QGroupBox("Programmer plusieurs sondages");
     QVBoxLayout *programerlayout = new QVBoxLayout();
-    programer.setLayout(programerlayout);
+    programer->setLayout(programerlayout);
+    programerlayout->addWidget(timecalendar);
+    programerlayout->addLayout(weeklayout);
     programerlayout->addLayout(nbiterationbox);
     programerlayout->addLayout(refbox);
     programerlayout->addLayout(newsupbox);
 
-    hbox->addWidjet(programer);
+    layout->addWidget(programer);
+    QGroupBox *calendarbox = new QGroupBox("Date du premier sondage");
+    QVBoxLayout *layoutcalendar = new QVBoxLayout();
+    calendarbox->setLayout(layoutcalendar);
+    layoutcalendar->addWidget(calendar);
+    hbox->addWidget(calendarbox);
 
     this->setLayout(hbox);
+
+    connect(timecalendar, SIGNAL(dateChanged(QDate)), calendar, SLOT(setSelectedDate(QDate)));
+    connect(calendar, SIGNAL(clicked(QDate)), timecalendar, SLOT(setDate(QDate)));
+
+    timecalendar->setDate(QDate::currentDate());
 }
 
 void menuconfigsondage::supsondage()
 {
     QSqlQuery qry;
 
-    if(!(qry.exec("DELETE FROM all_etude WHERE id=" + QString::number(listid[listWidget->currentRow()]) + ";")))
+    if (!(qry.exec("DELETE FROM all_etude WHERE id=" + QString::number(listid[listWidget->currentRow()]) + ";")))
         qDebug() << "menu config sondage 2" << qry.lastError();
     listid.erase(listid.begin() + listWidget->currentRow());
     delete listWidget->currentItem();
 }
 
+static bool notgoodday(QDateTime &time, QRadioButton **listday)
+{
+    if (listday[0]->isChecked() == 0 && listday[1]->isChecked() == 0
+        && listday[2]->isChecked() == 0 && listday[3]->isChecked() == 0
+        && listday[4]->isChecked() == 0 && listday[5]->isChecked() == 0
+        && listday[6]->isChecked() == 0)
+        return (0);
+    if (listday[0]->isChecked() && time.date().dayOfWeek() == 1)
+        return (0);
+    if (listday[1]->isChecked() && time.date().dayOfWeek() == 2)
+        return (0);
+    if (listday[2]->isChecked() && time.date().dayOfWeek() == 3)
+        return (0);
+    if (listday[3]->isChecked() && time.date().dayOfWeek() == 4)
+        return (0);
+    if (listday[4]->isChecked() && time.date().dayOfWeek() == 5)
+        return (0);
+    if (listday[5]->isChecked() && time.date().dayOfWeek() == 6)
+        return (0);
+    if (listday[6]->isChecked() && time.date().dayOfWeek() == 7)
+        return (0);
+    return (1);
+}
+
 void menuconfigsondage::newsondage()
 {
     QSqlQuery qry;
+    QDateTime time = QDateTime(timecalendar->dateTime());
+    int i;
 
-    (qry.prepare("INSERT INTO all_etude (iteration , project_name , ref ) VALUES ( ?, ?, ? );"));
-    qry.addBindValue(nbiteration->text());
-    qry.addBindValue(m->namecurrent);
-    qry.addBindValue(refcheck->isChecked());
-    if (!(qry.exec()))
-        qDebug() << "menu config sondage 3" << qry.lastError();
-    listid << qry.lastInsertId().toInt();
-    listWidget->addItem(QDate::currentDate().toString());
+    i = nbiteration->text().toInt();
+    while(--i > -1)
+    {
+        while (notgoodday(time, listday))
+            time.addDays(1);
+        (qry.prepare("INSERT INTO all_etude (iteration , project_name , ref , begin) VALUES ( ?, ?, ?, ? );"));
+        qry.addBindValue(nbiteration->text());
+        qry.addBindValue(m->namecurrent);
+        qry.addBindValue(refcheck->isChecked());
+        qry.addBindValue(time);
+        if (!(qry.exec()))
+            qDebug() << "menu config sondage 3" << qry.lastError();
+        listid << qry.lastInsertId().toInt();
+        listWidget->addItem(QDate::currentDate().toString());
+        time.addDays(1);
+    }
 }
