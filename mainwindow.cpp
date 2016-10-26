@@ -607,7 +607,7 @@ void MainWindow::sendprojectauxi(QString str)
 //	body.append(this->namecurrent);
 //	body.append("&");
 	// body.append(this->current->postquestion("ALL"));
-	listmail = this->current.sendproject();
+    listmail = this->current.sendproject(0);
 	QString bodytmp;
 	int i = 0;
 	while (i < listmail.size())

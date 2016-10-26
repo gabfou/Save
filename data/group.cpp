@@ -1,6 +1,7 @@
 #include "group.h"
 #include "person.h"
 #include "question.h"
+#include "fact.h"
 
 
 std::list<question> group::getListq() const{return listq;}
@@ -13,7 +14,7 @@ group::group()
 QColor panelgcolor[5] = {Qt::cyan, Qt::magenta, Qt::yellow, Qt::blue, Qt::darkGreen};
 
 QString group::getName() const{return this->name;}
-list<person> group::getListp(){return this->listp;}
+QList<person> group::getListp(){return this->listp;}
 int group::getGeneration() const{return generation;}
 int group::getParentid() const{return parentid;}
 QColor group::getColor() const{return color;}
@@ -48,7 +49,7 @@ void    group::supperson(int id)
 {
     if (id < 0 || !this || init == 0)
         return ;
-    list<person>::iterator tmp = listp.begin();
+    QList<person>::iterator tmp = listp.begin();
 
     while (tmp != listp.end())
     {
@@ -100,7 +101,7 @@ void group::addquestion(question q)
 
 void group::debug()
 {
-	list<person>::iterator tmp;
+    QList<person>::iterator tmp;
 	tmp = this->listp.begin();
 	while (tmp != this->listp.end())
 	{
@@ -128,7 +129,7 @@ t_groupref group::groupnamerep(const vector<question> &questionlist, int ref, QL
 
 QString group::grouprepvaltype2(question tmp2, int ref)
 {
-    list<person>::iterator tmp;
+    QList<person>::iterator tmp;
     QVector<int> nb(tmp2.liststr.size() + 1);
     float l;
     QString ret;
@@ -155,7 +156,7 @@ QString group::grouprepvaltype2(question tmp2, int ref)
 
 QString group::grouprepval(question tmp2, int ref)
 {
-    list<person>::iterator tmp;
+    QList<person>::iterator tmp;
     float nb;
     float l;
     float inttmp;
@@ -183,7 +184,7 @@ QString group::grouprepval(question tmp2, int ref)
 
 QString group::grouprep(question tmp2, int ref)
 {
-    list<person>::iterator tmp;
+    QList<person>::iterator tmp;
     float nb;
     float l;
     float inttmp;
@@ -279,7 +280,7 @@ group::~group()
 
 bool group::contain(person &p)
 {
-    list<person>::iterator tmp = listp.begin();
+    QList<person>::iterator tmp = listp.begin();
 
     while (tmp != listp.end())
     {

@@ -570,27 +570,37 @@ int project::addpgroup(QString name, QString parrent)
     return (-1);
 }
 
-QStringList	project::sendproject()
+QList<person> project::getListallpfils(int group)
 {
-    vector<person>::iterator tmp;
+    QList<person> ret;
+    QList<int> groupp = listgroup[group].getListfils();
+    QList<int>::iterator i;
+
+    ret += listgroup[group].getListp();
+
+    i = groupp.begin();
+    while(i != groupp.end())
+    {
+        ret += getListallpfils(*i);
+        i++;
+    }
+    return (ret);
+}
+
+QStringList	project::sendproject(int group)
+{
+    vector<int>::iterator tmp;
+    QList<person> listp = this->getListallpfils(group);
 	QStringList listmail;
-	QString post = (this->name);
-	post.append("&");
-	post.append(this->postquestion("ALL"));
 
 //	qDebug() << listtmp.size();
-    tmp = listp.begin();
-    while (tmp != listp.end())
-	{
-        if (tmp->id == -1)
-        {
-            tmp++;
-            continue ;
-        }
-		listmail.push_back((*tmp).email);
-		listmail.push_back(QString::number((*tmp).id));
-		tmp++;
-	}
+//    tmp = listp.begin();
+//    while (tmp != listp.end())
+//	{
+//		listmail.push_back((*tmp).email);
+//		listmail.push_back(QString::number((*tmp).id));
+//		tmp++;
+//	}
 	return (listmail);
 }
 

@@ -10,7 +10,7 @@ class group
 {
 private:
 	int generation = 0;
-	std::list<person> listp;
+    QList<person> listp;
 	std::list<question> listq;
     QList<int> listfils;
 	QColor color;
@@ -29,7 +29,7 @@ public:
     QString getName() const;
 	void addqfils(int id);
 	bool visible = true;
-	list<person> getListp();
+    QList<person> getListp();
     void debug();
 	void addfils(int id);
 	int getGeneration() const;

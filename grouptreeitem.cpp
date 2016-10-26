@@ -59,8 +59,8 @@ grouptreeitem::grouptreeitem(QStringList str, project * p, int id, int type, int
 		}
         else if (type == 0)
         {
-            list<person>::iterator listp;
-            list<person> listperson = g[id].getListp();
+            QList<person>::iterator listp;
+            QList<person> listperson = g[id].getListp();
 
             listp = listperson.begin();
             while (listp != listperson.end())

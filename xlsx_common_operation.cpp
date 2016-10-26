@@ -47,8 +47,6 @@ void tab_to_xlsx(const QTableWidget *table, Document & xlsx)
                 xlsx.write(y2 + 2, x + 2, item->text());
 			else if (item)
                 xlsx.write(y2 + 2, x + 2, item->text());
-			else
-                xlsx.write(y2 + 2, x + 2, item->text());
         }
 	}
 	qDebug() << "tab xlsx fin";

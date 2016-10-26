@@ -50,7 +50,7 @@ public:
 	QString postquestion(QString group);
 	void addquestion(string name, string group);
     void addreponse(int id, string name, int time, int note, string date, int iteration, int idquestion, QString timestr);
-    QStringList sendproject();
+    QStringList sendproject(int group);
 	void convert_to_xlsx();
     void addgroup(QString name, int parentid, unsigned int id, int type, QString description, bool gquestion);
 	vector<group> getListgroup() const;
@@ -80,6 +80,7 @@ public:
     int addqgroup(QString name, QString parrent);
     int mytypqinv(QString type);
     int addpgroup(QString name, QString parrent);
+    QList<person> getListallpfils(int group);
 };
 
 #endif

@@ -38,7 +38,6 @@ if (($tab['questionbool'] == 0 && $_SESSION['iteration'] >= 1) || ($tab['refbool
 <body>
 <div class="topbar">
 	<img src="logo.jpeg" alt="logo murano" class = logo>
-	<!-- <h1>MURANO</h1> -->
 </div>
 
 <p> Merci de votre de participation. </p>

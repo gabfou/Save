@@ -54,7 +54,8 @@ SOURCES += main.cpp\
     template/template.cpp \
     misc/uploader.cpp \
     graph/comparrefdo.cpp \
-    misc/menusondage.cpp
+    misc/menusondage.cpp \
+    misc/emailvalidator.cpp
 
 HEADERS  += mainwindow.h \
     data/fact.h \
@@ -90,7 +91,8 @@ HEADERS  += mainwindow.h \
     tableclass/tableau_brut.h \
     misc/uploader.h \
     graph/comparrefdo.h \
-    misc/menusondage.h
+    misc/menusondage.h \
+    misc/emailvalidator.h
 
 FORMS    += mainwindow.ui
 
