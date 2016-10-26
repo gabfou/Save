@@ -597,7 +597,8 @@ void MainWindow::sendprojectauxi(QString str)
                    "<p>Dans ce cadre, le cabinet Murano vous donne la parole !</p>"
                    "<p>Merci de prendre quelques minutes de votre temps pour répondre à notre questionnaire :</p>"
                    "<a href=\"etudemurano.alwaysdata.net/" + str;
-    QString bodyend = "<p>Si vous avez des questions ou des difficultés avec le lien, n’hésitez pas à nous contacter.</p><Br/>"
+    QString bodyend = "\"><u>ACCEDER AU QUESTIONNAIRE</u></a></p>"
+                      "<p>Si vous avez des questions ou des difficultés avec le lien, n’hésitez pas à nous contacter.</p><Br/>"
                       "<p>Nous vous remercions de votre participation !</p>"
                       "<p>L’équipe MURAnO</p>";
 	QStringList listmail;
@@ -612,7 +613,7 @@ void MainWindow::sendprojectauxi(QString str)
 	while (i < listmail.size())
 	{
 		qDebug() << listmail.at(i);
-        bodytmp = body + "?p=" + listmail.at(i + 1) + "&s=" + namecurrent + "\"><u>ACCEDER AU QUESTIONNAIRE</u></a></p>" + bodyend;
+        bodytmp = body + "?p=" + listmail.at(i + 1) + "&s=" + namecurrent + bodyend;
 		sendmail(listmail.at(i), bodytmp); // OPTI
 		i += 2;
 	}

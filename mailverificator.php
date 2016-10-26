@@ -1,26 +1,71 @@
-
-
 <?php
 	include("www/function.php");
+
+
+function mailmieux($to, $subject, $body)
+{
+	require 'PHPMailerAutoload.php';
+
+	$mail = new PHPMailer;
+
+	//$mail->SMTPDebug = 3;
+
+	$mail->isSMTP();									  // Set mailer to use SMTP
+	$mail->Host = '"smtp-etudemurano.alwaysdata.net"';  // Specify main and backup SMTP servers
+	$mail->SMTPAuth = true;							   // Enable SMTP authentication
+	$mail->Username = 'etudemurano@alwaysdata.net';				 // SMTP username
+	$mail->Password = 't4x5akda';						   // SMTP password
+	$mail->SMTPSecure = 'tls';							// Enable TLS encryption, `ssl` also accepted
+	$mail->Port = 587;									// TCP port to connect to
+
+	$mail->setFrom('etudemurano@alwaysdata.net', 'etudemurano');
+	$mail->addAddress($to/*, 'Joe User'*/);	 // Add a recipient
+
+	$mail->isHTML(true);								  // Set email format to HTML
+
+	$mail->Subject = $subject;
+	$mail->Body	= $body;
+//	$mail->AltBody = 'body in plain text';
+
+	if(!$mail->send())
+	{
+		echo 'Message could not be sent.';
+		echo 'Mailer Error: ' . $mail->ErrorInfo;
+	}
+	else
+		echo 'Message has been sent';
+}
 
 function maildebase($to, $subject, $body)
 {
 	$headers   = array();
 	$headers[] = "MIME-Version: 1.0";
-	$headers[] = "Content-type: text/plain; charset=utf-8";
+	$headers[] = "Content-type: text/html; charset=utf-8";
 	$headers[] = "From: Etudesmuranoconseil <etudemurano@alwaysdata.net>";
-	//$headers[] = "Bcc: JJ Chong <bcc@domain2.com>";
-	//$headers[] = "Reply-To: Recipient Name <receiver@domain3.com>";
 	$headers[] = "Subject: {".$subject."}";
 	$headers[] = "X-Mailer: PHP/".phpversion();
 
-	mail($to, $subject, $body, implode("\r\n", $headers));
+	if (!mail($to, $subject, $body, implode("\r\n", $headers)))
+		echo "mail to ".$to;
 }
-
-// maildebase("web-jbiqHB@mail-tester.com", "etude muranoconseil", "Bonjour dans le cadre de notre études veuillez repondre au formulaire à l'adresse suivante : http://etudemurano.alwaysdata.net/login.php"."\r\n\r\nMURAnO Conseil : Marketing / Retail / Supply Chain");
 
 function prepperson($groupid, $project_name, $bdd, $ref)
 {
+	$body = "<p>Bonjour,</p><Br/>";
+	$body .= "<p>Nous effectuons actuellement une mission pour le compte de votre société.</p>";
+	$body .= "<p>Dans ce cadre, le cabinet Murano vous donne la parole !</p>";
+	$body .= "<p>Merci de prendre quelques minutes de votre temps pour répondre à notre questionnaire :</p>";
+	$body .= '<a href="etudemurano.alwaysdata.net/directlogin.php';
+	$bodyend = '"><u>ACCEDER AU QUESTIONNAIRE</u></a></p>';
+	$bodyend .= "<p>Si vous avez des questions ou des difficultés avec le lien, n’hésitez pas à nous contacter.</p><Br/>";
+	$bodyend .= "<p>Nous vous remercions de votre participation !</p>";
+	$bodyend .= "<p>L’équipe MURAnO</p>";
+	$bodyend .= "<Br/><p><b>MURAnO Conseil</b><Br/>"
+	$bodyend .= "www.muranoconseil.com<Br/>"
+	$bodyend .= "21, rue Vauthier<Br/>"
+	$bodyend .= "92100 Boulogne-Billancourt<Br/>"
+	$bodyend .= "<img src=\"http://etudemurano.alwaysdata.net/logomieux.jpg\" alt=\"logo murano\" class = logo></p>";
+
 	$req_pre = $bdd->prepare('SELECT id, email FROM project_'.$project_name.'_project WHERE groupid = '.$groupid.";");
 	$req_pre->execute();
 	$tabperson = $req_pre->fetchall();
@@ -31,15 +76,17 @@ function prepperson($groupid, $project_name, $bdd, $ref)
 		else
 			$req_pre = $bdd->prepare('UPDATE project_'.$project_name.'_project SET questionbool = 1 WHERE id = '.$valuep['id'].';');
 		$req_pre->execute();
-		maildebase($valuep['email'], "etude muranoconseil", "Bonjour dans le cadre de notre études veuillez repondre au formulaire à l'adresse suivante : http://etudemurano.alwaysdata.net/directlogin.php?p=".$valuep['id']."&s=".$project_name."\r\n\r\nMURAnO Conseil : Marketing / Retail / Supply Chain");
+		maildebase($valuep['email'], "etude muranoconseil", $body."?p=".$valuep['id']."&s=".$project_name.$bodyend);
 	}
 }
 
-$req_pre = $bdd->prepare('DELETE FROM all_etude WHERE iteration < 1;');
+$req_pre = $bdd->prepare('DELETE FROM all_etude WHERE iteration < 1 OR begin < DATE_SUB(NOW(), INTERVAL 30 MINUTE);');
 $req_pre->execute();
-$req_pre = $bdd->prepare('SELECT id, begin, iteration, groupid, project_name, iteration_detail, ref FROM all_etude WHERE 1;');
+$req_pre = $bdd->prepare('SELECT id, begin, iteration, groupid, project_name, iteration_detail, ref FROM all_etude WHERE begin < DATE_ADD(NOW(), INTERVAL 30 MINUTE);');
 $req_pre->execute();
 $tabsondage = $req_pre->fetchall();
+$req_pre = $bdd->prepare('UPDATE all_etude SET iteration = iteration - 1 WHERE begin < DATE_ADD(NOW(), INTERVAL 30 MINUTE);');
+$req_pre->execute();
 foreach ($tabsondage as $key => $value)
 {
 	if ($value['ref'])
@@ -51,6 +98,4 @@ foreach ($tabsondage as $key => $value)
 	}
 	prepperson($value['groupid'], $value['project_name'], $bdd, 0);
 }
-$req_pre = $bdd->prepare('UPDATE all_etude SET iteration = iteration - 1 WHERE 1;');
-$req_pre->execute();
 ?>

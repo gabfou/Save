@@ -25,6 +25,6 @@ public:
 private slots:
     void supsondage();
     void newsondage();
-};
+    void updatecurrent();};
 
 #endif // MENUCONFIGSONDAGE_H

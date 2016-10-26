@@ -85,8 +85,23 @@ menuconfigsondage::menuconfigsondage(MainWindow *m) : m(m)  // opti list a la pl
 
     connect(timecalendar, SIGNAL(dateChanged(QDate)), calendar, SLOT(setSelectedDate(QDate)));
     connect(calendar, SIGNAL(clicked(QDate)), timecalendar, SLOT(setDate(QDate)));
+    connect(listWidget, SIGNAL(currentRowChanged(int)), this, SLOT(updatecurrent()));
 
     timecalendar->setDate(QDate::currentDate());
+}
+
+void menuconfigsondage::updatecurrent()
+{
+    QSqlQuery qry;
+
+    if (!(qry.exec("SELECT begin, ref FROM all_etude WHERE id='" + QString::number(listid[listWidget->currentRow()]) + "';")))
+    {
+        qDebug() << "updatecurrent menuconfigsondage fail" << qry.lastError();
+        return ;
+    }
+    timecalendar->setDateTime(qry.value(0).toDateTime());
+    refcheck->setChecked(qry.value(1).toBool());
+    nbiteration->setValue(1);
 }
 
 void menuconfigsondage::supsondage()
