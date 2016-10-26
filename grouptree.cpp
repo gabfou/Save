@@ -228,6 +228,7 @@ void	grouptree::addquestglobintree()
 {
 	infoqtmp = new infoquestion(&(m->current), m, 0);
 	infoqtmp->setquestionmod(dynamic_cast<grouptreeitem*>(this->currentItem())->getId());
+    infoqtmp->setWindowModality(Qt::ApplicationModal);
 	infoqtmp->show();
 
 	connect(infoqtmp->b_update, SIGNAL(clicked(bool)), this, SLOT(addquestglobintree2()));

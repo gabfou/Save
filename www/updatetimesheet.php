@@ -52,7 +52,7 @@ function getrepname($arg_1)
 	$i = -1;
 	$ret = "";
 
-	while ($arg_1[++$i] && $arg_1[$i] != '#')
+	while ($arg_1[++$i] !== '\0' && $arg_1[$i] != '#')
 		$ret .= $arg_1[$i];
 	return ($ret);
 }

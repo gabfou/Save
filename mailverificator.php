@@ -10,18 +10,18 @@ function mailmieux($to, $subject, $body)
 
 	//$mail->SMTPDebug = 3;
 
-	$mail->isSMTP();									  // Set mailer to use SMTP
-	$mail->Host = '"smtp-etudemurano.alwaysdata.net"';  // Specify main and backup SMTP servers
-	$mail->SMTPAuth = true;							   // Enable SMTP authentication
-	$mail->Username = 'etudemurano@alwaysdata.net';				 // SMTP username
-	$mail->Password = 't4x5akda';						   // SMTP password
-	$mail->SMTPSecure = 'tls';							// Enable TLS encryption, `ssl` also accepted
-	$mail->Port = 587;									// TCP port to connect to
+	$mail->isSMTP();
+	$mail->Host = '"smtp-etudemurano.alwaysdata.net"';
+	$mail->SMTPAuth = true;
+	$mail->Username = 'etudemurano@alwaysdata.net';
+	$mail->Password = 't4x5akda';
+	$mail->SMTPSecure = 'tls';
+	$mail->Port = 587;
 
 	$mail->setFrom('etudemurano@alwaysdata.net', 'etudemurano');
-	$mail->addAddress($to/*, 'Joe User'*/);	 // Add a recipient
+	$mail->addAddress($to/*, 'Joe User'*/);
 
-	$mail->isHTML(true);								  // Set email format to HTML
+	$mail->isHTML(true);
 
 	$mail->Subject = $subject;
 	$mail->Body	= $body;

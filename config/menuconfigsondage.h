@@ -2,6 +2,7 @@
 #define MENUCONFIGSONDAGE_H
 
 #include "le.h"
+#include "grouptree.h"
 
 class MainWindow;
 
@@ -16,6 +17,7 @@ class menuconfigsondage : public QWidget
     MainWindow *m;
     QCalendarWidget *calendar;
     QDateTimeEdit *timecalendar;
+    grouptree *gt;
     QRadioButton *listday[7] = {new QRadioButton("Lundi"), new QRadioButton("Mardi"),
                              new QRadioButton("Mercredi"), new QRadioButton("Jeudi"),
                              new QRadioButton("Vendredi"), new QRadioButton("Samedi"),

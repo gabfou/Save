@@ -11,6 +11,7 @@ tableau_brut::tableau_brut(project *p)
 	this->setColumnCount(30 + p->getNbpgeneration() + p->getNbqgeneration());
 	this->setheader(p);
     this->populate(p);
+    this->setWindowModality(Qt::ApplicationModal);
 
 }
 

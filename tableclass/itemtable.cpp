@@ -82,7 +82,7 @@ void itemtable::update(person *arg, question *head, QString form) // opti passer
                 valfloat = arg->personshowcaseval(*q, p->ref);
         }
         else
-            valfloat = arg->personshowcaseval(*q, p->ref);
+            valfloat = arg->personshowcase(*q, p->ref);
         //this->setBackgroundColor(arg->getColor()); //remettre les couleur
     }
     val = (valfloat > -0.1) ? QString::number(valfloat) : "NA";

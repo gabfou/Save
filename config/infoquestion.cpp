@@ -181,12 +181,8 @@ void infoquestion::updateib(QTreeWidgetItem * item)
 	unit->setText(q->unit);
     groupbox->setcurrentgroup(q->group);
     ref_only->setChecked(q->ref_only);
-    if (q->type == 2)
-        selectlist->update(q->liststr);
-    if (q->type == 3)
-        selectlistval->update(q->liststr);
-//    listchar =
-//	value->setText(q.value);
+    selectlist->update(q->liststr);
+    selectlistval->update(q->liststr);
 }
 
 question infoquestion::getquestioncopy()

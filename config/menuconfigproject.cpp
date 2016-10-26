@@ -86,6 +86,7 @@ void menuconfigproject::showsql()
     win->addTab(new sqldatatable(QString("groupname, groupparent, type"), "project_" + this->name + "_groupe", 3), "groupe");
     win->addTab(new sqldatatable(QString("lastname, firstname, email, groupid, refbool, questionbool"), "project_" + this->name + "_project", 6), "personne");
     win->addTab(new sqldatatable(QString("question, groupid, type, note, sujet, qgroupid, typef, ref_only, splitchar"), "project_" + this->name + "_question", 9), "question");
+    win->setWindowModality(Qt::ApplicationModal);
     win->show();
 }
 

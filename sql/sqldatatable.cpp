@@ -3,6 +3,7 @@
 
 sqldatatable::sqldatatable(QString column , QString table, int nbcolumn)
 {
+    this->setWindowModality(Qt::ApplicationModal);
 	QVariant tmpv; // opti & tmpv
 	QSqlQuery query;
 	query.prepare("SELECT id, " + column + " FROM " + table + ";");
