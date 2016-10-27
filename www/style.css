@@ -292,3 +292,7 @@
 		font-weight: 700;
 		margin-left:0%;
 		}
+	.error
+	{
+    	background:red;
+	}
