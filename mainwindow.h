@@ -39,6 +39,7 @@ public:
 	int currentgref = 0;
     int currentgqref = 0;
     void updatetable();
+    void sendprojectauxi(QString str, QList<person> listp);
 public slots:
 	void updateproject();
     void screenshootcurrent();
@@ -60,7 +61,7 @@ private slots:
 //	void addgroupe();
 //	void addgroupe2();
 	void modechange(bool checked);
-	void sendproject_ref();
+    void sendproject_ref();
 	void refmodechange(bool checked);
     void changescope2(QTreeWidgetItem *item);
 	void showbarchartref();
@@ -101,9 +102,6 @@ private:
     QAction *afficherbasetable;
     QAction *affichergraphiquecompare;
     QAction *afficherref;
-
-
-	void sendprojectauxi(QString str);
 	void addock();
 
     void select_first_table();

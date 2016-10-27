@@ -81,6 +81,7 @@ void	grouptree::contextmenuselect()
 	newqg->setVisible(false);
 	if (tmp)
 	{
+        emit selectgroupchange(tmp->getId());
 		newg->setVisible(true);
 		if (tmp->getId() > 0)
 			supg->setVisible(true);

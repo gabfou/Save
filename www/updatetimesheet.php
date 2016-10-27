@@ -51,7 +51,7 @@ function getrepname($arg_1)
 	$i = -1;
 	$ret = "";
 
-	while ($arg_1[++$i] !== '\0' && $arg_1[$i] != '#')
+	while (isset($arg_1[++$i]) && $arg_1[$i] != '#')
 		$ret .= $arg_1[$i];
 	return ($ret);
 }
@@ -80,9 +80,9 @@ foreach ($tab as $name)
 }
 if ($_SESSION['iteration'] == 0)
 {
-	$qry = 'UPDATE project_'.htmlspecialchars($_SESSION['project']).'_project SET refbool = "0" WHERE id = '.htmlspecialchars($_SESSION['id_client']).";";
+	$qry = 'UPDATE project_'.htmlspecialchars($_SESSION['project']).'_project SET refbool = refbool - 1 WHERE id = '.htmlspecialchars($_SESSION['id_client']).";";
 }
 else
-	$qry = 'UPDATE project_'.htmlspecialchars($_SESSION['project']).'_project SET questionbool = "0" WHERE id = '.htmlspecialchars($_SESSION['id_client']).";";
+	$qry = 'UPDATE project_'.htmlspecialchars($_SESSION['project']).'_project SET questionbool = questionbool - 1 WHERE id = '.htmlspecialchars($_SESSION['id_client']).";";
 $bdd->exec($qry);
 ?>

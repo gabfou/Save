@@ -11,6 +11,7 @@
 #include "misc/uploader.h"
 #include "graph/comparrefdo.h"
 #include "misc/menusondage.h"
+#include "misc/emailvalidator.h"
 
 MainWindow::MainWindow(QWidget *parent) :
 	QMainWindow(parent),
@@ -293,8 +294,8 @@ void MainWindow::addproject2()
 				" email VARCHAR(90),"
 				" groupid INTEGER,"
 				" password VARCHAR(1024),"
-				" refbool BOOLEAN DEFAULT 0,"
-				" questionbool BOOLEAN DEfAULT 0)") )
+                " refbool INT DEFAULT 0,"
+                " questionbool INT DEfAULT 0)") )
 		qDebug() << "create project" << qry.lastError();
 	else
 		qDebug() << "Table created!";
@@ -588,10 +589,8 @@ MainWindow::~MainWindow()
 
 // envoi des mail
 
-void MainWindow::sendprojectauxi(QString str)
+void MainWindow::sendprojectauxi(QString str, QList<person> listp)
 {
-	QSqlQuery qry;
-
     QString body = "<p>Bonjour,</p><Br/>"
                    "<p>Nous effectuons actuellement une mission pour le compte de votre société.</p>"
                    "<p>Dans ce cadre, le cabinet Murano vous donne la parole !</p>"
@@ -601,51 +600,18 @@ void MainWindow::sendprojectauxi(QString str)
                       "<p>Si vous avez des questions ou des difficultés avec le lien, n’hésitez pas à nous contacter.</p><Br/>"
                       "<p>Nous vous remercions de votre participation !</p>"
                       "<p>L’équipe MURAnO</p>";
-	QStringList listmail;
 
-//	this->updateproject();
-//	body.append(this->namecurrent);
-//	body.append("&");
-	// body.append(this->current->postquestion("ALL"));
-    listmail = this->current.sendproject(0);
-	QString bodytmp;
-	int i = 0;
-	while (i < listmail.size())
+    QList<person>::iterator i = listp.begin();
+    while (i != listp.end())
 	{
-		qDebug() << listmail.at(i);
-        bodytmp = body + "?p=" + listmail.at(i + 1) + "&s=" + namecurrent + bodyend;
-		sendmail(listmail.at(i), bodytmp); // OPTI
-		i += 2;
+        sendmail(i->email, body + "?p=" + QString::number(i->id) + "&s=" + namecurrent + bodyend); // OPTI
+        i++;
 	}
-	/*qry.prepare( " INSERT INTO all_etude (iteration , groupid , project_name) VALUES ( ? , ? , ? );");
-	qry.addBindValue(1);
-	qry.addBindValue(0);
-	qry.addBindValue(this->current.name);*/
-//	if(!qry.exec())
-//		qDebug() << qry.lastError();
 }
 
-void MainWindow::sendproject()
-{
-	QSqlQuery qry;
+void MainWindow::sendproject(){emailvalidator *emailv = new emailvalidator(this, 0);emailv->show();}
 
-	qry.prepare( "UPDATE project_" + this->namecurrent + "_project SET questionbool = 1 WHERE 1;");
-	if(!qry.exec() )
-		qDebug() << qry.lastError();
-	else
-		this->sendprojectauxi("directlogin.php");
-}
-
-void MainWindow::sendproject_ref()
-{
-	QSqlQuery qry;
-
-	qry.prepare( "UPDATE project_" + this->namecurrent + "_project SET refbool = 1 WHERE 1;");
-	if(!qry.exec() )
-		qDebug() << qry.lastError();
-	else
-		this->sendprojectauxi("directlogin.php");
-}
+void MainWindow::sendproject_ref(){emailvalidator *emailv = new emailvalidator(this, 1);emailv->show();}
 
 void MainWindow::mailSent(QString status)
 {

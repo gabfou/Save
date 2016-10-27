@@ -66,17 +66,17 @@
 					}
 					if ($value['typef'] == 0)
 					{
-						$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'<label class="label" id="lab'.$value['id'].'" for "'.$value['id'].'#time"> '.$value['sujet'].(($value['type'] == "") ? "" : (' (en '.$value['type'].')')).': </label><input class = "reponse"  id="rep'.$value['id'].'" type="number" name="'.$value['id'].'#time" value="0" />';
+						$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'<label class="label" id="lab'.$value['id'].'" for "'.$value['id'].'#time"> '.$value['sujet'].(($value['type'] == "") ? "" : (' (en '.$value['type'].')')).': </label><input class = "reponse required" required id="rep'.$value['id'].'" type="number" min="0" name="'.$value['id'].'#time" value="" />';
 					}
 					else if ($value['typef'] == 1)
 					{
-						$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'<label class="label" id="lab'.$value['id'].'" for="rep'.$value['id'].'"> '.$value['sujet'].': </label><select class = "reponse" id="rep'.$value['id'].'" type="checkbox" name="'.$value['id'].'#time" ><option value = -2 name="'.$value['id'].'#time">je ne sais pas</option><option value = "0" name="'.$value['id'].'#time">non</option><option value = "1" name="'.$value['id'].'#time">oui</option></select>';
+						$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'<label class="label" id="lab'.$value['id'].'" for="rep'.$value['id'].'"> '.$value['sujet'].': </label><select class = "reponse required" required id="rep'.$value['id'].'" type="checkbox" name="'.$value['id'].'#time" ><option value = "" name="'.$value['id'].'#time"></option><option value = "0" name="'.$value['id'].'#time">non</option><option value = "1" name="'.$value['id'].'#time">oui</option></select>';
 					}
 					else if ($value['typef'] == 2)
 					{
-						$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'<label class="label" id="lab'.$value['id'].'" for "'.$value['id'].'#str"> '.$value['sujet'].': </label><select class = "reponse" id="rep'.$value['id'].'" name="'.$value['id'].'#str" >';
+						$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'<label class="label" id="lab'.$value['id'].'" for "'.$value['id'].'#str"> '.$value['sujet'].': </label><select class = "reponse required" required id="rep'.$value['id'].'" name="'.$value['id'].'#str" >';
 						$select = array_filter(explode("\n", $value['splitchar']));
-						$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'<option value = -2 name="'.$value['id'].'#str">je ne sais pas</option>';
+						$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'<option value = "" name="'.$value['id'].'#str"></option>';
 						foreach ($select as $selectkey => $selectvalue)
 						{
 							$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'<option value = '.$selectvalue.' name="'.$value['id'].'#str">'.$selectvalue.'</option>';
@@ -85,11 +85,11 @@
 					}
 					else if ($value['typef'] == 3)
 					{
-						$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'<label class="label" id="lab'.$value['id'].'" for "'.$value['id'].'#time"> '.$value['sujet'].': </label><select class = "reponse" id="rep'.$value['id'].'" name="'.$value['id'].'#time" >';
+						$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'<label class="label" id="lab'.$value['id'].'" for "'.$value['id'].'#time"> '.$value['sujet'].': </label><select class = "reponse required" required id="rep'.$value['id'].'" name="'.$value['id'].'#time" >';
 						$select = array_filter(explode("\n", $value['splitchar']));
 						$i = 0;
 
-						$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'<option value = -2 name="'.$value['id'].'#time">je ne sais pas</option>';
+						$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'<option value = "" name="'.$value['id'].'#time"></option>';
 						while ($select[$i])
 						{
 							$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'<option value = '.$select[$i + 1].' name="'.$value['id'].'#time">'.$select[$i].'</option>';
@@ -186,11 +186,12 @@
 		//echo $introdesc;
 		echo '<form action="updatetimesheet.php" method="post" id="formulaireid">';
 		echo $echofinal;
-		echo '<input type="button" class = "from_inputleft btn-large waves-light" id = "go_back" value="Retour">';
-		echo '<input type="button" class = "from_inputright btn-large waves-light" id = "target" value="Suivant">';
-		echo '<input type="submit" class = "from_inputright btn-large waves-light" id = "next" value="Envoyer"></form>';
+		echo '<input type="button" class = "from_inputleft btn-large waves-light" id = "go_back" value="Retour" name = "retour">';
+		echo '<input type="button" class = "from_inputright btn-large waves-light" id = "target" value="Suivant" name = "suivant">';
+		echo '<input type="submit" class = "from_inputright btn-large waves-light" id = "next" value="Envoyer" name = "submit"></form>';
 ?>
 	<script type="text/javascript" src="http://code.jquery.com/jquery-1.8.0.min.js"></script>
+	<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.js"></script>
 	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script> -->
 	<script type="text/javascript">
 	$(document).ready(function () {
@@ -335,6 +336,7 @@
 						if (i > 0)
 							etapemanageur(--i);
 					});
+					$( "#formulaireid" ).validate();
 				})();
 			});
 	</script>

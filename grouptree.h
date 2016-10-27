@@ -53,6 +53,8 @@ private slots:
     void addquestglobintree();
     void addquestglobintree2();
     void initpersonintree();
+signals:
+    void selectgroupchange(int);
 };
 
 #endif // GROUPTREE_H

@@ -72,9 +72,9 @@ function prepperson($groupid, $project_name, $bdd, $ref)
 	foreach ($tabperson as $keyp => $valuep)
 	{
 		if ($ref)
-			$req_pre = $bdd->prepare('UPDATE project_'.$project_name.'_project SET refbool = 1 WHERE id = '.$valuep['id'].';');
+			$req_pre = $bdd->prepare('UPDATE project_'.$project_name.'_project SET refbool = refbool + 1 WHERE id = '.$valuep['id'].';');
 		else
-			$req_pre = $bdd->prepare('UPDATE project_'.$project_name.'_project SET questionbool = 1 WHERE id = '.$valuep['id'].';');
+			$req_pre = $bdd->prepare('UPDATE project_'.$project_name.'_project SET questionbool = questionbool + 1 WHERE id = '.$valuep['id'].';');
 		$req_pre->execute();
 		maildebase($valuep['email'], "etude muranoconseil", $body."?p=".$valuep['id']."&s=".$project_name.$bodyend);
 	}
