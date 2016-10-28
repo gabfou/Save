@@ -42,13 +42,18 @@ private:
     listeditwval *selectlistval;
     QLabel *selectlistlabel;
     QLabel *unitlabel;
-	int init;
+    QSpinBox *min;
+    QSpinBox *max;
+    QLabel *minlabel;
+    QLabel *maxlabel;
+    int init;
 	int qgroupid;
     QStringList listchar;
     QCheckBox *ref_only;
     QPushButton *changegroup;
     QLabel * changegrouplabel;
-
+    QHBoxLayout *minmaxbox;
+    QCheckBox *maxenabled;
     void prephide();
 };
 

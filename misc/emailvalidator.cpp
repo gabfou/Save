@@ -58,12 +58,13 @@ void emailvalidator::send()
 {
     QSqlQuery qry;
 
+    //m->current.getgrouplist(groupid);
     if (ref)
-        qry.prepare("UPDATE project_" + m->namecurrent + "_project SET refbool = refbool + 1 WHERE groupid=" + QString::number(groupid) + ";");
+        qry.prepare("UPDATE project_" + m->namecurrent + "_project SET refbool = refbool + 1 WHERE 1;");
     else
-         qry.prepare( "UPDATE project_" + m->namecurrent + "_project SET questionbool = questionbool + 1 WHERE groupid=" + QString::number(groupid) + ";");
+         qry.prepare( "UPDATE project_" + m->namecurrent + "_project SET questionbool = questionbool + 1 WHERE 1;");
     if(!qry.exec() )
-        qDebug() << qry.lastError();
+        qDebug() << "emailvalidator send" << qry.lastError();
     else
         m->sendprojectauxi("directlogin.php", listp);
 }

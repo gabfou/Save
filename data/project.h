@@ -58,6 +58,7 @@ public:
 	QList<t_groupref> getgrouplist(int id, int qid = 0);
     QList<t_groupref> getgrouplistref(int id, int qid = 0);
 	vector<question> getListquestion() const;
+    QList<int> getlistallfils(int gid);
     vector<person> getListp() const;
 	int getNbperson() const;
 	int getNbfact() const;

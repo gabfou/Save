@@ -23,13 +23,15 @@
 		ob_flush();
 		exit;
 	}
+	$questionbool = $tab['questionbool'];
+	$refbool = $tab['refbool'];	
 	$groupid = $tab['groupid'];
 ?>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<head>
-		<link rel="stylesheet" href="style.css" />
-		<title>etude muranoconseil</title>
-		<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css"> -->
+<head>
+	<link rel="stylesheet" href="style.css" />
+	<title>etude muranoconseil</title>
+	<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css"> -->
 </head>
 <body>
 	<div class="topbar">
@@ -66,7 +68,10 @@
 					}
 					if ($value['typef'] == 0)
 					{
-						$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'<label class="label" id="lab'.$value['id'].'" for "'.$value['id'].'#time"> '.$value['sujet'].(($value['type'] == "") ? "" : (' (en '.$value['type'].')')).': </label><input class = "reponse required" required id="rep'.$value['id'].'" type="number" min="0" name="'.$value['id'].'#time" value="" />';
+						$minmax = array_filter(explode("\n", $value['splitchar']));
+						if (!isset($minmax[0]))
+							$minmax[0] = '0';
+						$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'<label class="label" id="lab'.$value['id'].'" for "'.$value['id'].'#time"> '.$value['sujet'].(($value['type'] == "") ? "" : (' (en '.$value['type'].')')).': </label><input class = "reponse required" required id="rep'.$value['id'].'" type="number" min="'.$minmax[0].'" '.(isset($minmax[1]) ? 'max="'.$minmax[1].'"' : '').' name="'.$value['id'].'#time" value="" />';
 					}
 					else if ($value['typef'] == 1)
 					{
@@ -101,7 +106,7 @@
 					 	$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'<label for "'.$value['id'].'#note" >interet : </label><select name="'.$value['id'].'#note" /><option value = "1" name="'.$value['id'].'#note">faible</option><option value = "3" name="'.$value['id'].'#note">moyen</option><option value = "5" name="'.$value['id'].'#note">fort</option><br><br><br></select>';
 					// else
 					// 	continue ;
-					$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'<label id="resum'.$value['id'].'" class = "reponse">NA</label><br>';
+					//$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'<label id="resum'.$value['id'].'" class = "reponse">NA</label><br>';
 					if ($tabg['gquestion'] == 0)
 						$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'</fieldset>';
 					$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'</div>';
@@ -122,7 +127,18 @@
 		$echofinal2 += "</div>";
 		$arrayjson = array_unique($arrayjson);
 		$arrayjson = array_values($arrayjson);
-		$echofinal = $echofinal.'<div id = "intro"><p>Bonjour et merci de participer à cette étude</p><p>Veuillez cliquer sur le bouton suivant et repondre aux questions en fonction de votre journée.</p></div>';
+
+		if (isset($_SESSION['etude']))
+		{
+			$req_pre = $bdd->prepare('SELECT intro FROM all_etude WHERE project_name = '.htmlspecialchars($_SESSION['project']).";");
+			$req_pre->execute();
+			($tab = $req_pre->fetch());
+			$echofinal = $echofinal.$tab['intro'];
+		}
+		else
+			$echofinal = $echofinal.'<div id = "intro"><p>Bonjour et merci de participer à cette étude</p><p>Veuillez cliquer sur le bouton suivant et repondre aux questions en fonction de votre __%j__éme journée.</p></div>';
+		$echofinal = str_replace("__%j__", $_SESSION['iteration'], $echofinal);
+		$echofinal = str_replace("__%nb__", $questionbool + $refbool, $echofinal);
 		$introdesc = "";
 		echo '<ul id="menupbar">';
 		$i = 0;
@@ -168,13 +184,6 @@
 				$echofinal = $echofinal.'<h3><p id = gdesc'.$vqgroupid.'>'.$str3['description'].'</p></h3>'.'<div id = "question'.$vqgroupid.'" style="display: hidden">'.$echopargroupe[$value]."</div>";
 
 		}
-		// foreach ($arraygrouparrent as $key => $value)
-		// {
-		// 	$req_pre = $bdd->prepare('SELECT groupname, description, groupparent, gquestion FROM project_'.htmlspecialchars($_SESSION['project']).'_groupe WHERE id= '.htmlspecialchars($value).";");
-		// 	$req_pre->execute();
-		// 	$str3 = $req_pre->fetch();
-		// 	$echofinal = '<p id = gdesc'.$value.'><h3 id = gdesc'.$value.'>'.$str3['description'].'</h3></p>'.$echofinal;
-		// }
 		$arrayjson = array_unique($arrayjson);
 		$arrayjson = array_values($arrayjson);
 		$arrayjson3 = array_unique($arrayjson3);
@@ -223,42 +232,42 @@
 						//if(actualprogress == maxprogress)
 						//	clearInterval(itv);
 					}
-					function bilanforeach(element, index, array)
-					{
-						var str3 = "[id=rep";
-						str3 = str3.concat(element);
-						str3 = str3.concat("]");
-						var str4 = "[id=resum";
-						str4 = str4.concat(element);
-						str4 = str4.concat("]");
-						var str5 = "[id=lab";
-						str5 = str5.concat(element);
-						str5 = str5.concat("]");
-						var rep = document.getElementById("rep" + element);
-						var resum = document.getElementById("resum" + element);
-						if (resum && rep)
-						{
-							if (rep.tagName == "select" || rep.tagName == "SELECT")
-							{
-								var opt = rep.options;
-								resum.innerHTML = opt[rep.selectedIndex].text;
-							}
-							else
-								resum.innerHTML = rep.value;
-						}
-						if ("".localeCompare(resum.innerHTML) == 0)
-						 	return ;
-						// else
-						// 	resum.innerHTML = "Vous n'avez pas repondu a cette question";
-						$(str5).show();
-						$(str4).show();
-					}
+					// function bilanforeach(element, index, array)
+					// {
+					// 	var str3 = "[id=rep";
+					// 	str3 = str3.concat(element);
+					// 	str3 = str3.concat("]");
+					// 	var str4 = "[id=resum";
+					// 	str4 = str4.concat(element);
+					// 	str4 = str4.concat("]");
+					// 	var str5 = "[id=lab";
+					// 	str5 = str5.concat(element);
+					// 	str5 = str5.concat("]");
+					// 	var rep = document.getElementById("rep" + element);
+					// 	var resum = document.getElementById("resum" + element);
+					// 	if (resum && rep)
+					// 	{
+					// 		if (rep.tagName == "select" || rep.tagName == "SELECT")
+					// 		{
+					// 			var opt = rep.options;
+					// 			resum.innerHTML = opt[rep.selectedIndex].text;
+					// 		}
+					// 		else
+					// 			resum.innerHTML = rep.value;
+					// 	}
+					// 	if ("".localeCompare(resum.innerHTML) == 0)
+					// 	 	return ;
+					// 	// else
+					// 	// 	resum.innerHTML = "Vous n'avez pas repondu a cette question";
+					// 	$(str5).show();
+					// 	$(str4).show();
+					// }
 					function bilan()
 					{
 						$("[id=next]").show();
 						$("[id^=question]").show();
 						$("[id=target]").hide();
-						$("[id^=resum]").hide();
+//						$("[id^=resum]").hide();
 						$("[id^=gdesc]").show();
 						$("[id^=rep]").show();
 						$("[id^=lab]").show();
@@ -268,7 +277,7 @@
 					function mdcheck(element, index, array)
 					{
 
-						if ($( ".md_debut" + element).find("select").val() != 0)
+						if ($( ".md_debut" + element).find("select").val() != 0 && $( ".md_debut" + element).find("select").val() != "")
 							$( ".md_fin" + element).show();
 						else
 							$( "[class=md_fin" + element + "]").hide();
@@ -288,7 +297,7 @@
 						$("[id^=gdesc]").hide();
 						$("[id=target]").show();
 						$("[id^=question]").hide();
-						$("[id^=resum]").hide();
+//						$("[id^=resum]").hide();
 						$("[id=intro]").hide();
 						$("[id^=pbar]").css('background-color', '#6BF3FF');
 						$("[id=bilan]").hide();
@@ -320,7 +329,7 @@
 					var i = -1;
 					$("[id^=question]").hide();
 					$("[id^=gdesc]").hide();
-					$("[id^=resum]").hide();
+//					$("[id^=resum]").hide();
 					//$("[id^=pbar]").css('background-color', '#6BF3FF');
 					$("[id^=pbar]").hide();
 					$("[id=next]").hide();
@@ -354,8 +363,8 @@
 						minlength: jQuery.validator.format("Please enter at least {0} characters."),
 						rangelength: jQuery.validator.format("Please enter a value between {0} and {1} characters long."),
 						range: jQuery.validator.format("Please enter a value between {0} and {1}."),
-						max: jQuery.validator.format("Please enter a value less than or equal to {0}."),
-						min: jQuery.validator.format("Please enter a value greater than or equal to {0}.")
+						max: jQuery.validator.format("Ce nombre doit être inférieur ou égal à {0}."),
+						min: jQuery.validator.format("Ce nombre doit être supérieur ou égal à {0}.")
 					});
 				})();
 			});
@@ -373,7 +382,6 @@
 			echo("<p>cette page n'est pas disponible</p>");
 			die();
 	}
-	//print_r($arrayjson);
 	?>
 </div>
 	</body>  

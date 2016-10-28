@@ -295,7 +295,8 @@ void MainWindow::addproject2()
 				" groupid INTEGER,"
 				" password VARCHAR(1024),"
                 " refbool INT DEFAULT 0,"
-                " questionbool INT DEfAULT 0)") )
+                " questionbool INT DEfAULT 0,"
+                " jour INT DEFAULT 0)") )
 		qDebug() << "create project" << qry.lastError();
 	else
 		qDebug() << "Table created!";
@@ -357,10 +358,6 @@ void MainWindow::addproject2()
                 " default_table INTEGER NOT NULL DEFAULT 0);");
 	if (!qry.exec())
 		qDebug() << "create all config" << qry.lastError();
-	qry.prepare(" INSERT INTO all_config ("
-				" project_name=?);" );
-	if (!qry.exec(this->nametmp->text()))
-		qDebug() << "insert all config" << qry.lastError();
 
 	qry.prepare(" CREATE TABLE IF NOT EXISTS all_etude ("
 				" id INTEGER UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT,"
@@ -369,9 +366,15 @@ void MainWindow::addproject2()
 				" groupid INTEGER NOT NULL DEFAULT 0,"
 				" project_name VARCHAR(3000),"
 				" ref BOOLEAN NOT NULL DEFAULT 0,"
-				" iteration_detail TEXT);" );
+                " iteration_detail TEXT,"
+                " intro TEXT,"
+                " mail TEXT);" );
 	if (!qry.exec())
 		qDebug() << "create etude" << qry.lastError();
+    qry.prepare(" INSERT INTO all_config ("
+                " project_name=?);" );
+    if (!qry.exec(this->nametmp->text()))
+        qDebug() << "insert all config" << qry.lastError();
 
 	this->current.initoroject(this->nametmp->text());
 	//this->current->projectshow(this, this->table, this->currentgref);

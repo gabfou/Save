@@ -15,6 +15,11 @@ void infoquestion::prephide()
     selectlistlabel->hide();
     selectlist->hide();
     selectlistval->hide();
+    minlabel->hide();
+    maxlabel->hide();
+    min->hide();
+    max->hide();
+    maxenabled->hide();
 }
 
 void infoquestion::typeshow(int type)
@@ -24,6 +29,12 @@ void infoquestion::typeshow(int type)
     {
         unitlabel->show();
         unit->show();
+        minlabel->show();
+        maxlabel->show();
+        min->show();
+        maxenabled->show();
+        if (maxenabled->isChecked())
+            max->show();
     }
     if (type == 1)
     {
@@ -67,6 +78,24 @@ infoquestion::infoquestion(project *p, MainWindow *m, int con) : info(p), m(m)
     groupbox = new grouptree(m, p->listgroup, 0);
     groupbox->headerItem()->setText(0, "Groupe cible");
 
+    minmaxbox = new QHBoxLayout();
+    min = new QSpinBox(this);
+    max = new QSpinBox(this);
+    min->setMinimum(0);
+    max->setMinimum(0);
+    minlabel = new QLabel("Min:");
+    minmaxbox->addWidget(minlabel);
+    minmaxbox->addWidget(min);
+
+    QVBoxLayout *maxbox = new QVBoxLayout();
+    maxenabled = new QCheckBox(this);
+    maxbox->addWidget(maxenabled);
+    maxbox->addWidget(max);
+
+    maxlabel = new QLabel("Max:");
+    minmaxbox->addWidget(maxlabel);
+    minmaxbox->addLayout(maxbox);
+
 	vbox->addWidget(new QLabel("Type"));
 	vbox->addWidget(type);
 	vbox->addWidget(new QLabel("Noms"));
@@ -76,6 +105,7 @@ infoquestion::infoquestion(project *p, MainWindow *m, int con) : info(p), m(m)
     vbox->addWidget(selectlistlabel);
     vbox->addWidget(selectlist, 3);
     vbox->addWidget(selectlistval, 1);
+    vbox->addLayout(minmaxbox);
     vbox->addWidget(unitlabel);
 	vbox->addWidget(unit);
     vbox->addWidget(ref_only);
@@ -92,6 +122,7 @@ infoquestion::infoquestion(project *p, MainWindow *m, int con) : info(p), m(m)
     this->prephide();
 
 	//slot
+    connect(maxenabled, SIGNAL(clicked(bool)), max, SLOT(setVisible(bool)));
     if (con)
         cotmp = connect(b_update, SIGNAL(clicked(bool)), this, SLOT(updatebdd()));
     connect(type, SIGNAL(currentIndexChanged(int)), this, SLOT(typeshow(int)));
@@ -173,7 +204,7 @@ void infoquestion::updateib(QTreeWidgetItem * item)
         if (q)
             delete q;
 		this->q = new question(p->getquestion(tmp->id));
-	}
+    }
     type->setCurrentIndex(q->type);
     typeshow(q->type);
     name->setText(q->name);
@@ -183,11 +214,31 @@ void infoquestion::updateib(QTreeWidgetItem * item)
     ref_only->setChecked(q->ref_only);
     selectlist->update(q->liststr);
     selectlistval->update(q->liststr);
+    if (q->liststr.size() > 0)
+        min->setValue(q->liststr[0].toFloat());
+    else
+        min->setValue(0);
+    if (q->liststr.size() > 1)
+    {
+        max->setValue(q->liststr[1].toFloat());
+        maxenabled->setChecked(1);
+    }
+    else
+    {
+        max->setValue(0);
+        maxenabled->setChecked(0);
+    }
 }
 
 question infoquestion::getquestioncopy()
 {
-    QString splitchar = (type->currentIndex() == 3) ? selectlistval->getlstr().join("\n") : selectlist->getlstr().join("\n");
+    QString splitchar;
+    if (type->currentIndex() == 3)
+        splitchar = selectlistval->getlstr().join("\n");
+    else if (type->currentIndex() == 2)
+        selectlist->getlstr().join("\n");
+    else if (type->currentIndex() == 0)
+        splitchar = min->text() + "\n" + ((maxenabled->isChecked()) ? max->text() : "");
 
     question ret = question(name->text(), dynamic_cast<grouptreeitem*>(groupbox->currentItem())->getId(), -1,
                               qgroupid, description->text(), unit->text(), type->currentIndex(),
@@ -197,7 +248,14 @@ question infoquestion::getquestioncopy()
 
 void infoquestion::updatebdd()
 {
-    QString splitchar = (type->currentIndex() == 3) ? selectlistval->getlstr().join("\n") : selectlist->getlstr().join("\n");
+    QString splitchar;
+
+    if (type->currentIndex() == 3)
+        splitchar = selectlistval->getlstr().join("\n");
+    else if (type->currentIndex() == 2)
+        selectlist->getlstr().join("\n");
+    else if (type->currentIndex() == 0)
+        splitchar = min->text() + ((maxenabled->isChecked()) ? "\n" + max->text() : "");
 	if (!q && init)
 	{
 		QLabel *warning = new QLabel("Aucun objet selectioné");

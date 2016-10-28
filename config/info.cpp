@@ -16,7 +16,7 @@ info::info(project *p) : p(p)
     infog = new QVBoxLayout();
     infolabel = new QLabel("");
     descriptiong = new QLineEdit();
-    gquestion = new QCheckBox();
+    gquestion = new QComboBox(this);
     b_update = new QPushButton("Enregistrer");
 
     vboxinfo->addWidget(infolabel);
@@ -25,9 +25,13 @@ info::info(project *p) : p(p)
     infog->addWidget(descriptiong);
 
     gquestionbox = new QHBoxLayout();
-    gquestionlabel = new QLabel("question tiroir :");
+    gquestionlabel = new QLabel("type :");
+    gquestion->addItem("Etape");
+    gquestion->addItem("Groupe de question");
+    gquestion->addItem("Question tiroir (nécessite une question oui/non)");
     gquestionbox->addWidget(gquestionlabel);
-    gquestionbox->addWidget(gquestion, Qt::AlignLeft);
+    gquestionbox->addWidget(gquestion);
+
     infog->addLayout(gquestionbox);
 
     infog->addWidget(b_update);
@@ -63,7 +67,7 @@ void info::updateibg(int id, int type)
         gquestionlabel->show();
         current = &(p->listqgroup[id]);
     }
-    gquestion->setChecked(current->gquestion);
+    gquestion->setCurrentIndex(current->gquestion);
     descriptiong->setText(current->description);
     infolabel->setText("groupe");
     contg->show();
@@ -80,5 +84,5 @@ void info::updatebddg()
         warning->show();
         return ;
     }
-    sqlo::addgroup(p, p->name, current->name, current->parentid , current->type, descriptiong->text(), gquestion->isChecked(), ((init) ? current->id : -1));
+    sqlo::addgroup(p, p->name, current->name, current->parentid , current->type, descriptiong->text(), gquestion->currentIndex(), ((init) ? current->id : -1));
 }

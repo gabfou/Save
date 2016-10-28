@@ -18,7 +18,7 @@ protected:
     QVBoxLayout *vboxinfo;
     QVBoxLayout *infog;
     project     *p;
-    QCheckBox   *gquestion;
+    QComboBox   *gquestion;
     QLabel      *gquestionlabel;
 
 private:
