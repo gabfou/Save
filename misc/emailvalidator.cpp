@@ -30,10 +30,10 @@ emailvalidator::emailvalidator(MainWindow *m, int ref) : m(m), ref(ref) // opti 
     listmail = new QListWidget(this);
 
     init(0);
-    QPushButton *send = new QPushButton("nouveaux");
+    QPushButton *send = new QPushButton("Envoyer");
     connect(send, SIGNAL(pressed()), this, SLOT(send()));
     connect(send, SIGNAL(pressed()), this, SLOT(close()));
-    QPushButton *close = new QPushButton("supprimer");
+    QPushButton *close = new QPushButton("Annuler");
     connect(close, SIGNAL(pressed()), this, SLOT(close()));
     QHBoxLayout *sendanulbox = new QHBoxLayout();
     sendanulbox->addWidget(send);

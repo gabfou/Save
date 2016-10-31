@@ -1,14 +1,17 @@
 #include "info.h"
 #include "data/project.h"
 #include "data/group.h"
+#include "grouptree.h"
+#include "mainwindow.h"
 
 void info::prephide()
 {
     gquestion->hide();
     gquestionlabel->hide();
+    gsettarget->hide();
 }
 
-info::info(project *p) : p(p)
+info::info(MainWindow *m) : m(m), p(&(m->current))
 {
     vboxinfo = new QVBoxLayout();
     vboxinfo->setAlignment(Qt::AlignTop);
@@ -17,6 +20,7 @@ info::info(project *p) : p(p)
     infolabel = new QLabel("");
     descriptiong = new QLineEdit();
     gquestion = new QComboBox(this);
+    gsettarget = new QPushButton("Changer le groupe cible des decendants");
     b_update = new QPushButton("Enregistrer");
 
     vboxinfo->addWidget(infolabel);
@@ -31,6 +35,7 @@ info::info(project *p) : p(p)
     gquestion->addItem("Question tiroir (nécessite une question oui/non)");
     gquestionbox->addWidget(gquestionlabel);
     gquestionbox->addWidget(gquestion);
+    infog->addWidget(gsettarget);
 
     infog->addLayout(gquestionbox);
 
@@ -43,6 +48,7 @@ info::info(project *p) : p(p)
 
     //slot
 
+    connect(gsettarget, SIGNAL(clicked(bool)), this, SLOT(settargetchildquestion()));
     connect(b_update, SIGNAL(clicked(bool)), this, SLOT(updatebddg()));
     prephide();
 }
@@ -58,13 +64,13 @@ void info::updateibg(int id, int type)
     init = 1;
     if (type == 0)
     {
-
         current = &(p->listgroup[id]);
     }
     if (type == 1)
     {
         gquestion->show();
         gquestionlabel->show();
+        gsettarget->show();
         current = &(p->listqgroup[id]);
     }
     gquestion->setCurrentIndex(current->gquestion);
@@ -85,4 +91,19 @@ void info::updatebddg()
         return ;
     }
     sqlo::addgroup(p, p->name, current->name, current->parentid , current->type, descriptiong->text(), gquestion->currentIndex(), ((init) ? current->id : -1));
+}
+
+void info::settargetchildquestion()
+{
+    grouptree *tmp = new grouptree(m, m->current.listgroup, 2);
+    tmp->setWindowModality(Qt::ApplicationModal);
+    tmp->show();
+    connect(tmp, SIGNAL(selectgroupchange(int)), this, SLOT(settargetchildquestion2(int)));
+    connect(tmp, SIGNAL(selectgroupchange(int)), tmp, SLOT(close()));
+}
+
+void info::settargetchildquestion2(int id)
+{
+    qDebug() << id;
+    m->current.listqgroup[current->id].changegroupidallqchild(p, id);
 }

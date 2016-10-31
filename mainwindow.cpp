@@ -141,7 +141,7 @@ void MainWindow::addquestion()
 	this->emailtmp = new QLineEdit;
 	Labelsujet->setAlignment(Qt::AlignTop);
 	QLabel *Labelgroup = new QLabel("Groupe :");
-	this->groupboxtmp = new grouptree(this, this->current.listgroup);
+    this->groupboxtmp = new grouptree(this, this->current.listgroup);
 	Labelgroup->setAlignment(Qt::AlignTop);
 	QLabel *Labeltype = new QLabel("Unitée :");
 	this->prenametmp = new QLineEdit;

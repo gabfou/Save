@@ -12,6 +12,17 @@
 		return (substr(strstr($str, "</div>"), 6));
 	}
 
+	if (isset($_GET['it']) && $_GET['it'] <= $_SESSION['max'])
+		$_SESSION['iteration'] = $_GET['it'];
+	if (!isset($_SESSION['iteration']) || !isset($_SESSION['max']) || $_SESSION['iteration'] > $_SESSION['max'])
+	{
+		header("Location: index.php");
+		echo "<html></html>";
+		flush();
+		ob_flush();
+		exit;
+	}
+
 	$req_pre = $bdd->prepare('SELECT questionbool, refbool, groupid FROM project_'.htmlspecialchars($_SESSION['project']).'_project WHERE id = '.htmlspecialchars($_SESSION['id_client']).";"); // changer user
 	$req_pre->execute();
 	($tab = $req_pre->fetch());
@@ -136,7 +147,7 @@
 			$echofinal = $echofinal.$tab['intro'];
 		}
 		else
-			$echofinal = $echofinal.'<div id = "intro"><p>Bonjour et merci de participer à cette étude</p><p>Veuillez cliquer sur le bouton suivant et repondre aux questions en fonction de votre __%j__éme journée.</p></div>';
+			$echofinal = $echofinal.'<div id = "intro"><h1>JOUR __%j__</h1></div>';
 		$echofinal = str_replace("__%j__", $_SESSION['iteration'], $echofinal);
 		$echofinal = str_replace("__%nb__", $questionbool + $refbool, $echofinal);
 		$introdesc = "";
@@ -315,6 +326,12 @@
 						$(str2).css('background-color', '#449CA3');
 						md_array.forEach(mdcheck);
 						prog(nb);
+						if (array.length == 1)
+						{
+							$("[id=target]").hide();
+							$("[id=next]").show();
+							$("[id^=gdesc]").hide();
+						}
 					}
 					function mdforeach(element, index, array)
 					{

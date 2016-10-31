@@ -52,7 +52,7 @@ void infoquestion::typeshow(int type)
     }
 }
 
-infoquestion::infoquestion(project *p, MainWindow *m, int con) : info(p), m(m)
+infoquestion::infoquestion(project *p, MainWindow *m, int con) : info(m)
 {
 	QVBoxLayout *vbox = new QVBoxLayout();
     contq = new QWidget();
@@ -82,7 +82,9 @@ infoquestion::infoquestion(project *p, MainWindow *m, int con) : info(p), m(m)
     min = new QSpinBox(this);
     max = new QSpinBox(this);
     min->setMinimum(0);
+    min->setMaximum(1000000);
     max->setMinimum(0);
+    max->setMaximum(1000000);
     minlabel = new QLabel("Min:");
     minmaxbox->addWidget(minlabel);
     minmaxbox->addWidget(min);

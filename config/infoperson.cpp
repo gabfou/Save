@@ -7,7 +7,7 @@
 #include "misc/listedit.h"
 #include "grouptree.h"
 
-infoperson::infoperson(MainWindow *m, project *p) : info(p), m(m)
+infoperson::infoperson(MainWindow *m, project *p) : info(m)
 {
     vbox = new QVBoxLayout();
     contp = new QWidget();

@@ -3,11 +3,13 @@
 
 #include "le.h"
 
+class mainwindow;
+
 class info : public QWidget
 {
     Q_OBJECT
 public:
-    info(project *p);
+    info(MainWindow *m);
 
 public slots:
     void updatebddg();
@@ -20,7 +22,12 @@ protected:
     project     *p;
     QComboBox   *gquestion;
     QLabel      *gquestionlabel;
+    QPushButton *gsettarget;
+    MainWindow  *m;
 
+private slots:
+    void settargetchildquestion();
+    void settargetchildquestion2(int id);
 private:
     QLineEdit   *descriptiong;
     QPushButton *b_update;

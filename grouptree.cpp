@@ -227,7 +227,7 @@ void	grouptree::addquestintree2(QTreeWidgetItem *item, int column)
 
 void	grouptree::addquestglobintree()
 {
-	infoqtmp = new infoquestion(&(m->current), m, 0);
+    infoqtmp = new infoquestion(&(m->current), m, 0);
 	infoqtmp->setquestionmod(dynamic_cast<grouptreeitem*>(this->currentItem())->getId());
     infoqtmp->setWindowModality(Qt::ApplicationModal);
 	infoqtmp->show();
@@ -238,6 +238,7 @@ void	grouptree::addquestglobintree()
 void	grouptree::addquestglobintree2()
 {
 	dynamic_cast<grouptreeitem*>(this->currentItem())->addquestglobinttree(infoqtmp->getquestioncopy());
+    delete infoqtmp;
 	m->updatetable();
 }
 

@@ -2,9 +2,10 @@
 #include "person.h"
 #include "question.h"
 #include "fact.h"
+#include "project.h"
 
 
-std::list<question> group::getListq() const{return listq;}
+QList<question> group::getListq() const{return listq;}
 
 group::group()
 {
@@ -32,12 +33,13 @@ void	group::addfils(int id)
 
 void    group::supquestion(int id)
 {
-    list<question>::iterator tmp = listq.begin();
+    QList<question>::iterator tmp = listq.begin();
 
     while (tmp != listq.end())
     {
         if (tmp->id == id)
         {
+            qDebug() << "question" << id << "supprimer";
             listq.erase(tmp);
             return ;
         }
@@ -88,15 +90,15 @@ group::group(QString name, int parentid, int id, vector<group> & listgroup, int 
 void group::addperson(person p)
 {
 	person p2(p);
-	this->listp.push_back(p2);
+    listp.push_back(p2);
     //qDebug() << p2.getName();
 }
 
 void group::addquestion(question q)
 {
 	question q2(q);
-	this->listq.push_back(q2);
-    //qDebug() << q2.name;
+    listq.push_back(q2);
+    qDebug() << q2.name << id << listq.size();
 }
 
 void group::debug()
@@ -222,7 +224,7 @@ QString group::grouprep(question tmp2, int ref)
 
 QString group::grouprep(group & groupp, QString tmp3, int ref, question *ret)
 {
-    list<question>::iterator tmp = listq.begin();
+    QList<question>::iterator tmp = listq.begin();
 
     while (tmp != listq.end())
     {
@@ -260,8 +262,7 @@ QList<float> group::grouprep(const vector<question> & questionlist, int ref, QLi
 
     tmp2 = listqchild.begin();
     while (tmp2 != listqchild.end())
-	{
-        //qDebug() << "truc :" << *tmp2;
+    {
         ret << grouprep(questionlist[*tmp2], ref).toFloat();
 		tmp2++;
 	}
@@ -293,7 +294,7 @@ bool group::contain(person &p)
 
 bool group::contain(question &q)
 {
-    list<question>::iterator tmp = listq.begin();
+    QList<question>::iterator tmp = listq.begin();
 
     while (tmp != listq.end())
     {
@@ -302,4 +303,28 @@ bool group::contain(question &q)
         tmp++;
     }
     return (0);
+}
+
+void group::changegroupidallqchild(project *p, int groupid)
+{
+    QList<question>::iterator tmp = listq.begin();
+
+    if (type == 0)
+        qDebug() << "group::changegroupidallqchild fail 1";
+    qDebug() << "sjagd 1" << listq.size() << listp.size();
+    while (tmp != listq.end())
+    {
+        qDebug() << "sjagd 2" << tmp->id;
+        sqlo::addquestion(p, tmp->name, groupid, tmp->unit, tmp->note, tmp->sujet, tmp->qgroupid,
+                          tmp->type, tmp->ref_only,tmp->liststr.join("\n"), tmp->val, tmp->global, tmp->id);
+        tmp++;
+    }
+
+    QList<int>::iterator tmp2 = listfils.begin();
+    while (tmp2 != listfils.end())
+    {
+        qDebug() << "sjagd 3" << *tmp2;
+        p->listgroup[*tmp2].changegroupidallqchild(p, groupid);
+        tmp2++;
+    }
 }

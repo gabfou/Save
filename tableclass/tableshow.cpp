@@ -289,8 +289,8 @@ void	tableshow::setverticalheader(vector<question> &q, int id)
     listpg = listint.begin();
     while (listpg != listint.end())
     {
-        list<question> listq37 = p->listqgroup[*listpg].getListq();
-        list<question>::iterator listqtmp = listq37.begin();
+        QList<question> listq37 = p->listqgroup[*listpg].getListq();
+        QList<question>::iterator listqtmp = listq37.begin();
         while (listqtmp != listq37.end())
         {
             gtmp = &(p->listqgroup[((*listqtmp).qgroupid)]);

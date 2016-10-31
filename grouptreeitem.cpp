@@ -47,8 +47,8 @@ grouptreeitem::grouptreeitem(QStringList str, project * p, int id, int type, int
 	{
 		if (type == 1)
 		{
-			list<question>::iterator listq;
-			list<question> listquestion = g[id].getListq();
+            QList<question>::iterator listq;
+            QList<question> listquestion = g[id].getListq();
 
 			listq = listquestion.begin();
 			while (listq != listquestion.end())
@@ -79,8 +79,10 @@ void    grouptreeitem::addquestglobinttree(const question &q)
     int i = -1;
     grouptreeitem *tmpg;
 
+    qDebug() << "dsfdsf";
     if (nbgchild == 0)
     {
+        qDebug() << "dsfdsf 1";
         this->addChild(new questiontreeitem(QStringList(q.name),
                                                         sqlo::addquestion(p, q.name, q.group, q.unit, q.note, q.sujet,
                                                                     this->getId(),
@@ -89,8 +91,10 @@ void    grouptreeitem::addquestglobinttree(const question &q)
     }
     else
     {
+        qDebug() << "dsfdsf 2";
         while (++i < this->childCount())
         {
+            qDebug() << "dsfdsf 3";
             if ((tmpg = dynamic_cast<grouptreeitem*>(this->child(i))))
                 tmpg->addquestglobinttree(q);
         }

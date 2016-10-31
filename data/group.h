@@ -11,7 +11,7 @@ class group
 private:
 	int generation = 0;
     QList<person> listp;
-	std::list<question> listq;
+    QList<question> listq;
     QList<int> listfils;
 	QColor color;
 	//	std::list<fact> listf;
@@ -47,9 +47,9 @@ public:
     QString description;
     bool gquestion;
 	int type = -1;
-	std::list<int> getListqfils() const;
+    QList<int> getListqfils() const;
 	void addquestion(question q);
-    std::list<question> getListq() const;
+    QList<question> getListq() const;
     bool contain(person &p);
     bool contain(question &q);
     float grouprepall(question tmp2, vector<group> &g);
@@ -59,6 +59,7 @@ public:
     QString grouprepval(question tmp2, int ref);
     QString grouprep(group &groupp, QString tmp3, int ref, question *ret = NULL);
     QString grouprepvaltype2(question tmp2, int ref);
+    void changegroupidallqchild(project *p, int groupid);
 };
 
 #endif // GROUP_H

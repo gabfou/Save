@@ -23,7 +23,6 @@ private slots:
     void changegroupparent();
     void changegroupparent2(QTreeWidgetItem *item);
 private:
-    MainWindow *m;
     QWidget *contp;
 	QMetaObject::Connection cotmp;
 	QLineEdit *name;

@@ -350,11 +350,11 @@ void project::initoroject(QString fproject)
 
 	qDebug() << "remplissage groupe question";timerdebug.start();
 	vector<question>::iterator tmp2;
-	tmp2 = this->listquestion.begin();
+    tmp2 = this->listquestion.begin();
 	while (tmp2 != this->listquestion.end())
 	{
 		if (tmp2->qgroupid > -1 && tmp2->qgroupid < listqgroup.size())
-			this->listqgroup[tmp2->qgroupid].addquestion(*tmp2);
+            this->listqgroup[tmp2->qgroupid].addquestion(*tmp2);
 		tmp2++;
 	}
 	qDebug() << "remplissage groupe question time" << timerdebug.elapsed() << "milliseconds";
@@ -444,8 +444,8 @@ QList<question> project::questiongroupqchildnotopti(int id)
 void	project::questiongroupqchild(int id, QList<int> & ret) const
 {
     QList<int>::iterator listpg;
-	list<question> listq = listqgroup[id].getListq();
-	list<question>::iterator listqi;
+    QList<question> listq = listqgroup[id].getListq();
+    QList<question>::iterator listqi;
     QList<int> listint = listqgroup[id].getListfils();
 
 	listqi = listq.begin();

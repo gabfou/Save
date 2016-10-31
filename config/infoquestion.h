@@ -36,7 +36,6 @@ private:
 	QLineEdit *unit;
 	QComboBox *type;
     QSpinBox *value;
-    MainWindow *m;
 	question *q = NULL;
     listedit *selectlist;
     listeditwval *selectlistval;
