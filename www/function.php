@@ -8,8 +8,6 @@ catch(Exception $e)
 {
 	die('Erreur : '.$e->getMessage());
 }
-?>
-<?php
 function mysql_escape_mimic($inp)
 {
 	if(is_array($inp))
@@ -18,6 +16,39 @@ function mysql_escape_mimic($inp)
 		return str_replace(array('\\', "\0", "\n", "\r", "'", '"', "\x1a"), array('\\\\', '\\0', '\\n', '\\r', "\\'", '\\"', '\\Z'), $inp);
 	}
 	return $inp;
+}
+
+function recupallgroupfils($groupid, $bdd, $project_name)
+{
+	$ret = array();
+	$ret[] = $groupid;
+	$req_pre = $bdd->prepare('SELECT id FROM project_'.$project_name.'_groupe WHERE groupparent = '.$groupid.";");
+	$req_pre->execute();
+	$fetch = $req_pre->fetchall();
+	foreach ($fetch as $key => $value)
+	{
+		$ret = array_merge($ret, recupallgroupfils($value['id'], $bdd, $project_name));
+	}
+	return ($ret);
+}
+
+function strallgroupfilsforsql($groupid, $bdd, $project_name)
+{
+	$i = 0;
+	$ret = "";
+	$tabid = recupallgroupfils($groupid, $bdd, $project_name);
+	print_r($tabid);
+	foreach ($tabid as $key => $value)
+	{
+		if ($i === 0)
+		{
+			$ret .= "groupid = ".$value;			
+			$i++;
+		}
+		else
+			$ret .= " OR groupid = ".$value;
+	}
+	return ($ret);
 }
 
 class Securite

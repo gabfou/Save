@@ -63,17 +63,19 @@ function prepperson($groupid, $project_name, $bdd, $ref, $body)
 		$body .= "<p>Si vous avez des questions ou des difficultés avec le lien, n’hésitez pas à nous contacter.</p><Br/>";
 		$body .= "<p>Nous vous remercions de votre participation !</p>";
 		$body .= "<p>L’équipe MURAnO</p>";
-		$body .= "<Br/><p><b>MURAnO Conseil</b><Br/>"
-		$body .= "www.muranoconseil.com<Br/>"
-		$body .= "21, rue Vauthier<Br/>"
-		$body .= "92100 Boulogne-Billancourt<Br/>"
+		$body .= "<Br/><p><b>MURAnO Conseil</b><Br/>";
+		$body .= "www.muranoconseil.com<Br/>";
+		$body .= "21, rue Vauthier<Br/>";
+		$body .= "92100 Boulogne-Billancourt<Br/>";
 		$body .= "<img src=\"http://etudemurano.alwaysdata.net/logomieux.jpg\" alt=\"logo murano\" class = logo></p>";
 	}
-	$req_pre = $bdd->prepare('SELECT id, email FROM project_'.$project_name.'_project WHERE groupid = '.$groupid.";");
+	$req_pre = $bdd->prepare('SELECT id, email FROM project_'.$project_name.'_project WHERE '.strallgroupfilsforsql($groupid, $bdd, $project_name).";");
 	$req_pre->execute();
 	$tabperson = $req_pre->fetchall();
+	print_r($tabperson);
 	foreach ($tabperson as $keyp => $valuep)
 	{
+		echo $valuep['email']."\n";
 		if ($ref)
 			$req_pre = $bdd->prepare('UPDATE project_'.$project_name.'_project SET refbool = refbool + 1 WHERE id = '.$valuep['id'].';');
 		else
@@ -83,13 +85,16 @@ function prepperson($groupid, $project_name, $bdd, $ref, $body)
 	}
 }
 
+$bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
+echo time()."\n";
 $req_pre = $bdd->prepare('DELETE FROM all_etude WHERE begin < DATE_SUB(NOW(), INTERVAL 30 day);');
 $req_pre->execute();
 $req_pre = $bdd->prepare('SELECT id, begin, iteration, groupid, project_name, iteration_detail, ref, mail FROM all_etude WHERE begin < DATE_ADD(NOW(), INTERVAL 30 MINUTE) AND iteration > 0;');
 $req_pre->execute();
 $tabsondage = $req_pre->fetchall();
-$req_pre = $bdd->prepare('UPDATE all_etude SET iteration = iteration - 1 WHERE begin < DATE_ADD(NOW(), INTERVAL 30 MINUTE AND iteration > 0);');
+$req_pre = $bdd->prepare('UPDATE all_etude SET iteration = iteration - 1 WHERE begin < DATE_ADD(NOW(), INTERVAL 30 MINUTE) AND iteration > 0;');
 $req_pre->execute();
+print_r($tabsondage);
 foreach ($tabsondage as $key => $value)
 {
 	if ($value['ref'])
@@ -101,4 +106,5 @@ foreach ($tabsondage as $key => $value)
 	}
 	prepperson($value['groupid'], $value['project_name'], $bdd, 0, $value['mail']);
 }
+echo "\n";
 ?>

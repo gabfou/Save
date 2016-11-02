@@ -121,3 +121,37 @@ void sendmail(QString mail, QString body)
     smtp->sendMail("etudemurano@alwaysdata.net", mail, "Etude muranoconseil",  body + signature);
     //delete smtp;
 }
+
+QList<int> recupallgroupfils(int groupid, QString project_name)
+{
+    QSqlQuery qry;
+    QList<int> ret;
+
+    ret += groupid;
+    qry.prepare('SELECT id FROM project_' + project_name + '_groupe WHERE groupparent = '+ QString::number(groupid) + ";");
+    qry.exec();
+    while (qry.next())
+        ret << recupallgroupfils(qry.value(0).toInt(), project_name);
+    return (ret);
+}
+
+QString strallgroupfilsforsql(int groupid, QString project_name)
+{
+    int i = 0;
+    QString ret = "";
+    QList<int> tabid = recupallgroupfils(groupid, project_name);
+    QList<int>::iterator it = tabid.begin();
+
+    while (it != tabid.end())
+    {
+        if (i == 0)
+        {
+            ret += "groupid = " + QString::number(*it);
+            i++;
+        }
+        else
+            ret += " OR groupid = " +  QString::number(*it);
+        it++;
+    }
+    return (ret);
+}

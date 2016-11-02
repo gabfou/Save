@@ -106,6 +106,8 @@ void createquestiontemplate(MainWindow *m, project *p);
 void recupquestiontemplate(QString name, project *p);
 void createpersonnetemplate(MainWindow *m, project *p);
 void recuppersonnetemplate(QString name, project *p);
+QString strallgroupfilsforsql(int groupid, QString project_name);
+QList<int> recupallgroupfils(int groupid, QString project_name);
 
 namespace sqlo
 {
