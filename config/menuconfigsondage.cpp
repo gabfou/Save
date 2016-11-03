@@ -157,7 +157,7 @@ void menuconfigsondage::newsondage()
         if (!(qry.exec()))
             qDebug() << "menu config sondage 3" << qry.lastError();
         listid << qry.lastInsertId().toInt();
-        listWidget->addItem(QDate::currentDate().toString());
+        listWidget->addItem(time.toString());
         time.addDays(1);
     }
 }

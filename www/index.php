@@ -2,9 +2,6 @@
 include("function.php");
 include("testconect.php");
 
-
-
-
 try
 {
 	$req_pre = $bdd->prepare('SELECT refbool, questionbool, jour FROM project_'.htmlspecialchars($_SESSION['project']).'_project WHERE id = '.htmlspecialchars($_SESSION['id_client']).";"); // changer user		
@@ -31,7 +28,7 @@ if ($tab['refbool'] < 1 && $tab['questionbool'] > 0 && $tab['jour'] < 1)
 $debut = -1;
 if ($tab['refbool'] > 0)
 	$debut = 0;
-if ($tab['questionbool'] > 0)
+if ($tab['questionbool'] > 0 || ($tab['refbool'] < 1 && $tab['jour'] > 0))
 	$debut = $tab['jour'];
 
 $_SESSION['max'] = $debut;
@@ -54,11 +51,16 @@ $_SESSION['max'] = $debut;
 $i = -1;
 while (++$i <= $debut)
 {
-	echo '<h5><a href="form.php?it='.$i.'">jour '.$i.'</a></h5>';
+	if ($i > 0)
+		echo '<h5><a href="form.php?it='.$i.'">day '.$i.' </a>'.(($i != $tab['jour']) ? ('<img src="Symbol_OK.svg" alt="ok" height="12px" width="12px"/>') : "").'</h5>';
+	else if ($tab['refbool'] > 0)
+		echo '<h5><a href="form.php?it='.$i.'">estimate </a>'.(($i != $tab['jour']) ? ('<img src="Symbol_OK.svg" alt="ok" height="12px" width="12px"/>') : "").'</h5>';
 }
+
 while (++$i <= $debut + $tab['questionbool'])
 {
-	echo '<h5>jour '.$i.'</h5>';
+	if ($i > 0 || $tab['refbool'] > 0)
+		echo '<h5>jour '.$i.'</h5>';
 }
 ?>
 

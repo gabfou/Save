@@ -331,7 +331,7 @@ void MainWindow::addproject2()
 				" id INTEGER UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT,"
 				" idperson INTEGER,"
 				" name VARCHAR(100),"
-				" time INTEGER,"
+                " time FLOAT,"
 				" note INTEGER,"
 				" date_info datetime,"
 				" iteration INTEGER,"
