@@ -36,9 +36,11 @@ catch (PDOException $e)
 <title>etude muranoconseil</title>
 </head>
 <body>
-<div class="topbar">
-	<img src="logo.jpeg" alt="logo murano" class = logo>
-</div>
+	<div class="topbar">
+		<a href="index.php"><img src="logonew.png" alt="logo murano" class = logo></a>
+		<h1 class = titre><?php echo str_replace("_", " ", htmlspecialchars($_SESSION['project'])); ?></h1>
+	</div>
+
 
 <p> Merci de votre de participation. </p>
 <p> Cordialement toute l'équipe de murano conseil </p>
@@ -50,7 +52,7 @@ function getrepname($arg_1)
 	$i = -1;
 	$ret = "";
 
-	while (isset($arg_1[++$i]) && $arg_1[$i] != '#')
+	while (isset($arg_1[++$i]) && $arg_1[$i] != '_')
 		$ret .= $arg_1[$i];
 	return ($ret);
 }
@@ -70,21 +72,22 @@ $bdd->exec($qry);
 
 foreach ($tab as $name)
 {
-	if (!(isset($_POST[$name.'__str'])))
-		$_POST[$name.'__str'] = "NA";
-	if (!(isset($_POST[$name.'__time'])))
-		$_POST[$name.'__time'] = 0;
-	if (htmlspecialchars($_POST[$name.'__time']) > -1)
+	if (!(isset($_POST[$name.'_str'])))
+		$_POST[$name.'_str'] = "NA";
+	if (!(isset($_POST[$name.'_time'])))
+		$_POST[$name.'_time'] = 0;
+	if (htmlspecialchars($_POST[$name.'_time']) > -1)
 	{
-		$qry = 'INSERT INTO project_'.htmlspecialchars($_SESSION['project']).'_reponse (idperson , idquestion, time, note, date_info, iteration, str) VALUE ('.htmlspecialchars($_SESSION['id_client']).' , "'.$name.'" , '.htmlspecialchars($_POST[$name.'__time']).', '.((isset($_POST[$name.'#note'])) ? htmlspecialchars($_POST[$name.'#note']) : '-1').' , NOW() , '.$_SESSION['iteration'].' , "'.htmlspecialchars($_POST[$name.'__str']).'" );';
+		$qry = 'INSERT INTO project_'.htmlspecialchars($_SESSION['project']).'_reponse (idperson , idquestion, time, note, date_info, iteration, str) VALUE ('.htmlspecialchars($_SESSION['id_client']).' , "'.$name.'" , '.htmlspecialchars($_POST[$name.'_time']).', '.((isset($_POST[$name.'#note'])) ? htmlspecialchars($_POST[$name.'#note']) : '-1').' , NOW() , '.$_SESSION['iteration'].' , "'.htmlspecialchars($_POST[$name.'_str']).'" );';
 		$bdd->exec($qry);
 		//echo 'INSERT INTO project_'.$_SESSION['project'].'_reponse ('.$_SESSION['id_client'].', '.$_POST[$name."_time"].', '.$_POST[$name."_note"].', NOW());';
 	}
 }
-
 if ($_SESSION['iteration'] == 0)
-	$qry = 'UPDATE project_'.htmlspecialchars($_SESSION['project']).'_project SET refbool = refbool, jour = jour + 1 WHERE id = '.htmlspecialchars($_SESSION['id_client']).";";
-else
-	$qry = 'UPDATE project_'.htmlspecialchars($_SESSION['project']).'_project SET questionbool = questionbool - 1, jour = jour + 1 WHERE id = '.htmlspecialchars($_SESSION['id_client']).";";
+	$qry = 'UPDATE project_'.htmlspecialchars($_SESSION['project']).'_project SET refbool = 0 WHERE id = '.htmlspecialchars($_SESSION['id_client']).";";
+$bdd->exec($qry);
+
+if ($_SESSION['iteration'] == $_SESSION['max'])
+	$qry = 'UPDATE project_'.htmlspecialchars($_SESSION['project']).'_project SET jour = jour + 1 WHERE id = '.htmlspecialchars($_SESSION['id_client']).";";
 $bdd->exec($qry);
 ?>

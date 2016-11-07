@@ -1,15 +1,27 @@
 <?php
 include("function.php");
 include("testconect.php");
-
 try
 {
-	$req_pre = $bdd->prepare('SELECT refbool, questionbool, jour FROM project_'.htmlspecialchars($_SESSION['project']).'_project WHERE id = '.htmlspecialchars($_SESSION['id_client']).";"); // changer user		
+if (isset($_POST['sugestionp']))
+{
+	$req_pre = $bdd->prepare('UPDATE project_'.htmlspecialchars($_SESSION['project']).'_project SET sugestion = "'.htmlspecialchars($_POST['sugestionp']).'" WHERE id = '.htmlspecialchars($_SESSION['id_client']).";"); // changer user
+	$req_pre->execute();
+}
+}
+catch (PDOException $e)
+{
+	echo 'Error';
+	die();
+}
+try
+{
+	$req_pre = $bdd->prepare('SELECT refbool, questionbool, jour, sugestion FROM project_'.htmlspecialchars($_SESSION['project']).'_project WHERE id = '.htmlspecialchars($_SESSION['id_client']).";"); // changer user		
 	$req_pre->execute();
 }
 catch (PDOException $e)
 {
-	echo 'Error : '.$e->getMessage();
+	echo 'Error';
 	die();
 }
 ($tab = $req_pre->fetch());
@@ -22,13 +34,15 @@ if ($tab['refbool'] < 1 && $tab['questionbool'] < 1 && $tab['jour'] < 1)
 	ob_flush();
 	die();
 }
-
+$sugestion = $tab['sugestion'];
 if ($tab['refbool'] < 1 && $tab['questionbool'] > 0 && $tab['jour'] < 1)
 	$tab['jour'] = 1;
 $debut = -1;
 if ($tab['refbool'] > 0)
 	$debut = 0;
 if ($tab['questionbool'] > 0 || ($tab['refbool'] < 1 && $tab['jour'] > 0))
+	$debut = $tab['jour'];
+if ($tab['jour'] > 0)
 	$debut = $tab['jour'];
 
 $_SESSION['max'] = $debut;
@@ -42,27 +56,39 @@ $_SESSION['max'] = $debut;
 </head>
 <body>
 	<div class="topbar">
-		<img src="logo.jpeg" alt="logo murano" class = logo>
-		<!-- <h1>MURANO</h1> -->
+		<a href="index.php"><img src="logonew.png" alt="logo murano" class = logo></a>
+		<h1 class = titre><?php echo str_replace("_", " ", htmlspecialchars($_SESSION['project'])); ?></h1>
 	</div>
 	<div class="formulaire2">
 		<p><h5>Selectioner le sondage que vous voulez remplir</h5></p>
 <?php
 $i = -1;
-while (++$i <= $debut)
+while (++$i <= $tab['jour'])
 {
 	if ($i > 0)
-		echo '<h5><a href="form.php?it='.$i.'">day '.$i.' </a>'.(($i != $tab['jour']) ? ('<img src="Symbol_OK.svg" alt="ok" height="12px" width="12px"/>') : "").'</h5>';
+		echo '<h5><a href="form.php?it='.$i.'">day '.$i.' </a><img src="Symbol_OK.svg" alt="ok" height="12px" width="12px"/></h5>';
 	else if ($tab['refbool'] > 0)
-		echo '<h5><a href="form.php?it='.$i.'">estimate </a>'.(($i != $tab['jour']) ? ('<img src="Symbol_OK.svg" alt="ok" height="12px" width="12px"/>') : "").'</h5>';
+		echo '<h5><a href="form.php?it='.$i.'">estimate </a><img src="Symbol_OK.svg" alt="ok" height="12px" width="12px"/></h5>';
 }
-
-while (++$i <= $debut + $tab['questionbool'])
+$j = 0;
+$i--;
+while (++$i <= $tab['questionbool'])
 {
 	if ($i > 0 || $tab['refbool'] > 0)
-		echo '<h5>jour '.$i.'</h5>';
+	{
+		if ($j == 0 && $tab['jour'] > 0)
+			echo '<h5><a href="form.php?it='.$i.'">day '.$i.' </a></h5>';
+		else
+			echo '<h5>day '.$i.'</h5>';
+	}
+	$j++;
 }
 ?>
-
+		<h5>Your personal input</h5>
+		<form method="post" action="index.php" id="formid">
+			<textarea name="sugestionp" rows="5" cols="40" form="formid"><?php echo(htmlspecialchars($sugestion));?></textarea>
+			<input type="submit" name="submit" value="Submit">
+		</form>
 	</div>
 </body>
+

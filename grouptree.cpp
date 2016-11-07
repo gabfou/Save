@@ -57,7 +57,15 @@ grouptree::grouptree(MainWindow *m, vector<group> & g, int i) : g(g), m(m), i(i)
 	this->addAction(persinit);
 	connect(persinit, SIGNAL(triggered()), this, SLOT(initpersonintree()));
 
-	connect(this, SIGNAL(itemSelectionChanged()), this, SLOT(contextmenuselect()));
+    copie = new QAction(QString("copier"), this);
+    this->addAction(copie);
+    connect(copie, SIGNAL(triggered()), this, SLOT(copieintree()));
+
+    paste = new QAction(QString("coller"), this);
+    this->addAction(paste);
+    connect(paste, SIGNAL(triggered()), this, SLOT(pastintree()));
+
+    connect(this, SIGNAL(itemSelectionChanged()), this, SLOT(contextmenuselect()));
 	contextmenuselect();
 }
 
@@ -332,6 +340,60 @@ void	grouptree::suppersonintree()
 	delete item;
 	item = NULL;
 	m->updatetable();
+}
+
+void    grouptree::copieintree()
+{
+    grouptreeitem *tmp = dynamic_cast<grouptreeitem*>(this->currentItem());
+    questiontreeitem *tmp2 = dynamic_cast<questiontreeitem*>(this->currentItem());
+    persontreeitem *tmp3 = dynamic_cast<persontreeitem*>(this->currentItem());
+    copietype = -1;
+
+    if (tmp)
+    {
+        copietype = 0;
+        if (g[0].type == 1)
+            copieg = m->current.listqgroup[tmp->getId()];
+        else if (g[0].type == 0)
+            copieg = m->current.listgroup[tmp->getId()];
+    }
+    else if (tmp2)
+    {
+        copietype = 2;
+        copieq = m->current.listquestion[tmp2->id];
+    }
+    else if (tmp3)
+    {
+        copietype = 1;
+        copiep = m->current.listp[tmp2->id];
+    }
+}
+
+void    grouptree::pastintree()
+{
+    grouptreeitem *tmp = dynamic_cast<grouptreeitem*>(this->currentItem());
+
+    if (!tmp)
+        return ;
+    if (copietype == 1)
+    {
+        int id = sqlo::addperson(&(m->current), copiep.firstname, copiep.lastname, copiep.email, tmp->getId());
+        this->currentItem()->addChild(new persontreeitem(QStringList(copiep.firstname + " " + copiep.lastname) , id, (QTreeWidget*)0));
+        m->updatetable();
+    }
+    else if (copietype == 0)
+    {
+        int id = sqlo::addgroup(&(m->current), m->namecurrent, copieg.name, tmp->getId(), copieg.type, copieg.description, copieg.gquestion);
+        this->currentItem()->addChild(new grouptreeitem(QStringList(copieg.name), &(m->current), id));
+        m->updatetable();
+    }
+    else if (copietype == 2)
+    {
+        int id = sqlo::addquestion(&(m->current), copieq.name, copieq.group, copieq.unit, copieq.note, copieq.sujet, tmp->getId(), copieq.type, copieq.ref_only, copieq.liststr.join("\n"), copieq.val, copieq.global);
+        this->currentItem()->addChild(new questiontreeitem(QStringList(copieq.name) , tmp->getId(), (QTreeWidget*)0));
+        m->updatetable();
+    }
+
 }
 
 grouptree::~grouptree()

@@ -48,7 +48,7 @@ private:
     int init;
 	int qgroupid;
     QStringList listchar;
-    QCheckBox *ref_only;
+    QComboBox *ref_only;
     QPushButton *changegroup;
     QLabel * changegrouplabel;
     QHBoxLayout *minmaxbox;

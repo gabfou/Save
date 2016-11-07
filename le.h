@@ -114,7 +114,7 @@ namespace sqlo
     int     addgroup(project *p, QString nameproject, QString name, int groupparent, int type, QString description, bool gquestion, int id = -1);
     void	supgroup(QString nameproject, int id, vector<group> &g);
     void	supquest(project *p, QString nameproject, int id);
-    int     addquestion(project *p, QString name, int groupid, QString type, int note, QString description, int qgroupid, int typef, bool ref_only, QString splitchar, int val, bool global, int id = -1);
+    int     addquestion(project *p, QString name, int groupid, QString type, int note, QString description, int qgroupid, int typef, int ref_only, QString splitchar, int val, bool global, int id = -1);
     void    sqlupdate(QString tablename, QString colname, QString str, int id);
     void	supperson(project *p, QString nameproject, int id);
     int     addperson(project *p, QString firstname, QString lastname, QString email, int groupid, int id = -1);

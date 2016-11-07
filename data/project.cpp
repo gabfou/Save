@@ -423,7 +423,7 @@ void	project::groupqchild(int id, QList<int> & ret) const
 	}
 }
 
-QList<question> project::questiongroupqchildnotopti(int id)
+QList<question> project::questiongroupqchildnotopti(int id, bool ref)
 {
 
 	QList<int> listqchild;
@@ -435,13 +435,14 @@ QList<question> project::questiongroupqchildnotopti(int id)
 	while (tmp != listqchild.end())
 	{
 		//qDebug() << listquestion[(*tmp)].name;
-		ret.push_back(listquestion[(*tmp)]);
+        if (ref == 1 || listquestion[(*tmp)].ref_only == 0)
+            ret.push_back(listquestion[(*tmp)]);
 		tmp++;
 	}
 	return (ret);
 }
 
-void	project::questiongroupqchild(int id, QList<int> & ret) const
+void	project::questiongroupqchild(int id, QList<int> & ret, bool ref) const
 {
     QList<int>::iterator listpg;
     QList<question> listq = listqgroup[id].getListq();
@@ -452,7 +453,8 @@ void	project::questiongroupqchild(int id, QList<int> & ret) const
 	while (listqi != listq.end())
 	{
 		//qDebug() << "questiongroupchild : " << listqi->id;
-		ret << listqi->id;
+        if (ref == 1 || listqi->ref_only == 0)
+            ret << listqi->id;
 		listqi++;
 	}
 	listint = this->listqgroup[id].getListfils();
@@ -460,12 +462,12 @@ void	project::questiongroupqchild(int id, QList<int> & ret) const
 	while (listpg != listint.end())
 	{
 		//qDebug() << "questiongroupchild number group: " << QString::number(*listpg);
-		this->questiongroupqchild(*listpg, ret);
+        this->questiongroupqchild(*listpg, ret, ref);
 		listpg++;
 	}
 }
 
-QList<t_groupref> project::getgrouplist(int id, int qid)
+QList<t_groupref> project::getgrouplist(int id, int qid, bool ref)
 {
 	QList<t_groupref> ret;
 	QList<int> listchild;
@@ -473,7 +475,7 @@ QList<t_groupref> project::getgrouplist(int id, int qid)
 	QList<int> listqchild;
 
 	groupchild(id, listchild);
-	questiongroupqchild(qid, listqchild);
+    questiongroupqchild(qid, listqchild, ref);
 	i = listchild.begin();
 	while (i != listchild.end())
 	{
@@ -483,7 +485,7 @@ QList<t_groupref> project::getgrouplist(int id, int qid)
 	return ret;
 }
 
-QList<t_groupref> project::getgrouplistref(int id, int qid)
+QList<t_groupref> project::getgrouplistref(int id, int qid, bool ref)
 {
 	QList<t_groupref> ret;
 	QList<int> listchild;
@@ -491,11 +493,11 @@ QList<t_groupref> project::getgrouplistref(int id, int qid)
 	QList<int> listqchild;
 
 	groupchild(id, listchild);
-	questiongroupqchild(qid, listqchild);
+    questiongroupqchild(qid, listqchild, ref);
 	i = listchild.begin();
 	while (i != listchild.end())
-	{
-		ret << this->listgroup[*i].groupnamerep(this->listquestion, 1, listqchild);
+    {
+        ret << this->listgroup[*i].groupnamerep(this->listquestion, 1, listqchild);
 		i++;
 	}
 	return ret;
@@ -675,7 +677,7 @@ void	sqlo::supgroup(QString nameproject, int id, vector<group> & g)
 }
 
 int	sqlo::addquestion(project *p, QString name, int groupid, QString type, int note, QString description, int qgroupid,
-                int typef, bool ref_only, QString splitchar, int val, bool global, int id) // global n'est pas integrer en sql
+                int typef, int ref_only, QString splitchar, int val, bool global, int id) // global n'est pas integrer en sql
 {
     QSqlQuery qry;
 
@@ -723,6 +725,7 @@ int	sqlo::addquestion(project *p, QString name, int groupid, QString type, int n
         p->listquestion[id].val = val;
         p->listquestion[id].ref_only = ref_only;
         p->listquestion[id].global = global;
+        p->listqgroup[qgroupid].changequestion(id, p->listquestion[id]);
     }
     return (qry.lastInsertId().toInt());
 }
@@ -780,6 +783,7 @@ int     sqlo::addperson(project *p, QString firstname, QString lastname,
         p->listp[id].lastname = lastname;
         p->listp[id].email = email;
         p->listp[id].groupid = groupid;
+        p->listgroup[groupid].changeperson(id, p->listp[id]);
     }
     return (qry.lastInsertId().toInt());
 }

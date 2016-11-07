@@ -64,6 +64,39 @@ void    group::supperson(int id)
     }
 }
 
+void    group::changequestion(int id, question & q)
+{
+    QList<question>::iterator tmp = listq.begin();
+
+    while (tmp != listq.end())
+    {
+        if (tmp->id == id)
+        {
+            qDebug() << "question" << id << "changer";
+            *tmp = q;
+            return ;
+        }
+        tmp++;
+    }
+}
+
+void    group::changeperson(int id, person & p)
+{
+    if (id < 0 || init == 0)
+        return ;
+    QList<person>::iterator tmp = listp.begin();
+
+    while (tmp != listp.end())
+    {
+        if (tmp->id == id)
+        {
+            *tmp = p;
+            return ;
+        }
+        tmp++;
+    }
+}
+
 group::group(QString name, int parentid, int id, vector<group> & listgroup, int type, QString description, bool gquestion) : type(type)
 {
     this->init = 1;

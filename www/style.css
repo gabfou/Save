@@ -50,8 +50,13 @@
 	legend
 	{
 		padding: 0px 3px;
-		font-weight: bold;
-		font-variant: small-caps;
+		/*font-weight: bold;*/
+		/*font-variant: small-caps;*/
+	}
+
+	.titre
+	{
+		
 	}
 
 	.label
@@ -114,12 +119,22 @@
 	{
 		height: 150px;
 		width: auto;
-		background-color: #000000;
+		background-color: #009C9B;
 		margin-top: -25px;
 		margin-left: -15px;
 		margin-right: -15px;
 
 	}
+
+/*	input.error
+	{
+		background-color: #ffdddd;
+	}
+
+	form.error
+	{
+		border: 5px solid #ffdddd;
+	}*/
 
 	div.rightbar
 	{
@@ -134,15 +149,13 @@
 
 	.logo
 	{
-		top: 6px;
-		left: 0;
+		top: 33px;
+		left: 18;
 		position: absolute;
 		z-index: 100;
 		padding-left: 20px;
-		/*background: url("logo.jpeg");*/
-		/*no-repeat scroll 0 100% transparent;*/
-	/*	height: 119px;
-		width: 200px;*/
+		height: auto;
+		width: 340px;
 	}
 
 	.site_container
@@ -317,4 +330,10 @@
 	.error
 	{
 		background:red;
+	}
+
+	textarea
+	{
+		height: 200px;
+		width: 100%;
 	}

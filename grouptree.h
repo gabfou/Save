@@ -2,10 +2,13 @@
 #define GROUPTREE_H
 
 #include "le.h"
+#include "data/group.h"
+#include "data/person.h"
+#include "data/question.h"
+#include "data/fact.h"
 
 class project;
 class MainWindow;
-class group;
 class grouptreeitem;
 class infoquestion;
 
@@ -26,9 +29,16 @@ class grouptree : public QTreeWidget
     QAction *persinit;
     QPlainTextEdit *texttmp;
     QAction *modifdg;
+    QAction *copie;
+    QAction *paste;
 	QMetaObject::Connection cotmp;
 	int i;
     infoquestion *infoqtmp;
+
+    int copietype = -1;
+    group copieg;
+    question copieq;
+    person copiep;
 public:
 	grouptree();
 	~grouptree();
@@ -53,6 +63,8 @@ private slots:
     void addquestglobintree();
     void addquestglobintree2();
     void initpersonintree();
+    void pastintree();
+    void copieintree();
 signals:
     void selectgroupchange(int);
 };

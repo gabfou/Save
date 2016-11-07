@@ -67,6 +67,8 @@ MainWindow::MainWindow(QWidget *parent) :
 	menu_outil = menuBar()->addMenu("&Outils");
 	QAction *xlsx_convert = menu_outil->addAction("&Convertir en xlsx");
 	QObject::connect(xlsx_convert, SIGNAL(triggered()), this, SLOT(convert_to_xlsx()));
+    QAction *preview = menu_outil->addAction("&Preview");
+    QObject::connect(preview, SIGNAL(triggered()), this, SLOT(affichepreview()));
 //	QAction *barchartref = menu_outil->addAction("&Graphique comparaison reference-donnée");
 //	QObject::connect(barchartref, SIGNAL(triggered()), this, SLOT(showbarchartref()));
 
@@ -296,7 +298,8 @@ void MainWindow::addproject2()
 				" password VARCHAR(1024),"
                 " refbool INT DEFAULT 0,"
                 " questionbool INT DEfAULT 0,"
-                " jour INT DEFAULT 0)") )
+                " jour INT DEFAULT 0,"
+                " Sugestion TEXT DEFAULT '')") )
 		qDebug() << "create project" << qry.lastError();
 	else
 		qDebug() << "Table created!";
@@ -313,7 +316,9 @@ void MainWindow::addproject2()
 				" ref_only INT DEFAULT 0,"
 				" splitchar TEXT NOT NULL DEFAULT '',"
 				" global BOOL NOT NULL DEFAULT 0,"
-				" value INT NOT NULL DEFAULT -1)");
+                " value INT NOT NULL DEFAULT 1,"
+                " sujetesti TEXT,"
+                " link INT NOT NULL DEFAULT -1)");
 	if (!qry.exec())
 		qDebug() << "create question" << qry.lastError();
 

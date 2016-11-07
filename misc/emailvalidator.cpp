@@ -60,9 +60,9 @@ void emailvalidator::send()
 
     //m->current.getgrouplist(groupid);
     if (ref)
-        qry.prepare("UPDATE project_" + m->namecurrent + "_project SET refbool = refbool + 1 WHERE 1";// + strallgroupfilsforsql(groupid, m->namecurrent) + ";");
+        qry.prepare("UPDATE project_" + m->namecurrent + "_project SET refbool = refbool + 1 WHERE 1");// + strallgroupfilsforsql(groupid, m->namecurrent) + ";");
     else
-         qry.prepare( "UPDATE project_" + m->namecurrent + "_project SET questionbool = questionbool + 1 WHERE 1;";// + strallgroupfilsforsql(groupid, m->namecurrent) + ";");
+         qry.prepare( "UPDATE project_" + m->namecurrent + "_project SET questionbool = questionbool + 1 WHERE 1;");// + strallgroupfilsforsql(groupid, m->namecurrent) + ";");
     if(!qry.exec() )
         qDebug() << "emailvalidator send" << qry.lastError();
     else

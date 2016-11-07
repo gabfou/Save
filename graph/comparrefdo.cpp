@@ -5,8 +5,8 @@
 Comparrefdo::Comparrefdo(MainWindow *m, int group) : m(m), group(group)
 {
     QGridLayout *gl = new QGridLayout(this);
-    bar = new bargraph(syntheselistgroup(m->current.getgrouplist(group)),&(m->current));
-    barref = new bargraph(syntheselistgroup(m->current.getgrouplistref(group)), &(m->current));
+    bar = new bargraph(syntheselistgroup(m->current.getgrouplist(group, m->currentgqref, 0)),&(m->current));
+    barref = new bargraph(syntheselistgroup(m->current.getgrouplistref(group, m->currentgqref, 0)), &(m->current));
     bar->setName("Réel");
     barref->setName("Escompté");
     gl->addWidget(barref, 1, 0);
@@ -29,8 +29,8 @@ void Comparrefdo::autoupdateov()
 
 void Comparrefdo::updateov(int group, int qgroup)
 {
-    bar->updateg(syntheselistgroup(m->current.getgrouplist(group, qgroup)), qgroup);
-    barref->updateg(syntheselistgroup(m->current.getgrouplistref(group, qgroup)), qgroup);
+    bar->updateg(syntheselistgroup(m->current.getgrouplist(group, qgroup, 0)), qgroup);
+    barref->updateg(syntheselistgroup(m->current.getgrouplistref(group, qgroup, 0)), qgroup);
     this->update();
 }
 

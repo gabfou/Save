@@ -55,8 +55,8 @@ public:
     void addgroup(QString name, int parentid, unsigned int id, int type, QString description, bool gquestion);
 	vector<group> getListgroup() const;
 	void setListgroup(const vector<group> &value);
-	QList<t_groupref> getgrouplist(int id, int qid = 0);
-    QList<t_groupref> getgrouplistref(int id, int qid = 0);
+    QList<t_groupref> getgrouplist(int id, int qid = 0, bool ref = 1);
+    QList<t_groupref> getgrouplistref(int id, int qid = 0, bool ref = 1);
 	vector<question> getListquestion() const;
     QList<int> getlistallfils(int gid);
     vector<person> getListp() const;
@@ -69,8 +69,8 @@ public:
 	void groupqchild(int id, QList<int> &ret) const;
     void groupchild(unsigned int id, QList<int> & ret, vector<group> &g) const;
     question getquestion(int id);
-    void questiongroupqchild(int id, QList<int> &ret) const;
-    QList<question> questiongroupqchildnotopti(int id);
+    void questiongroupqchild(int id, QList<int> &ret, bool ref = 1) const;
+    QList<question> questiongroupqchildnotopti(int id, bool ref = 1);
     person getperson(int id);
     int getNbqgroup() const;
     int getNbfactref() const;

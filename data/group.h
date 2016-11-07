@@ -60,6 +60,8 @@ public:
     QString grouprep(group &groupp, QString tmp3, int ref, question *ret = NULL);
     QString grouprepvaltype2(question tmp2, int ref);
     void changegroupidallqchild(project *p, int groupid);
+    void changequestion(int id, question &q);
+    void changeperson(int id, person &p);
 };
 
 #endif // GROUP_H

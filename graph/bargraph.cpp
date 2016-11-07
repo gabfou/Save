@@ -7,7 +7,7 @@
 bargraph::bargraph(t_groupref  g, project *p, QWidget *parent) : QWidget(parent), g(g), p(p)
 {
     //setMinimumWidth(300);
-    listqchild = p->questiongroupqchildnotopti(p->gqref);
+    listqchild = p->questiongroupqchildnotopti(p->gqref, 0);
 //    connect(m, SIGNAL(gqrefchange(int)), this, SLOT(selectq(int)));
 }
 
@@ -20,7 +20,7 @@ void bargraph::mousePressEvent(QMouseEvent *event)
 void bargraph::updateg(t_groupref g, int qgroup)
 {
 	this->g = g;
-    listqchild = p->questiongroupqchildnotopti(qgroup);
+    listqchild = p->questiongroupqchildnotopti(qgroup, 0);
     //this->g.total = total(g, listqchild);
 }
 
@@ -74,12 +74,12 @@ void bargraph::drawgraph(QPainter *qp)
 	tmp3 = listq.begin();
 	while (tmp3 != listq.end() && tmp != g.list.end())
 	{
-        /*if ((*tmp) == 0)
+        if ((tmp3->ref_only) == 1)
 		{
 			tmp3++;
 			tmp++;
 			continue ;
-        }*/
+        }
         x +=  incr + incr;
 //		qDebug() << "boucle" << x <<  tmp37 << (*tmp).toFloat() / d;
         qp->drawRect(x, tmp37 * h120, width, ((*tmp) / d) * h120);

@@ -23,9 +23,11 @@
 		exit;
 	}
 
-	$req_pre = $bdd->prepare('SELECT questionbool, refbool, groupid FROM project_'.htmlspecialchars($_SESSION['project']).'_project WHERE id = '.htmlspecialchars($_SESSION['id_client']).";"); // changer user
+	$req_pre = $bdd->prepare('SELECT questionbool, refbool, groupid, firstname, lastname FROM project_'.htmlspecialchars($_SESSION['project']).'_project WHERE id = '.htmlspecialchars($_SESSION['id_client']).";"); // changer user
 	$req_pre->execute();
 	($tab = $req_pre->fetch());
+	$firstname = $tab['firstname'];
+	$lastname = $tab['lastname'];
 	// if (($tab['questionbool'] == 0 && $_SESSION['iteration'] >= 1) || ($tab['refbool'] == 0 && $_SESSION['iteration'] == 0))
 	// {
 	// 	header("Location: index.php");
@@ -46,8 +48,8 @@
 </head>
 <body>
 	<div class="topbar">
-		<img src="logo.jpeg" alt="logo murano" class = logo>
-		<!-- <h1>MURANO</h1> -->
+		<a href="index.php"><img src="logonew.png" alt="logo murano" class = logo></a>
+		<h1 class = titre><?php echo str_replace("_", " ", htmlspecialchars($_SESSION['project'])); ?></h1>
 	</div>
 <?php
 	$error = 1;
@@ -68,7 +70,9 @@
 			($tabquestion = $req_pre->fetchall());
 			foreach ($tabquestion as $key => $value)
 			{
-				if ($value['ref_only'] != 1 || $_SESSION['iteration'] == 0)
+				if ($value['ref_only'] == 0
+					|| ($_SESSION['iteration'] == 0  && $value['ref_only'] == 1)
+					|| ($_SESSION['iteration'] == 1 && $value['ref_only'] == 2))
 				{
 					$req_pre2 = $bdd->prepare('SELECT gquestion FROM project_'.htmlspecialchars($_SESSION['project']).'_groupe WHERE id= '.$value['qgroupid'].";");
 					$req_pre2->execute();
@@ -87,37 +91,40 @@
 					}
 					if ($value['typef'] == 0)
 					{
+						$type = $value['type'];
+						if ($_SESSION['iteration'] == 0 && $value['type'] === "min")
+							$type = "%";
 						$minmax = array_filter(explode("\n", $value['splitchar']));
 						if (!isset($minmax[0]))
 							$minmax[0] = '0';
-						$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'<label class="label lab'.$value['id'].'" for="'.$value['id'].'__time"> '.$value['sujet'].(($value['type'] == "") ? "" : (' (en '.$value['type'].')')).': </label><input class = "reponse required rep '.(($value['type'] == "") ? '' : ('type_'.$value['type'])).'" required '.$value['id'].'" type="number" min="'.$minmax[0].'" '.(isset($minmax[1]) ? 'max="'.$minmax[1].'"' : '').' name="'.$value['id'].'__time" id="'.$value['id'].'__time" value="'.$repnbr.'" />';
+						$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'<label class="label lab'.$value['id'].'" for="'.$value['id'].'_time"> '.$value['sujet'].(($type == "") ? "" : (' (in '.$type.')')).': </label><input class = "reponse required rep '.(($type == "") ? '' : ('type_'.$type)).'" required '.$value['id'].'" type="number" min="'.$minmax[0].'" '.(isset($minmax[1]) ? 'max="'.$minmax[1].'"' : '').' name="'.$value['id'].'_time" id="'.$value['id'].'_time" value="'.$repnbr.'" />';
 						$arrayjson4[] = $value['sujet'];
 					}
 					else if ($value['typef'] == 1)
 					{
-						$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'<label class="label lab'.$value['id'].'" for="rep'.$value['id'].'"> '.$value['sujet'].': </label><select class = "reponse required rep" required '.$value['id'].'" type="checkbox" name="'.$value['id'].'__time" ><option value = "'.$repnbr.'" name="'.$value['id'].'__time"></option><option value = "0" name="'.$value['id'].'__time">non</option><option value = "1" name="'.$value['id'].'__time">oui</option></select>';
+						$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'<label class="label lab'.$value['id'].'" for="rep'.$value['id'].'"> '.$value['sujet'].': </label><select class = "reponse required rep" required '.$value['id'].'" type="checkbox" name="'.$value['id'].'_time" ><option value = "'.$repnbr.'" name="'.$value['id'].'_time"></option><option value = "0" name="'.$value['id'].'_time">non</option><option value = "1" name="'.$value['id'].'_time">oui</option></select>';
 					}
 					else if ($value['typef'] == 2)
 					{
-						$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'<label class="label lab'.$value['id'].'" for "'.$value['id'].'__str"> '.$value['sujet'].': </label><select class = "reponse required rep" required '.$value['id'].'" name="'.$value['id'].'__str" >';
+						$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'<label class="label lab'.$value['id'].'" for "'.$value['id'].'_str"> '.$value['sujet'].': </label><select class = "reponse required rep" required '.$value['id'].'" name="'.$value['id'].'_str" >';
 						$select = array_filter(explode("\n", $value['splitchar']));
-						$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'<option value = "'.$repstr.'" name="'.$value['id'].'__str"></option>';
+						$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'<option value = "'.$repstr.'" name="'.$value['id'].'_str"></option>';
 						foreach ($select as $selectkey => $selectvalue)
 						{
-							$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'<option value = '.$selectvalue.' name="'.$value['id'].'__str">'.$selectvalue.'</option>';
+							$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'<option value = '.$selectvalue.' name="'.$value['id'].'_str">'.$selectvalue.'</option>';
 						}
 						$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'</select>';
 					}
 					else if ($value['typef'] == 3)
 					{
-						$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'<label class="label lab'.$value['id'].'" for "'.$value['id'].'__time"> '.$value['sujet'].': </label><select class = "reponse required rep" required '.$value['id'].'" name="'.$value['id'].'__time" >';
+						$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'<label class="label lab'.$value['id'].'" for "'.$value['id'].'_time"> '.$value['sujet'].': </label><select class = "reponse required rep" required '.$value['id'].'" name="'.$value['id'].'_time" >';
 						$select = array_filter(explode("\n", $value['splitchar']));
 						$i = 0;
 
-						$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'<option value = "'.$repnbr.'" name="'.$value['id'].'__time"></option>';
+						$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'<option value = "'.$repnbr.'" name="'.$value['id'].'_time"></option>';
 						while ($select[$i])
 						{
-							$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'<option value = '.$select[$i + 1].' name="'.$value['id'].'__time">'.$select[$i].'</option>';
+							$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'<option value = '.$select[$i + 1].' name="'.$value['id'].'_time">'.$select[$i].'</option>';
 							$i += 2;
 						}
 						$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'</select>';
@@ -156,21 +163,30 @@
 			$echofinal = $echofinal.$tab['intro'];
 		}
 		else
-			$echofinal = $echofinal.'<div id = "intro"><h1>JOUR __%j__</h1></div>';
+			$echofinal = $echofinal.'<div id = "intro"><h1>DAY __%j__</h1><p>Hello __%p__ __%n__</p></div>';
+		$req_pre = $bdd->prepare('SELECT intro FROM all_etude WHERE id = '.htmlspecialchars($_SESSION['id_client']).";");
+		$req_pre->execute();
+		($tab = $req_pre->fetch());
+
 		$echofinal = str_replace("__%j__", $_SESSION['iteration'], $echofinal);
 		$echofinal = str_replace("__%nb__", $questionbool + $refbool, $echofinal);
+		$echofinal = str_replace("__%p__", $firstname, $echofinal);
+		$echofinal = str_replace("__%n__", $lastname, $echofinal);
 		$introdesc = "";
 		echo '<ul id="menupbar">';
-		$i = 0;
 		$nop = 1;
-//		while ($nop > 0)
+		while ($nop > 0)
 		{
 			$nop = 0;
+			$i = 0;
 			foreach ($arrayjson as $key => $value)
 			{
 				$req_pre = $bdd->prepare('SELECT groupname, description, groupparent, gquestion FROM project_'.htmlspecialchars($_SESSION['project']).'_groupe WHERE id= '.htmlspecialchars($value).";"); 
 				$req_pre->execute();
 				$str3 = $req_pre->fetch();
+				$req_pre = $bdd->prepare('SELECT id FROM project_'.htmlspecialchars($_SESSION['project']).'_question WHERE qgroupid= '.htmlspecialchars($value).";"); 
+				$req_pre->execute();
+				$childcount = $req_pre->rowCount();
 				if ($str3['gquestion'] != 0)
 				{
 					$nop++;
@@ -181,7 +197,12 @@
 					if ($str3['gquestion'] == 2)
 					{
 						$arrayjson3[] = $i; 
-						$echopargroupe[$str3['groupparent']] = $echopargroupe[$str3['groupparent']].'<div class= "question'.$vqgroupid.'" style="display: hidden"><fieldset><legend>'.$str3['description'].'</legend><div class="md_debut'.$i.'">'.recupfirstdiv($echopargroupe[$value]).'</div><div id = "question'.$vqgroupid.'" class="md_fin'.$i.'" style="display: hidden"><div>'.supfirstdiv($echopargroupe[$value])."</div></fieldset></div>"; // j ai virer le duxieme div id (au cas ou sa bugerai)
+						$echopargroupe[$str3['groupparent']] .= '<div class= "question'.$vqgroupid.'" style="display: hidden">';
+						$echopargroupe[$str3['groupparent']] .= '<fieldset><legend>';
+						$echopargroupe[$str3['groupparent']] .= $str3['description'];
+						$echopargroupe[$str3['groupparent']] .= '</legend>';
+						$echopargroupe[$str3['groupparent']] .=  '<div class="md_debut'.$i.'">'.recupfirstdiv($echopargroupe[$value]).'</div>';
+						$echopargroupe[$str3['groupparent']] .=  '<div id = "question'.$vqgroupid.'" class="md_fin'.$i.'" style="display: hidden"><div>'.supfirstdiv($echopargroupe[$value])."</div></fieldset></div>"; // j ai virer le duxieme div id (au cas ou sa bugerai)
 					}
 					else
 						$echopargroupe[$str3['groupparent']] = $echopargroupe[$str3['groupparent']].'<div class = "question'.$vqgroupid.'" style="display: hidden"><fieldset><legend>'.$str3['description'].'</legend><div>'.$echopargroupe[$value]."</fieldset></div>";
@@ -217,16 +238,18 @@
 		$arrayjson4 = array_unique($arrayjson4);
 		$arrayjson4 = array_values($arrayjson4);
 		echo '</ul>';
-		echo '<div id="progressbar"><div id="indicator"></div><div id="progressnum">0%</div></div>';
+		if (sizeof($arrayjson) > 1)
+			echo '<div id="progressbar"><div id="indicator"></div><div id="progressnum">0%</div></div>';
 		echo '<div class = "formulaire2">';
 		echo '<div class="rightbar"></div>';
 		echo '<h1 id = bilan>BILAN</h1>';
 		//echo $introdesc;
 		echo '<form action="updatetimesheet.php" method="post" id="formulaireid">';
 		echo $echofinal;
-		echo '<input type="button" class = "from_inputleft btn-large waves-light" id = "go_back" value="Retour" name = "retour">';
-		echo '<input type="button" class = "from_inputright btn-large waves-light" id = "target" value="Suivant" name = "suivant">';
-		echo '<input type="submit" class = "from_inputright btn-large waves-light" id = "next" value="Envoyer" name = "submit"></form>';
+		if (sizeof($arrayjson) > 1)
+			echo '<input type="button" class = "from_inputleft btn-large waves-light" id = "go_back" value="Back" name = "retour">';
+		echo '<input type="button" class = "from_inputright btn-large waves-light" id = "target" value="Next" name = "suivant">';
+		echo '<input type="submit" class = "from_inputright btn-large waves-light" id = "next" value="Send" name = "submit"></form>';
 ?>
 	<script type="text/javascript" src="http://code.jquery.com/jquery-1.8.0.min.js"></script>
 	<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.js"></script>
@@ -244,7 +267,7 @@
 						$js_array4 = json_encode($arrayjson4);
 						echo "var type_array = ".$js_array4.";\n";
 					?>
-					var nbtmp = 0;
+					var nbtmp = -1;
 					var maxprogress = 100; // total à atteindre
 					var actualprogress = 0; // valeur courante
 					var itv = 0; // id pour setinterval
@@ -276,20 +299,28 @@
 						else
 							$( "[class=md_fin" + element + "]").hide();
 					}
-					function typesummanager(element, index, array)
+					function typesummanager()
 					{
-						console.log("typesummanager" + nbtmp + element);
+						console.log("typesummanager" + nbtmp);
+						$('.rightbar').html("");
 						var totalPoints = 0;
-		 				$('.question' + nbtmp).each(function()
+						var totalPoints2 = 0;
+		 				$('.question' + nbtmp).find("label:contains(\"" + "Time spent (in min)" + "\")").each(function(i,n)
 						{
-							$(this).find("label:contains(\"" + element + "\")").each(function(i,n)
-							{
+							var tmp = parseFloat($("#" + $(n).attr("for")).val(),20);
+							if (isNaN(tmp) == 0)
 								totalPoints += parseFloat($("#" + $(n).attr("for")).val(),20);
-								console.log("#" + $(n).attr("for"));
-								console.log(parseFloat($("#" + $(n).attr("for")).val(),20));
-							});
-					 	});	
-						$('.rightbar').html($('.rightbar').html() + ("<h5>" + element + " = " + totalPoints + "</h5>"));
+					 	});
+		 				$('.question' + nbtmp).find("label:contains(\"" + "Time spent (in %)" + "\")").each(function(i,n)
+						{
+							var tmp = parseFloat($("#" + $(n).attr("for")).val(),20);
+							if (isNaN(tmp) == 0)
+								totalPoints2 += parseFloat($("#" + $(n).attr("for")).val(),20);
+					 	});
+					 	if (totalPoints > 0)
+							$('.rightbar').html($('.rightbar').html() + ("<h5>" + "Total time" + " = " + totalPoints + "min</h5>"));
+					 	if (totalPoints2 > 0)
+							$('.rightbar').html($('.rightbar').html() + ("<h5>" + "Total time" + " = " + totalPoints2 + "%</h5>"));
 					}
 					function etapemanageur(nb)
 					{
@@ -302,7 +333,8 @@
 						}
 						nbtmp = array[nb];
 						$('.rightbar').innerHTML = "";
-						type_array.forEach(typesummanager);
+						typesummanager();
+						// type_array.forEach(typesummanager);
 						$("[class^=lab]").show();
 						$("[class^=rep]").show();
 						$("[id=next]").hide();
@@ -322,16 +354,17 @@
 						str4 = str4.concat(array[nb]);
 						str4 = str4.concat("]");
 						$(str4).show();
-						$(str).show();
+						$(str).show().find("*").show();
 						$(str2).css('background-color', '#449CA3');
 						md_array.forEach(mdcheck);
-						prog(nb);
 						if (array.length == 1)
 						{
 							$("[id=target]").hide();
 							$("[id=next]").show();
 							$("[class^=gdesc]").hide();
 						}
+						else
+							prog(nb);
 					}
 					function mdforeach(element, index, array)
 					{
@@ -361,7 +394,19 @@
 						if (i > 0)
 							etapemanageur(--i);
 					});
-					$( "#formulaireid" ).validate();
+					$('input').change(typesummanager);
+					$( "#formulaireid" ).validate(/*{
+                          // // errorClass:'error',
+                          // // validClass:'success',
+                          // errorElement:'label',
+                          highlight: function (element, errorClass, validClass) { 
+                            $("label[for='"+$(element).attr('id')+"']").addClass(errorClass).removeClass(validClass); 
+
+                          }, 
+                          unhighlight: function (element, errorClass, validClass) { 
+                          	$("label[for='"+$(element).attr('id')+"']").removeClass(errorClass).addClass(validClass); 
+                          }
+                      }*/);
 					jQuery.extend(jQuery.validator.messages,
 					{
 						required: "",

@@ -68,8 +68,11 @@ infoquestion::infoquestion(project *p, MainWindow *m, int con) : info(m)
 	unit = new QLineEdit();
 	value = new QSpinBox();
     value->setValue(1);
-    ref_only = new QCheckBox("Question unique");
-	b_update = new QPushButton("Enregistrer");
+    ref_only = new QComboBox();
+    ref_only->addItem("Estimation et réel");
+    ref_only->addItem("Estimation seulement");
+    ref_only->addItem("Réel Seulement");
+    b_update = new QPushButton("Enregistrer");
     selectlist = new listedit();
     selectlistval = new listeditwval();
     selectlistlabel = new QLabel("Option");
@@ -213,7 +216,7 @@ void infoquestion::updateib(QTreeWidgetItem * item)
 	description->setText(q->sujet);
 	unit->setText(q->unit);
     groupbox->setcurrentgroup(q->group);
-    ref_only->setChecked(q->ref_only);
+    ref_only->setCurrentIndex(q->ref_only);
     selectlist->update(q->liststr);
     selectlistval->update(q->liststr);
     if (q->liststr.size() > 0)
@@ -244,7 +247,7 @@ question infoquestion::getquestioncopy()
 
     question ret = question(name->text(), dynamic_cast<grouptreeitem*>(groupbox->currentItem())->getId(), -1,
                               qgroupid, description->text(), unit->text(), type->currentIndex(),
-                              splitchar, value->text().toInt(), ref_only->isChecked(), 0);
+                              splitchar, value->text().toInt(), ref_only->currentIndex(), 0);
     return (ret);
 }
 
@@ -265,7 +268,7 @@ void infoquestion::updatebdd()
 		return ;
 	}
     sqlo::addquestion(p, name->text(), dynamic_cast<grouptreeitem*>(groupbox->currentItem())->getId(),
-                unit->text(), 0, description->text(), qgroupid, type->currentIndex(), ref_only->isChecked(),
+                unit->text(), 0, description->text(), qgroupid, type->currentIndex(), ref_only->currentIndex(),
                 splitchar, value->text().toInt(), 0, ((init) ? q->id : -1));
 
 }
