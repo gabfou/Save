@@ -113,7 +113,7 @@ void sendmail(QString mail, QString body)
                         "www.muranoconseil.com<Br/>"
                         "21, rue Vauthier<Br/>"
                         "92100 Boulogne-Billancourt<Br/>"
-                        "<img src=\"http://etudemurano.alwaysdata.net/logomieux.jpg\" alt=\"logo murano\" class = logo></p></html> + \r\n";
+                        "<img src=\"http://etudemurano.alwaysdata.net/logomieux.jpg\" alt=\"logo murano\" class = logo></p></html>\r\n";
     QString username = "etudemurano@alwaysdata.net";
     QString passwd = "t4x5akda";
     QString server = "smtp-etudemurano.alwaysdata.net";
