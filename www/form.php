@@ -344,7 +344,7 @@
 						$("[class^=gdesc]").hide();
 						$("[id=target]").show();
 						$("[class^=question]").hide();
-						$("[id=intro]").hide();
+						//$("[id=intro]").hide();
 						//$("[class^=pbar]").css('background-color', '#6BF3FF');
 						$("[id=bilan]").hide();
 						var str = "[class=question";
@@ -401,6 +401,7 @@
 					$("[id=bilan]").hide();
 					var j = -1;
 					md_array.forEach(mdforeach);
+					etapemanageur(++i);
 					$( "#target" ).click(function()
 					{
 						etapemanageur(++i);

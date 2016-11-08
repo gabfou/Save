@@ -118,7 +118,7 @@ void sendmail(QString mail, QString body)
     QString passwd = "t4x5akda";
     QString server = "smtp-etudemurano.alwaysdata.net";
     Smtp	*smtp = new Smtp(username, passwd, server);
-    smtp->sendMail("etudemurano@alwaysdata.net", mail, "Etude muranoconseil",  body + signature);
+    smtp->sendMail("etudemurano@alwaysdata.net", mail, "leadchangesurvey",  body + signature);
     //delete smtp;
 }
 

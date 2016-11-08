@@ -41,7 +41,7 @@ function maildebase($to, $subject, $body)
 	$headers   = array();
 	$headers[] = "MIME-Version: 1.0";
 	$headers[] = "Content-type: text/html; charset=utf-8";
-	$headers[] = "From: Etudesmuranoconseil <etudemurano@alwaysdata.net>";
+	$headers[] = "From: leadchangesurvey <etudemurano@alwaysdata.net>";
 	$headers[] = "Subject: {".$subject."}";
 	$headers[] = "X-Mailer: PHP/".phpversion();
 
