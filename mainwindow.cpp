@@ -600,15 +600,18 @@ MainWindow::~MainWindow()
 
 void MainWindow::sendprojectauxi(QString str, QList<person> listp)
 {
-    QString body = "<html><p>Hello __%p__,</p>"
-                   "<p>During the kick-off meeting, we shared with you the phasing of the project. After the interview step, we are now launching the Time-Sheet phase.</p>"
-                   "<p>The main objective of this second phase is to assess your day-to-day workload and evaluate the perception you have on it.</p>"
-                   "<p>It will take you 5 minutes per day to fill it, during 2 weeks (from Monday, the14th until Friday, the 25th of November). We will send you a reminder email everyday.</p>"
-                   "<p>First of all, you will need you to fill the Estimation part, here is the link bellow:</p>"
+    QString body = "<html><p>Dear __%p__,</p>"
+                   "<p>During the kick-off, we’ve introduced you the methodology of the DMI Lead change project. Interview phase is over, we are now moving to the Time-Sheet phase.</p>"
+                   "<p>For the next 2 weeks : Monday, the14th until Friday, the 25th of November, we are kindly asking to fill your time-sheet (see the link down below). This simple task will only take 5 minutes per day. </p>"
+                   "<p>The objective is to assess your day-to-day workload , and your perception about it :"
+                   "<ol><li>estimation of your workload on an annual basis (%)</li>"
+                   "<li>assessment of the time spent and perception of added-value on each task</li>"
+                   "<li>The actual time you spend on each task (daily basis-minutes)</li></ol></p>"
+                   "<p>Before filling the Time-sheets, you will have to complete the -Estimation- parts (items 1&2). The link below will drive you to the survey where you will find the -Estimation- form</p>"
                    "<a href=\"http://etudemurano.alwaysdata.net/" + str;
     QString bodyend = "\"><u>PPD_DMI LEAD CHANGE_Online Survey</u></a></p>"
                       "<p>For you information: you cannot start filling the everyday Time-sheet if you don’t  have answered this Estimation part. So please fill it as soon as possible. Thank you.</p><Br/>"
-                      "<p>If you encounter any difficulty or have for any question, you can contact me directly on:<br />anais.deframond@muranoconseil.com <br /> +33 770734938</p>"
+                      "<p>If you encounter any difficulty or have for any question, you can contact me directly on:<ul><li>anais.deframond@muranoconseil.com</li><li>+33 770734938</li></ul></p>"
                       "<p>Thank you in advance for your time and involvement! <Br /> Best regards,</p>";
                       "<p>Anaïs de Framond for the MURANO Team</p>";
 //    QString body = "<p>Bonjour,</p><Br/>"
