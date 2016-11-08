@@ -94,7 +94,8 @@ while (++$i <= $tab['questionbool'])
 	$j++;
 }
 ?>
-		<h5>Your personal input</h5>
+
+		<h6>If you have some suggestions, ideas or best practices to share with us about the project, please feel free to complete to the space provided below:</h6>
 		<form method="post" action="index.php" id="formid">
 			<textarea name="sugestionp" rows="5" cols="40" form="formid"><?php echo(htmlspecialchars($sugestion));?></textarea>
 			<input type="submit" name="submit" value="Submit">
