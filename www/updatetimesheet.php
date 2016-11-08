@@ -91,7 +91,7 @@ else if ($_SESSION['iteration'] == $_SESSION['max'])
 
 <p>If you have any question, you can still contact me:
 <ul>
-<li>anais.deframond@muranoconseil.com</li>
+<li><a href="anais.deframond@muranoconseil.com">anais.deframond@muranoconseil.com</a></li>
 <li>+33 770734938</li>
 </ul></p>
 

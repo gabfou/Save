@@ -92,13 +92,18 @@
 					if ($value['typef'] == 0)
 					{
 						$type = $value['type'];
-						if ($_SESSION['iteration'] == 0 && $value['type'] === "min")
-							$type = "%";
+						$sujet = $value['sujet'];
 						$minmax = array_filter(explode("\n", $value['splitchar']));
 						if (!isset($minmax[0]))
 							$minmax[0] = '0';
-						$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'<label class="label lab'.$value['id'].'" for="'.$value['id'].'_time"> '.$value['sujet'].(($type == "") ? "" : (' (in '.$type.')')).': </label><input class = "reponse required rep '.(($type == "") ? '' : ('type_'.$type)).'" required '.$value['id'].'" type="number" min="'.$minmax[0].'" '.(isset($minmax[1]) ? 'max="'.$minmax[1].'"' : '').' name="'.$value['id'].'_time" id="'.$value['id'].'_time" value="'.$repnbr.'" />';
-						$arrayjson4[] = $value['sujet'];
+						if ($_SESSION['iteration'] == 0 && $value['type'] === "min" && $sujet === "Time spent")
+						{							
+							$type = "%";
+							$sujet = "Estimated time";
+							$minmax[1] = 100;
+						}
+						$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'<label class="label lab'.$value['id'].'" for="'.$value['id'].'_time"> '.$sujet.(($type == "") ? "" : (' (in '.$type.')')).': </label><input class = "reponse required rep '.(($type == "") ? '' : ('type_'.$type)).'" required '.$value['id'].'" type="number" min="'.$minmax[0].'" '.(isset($minmax[1]) ? 'max="'.$minmax[1].'"' : '').' name="'.$value['id'].'_time" id="'.$value['id'].'_time" value="'.$repnbr.'" />';
+						$arrayjson4[] = $sujet;
 					}
 					else if ($value['typef'] == 1)
 					{
