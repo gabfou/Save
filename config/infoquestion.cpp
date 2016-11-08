@@ -219,19 +219,22 @@ void infoquestion::updateib(QTreeWidgetItem * item)
     ref_only->setCurrentIndex(q->ref_only);
     selectlist->update(q->liststr);
     selectlistval->update(q->liststr);
-    if (q->liststr.size() > 0)
-        min->setValue(q->liststr[0].toFloat());
-    else
-        min->setValue(0);
-    if (q->liststr.size() > 1)
+    if (type == 0)
     {
-        max->setValue(q->liststr[1].toFloat());
-        maxenabled->setChecked(1);
-    }
-    else
-    {
-        max->setValue(0);
-        maxenabled->setChecked(0);
+        if (q->liststr.size() > 0)
+            min->setValue(q->liststr[0].toFloat());
+        else
+            min->setValue(0);
+        if (q->liststr.size() > 1)
+        {
+            max->setValue(q->liststr[1].toFloat());
+            maxenabled->setChecked(1);
+        }
+        else
+        {
+            max->setValue(0);
+            maxenabled->setChecked(0);
+        }
     }
 }
 
@@ -241,7 +244,7 @@ question infoquestion::getquestioncopy()
     if (type->currentIndex() == 3)
         splitchar = selectlistval->getlstr().join("\n");
     else if (type->currentIndex() == 2)
-        selectlist->getlstr().join("\n");
+        splitchar = selectlist->getlstr().join("\n");
     else if (type->currentIndex() == 0)
         splitchar = min->text() + "\n" + ((maxenabled->isChecked()) ? max->text() : "");
 
@@ -258,7 +261,7 @@ void infoquestion::updatebdd()
     if (type->currentIndex() == 3)
         splitchar = selectlistval->getlstr().join("\n");
     else if (type->currentIndex() == 2)
-        selectlist->getlstr().join("\n");
+        splitchar = selectlist->getlstr().join("\n");
     else if (type->currentIndex() == 0)
         splitchar = min->text() + ((maxenabled->isChecked()) ? "\n" + max->text() : "");
 	if (!q && init)

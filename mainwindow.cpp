@@ -597,22 +597,35 @@ MainWindow::~MainWindow()
 
 // envoi des mail
 
+
 void MainWindow::sendprojectauxi(QString str, QList<person> listp)
 {
-    QString body = "<p>Bonjour,</p><Br/>"
-                   "<p>Nous effectuons actuellement une mission pour le compte de votre société.</p>"
-                   "<p>Dans ce cadre, le cabinet Murano vous donne la parole !</p>"
-                   "<p>Merci de prendre quelques minutes de votre temps pour répondre à notre questionnaire :</p>"
-                   "<a href=\"etudemurano.alwaysdata.net/" + str;
-    QString bodyend = "\"><u>ACCEDER AU QUESTIONNAIRE</u></a></p>"
-                      "<p>Si vous avez des questions ou des difficultés avec le lien, n’hésitez pas à nous contacter.</p><Br/>"
-                      "<p>Nous vous remercions de votre participation !</p>"
-                      "<p>L’équipe MURAnO</p>";
+    QString body = "<html><p>Hello __%p__,</p>"
+                   "<p>During the kick-off meeting, we shared with you the phasing of the project. After the interview step, we are now launching the Time-Sheet phase.</p>"
+                   "<p>The main objective of this second phase is to assess your day-to-day workload and evaluate the perception you have on it.</p>"
+                   "<p>It will take you 5 minutes per day to fill it, during 2 weeks (from Monday, the14th until Friday, the 25th of November). We will send you a reminder email everyday.</p>"
+                   "<p>First of all, you will need you to fill the Estimation part, here is the link bellow:</p>"
+                   "<a href=\"http://etudemurano.alwaysdata.net/" + str;
+    QString bodyend = "\"><u>PPD_DMI LEAD CHANGE_Online Survey</u></a></p>"
+                      "<p>For you information: you cannot start filling the everyday Time-sheet if you don’t  have answered this Estimation part. So please fill it as soon as possible. Thank you.</p><Br/>"
+                      "<p>If you encounter any difficulty or have for any question, you can contact me directly on:<br />anais.deframond@muranoconseil.com <br /> +33 770734938</p>"
+                      "<p>Thank you in advance for your time and involvement! <Br /> Best regards,</p>";
+                      "<p>Anaïs de Framond for the MURANO Team</p>";
+//    QString body = "<p>Bonjour,</p><Br/>"
+//                   "<p>Nous effectuons actuellement une mission pour le compte de votre société.</p>"
+//                   "<p>Dans ce cadre, le cabinet Murano vous donne la parole !</p>"
+//                   "<p>Merci de prendre quelques minutes de votre temps pour répondre à notre questionnaire :</p>"
+//                   "<a href=\"etudemurano.alwaysdata.net/" + str;
+//    QString bodyend = "\"><u>ACCEDER AU QUESTIONNAIRE</u></a></p>"
+//                      "<p>Si vous avez des questions ou des difficultés avec le lien, n’hésitez pas à nous contacter.</p><Br/>"
+//                      "<p>Nous vous remercions de votre participation !</p>"
+//                      "<p>L’équipe MURAnO</p>";
 
     QList<person>::iterator i = listp.begin();
     while (i != listp.end())
 	{
-        sendmail(i->email, body + "?p=" + QString::number(i->id) + "&s=" + namecurrent + bodyend); // OPTI
+        QString bodytmp = (body + "?p=" + QString::number(i->id) + "&s=" + namecurrent + bodyend);
+        sendmail(i->email, bodytmp.replace("__%p__", i->firstname)) ; // OPTI
         i++;
 	}
 }

@@ -16,7 +16,7 @@ catch (PDOException $e)
 }
 try
 {
-	$req_pre = $bdd->prepare('SELECT refbool, questionbool, jour, sugestion FROM project_'.htmlspecialchars($_SESSION['project']).'_project WHERE id = '.htmlspecialchars($_SESSION['id_client']).";"); // changer user		
+	$req_pre = $bdd->prepare('SELECT refbool, questionbool, jour, sugestion, firstname, lastname FROM project_'.htmlspecialchars($_SESSION['project']).'_project WHERE id = '.htmlspecialchars($_SESSION['id_client']).";"); // changer user		
 	$req_pre->execute();
 }
 catch (PDOException $e)
@@ -26,14 +26,16 @@ catch (PDOException $e)
 }
 ($tab = $req_pre->fetch());
 
-if ($tab['refbool'] < 1 && $tab['questionbool'] < 1 && $tab['jour'] < 1)
-{
-	header("Location: error_no_question.php");
-	echo "<html></html>";
-	flush();
-	ob_flush();
-	die();
-}
+// if ($tab['refbool'] < 1 && $tab['questionbool'] < 1 && $tab['jour'] < 1)
+// {
+// 	header("Location: error_no_question.php");
+// 	echo "<html></html>";
+// 	flush();
+// 	ob_flush();
+// 	die();
+// }
+$firstname = $tab['firstname'];
+$lastname = $tab['lastname'];
 $sugestion = $tab['sugestion'];
 if ($tab['refbool'] < 1 && $tab['questionbool'] > 0 && $tab['jour'] < 1)
 	$tab['jour'] = 1;
@@ -60,15 +62,23 @@ $_SESSION['max'] = $debut;
 		<h1 class = titre><?php echo str_replace("_", " ", htmlspecialchars($_SESSION['project'])); ?></h1>
 	</div>
 	<div class="formulaire2">
-		<p><h5>Selectioner le sondage que vous voulez remplir</h5></p>
+
 <?php
+$req_pre = $bdd->prepare('SELECT introindex FROM all_config WHERE project_name = "'.htmlspecialchars($_SESSION['project']).'";');
+$req_pre->execute();
+($tab2 = $req_pre->fetch());
+$intro = $tab2['introindex'];
+$intro = str_replace("__%nb__", $questionbool + $refbool, $intro);
+$intro = str_replace("__%p__", $firstname, $intro);
+$intro = str_replace("__%n__", $lastname, $intro);
+echo $intro;
 $i = -1;
 while (++$i <= $tab['jour'])
 {
 	if ($i > 0)
-		echo '<h5><a href="form.php?it='.$i.'">day '.$i.' </a><img src="Symbol_OK.svg" alt="ok" height="12px" width="12px"/></h5>';
+		echo '<h5><a href="form.php?it='.$i.'">Time Sheet Day '.$i.' </a><img src="Symbol_OK.svg" alt="ok" height="12px" width="12px"/></h5>';
 	else if ($tab['refbool'] > 0)
-		echo '<h5><a href="form.php?it='.$i.'">estimate </a><img src="Symbol_OK.svg" alt="ok" height="12px" width="12px"/></h5>';
+		echo '<h5><a href="form.php?it='.$i.'">Estimation </a><img src="Symbol_OK.svg" alt="ok" height="12px" width="12px"/></h5>';
 }
 $j = 0;
 $i--;
@@ -77,9 +87,9 @@ while (++$i <= $tab['questionbool'])
 	if ($i > 0 || $tab['refbool'] > 0)
 	{
 		if ($j == 0 && $tab['jour'] > 0)
-			echo '<h5><a href="form.php?it='.$i.'">day '.$i.' </a></h5>';
+			echo '<h5><a href="form.php?it='.$i.'">Time Sheet Day '.$i.' </a></h5>';
 		else
-			echo '<h5>day '.$i.'</h5>';
+			echo '<h5>Time Sheet Day '.$i.'</h5>';
 	}
 	$j++;
 }

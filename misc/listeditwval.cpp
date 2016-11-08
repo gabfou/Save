@@ -49,12 +49,17 @@ QStringList listeditwval::getlstr()
 {
     QList<QListWidgetItem *> ltmp = listoption->list->findItems(QString("*"), Qt::MatchWrap | Qt::MatchWildcard);
     QStringList ret;
+    QSpinBox *tmp;
     int row = 0;
 
     foreach(QListWidgetItem *item, ltmp)
     {
-        ret << item->text();
-        ret << dynamic_cast<QSpinBox*>(listval->itemWidget(listval->item(row++)))->text();
+        tmp = dynamic_cast<QSpinBox*>(listval->itemWidget(listval->item(row++)));
+        if (tmp)
+        {
+            ret << item->text();
+            ret << tmp->text();
+        }
     }
     return (ret);
 }

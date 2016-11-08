@@ -21,31 +21,6 @@ catch (PDOException $e)
 	//die();
 }
 ($tab = $req_pre->fetch());
-// if (($tab['questionbool'] == 0 && $_SESSION['iteration'] >= 1) || ($tab['refbool'] == 0 && $_SESSION['iteration'] == 0))
-// {
-// 	header("Location: error_no_question.php");
-// 	echo "<html></html>";
-// 	flush();
-// 	ob_flush();
-// 	die();
-// }
-?>
-
-<head>
-<link rel="stylesheet" href="style.css" />
-<title>etude muranoconseil</title>
-</head>
-<body>
-	<div class="topbar">
-		<a href="index.php"><img src="logonew.png" alt="logo murano" class = logo></a>
-		<h1 class = titre><?php echo str_replace("_", " ", htmlspecialchars($_SESSION['project'])); ?></h1>
-	</div>
-
-
-<p> Merci de votre de participation. </p>
-<p> Cordialement toute l'équipe de murano conseil </p>
-
-<?php
 
 function getrepname($arg_1)
 {
@@ -84,10 +59,39 @@ foreach ($tab as $name)
 	}
 }
 if ($_SESSION['iteration'] == 0)
+{
 	$qry = 'UPDATE project_'.htmlspecialchars($_SESSION['project']).'_project SET refbool = 0 WHERE id = '.htmlspecialchars($_SESSION['id_client']).";";
-$bdd->exec($qry);
+	$bdd->exec($qry);
+}
 
-if ($_SESSION['iteration'] == $_SESSION['max'])
+else if ($_SESSION['iteration'] == $_SESSION['max'])
+{
 	$qry = 'UPDATE project_'.htmlspecialchars($_SESSION['project']).'_project SET jour = jour + 1 WHERE id = '.htmlspecialchars($_SESSION['id_client']).";";
-$bdd->exec($qry);
+	$bdd->exec($qry);
+}
 ?>
+
+<head>
+<link rel="stylesheet" href="style.css" />
+<title>etude muranoconseil</title>
+</head>
+<body>
+	<div class="topbar">
+		<a href="index.php"><img src="logonew.png" alt="logo murano" class = logo></a>
+		<h1 class = titre><?php echo str_replace("_", " ", htmlspecialchars($_SESSION['project'])); ?></h1>
+	</div>
+
+
+<p>Thank you for your participation!</p>
+
+<p>Kind regards, </p>
+
+<p>Anaïs and the MURAnO Team</p>
+
+
+<p>If you have any question, you can still contact me:
+<ul>
+<li>anais.deframond@muranoconseil.com</li>
+<li>+33 770734938</li>
+</ul></p>
+

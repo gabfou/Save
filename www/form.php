@@ -154,14 +154,16 @@
 		$echofinal2 += "</div>";
 		$arrayjson = array_unique($arrayjson);
 		$arrayjson = array_values($arrayjson);
-
-		if (isset($_SESSION['etude']))
-		{
-			$req_pre = $bdd->prepare('SELECT intro FROM all_etude WHERE project_name = '.htmlspecialchars($_SESSION['project']).";");
-			$req_pre->execute();
-			($tab = $req_pre->fetch());
-			$echofinal = $echofinal.$tab['intro'];
-		}
+		if ($_SESSION['iteration'] == 0)
+			$req_pre = $bdd->prepare('SELECT introref FROM all_config WHERE project_name = "'.htmlspecialchars($_SESSION['project']).'";');
+		else
+			$req_pre = $bdd->prepare('SELECT introreel FROM all_config WHERE project_name = "'.htmlspecialchars($_SESSION['project']).'";');
+		$req_pre->execute();
+		($tab = $req_pre->fetch());
+		if ($tab['introreel'] != "" && $_SESSION['iteration'] != 0)
+			$echofinal = $echofinal.'<div id = "intro">'.$tab['introreel'].'</div>';
+		else if ($tab['introref'] != "" && $_SESSION['iteration'] == 0)
+			$echofinal = $echofinal.'<div id = "intro">'.$tab['introref'].'</div>';
 		else
 			$echofinal = $echofinal.'<div id = "intro"><h1>DAY __%j__</h1><p>Hello __%p__ __%n__</p></div>';
 		$req_pre = $bdd->prepare('SELECT intro FROM all_etude WHERE id = '.htmlspecialchars($_SESSION['id_client']).";");
@@ -179,6 +181,7 @@
 		{
 			$nop = 0;
 			$i = 0;
+			sort($arrayjson);
 			foreach ($arrayjson as $key => $value)
 			{
 				$req_pre = $bdd->prepare('SELECT groupname, description, groupparent, gquestion FROM project_'.htmlspecialchars($_SESSION['project']).'_groupe WHERE id= '.htmlspecialchars($value).";"); 
@@ -197,7 +200,7 @@
 					if ($str3['gquestion'] == 2)
 					{
 						$arrayjson3[] = $i; 
-						$echopargroupe[$str3['groupparent']] .= '<div class= "question'.$vqgroupid.'" style="display: hidden">';
+						$echopargroupe[$str3['groupparent']] .= '<div class= "question'.$vqgroupid.'" style="display: hidden" sort="'.$value.'">';
 						$echopargroupe[$str3['groupparent']] .= '<fieldset><legend>';
 						$echopargroupe[$str3['groupparent']] .= $str3['description'];
 						$echopargroupe[$str3['groupparent']] .= '</legend>';
@@ -205,7 +208,7 @@
 						$echopargroupe[$str3['groupparent']] .=  '<div id = "question'.$vqgroupid.'" class="md_fin'.$i.'" style="display: hidden"><div>'.supfirstdiv($echopargroupe[$value])."</div></fieldset></div>"; // j ai virer le duxieme div id (au cas ou sa bugerai)
 					}
 					else
-						$echopargroupe[$str3['groupparent']] = $echopargroupe[$str3['groupparent']].'<div class = "question'.$vqgroupid.'" style="display: hidden"><fieldset><legend>'.$str3['description'].'</legend><div>'.$echopargroupe[$value]."</fieldset></div>";
+						$echopargroupe[$str3['groupparent']] = $echopargroupe[$str3['groupparent']].'<div class = "question'.$vqgroupid.'" style="display: hidden" sort="'.$value.'"><fieldset><legend>'.$str3['description'].'</legend><div>'.$echopargroupe[$value]."</fieldset></div>";
 					unset($arrayjson[$key]);
 					$arrayjson[] = $str3['groupparent'];
 				}
@@ -376,7 +379,20 @@
 								$( ".md_fin" + element).hide();
 						});
 					}
+					$( "#formulaireid" ).children('div').each(function ()
+					{
+						if ($(this).attr("id") == "intro")
+							return ;
+						var sorted = $(this).children('div').sort(function (a, b)
+						{
+							var contentA =parseInt( $(a).attr('sort'));
+							var contentB =parseInt( $(b).attr('sort'));
+							return (contentA < contentB) ? -1 : (contentA > contentB) ? 1 : 0;
+						});
+						$(this).html(sorted);
+					});
 					var i = -1;
+					$()
 					$("[class^=question]").hide();
 					$("[class^=gdesc]").hide();
 					//$("[class^=pbar]").css('background-color', '#6BF3FF');
