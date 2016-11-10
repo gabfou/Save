@@ -43,13 +43,17 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <head>
 	<link rel="stylesheet" href="style.css" />
-	<title>etude muranoconseil</title>
+	<title><?php echo htmlspecialchars($_SESSION['project']);?></title>
 	<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css"> -->
 </head>
 <body>
 	<div class="topbar">
 		<a href="index.php"><img src="logonew.png" alt="logo murano" class = logo></a>
 		<h1 class = titre><?php echo str_replace("_", " ", htmlspecialchars($_SESSION['project'])); ?></h1>
+		<img src="Kérastase_logo.png" alt="logo murano" class = "logopetit logop1">
+		<img src="L’Oréal-Logos-HD.jpg" alt="logo murano" class = "logopetit logop2">
+		<img src="matrix_logo.png" alt="logo murano" class = "logopetit logop3">
+		<img src="Redken-Logo.jpg" alt="logo murano" class = "logopetit logop4">
 	</div>
 <?php
 	$error = 1;
@@ -62,7 +66,9 @@
 		$arrayjson2 = array();
 		$arrayjson3 = array();
 		$arrayjson4 = array();
+		$arrayjson5 = array();
 		$arraygrouparrent = array();
+
 		while ($groupid > -1)
 		{
 			$req_pre = $bdd->prepare('SELECT id, question, note, type, sujet, qgroupid, typef, ref_only, splitchar FROM project_'.htmlspecialchars($_SESSION['project']).'_question WHERE groupid = '.htmlspecialchars($groupid).";"); // changer user
@@ -72,7 +78,7 @@
 			{
 				if ($value['ref_only'] == 0
 					|| ($_SESSION['iteration'] == 0  && $value['ref_only'] == 1)
-					|| ($_SESSION['iteration'] == 1 && $value['ref_only'] == 2))
+					|| ($_SESSION['iteration'] != 0 && $value['ref_only'] == 2))
 				{
 					$req_pre2 = $bdd->prepare('SELECT gquestion FROM project_'.htmlspecialchars($_SESSION['project']).'_groupe WHERE id= '.$value['qgroupid'].";");
 					$req_pre2->execute();
@@ -116,7 +122,7 @@
 						$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'<option value = "'.$repstr.'" name="'.$value['id'].'_str"></option>';
 						foreach ($select as $selectkey => $selectvalue)
 						{
-							$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'<option value = '.$selectvalue.' name="'.$value['id'].'_str">'.$selectvalue.'</option>';
+							$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'<option value = '.$selectvalue.' '.(($selectvalue == $repstr) ? 'selected="selected"' : '').' name="'.$value['id'].'_str">'.$selectvalue.'</option>';
 						}
 						$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'</select>';
 					}
@@ -129,7 +135,7 @@
 						$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'<option value = "'.$repnbr.'" name="'.$value['id'].'_time"></option>';
 						while ($select[$i])
 						{
-							$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'<option value = '.$select[$i + 1].' name="'.$value['id'].'_time">'.$select[$i].'</option>';
+							$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'<option value = '.$select[$i + 1].' '.(($select[$i + 1] == $repnbr) ? 'selected="selected"' : '').' name="'.$value['id'].'_time">'.$select[$i].'</option>';
 							$i += 2;
 						}
 						$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'</select>';
@@ -147,13 +153,14 @@
 					$numberoffield++;
 				}
 			}
-			$req_pre = $bdd->prepare('SELECT groupparent FROM project_'.htmlspecialchars($_SESSION['project']).'_groupe WHERE id = '.$groupid.";"); // changer user	
+			$req_pre = $bdd->prepare('SELECT groupname, groupparent FROM project_'.htmlspecialchars($_SESSION['project']).'_groupe WHERE id = '.$groupid.";"); // changer user
 			$req_pre->execute();
 			($tab = $req_pre->fetch());
 			if ($tab === false)
 				$groupid = -1;
 			else
 				$groupid = $tab['groupparent'];
+			$arrayjson5[] = $tab['groupname'];
 			unset ($tabquestion);
 		}
 		$echofinal2 += "</div>";
@@ -245,6 +252,9 @@
 		$arrayjson3 = array_values($arrayjson3);
 		$arrayjson4 = array_unique($arrayjson4);
 		$arrayjson4 = array_values($arrayjson4);
+		$arrayjson5 = array_unique($arrayjson5);
+		$arrayjson5 = array_values($arrayjson5);
+
 		echo '</ul>';
 		if (sizeof($arrayjson) > 1)
 			echo '<div id="progressbar"><div id="indicator"></div><div id="progressnum">0%</div></div>';
@@ -274,6 +284,8 @@
 						echo "var md_array = ".$js_array3.";\n";
 						$js_array4 = json_encode($arrayjson4);
 						echo "var type_array = ".$js_array4.";\n";
+						$js_array5 = json_encode($arrayjson5);
+						echo "var group_array = ".$js_array5.";\n";
 					?>
 					var nbtmp = -1;
 					var maxprogress = 100; // total à atteindre
@@ -319,16 +331,24 @@
 							if (isNaN(tmp) == 0)
 								totalPoints += parseFloat($("#" + $(n).attr("for")).val(),20);
 					 	});
-		 				$('.question' + nbtmp).find("label:contains(\"" + "Time spent (in %)" + "\")").each(function(i,n)
+		 				$('.question' + nbtmp).find("label:contains(\"" + "Estimated time (in %)" + "\")").each(function(i,n)
 						{
 							var tmp = parseFloat($("#" + $(n).attr("for")).val(),20);
 							if (isNaN(tmp) == 0)
 								totalPoints2 += parseFloat($("#" + $(n).attr("for")).val(),20);
 					 	});
 					 	if (totalPoints > 0)
-							$('.rightbar').html($('.rightbar').html() + ("<h5>" + "Total time" + " = " + totalPoints + "min</h5>"));
+					 	{
+					 		var totalPointshour = 0;
+					 		while (totalPoints >= 60)
+					 		{
+					 			totalPoints = totalPoints - 60;
+					 			totalPointshour++;
+					 		}
+							$('.rightbar').html($('.rightbar').html() + ("<h3>" + "Total time" + " = " + totalPointshour + "h " + totalPoints + "min</h3>"));
+					 	}
 					 	if (totalPoints2 > 0)
-							$('.rightbar').html($('.rightbar').html() + ("<h5>" + "Total time" + " = " + totalPoints2 + "%</h5>"));
+							$('.rightbar').html($('.rightbar').html() + ("<h3>" + "Total time" + " = " + totalPoints2 + "%</h3>"));
 					}
 					function etapemanageur(nb)
 					{
@@ -384,6 +404,10 @@
 								$( ".md_fin" + element).hide();
 						});
 					}
+					function groupshow(element, index, array)
+					{
+						$("." + element).removeClass('prehidden');
+					}
 					$( "#formulaireid" ).children('div').each(function ()
 					{
 						if ($(this).attr("id") == "intro")
@@ -406,6 +430,8 @@
 					$("[id=bilan]").hide();
 					var j = -1;
 					md_array.forEach(mdforeach);
+					group_array.forEach(groupshow);
+					$(".prehidden").html("");
 					etapemanageur(++i);
 					$( "#target" ).click(function()
 					{

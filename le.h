@@ -100,7 +100,7 @@ QString indextocase(int x, int y);
 void warning(QString error);
 t_groupref syntheselistgroup(QList<t_groupref> listg);
 void gen_random(char *s, const int len);
-void sendmail(QString mail, QString body);
+void sendmail(QString mail, QString body, int type = 0, int it = 0);
 QList<int> QStrltoQil(QStringList &src);
 void createquestiontemplate(MainWindow *m, project *p);
 void recupquestiontemplate(QString name, project *p);

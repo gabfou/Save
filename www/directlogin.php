@@ -5,6 +5,10 @@ if (isset($_GET['s']) && isset($_GET['p']))
 	session_start();
 	$_SESSION['id_client'] = $_GET['p'];
 	$_SESSION['project'] = $_GET['s'];
+	if ($_SESSION['project'] == "DMI_LEAD_CHANGE")
+	{
+		$_SESSION['project'] = "DMI_LEAD_CHANGE_SURVEY";
+	}
 	header("Location: index.php");
 	echo "<html></html>";
 	flush();

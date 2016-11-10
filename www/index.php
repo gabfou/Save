@@ -38,7 +38,7 @@ $firstname = $tab['firstname'];
 $lastname = $tab['lastname'];
 $sugestion = $tab['sugestion'];
 if ($tab['refbool'] < 1 && $tab['questionbool'] > 0 && $tab['jour'] < 1)
-	$tab['jour'] = 1;
+	$tab['jour'] = 0;
 $debut = -1;
 if ($tab['refbool'] > 0)
 	$debut = 0;
@@ -47,21 +47,25 @@ if ($tab['questionbool'] > 0 || ($tab['refbool'] < 1 && $tab['jour'] > 0))
 if ($tab['jour'] > 0)
 	$debut = $tab['jour'];
 
-$_SESSION['max'] = $debut;
+$_SESSION['max'] = ($tab['questionbool'] > $tab['jour']) ? $tab['jour'] + 1 : $tab['jour'];
 
 ?>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <head>
 	<link rel="stylesheet" href="style.css" />
-	<title>etude muranoconseil</title>
+	<title><?php echo htmlspecialchars($_SESSION['project']);?></title>
 	<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css"> -->
 </head>
 <body>
 	<div class="topbar">
 		<a href="index.php"><img src="logonew.png" alt="logo murano" class = logo></a>
 		<h1 class = titre><?php echo str_replace("_", " ", htmlspecialchars($_SESSION['project'])); ?></h1>
+		<img src="Kérastase_logo.png" alt="logo murano" class = "logopetit logop1">
+		<img src="L’Oréal-Logos-HD.jpg" alt="logo murano" class = "logopetit logop2">
+		<img src="matrix_logo.png" alt="logo murano" class = "logopetit logop3">
+		<img src="Redken-Logo.jpg" alt="logo murano" class = "logopetit logop4">
 	</div>
-	<div class="formulaire2">
+	<div class="index">
 
 <?php
 $req_pre = $bdd->prepare('SELECT introindex FROM all_config WHERE project_name = "'.htmlspecialchars($_SESSION['project']).'";');
@@ -76,17 +80,17 @@ $i = -1;
 while (++$i <= $tab['jour'])
 {
 	if ($i > 0)
-		echo '<h5><a href="form.php?it='.$i.'">Time Sheet Day '.$i.' </a><img src="Symbol_OK.svg" alt="ok" height="12px" width="12px"/></h5>';
-	else if ($tab['refbool'] > 0)
-		echo '<h5><a href="form.php?it='.$i.'">Estimation </a><img src="Symbol_OK.svg" alt="ok" height="12px" width="12px"/></h5>';
+		echo '<h5>Time Sheet Day '.$i.' <img src="Symbol_OK.svg" alt="ok" height="12px" width="12px"/></h5>';
+	else if ($tab['refbool'] > 0 && $i == 0)
+		echo '<h5><a href="form.php?it='.$i.'">Estimation </a></h5>';
 }
 $j = 0;
 $i--;
 while (++$i <= $tab['questionbool'])
 {
-	if ($i > 0 || $tab['refbool'] > 0)
+	if ($i > 0)
 	{
-		if ($j == 0 && $tab['jour'] > 0)
+		if ($j == 0 && $tab['refbool'] == 0)
 			echo '<h5><a href="form.php?it='.$i.'">Time Sheet Day '.$i.' </a></h5>';
 		else
 			echo '<h5>Time Sheet Day '.$i.'</h5>';
@@ -95,11 +99,14 @@ while (++$i <= $tab['questionbool'])
 }
 ?>
 
-		<h6>If you have some suggestions, ideas or best practices to share with us about the project, please feel free to complete to the space provided below:</h6>
+		<Br/>If you have some suggestions, ideas or best practices to share with us, please feel free to complete to the space provided below:
 		<form method="post" action="index.php" id="formid">
 			<textarea name="sugestionp" rows="5" cols="40" form="formid"><?php echo(htmlspecialchars($sugestion));?></textarea>
 			<input type="submit" name="submit" value="Submit">
 		</form>
+		<p>If you encounter any difficulty or if you have any question, please contact me:<ul>
+		<li><a href="mailto:anais.deframond@muranoconseil.com">anais.deframond@muranoconseil.com</a></li>
+		<li>+33 770734938</li></ul></p>
 	</div>
 </body>
 

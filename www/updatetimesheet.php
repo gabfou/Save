@@ -12,7 +12,7 @@ catch(Exception $e)
 }
 try
 {
-	$req_pre = $bdd->prepare('SELECT questionbool, refbool FROM project_'.htmlspecialchars($_SESSION['project']).'_project WHERE id = '.htmlspecialchars($_SESSION['id_client']).";"); // changer user		  
+	$req_pre = $bdd->prepare('SELECT questionbool, refbool, jour FROM project_'.htmlspecialchars($_SESSION['project']).'_project WHERE id = '.htmlspecialchars($_SESSION['id_client']).";"); // changer user		  
 	$req_pre->execute();
 }
 catch (PDOException $e)
@@ -21,6 +21,7 @@ catch (PDOException $e)
 	//die();
 }
 ($tab = $req_pre->fetch());
+$max = $tab['jour'];
 
 function getrepname($arg_1)
 {
@@ -64,34 +65,49 @@ if ($_SESSION['iteration'] == 0)
 	$bdd->exec($qry);
 }
 
-else if ($_SESSION['iteration'] == $_SESSION['max'])
+else if ($_SESSION['iteration'] > $max)
 {
 	$qry = 'UPDATE project_'.htmlspecialchars($_SESSION['project']).'_project SET jour = jour + 1 WHERE id = '.htmlspecialchars($_SESSION['id_client']).";";
 	$bdd->exec($qry);
 }
+$req_pre = $bdd->prepare('SELECT  jour, questionbool FROM project_'.htmlspecialchars($_SESSION['project']).'_project  WHERE id = '.htmlspecialchars($_SESSION['id_client']).";");
+$req_pre->execute();
+$tab3 = $req_pre->fetch();
+
+if ($tab3['questionbool'] > $tab3['jour'])
+{
+	header("Location: index.php");
+	echo "<html></html>";
+	flush();
+	ob_flush();
+	exit;
+}
+
 ?>
 
 <head>
 <link rel="stylesheet" href="style.css" />
-<title>etude muranoconseil</title>
+<title><?php echo htmlspecialchars($_SESSION['project']);?></title>
 </head>
 <body>
 	<div class="topbar">
 		<a href="index.php"><img src="logonew.png" alt="logo murano" class = logo></a>
 		<h1 class = titre><?php echo str_replace("_", " ", htmlspecialchars($_SESSION['project'])); ?></h1>
+		<img src="Kérastase_logo.png" alt="logo murano" class = "logopetit logop1">
+		<img src="L’Oréal-Logos-HD.jpg" alt="logo murano" class = "logopetit logop2">
+		<img src="matrix_logo.png" alt="logo murano" class = "logopetit logop3">
+		<img src="Redken-Logo.jpg" alt="logo murano" class = "logopetit logop4">
 	</div>
 
+<div class="index" style="text-align: center;">
+<Br /><p>Thank you for your participation!</p><Br/>
 
-<p>Thank you for your participation!</p>
+<p>Kind regards, <Br />
 
-<p>Kind regards, </p>
+Anaïs and the MURANO Team</p><Br />
+<p>If you encounter any difficulty or if you have any question, please contact me:<Br/>
+<a href="mailto:anais.deframond@muranoconseil.com">anais.deframond@muranoconseil.com</a><Br/>
++33 770734938</p>
+</div>
 
-<p>Anaïs and the MURAnO Team</p>
-
-
-<p>If you have any question, you can still contact me:
-<ul>
-<li><a href="anais.deframond@muranoconseil.com">anais.deframond@muranoconseil.com</a></li>
-<li>+33 770734938</li>
-</ul></p>
 

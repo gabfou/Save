@@ -107,18 +107,18 @@ QList<int> QStrltoQil(QStringList &src)
     return (ret);
 }
 
-void sendmail(QString mail, QString body)
+void sendmail(QString mail, QString body, int type, int it)
 {
-    QString signature = "<Br/><p><b>MURAnO Conseil</b><Br/>"
+    QString signature = "<p><b>MURANO Conseil</b><Br/>"
                         "www.muranoconseil.com<Br/>"
                         "21, rue Vauthier<Br/>"
-                        "92100 Boulogne-Billancourt<Br/>"
-                        "<img src=\"http://etudemurano.alwaysdata.net/logomieux.jpg\" alt=\"logo murano\" class = logo></p></html>\r\n";
-    QString username = "etudemurano@alwaysdata.net";
-    QString passwd = "t4x5akda";
-    QString server = "smtp-etudemurano.alwaysdata.net";
+                        "92100 Boulogne-Billancourt<Br/><Br/>"
+                        "<img src=\"http://etudemurano.alwaysdata.net/logomail.jpg\" alt=\"logo murano\" style=\"width:120px;height:auto;\"class = logo></p></html>\r\n";
+    QString username = "etudes@muranoconseil.com";//"etudemurano@alwaysdata.net";
+    QString passwd = "etudes564";//"t4x5akda";
+    QString server = "SSL0.OVH.NET";//"smtp-etudemurano.alwaysdata.net";
     Smtp	*smtp = new Smtp(username, passwd, server);
-    smtp->sendMail("etudemurano@alwaysdata.net", mail, "leadchangesurvey",  body + signature);
+    smtp->sendMail("etudes@muranoconseil.com", mail, (type == 1) ? "PPD_DMI LEAD CHANGE_Timesheet part 1" : "PPD_DMI LEAD CHANGE_Timesheet part 2_day" + QString::number(it),  body + signature);
     //delete smtp;
 }
 

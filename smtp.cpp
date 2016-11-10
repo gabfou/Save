@@ -34,6 +34,11 @@ void Smtp::sendMail(const QString &from, const QString &to, const QString &subje
     message = "To: " + to + "\n";
     message.append("From: " + from + "\n");
     message.append("Subject: " + subject + "\n");
+//    message.append("Reply-To: <" + to + ">" + "\n");
+//    message.append("Disposition-Notification-To: <"+ from + ">\n");
+//    message.append("Return-Receipt-To: <" + from + ">>\n");
+    message.append(QString("Date: %1\n").arg(QDateTime::currentDateTime().toString(Qt::RFC2822Date)));
+    message.append("MIME-Version: 1.0\n");
     message.append("Content-Type: text/html; charset=utf-8\n");
     message.append(body);
     message.replace( QString::fromLatin1( "\n" ), QString::fromLatin1( "\r\n" ) );
@@ -109,14 +114,14 @@ void Smtp::readyRead()
         state = HandShake;
     }
     //No need, because I'm using socket->startClienEncryption() which makes the SSL handshake for you
-    /*else if (state == Tls && responseLine == "250")
+    else if (state == Tls && responseLine == "250")
     {
         // Trying AUTH
         qDebug() << "STarting Tls";
         *t << "STARTTLS" << "\r\n";
         t->flush();
         state = HandShake;
-    }*/
+    }
     else if (state == HandShake && responseLine == "250")
     {
         socket->startClientEncryption();

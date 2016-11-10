@@ -66,5 +66,5 @@ void emailvalidator::send()
     if(!qry.exec() )
         qDebug() << "emailvalidator send" << qry.lastError();
     else
-        m->sendprojectauxi("directlogin.php", listp);
+        m->sendprojectauxi("directlogin.php", listp, ref);
 }

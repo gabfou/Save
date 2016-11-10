@@ -1,16 +1,16 @@
 <?php
 	include("www/function.php");
-	require 'phpMailer/PHPMailerAutoload.php';
+
 
 function mailmieux($to, $subject, $body)
 {
-
+	require 'PHPMailerAutoload.php';
 
 	$mail = new PHPMailer;
 
-	$mail->SMTPDebug = 3;
+	//$mail->SMTPDebug = 3;
 
-	//$mail->isSMTP();
+	$mail->isSMTP();
 	$mail->Host = '"smtp-etudemurano.alwaysdata.net"';
 	$mail->SMTPAuth = true;
 	$mail->Username = 'etudemurano@alwaysdata.net';
@@ -18,14 +18,14 @@ function mailmieux($to, $subject, $body)
 	$mail->SMTPSecure = 'tls';
 	$mail->Port = 587;
 
-	$mail->setFrom('etudemurano@alwaysdata.net', 'leadchangesurvey');
+	$mail->setFrom('etudemurano@alwaysdata.net', 'etudemurano');
 	$mail->addAddress($to/*, 'Joe User'*/);
 
 	$mail->isHTML(true);
 
 	$mail->Subject = $subject;
 	$mail->Body	= $body;
-	$mail->AltBody = "hello, if you want to see corectly this message please use html compatible mailbox";
+//	$mail->AltBody = 'body in plain text';
 
 	if(!$mail->send())
 	{
@@ -39,15 +39,22 @@ function mailmieux($to, $subject, $body)
 function maildebase($to, $subject, $body)
 {
 	$headers   = array();
-	$headers[] = "MIME-Version: 1.0";
-	$headers[] = "Content-type: text/html; charset=utf-8";
 	$headers[] = "From: leadchangesurvey <etudemurano@alwaysdata.net>";
 	$headers[] = "Subject: {".$subject."}";
 	$headers[] = "X-Mailer: PHP/".phpversion();
+	$headers[] = "MIME-Version: 1.0";
+	$headers[] = "Content-type: Content-Type: multipart/alternative;boundary=_NextPart_DC7E1BB5_1105_4DB3_BAE3_2A6208EB099D";
 
 
-	if (!mail($to, $subject, $body, implode("\r\n", $headers)))
-		echo "mail to ".$to;
+
+if (!mail($to, $subject, $body, implode("\r\n", $headers)))
+{
+		echo "mail to ".$to." sent";
+}else{
+		echo "mail to ".$to." not sent";
+}
+
+
 }
 
 		// $body = "<p>Bonjour,</p><Br/>";
@@ -64,7 +71,7 @@ function maildebase($to, $subject, $body)
 		// $body .= "www.muranoconseil.com<Br/>";
 		// $body .= "21, rue Vauthier<Br/>";
 		// $body .= "92100 Boulogne-Billancourt<Br/>";
-		// $body .= "<img src=\"http://etudemurano.alwaysdata.net/logomieux.jpg\" alt=\"logo murano\" style=\"width:64px; height:auto\" class = logo>";
+		// $body .= "<img src=\"http://etudemurano.alwaysdata.net/logomieux.jpg\" alt=\"logo murano\" class = logo></p>";
 
 
 
@@ -72,11 +79,13 @@ function maildebase($to, $subject, $body)
 
 function prepperson($groupid, $project_name, $bdd, $ref, $body)
 {
-	if (!isset($body) && $ref == 1)
+	$body = "\r\n\r\n--_NextPart_DC7E1BB5_1105_4DB3_BAE3_2A6208EB099D\r\n";
+	$body .= "Content-type: text/html; charset=utf-8\r\n\r\n";
+	if ($ref == 1)
 	{
-		$body = "<html><p>Dear __%p__,</p>";
+		$body .= "<html><p>Dear __%p__,</p>";
 		$body .= "<p>We hope that you had the time to complete the -Estimation- part of the Survey. If not the link below is still valid.</p>";
-		$body .= "<p>We are now moving to the daily timesheet phase (a daily record of the time you spend on each task). Some tasks (ie: project development) are slightly more detailed than others, don’t be surprised and be as much accurate as you can.</p>";
+		$body .= "<p>We are now moving to the daily Time-Sheet phase (a daily record of the time you spend on each task). Some tasks (ie: project development) are slightly more detailed than others, don’t be surprised and be as much accurate as you can.</p>";
 		$body .= "<p>Ideally, fill the form at the end of the day. Don’t wait too long to complete it, after 3 days it won’t be that fresh on your mind…</p>";
 		$body .= '<a href="http://etudemurano.alwaysdata.net/directlogin.php';
 		$body .= '__%l__';
@@ -84,31 +93,31 @@ function prepperson($groupid, $project_name, $bdd, $ref, $body)
 		$body .= "<p>If you encounter any difficulty or if you have any question, please contact me:<ul><li>anais.deframond@muranoconseil.com</li><li>+33 770734938</p></li>";
 		$body .= "<p>Thank you,<Br />Best Regards,</p>";
 		$body .= "<p>Anaïs for the MURANO Team</p>";
-		$body .= "<img src=\"http://etudemurano.alwaysdata.net/logomieux.jpg\" alt=\"logo murano\" style=\"width:64px; height:auto\" class = logo>";
+		$body .= "<img src=\"http://etudemurano.alwaysdata.net/logomieux.jpg\" alt=\"logo murano\" class = logo></p>";
 		$body .= "www.muranoconseil.com<Br/>";
 		$body .= "21, rue Vauthier<Br/>";
 		$body .= "92100 Boulogne-Billancourt<Br/></html>";
 	}
-	else if (!isset($body))
+	else //if (!isset($body))
 	{
-		$body = "<html><p>Dear __%p__,</p>";
-		$body .= "<p>This is your daily DMI LEAD CHANGE Timesheet reminder!</p>";
-		$body .= "<p>Thank you for taking a few minutes at the end of your day to complete the form:</p>";
+		$body .= "<html><p>Dear __%p__,</p>";
+		$body .= "<p>This is your daily DMI LEAD CHANGE Time-Sheet reminder!</p>";
+		$body .= "<p>Thank you for taking a few minutes at the end of your day to complete the time-sheet:</p>";
 		$body .= '<a href="http://etudemurano.alwaysdata.net/directlogin.php';
 		$body .= '__%l__';
 		$body .= '"><u>PPD_DMI LEAD CHANGE_Online Survey</u></a></p>';
 		$body .= "<p>If you encounter any difficulty or if you have any question, please contact me:<ul><li>anais.deframond@muranoconseil.com</li><li>+33 770734938</li></p>";
 		$body .= "<p>Thank you,<Br />Best Regards,</p>";
 		$body .= "<p>Anaïs for the MURANO Team</p>";
-		$body .= "<Br/><p><b>MURANO Conseil</b><Br/>";
+		$body .= "<img src=\"http://etudemurano.alwaysdata.net/logomieux.jpg\" alt=\"logo murano\" style = logo></p>";
 		$body .= "www.muranoconseil.com<Br/>";
 		$body .= "21, rue Vauthier<Br/>";
 		$body .= "92100 Boulogne-Billancourt<Br/></html>";
-                        "21, rue Vauthier<Br/>"
-                        "92100 Boulogne-Billancourt<Br/>"
-                        "<img src=\"http://etudemurano.alwaysdata.net/logomail.jpg\" alt=\"logo murano\" style=\"width:120px;height:auto;\"class = logo></p></html>\r\n";
-    QString username = "etudes@muranoconseil.com";//"etudemurano@alwaysdata.net";
-	}		
+	}
+	$body .= "\r\n\r\n--_NextPart_DC7E1BB5_1105_4DB3_BAE3_2A6208EB099D\r\n";
+	$body .= "Content-type: text/plain; charset=utf-8\r\n\r\n";
+	$body .= "hello, if you want to see corectly this message please use html compatible mailbox";
+	$body .= "\r\n\r\n--_NextPart_DC7E1BB5_1105_4DB3_BAE3_2A6208EB099D--";
 	$req_pre = $bdd->prepare('SELECT id, email, questionbool, refbool, firstname, lastname FROM project_'.$project_name.'_project WHERE '.strallgroupfilsforsql($groupid, $bdd, $project_name).";");
 	$req_pre->execute();
 	$tabperson = $req_pre->fetchall();
@@ -120,7 +129,7 @@ function prepperson($groupid, $project_name, $bdd, $ref, $body)
 		else
 			$req_pre = $bdd->prepare('UPDATE project_'.$project_name.'_project SET questionbool = questionbool + 1 WHERE id = '.$valuep['id'].';');
 		$req_pre->execute();
-		mailmieux($valuep['email'], "PPD_DMI LEAD CHANGE_Time Sheet Survey_part2_day".($valuep['questionbool'] + 1), str_replace("__%p__", $valuep['firstname'], (str_replace("__%l__", "?p=".$valuep['id']."&s=".$project_name, $body))));
+		maildebase($valuep['email'], "PPD_DMI LEAD CHANGE_Time Sheet Timesheet_part2_day".($valuep['questionbool'] + 1), str_replace("__%p__", $valuep['firstname'], (str_replace("__%l__", "?p=".$valuep['id']."&s=".$project_name, $body))));
 	}
 }
 

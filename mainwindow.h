@@ -39,7 +39,7 @@ public:
 	int currentgref = 0;
     int currentgqref = 0;
     void updatetable();
-    void sendprojectauxi(QString str, QList<person> listp);
+    void sendprojectauxi(QString str, QList<person> listp, int type = 0);
 public slots:
 	void updateproject();
     void screenshootcurrent();
