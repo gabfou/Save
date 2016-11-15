@@ -67,7 +67,7 @@ public:
 	int getNbgroup() const;
 	int getNbgeneration() const;
     void groupchild(unsigned int id, QList<int> &ret) const;
-	void groupqchild(int id, QList<int> &ret) const;
+    void groupqchild(int id, QList<int> &ret, int gref = 0) const;
     void groupchild(unsigned int id, QList<int> & ret, vector<group> &g) const;
     question getquestion(int id);
     void questiongroupqchild(int id, QList<int> &ret, bool ref = 1) const;

@@ -411,7 +411,7 @@ void	project::groupchild(unsigned int id, QList<int> & ret, vector<group> &g) co
 	}
 }
 
-void	project::groupqchild(int id, QList<int> & ret) const
+void	project::groupqchild(int id, QList<int> & ret, int gref) const
 {
     QList<int>::iterator listpg;
     QList<int> listint = listqgroup[id].getListfils();
@@ -422,7 +422,7 @@ void	project::groupqchild(int id, QList<int> & ret) const
 	while (listpg != listint.end())
 	{
 		//qDebug() << "groupqchild number group: " << QString::number(*listpg);
-		this->groupqchild(*listpg, ret);
+        this->groupqchild(*listpg, ret, gref);
 		listpg++;
 	}
 }

@@ -426,8 +426,8 @@ void	tableshow::select(int gref, int gqref)
 	QList<int> listint;
 	QList<int> listqint;
 
-	p->groupqchild(gqref, listqint);
-	p->groupchild(gref, listint);
+    p->groupchild(gref, listint);
+    p->groupqchild(gqref, listqint);
 	headertableitem *tmp;
 
 	QElapsedTimer timerdebug;
