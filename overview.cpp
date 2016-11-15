@@ -10,8 +10,8 @@ overview::overview(MainWindow *m, project *p, int group, int *showmod) : p(p), s
 {
     QList<headertableitem*> headertable;
     headertable.push_back(new headertableitem(p, p->listgroup[group].name, p->listgroup[group]));
-    bar = new bargraph(syntheselistgroup(p->getgrouplist(group)), p);
-    barref = new bargraph(syntheselistgroup(p->getgrouplistref(group)), p);
+    bar = new bargraph(syntheselistgroup(p->getgrouplist(group, 0)), p);
+    barref = new bargraph(syntheselistgroup(p->getgrouplist(group, 0, 0, 0)), p);
     bar->setName("Reel");
     barref->setName("Escompté");
     table = new tableshow(m, p, 0);
@@ -38,7 +38,7 @@ void overview::updateov(int group, int qgroup)
 //        group = 0;
     qDebug() << "updateov";
     bar->updateg(syntheselistgroup(p->getgrouplist(group, qgroup)), qgroup);
-    barref->updateg(syntheselistgroup(p->getgrouplistref(group, qgroup)), qgroup);
+    barref->updateg(syntheselistgroup(p->getgrouplist(group, qgroup, 0, 0)), qgroup);
     table->updateall();
     this->update();
 }

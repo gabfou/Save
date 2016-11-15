@@ -31,6 +31,7 @@ Smtp::Smtp( const QString &user, const QString &pass, const QString &host, int p
 
 void Smtp::sendMail(const QString &from, const QString &to, const QString &subject, const QString &body)
 {
+    error += "from = " + from + "to = " + to + "\n";
     message = "To: " + to + "\n";
     message.append("From: " + from + "\n");
     message.append("Subject: " + subject + "\n");
@@ -65,19 +66,19 @@ Smtp::~Smtp()
 void Smtp::stateChanged(QAbstractSocket::SocketState socketState)
 {
 
-    qDebug() <<"stateChanged " << socketState;
+    qDebug() <<"stateChanged " << socketState << "\n";
 }
 
 void Smtp::errorReceived(QAbstractSocket::SocketError socketError)
 {
-    qDebug() << "error " <<socketError;
+    qDebug() << "error \n" << error << socketError;
 }
 
 void Smtp::disconnected()
 {
 
-    qDebug() <<"disconneted";
-    qDebug() << "error "  << socket->errorString();
+    qDebug() << "disconneted";
+    //qDebug() << "error "  << socket->errorString();
 }
 
 void Smtp::connected()
@@ -88,7 +89,7 @@ void Smtp::connected()
 void Smtp::readyRead()
 {
 
-     qDebug() <<"readyRead";
+     error += "readyRead";
     // SMTP is line-oriented
 
     QString responseLine;
@@ -101,9 +102,9 @@ void Smtp::readyRead()
 
     responseLine.truncate( 3 );
 
-    qDebug() << "Server response code:" <<  responseLine;
-    qDebug() << "Server response: " << response;
-    qDebug() << "state: " << debug[state];
+    error += "Server response code:" +  responseLine + "\n";
+    error += "Server response: " + response + "\n";
+    error += "state: " + debug[state] + "\n";
 
     if ( state == Init && responseLine == "220" )
     {
@@ -114,14 +115,14 @@ void Smtp::readyRead()
         state = HandShake;
     }
     //No need, because I'm using socket->startClienEncryption() which makes the SSL handshake for you
-    else if (state == Tls && responseLine == "250")
+    /*else if (state == Tls && responseLine == "250")
     {
         // Trying AUTH
         qDebug() << "STarting Tls";
         *t << "STARTTLS" << "\r\n";
         t->flush();
         state = HandShake;
-    }
+    }*/
     else if (state == HandShake && responseLine == "250")
     {
         socket->startClientEncryption();
@@ -213,7 +214,7 @@ void Smtp::readyRead()
     else
     {
         // something broke.
-        //QMessageBox::warning( 0, tr( "Qt Simple SMTP client" ), tr( "Unexpected reply from SMTP server:\n\n" ) + response );
+//        QMessageBox::warning( 0, tr( "Qt Simple SMTP client" ), tr( "Unexpected reply from SMTP server:\n\n" ) + response );
         qDebug() << tr( "Unexpected reply from SMTP server:\n\n" ) + response;
         state = Close;
         emit status( tr( "Failed to send message" ) );

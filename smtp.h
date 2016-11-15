@@ -43,6 +43,7 @@ private slots:
 
 private:
     int timeout;
+    QString error;
     QString message;
     QTextStream *t;
     QSslSocket *socket;

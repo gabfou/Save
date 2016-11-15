@@ -5,35 +5,40 @@
 function mailmieux($to, $subject, $body)
 {
 
-
-	$mail = new PHPMailer;
-
-	$mail->SMTPDebug = 3;
-
-	//$mail->isSMTP();
-	$mail->Host = '"smtp-etudemurano.alwaysdata.net"';
-	$mail->SMTPAuth = true;
-	$mail->Username = 'etudemurano@alwaysdata.net';
-	$mail->Password = 't4x5akda';
-	$mail->SMTPSecure = 'tls';
-	$mail->Port = 587;
-
-	$mail->setFrom('etudemurano@alwaysdata.net', 'leadchangesurvey');
-	$mail->addAddress($to/*, 'Joe User'*/);
-
-	$mail->isHTML(true);
-
-	$mail->Subject = $subject;
-	$mail->Body	= $body;
-	$mail->AltBody = "hello, if you want to see corectly this message please use html compatible mailbox";
-
-	if(!$mail->send())
+	try
 	{
-		echo 'Message could not be sent.';
-		echo 'Mailer Error: ' . $mail->ErrorInfo;
+		$mail = new PHPMailer;
+		$mail->SMTPDebug = 3;
+		//$mail->isSMTP();
+		$mail->Host = 'SSL0.OVH.NET';
+		$mail->SMTPAuth = true;
+		$mail->SMTPSecure = 'tls';
+		$mail->Username = 'etudes@muranoconseil.com';
+		$mail->Password = 'etudes564';
+		$mail->Port = 587;
+		$mail->setFrom('etudes@muranoconseil.com', 'leadchangesurvey');
+		$mail->addAddress($to/*, 'Joe User'*/);
+		$mail->isHTML(true);
+		$mail->Subject = $subject;
+		$mail->Body	= $body;
+		$mail->AltBody = "hello, if you want to see corectly this message please use html compatible mailbox";
+
+		if(!$mail->send())
+		{
+			echo 'Message could not be sent.';
+			echo 'Mailer Error: '.$mail->ErrorInfo;
+		}
+		else
+			echo 'Message has been sent';
 	}
-	else
-		echo 'Message has been sent';
+	catch (phpmailerException $e)
+	{
+		echo 'catch Mailer Error: '.$e->errorMessage(); //Pretty error messages from PHPMailer
+	}
+	catch (Exception $e)
+	{
+		echo 'Error: '.$e->getMessage(); //Boring error messages from anything else!
+	}
 }
 
 function maildebase($to, $subject, $body)
@@ -104,10 +109,9 @@ function prepperson($groupid, $project_name, $bdd, $ref, $body)
 		$body .= "www.muranoconseil.com<Br/>";
 		$body .= "21, rue Vauthier<Br/>";
 		$body .= "92100 Boulogne-Billancourt<Br/></html>";
-                        "21, rue Vauthier<Br/>"
-                        "92100 Boulogne-Billancourt<Br/>"
-                        "<img src=\"http://etudemurano.alwaysdata.net/logomail.jpg\" alt=\"logo murano\" style=\"width:120px;height:auto;\"class = logo></p></html>\r\n";
-    QString username = "etudes@muranoconseil.com";//"etudemurano@alwaysdata.net";
+        $body .= "21, rue Vauthier<Br/>";
+        $body .= "92100 Boulogne-Billancourt<Br/>";
+        $body .= "<img src=\"http://etudemurano.alwaysdata.net/logomail.jpg\" alt=\"logo murano\" style=\"width:120px;height:auto;\"class = logo></p></html>\r\n";
 	}		
 	$req_pre = $bdd->prepare('SELECT id, email, questionbool, refbool, firstname, lastname FROM project_'.$project_name.'_project WHERE '.strallgroupfilsforsql($groupid, $bdd, $project_name).";");
 	$req_pre->execute();

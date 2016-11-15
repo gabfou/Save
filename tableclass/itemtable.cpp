@@ -19,10 +19,25 @@ void itemtable::update()
 	headertableitem *arg = dynamic_cast<headertableitem*>(this->tableWidget()->verticalHeaderItem(this->row()));
 	headertableitem *head = dynamic_cast<headertableitem*>(this->tableWidget()->horizontalHeaderItem(this->column()));
 	QString actform = "";
+
 	if (form.compare(actform))
 		actform = form;
 	else if (head && form.compare(head->formule))
 		actform = head->formule;
+
+    int itmax;
+    int itmin;
+    if (p->ref == 0)
+    {
+        itmax = 0;
+        itmin = 0;
+    }
+    else
+    {
+        itmax = p->iterationmax;
+        itmin = p->iterationmin;
+    }
+
 	if (!head || !arg)
 	{
         //qDebug() << "fail dynamic cast tab col=" << this->column() << " tab row =" << this->row();
@@ -31,14 +46,14 @@ void itemtable::update()
         return ;
     }
     else if (arg->type == 1 && head->type == 2)
-		update(&(arg->argg), &(head->argq));
+        update(&(arg->argg), &(head->argq), itmin, itmax);
     else if (arg->type == 2 && head->type == 1)
-        updateall(&(head->argg), &(arg->argq));
+        updateall(&(head->argg), &(arg->argq), itmin, itmax);
     else if (arg->type == 3 && head->type == 2)
-        update(&(arg->argp), &(head->argq));
+        update(&(arg->argp), &(head->argq), itmin, itmax);
     else if (arg->type == 1  && head->type == 4)
     {
-        update(&(arg->argg), &(head->argstr));
+        update(&(arg->argg), &(head->argstr), itmin, itmax);
     }
 	else
 	{
@@ -47,49 +62,45 @@ void itemtable::update()
 	}
 }
 
-void itemtable::update(group *arg, question *head, QString form) // opti passer question en vector
+void itemtable::update(group *arg, question *head, int itmin, int itmax, QString form) // opti passer question en vector
 {(void)form;
 	// vector<question>::iterator tmp = this->p->listquestion.begin();
 	question *q = &(p->listquestion[head->id]); // opti verifier que ca sert a quelque chose (question deja en argument ?)
 	QString val;
+
 
 	if (q)
 	{
         if (p->val)
         {
             if (q->val != -1)
-                val = arg->grouprepval(*q, p->ref);
+                val = arg->grouprepval(*q, itmin, itmax);
         }
         else
-            val = arg->grouprep(*q, p->ref);
+            val = arg->grouprep(*q, itmin, itmax);
         //this->setBackgroundColor(arg->getColor()); //remettre les couleur
 	}
     this->eval(val, *head);
 }
 
-void itemtable::update(person *arg, question *head, QString form) // opti passer question en vector
+void itemtable::update(person *arg, question *head, int itmin, int itmax, QString form) // opti passer question en vector
 {(void)form;
     // vector<question>::iterator tmp = this->p->listquestion.begin();
     question *q = &(p->listquestion[head->id]); // opti verifier que ca sert a quelque chose (question deja en argument ?)
-    float   valfloat;
     QString val;
 
     if (q)
     {
         if (p->val)
-        {
-            if (q->val != -1)
-                valfloat = arg->personshowcaseval(*q, p->ref);
-        }
+            val = arg->personshowcasevalstr(*q, itmin, itmax);
         else
-            valfloat = arg->personshowcase(*q, p->ref);
+            val = arg->personshowcasestr(*q, itmin, itmax);
         //this->setBackgroundColor(arg->getColor()); //remettre les couleur
     }
-    val = (valfloat > -0.1) ? QString::number(valfloat) : "NA";
     this->eval(val, *q);
 }
 
-void itemtable::update(group *arg, QString *head, QString form)
+void itemtable::update(group *arg, QString *head, int itmin, int itmax, QString form)
 {
     question tmp;
     QString val;
@@ -99,12 +110,12 @@ void itemtable::update(group *arg, QString *head, QString form)
 //                val = arg->grouprepval(*q, p->ref);
 //        }
 //        else
-    val = arg->grouprep(p->listgroup[p->gref], *head, p->ref, &tmp);
+    val = arg->grouprep(p->listgroup[p->gref], *head, &tmp, itmin, itmax);
         //this->setBackgroundColor(arg->getColor()); //remettre les couleur
    this->eval(val, tmp);
 }
 
-void itemtable::updateall(group *arg, question *head, QString form)
+void itemtable::updateall(group *arg, question *head, int itmin, int itmax, QString form)
 {
     if (arg->type != 0)
     {
@@ -113,7 +124,7 @@ void itemtable::updateall(group *arg, question *head, QString form)
     }
     QString val;
     question *q = &(p->listquestion[head->id]);
-    val = QString::number(arg->grouprepall(*q, p->listgroup));
+    val = QString::number(arg->grouprepall(*q, p->listgroup, itmin, itmax));
     //this->setBackgroundColor(arg->getColor());
     this->eval(val, *head);
 }

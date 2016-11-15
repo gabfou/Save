@@ -38,6 +38,8 @@ public:
     tableshow *tablep = NULL;
 	int currentgref = 0;
     int currentgqref = 0;
+    int iterationmax = 2147483640;
+    int iterationmin = 1;
     void updatetable();
     void sendprojectauxi(QString str, QList<person> listp, int type = 0);
 public slots:
@@ -45,6 +47,8 @@ public slots:
     void screenshootcurrent();
     void changescopeq2(QTreeWidgetItem *item);
     void Backroundchange();
+    void miniterationchange(int min);
+    void maxiterationchange(int max);
 private slots:
     //void showproject();
 	void sendproject();
@@ -105,11 +109,14 @@ private:
 	void addock();
 
     void select_first_table();
+    void initvar();
 signals:
      void grefchange(int gref);
      void gqrefchange(int gqref);
      void valchanged(bool val);
      void refchanged(bool ref);
+     void maxiterationchanged(int max);
+     void miniterationchanged(int min);
 };
 
 	

@@ -25,9 +25,9 @@
 #include <QCheckBox>
 #include <QTWidgets/QMessageBox>
 #include <stdlib.h>
-//#include <QtGui/QMessageBox>
 #include <QDialog>
 #include <iostream>
+#include <QSlider>
 #include <string>
 #include <list>
 #include <cstdlib>
@@ -35,7 +35,6 @@
 #include <QCalendarWidget>
 #include <QComboBox>
 #include <QListWidget>
-//#include <random>
 #include <time.h>
 #include <QTreeWidget>
 #include "xlsxdocument.h"

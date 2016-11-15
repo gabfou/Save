@@ -159,6 +159,8 @@ inline void project::addquestion(QString name, int group, unsigned int id, int q
 
 void project::addreponse(int id, string name, int time, int note, string date, int iteration, int idquestion, QString timestr)
 {
+    if (iteration > iterationmax)
+        iterationmax = iteration;
 	if (iteration)
 		nbfactnref++;
 	else
@@ -171,7 +173,7 @@ inline void project::addgroup(QString name, int parentid, unsigned int id, int t
 	if (type == 0)
 	{
 		this->nbgroup++;
-		group ret(name, parentid, id, (this->listgroup), type, description, gquestion);
+        group ret(name, parentid, id, (this->listgroup), type, description, gquestion, this);
 		if (ret.getGeneration() > this->nbpgeneration)
 			this->nbpgeneration = ret.getGeneration();
 		while (this->listgroup.size() < id)
@@ -181,7 +183,7 @@ inline void project::addgroup(QString name, int parentid, unsigned int id, int t
 	else if (type == 1)
 	{
 		this->nbqgroup++;
-		group ret(name, parentid, id, (this->listqgroup), type, description, gquestion);
+        group ret(name, parentid, id, (this->listqgroup), type, description, gquestion, this);
 		if (ret.getGeneration() > this->nbqgeneration) // changer nbgenaration par nbqgeneration
 			this->nbqgeneration = ret.getGeneration();
 		while (this->listqgroup.size() < id)
@@ -240,6 +242,8 @@ void project::initvar()
 	listqgroup.clear();
 	listquestion.clear();
     default_table = 0;
+    iterationmax = 0;
+    iterationmin = 0;
 }
 
 void project::initoroject(QString fproject)
@@ -252,7 +256,7 @@ void project::initoroject(QString fproject)
 	this->addgroup("ALL", -1, 0, 0, "", 0);
 	this->addgroup("ALL", -1, 0, 1, "", 0);
 
-    if(query.exec("SELECT default_table FROM all_config WHERE project_name=" + fproject))
+    if (query.exec("SELECT default_table FROM all_config WHERE project_name=" + fproject))
     {
         while(query.next())
         {
@@ -262,7 +266,7 @@ void project::initoroject(QString fproject)
     else
         qDebug() << "error get info_project :" << query.lastError();
 	qDebug() << "init groupe";timerdebug.start();
-    if(query.exec("SELECT groupname, groupparent, id, type, description, gquestion FROM project_" + fproject + "_groupe"))
+    if (query.exec("SELECT groupname, groupparent, id, type, description, gquestion FROM project_" + fproject + "_groupe"))
 	{
 		while(query.next())
 		{
@@ -279,7 +283,7 @@ void project::initoroject(QString fproject)
 	qDebug() << "init group time" << timerdebug.elapsed() << "milliseconds";
 
 	qDebug() << "init question";timerdebug.start();
-    if(query.exec("SELECT question,groupid,id,qgroupid,sujet,type,typef,splitchar,value,ref_only FROM project_" + fproject + "_question"))
+    if (query.exec("SELECT question,groupid,id,qgroupid,sujet,type,typef,splitchar,value,ref_only FROM project_" + fproject + "_question"))
 	{
 		while(query.next())
 		{
@@ -467,7 +471,7 @@ void	project::questiongroupqchild(int id, QList<int> & ret, bool ref) const
 	}
 }
 
-QList<t_groupref> project::getgrouplist(int id, int qid, bool ref)
+QList<t_groupref> project::getgrouplist(int id, int qid, int iterationmin, int iterationmax)
 {
 	QList<t_groupref> ret;
 	QList<int> listchild;
@@ -475,33 +479,16 @@ QList<t_groupref> project::getgrouplist(int id, int qid, bool ref)
 	QList<int> listqchild;
 
 	groupchild(id, listchild);
-    questiongroupqchild(qid, listqchild, ref);
+    questiongroupqchild(qid, listqchild);
 	i = listchild.begin();
 	while (i != listchild.end())
 	{
-		ret << this->listgroup[*i].groupnamerep(this->listquestion, 0, listqchild);
+        ret << this->listgroup[*i].groupnamerep(this->listquestion, listqchild, iterationmin, iterationmax);
 		i++;
 	}
 	return ret;
 }
 
-QList<t_groupref> project::getgrouplistref(int id, int qid, bool ref)
-{
-	QList<t_groupref> ret;
-	QList<int> listchild;
-	QList<int>::iterator i;
-	QList<int> listqchild;
-
-	groupchild(id, listchild);
-    questiongroupqchild(qid, listqchild, ref);
-	i = listchild.begin();
-	while (i != listchild.end())
-    {
-        ret << this->listgroup[*i].groupnamerep(this->listquestion, 1, listqchild);
-		i++;
-	}
-	return ret;
-}
 
 group    *project::groupsearch(QString name, group *g)
 {

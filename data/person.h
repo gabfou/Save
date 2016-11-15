@@ -10,9 +10,8 @@ class person
 {
 private:
     QList<fact> flist;
-    QList<fact> freflist;
 	std::vector<question> *questionlist;
-    float personshowcase(question &qname, QList<fact> lf) const;
+
 public:
     QString name;
     QString lastname;
@@ -41,14 +40,11 @@ public:
 	std::vector<question> *getQuestionlist() const;
     QList<fact> getFlist() const;
 	void personadd(QTableWidget *gbox, int i, group &g);
-    float personshowcase(question &qname);
-    float personrefshowcase(question & qname);
     QList<fact> getFreflist() const;
-    float personshowcaseval(question &qname, QList<fact> lf) const;
-    float personshowcaseval(question &qname);
-    float personrefshowcaseval(question &qname);
-    float personshowcaseval(question &qname, int ref);
-    float personshowcase(question &qname, int ref);
-    float personshowcasevaltype2(question &qname, QList<fact> lf, QVector<int> *nb) const;
-    float personshowcasevaltype2(question &qname, int ref, QVector<int> *nb);
+    float personshowcaseval(question &qname, int iterationmin = 0, int iterationmax = 2147483640);
+    float personshowcasevaltype2(question &qname, QList<fact> lf, QVector<int> *nb, int iterationmin = 0, int iterationmax = 2147483640) const;
+    float personshowcasevaltype2(question &qname, QVector<int> *nb, int iterationmin = 0, int iterationmax = 2147483640);
+    QString personshowcasestr(question &qname, int iterationmin = 0, int iterationmax = 2147483640);
+    QString personshowcasevalstr(question &qname, int iterationmin = 0, int iterationmax = 2147483640);
+    float personshowcase(question &qname, int iterationmin = 0, int iterationmax = 2147483640);
 };

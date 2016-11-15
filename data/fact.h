@@ -14,12 +14,13 @@ private:
 public:
 	string	factname;
     int idquestion = -1;
+    int iteration;
 
 	fact();
 	fact(string line);
 	virtual ~fact();
 	int showfact(QGridLayout *gbox, int i, int j);
-    int checkfacttime(int idquestion, int &counter) const;
+    int checkfacttime(int idquestion, int &counter, int iterationmin = -1, int iterationmax = 2147483640) const;
 	QString getTimestr() const;
 	int getNote() const;
 	void setNote(int value);
@@ -29,8 +30,8 @@ public:
 	void setDate(const string &value);
 	string getFactname() const;
 	void setFactname(const string &value);
-    fact(string name, int time, int note, string date, int idquestion, QString timestr);
-    void checkfactstr(int idquestion, int &counter, QStringList &list, QVector<int> *nb, QVector<int> *nbl) const;
+    fact(string name, int time, int note, string date, int idquestion, QString timestr, int iteration);
+    void checkfactstr(int idquestion, int &counter, QStringList &list, QVector<int> *nb, QVector<int> *nbl, int iterationmin = -1, int iterationmax = 2147483640) const;
 };
 
 ostream & operator<<(ostream &o, fact const & rhs);

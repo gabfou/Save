@@ -18,7 +18,7 @@ fact::fact()
 {
 }
 
-fact::fact(string name, int time, int note, string date, int idquestion, QString timestr)
+fact::fact(string name, int time, int note, string date, int idquestion, QString timestr, int iteration)
 {
 	this->factname = name;
 	this->note = note;
@@ -26,6 +26,7 @@ fact::fact(string name, int time, int note, string date, int idquestion, QString
 	this->date = date;
     this->idquestion = idquestion;
     this->timestr = timestr;
+    this->iteration = iteration;
 }
 
 fact::~fact()
@@ -33,9 +34,9 @@ fact::~fact()
 }
 
 
-int fact::checkfacttime(int idquestion, int &counter) const
+int fact::checkfacttime(int idquestion, int &counter, int iterationmin, int iterationmax) const
 {
-    if (this->idquestion == idquestion)
+    if (this->idquestion == idquestion && iterationmin <= iteration && iterationmax >= iteration)
 	{
 		counter++;
 		return (this->time);
@@ -43,7 +44,7 @@ int fact::checkfacttime(int idquestion, int &counter) const
 	return (0);
 }
 
-void fact::checkfactstr(int idquestion, int &counter, QStringList &list, QVector<int> *nb, QVector<int> *nbl) const
+void fact::checkfactstr(int idquestion, int &counter, QStringList &list, QVector<int> *nb, QVector<int> *nbl, int iterationmin, int iterationmax) const
 {
     QStringList::iterator i;
     int j = -1;
@@ -53,7 +54,6 @@ void fact::checkfactstr(int idquestion, int &counter, QStringList &list, QVector
         i = list.begin();
         while (i != list.end())
         {
-            qDebug() << "fgqqsjhdg" << timestr << *i;
             ++j;
             if (i->compare(this->timestr) == 0)
             {

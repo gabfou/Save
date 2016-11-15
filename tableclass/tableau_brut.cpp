@@ -83,14 +83,14 @@ void tableau_brut::populate(project *p)
             ip++;
             continue ;
         }
-        f = ip->getFreflist();
+        f = ip->getFlist();
         i = f.begin();
         while(i != f.end())
 		{
 			setrow(*ip, *i, p, ++k);
 			i++;
 		}
-        f = ip->getFreflist();
+        f = ip->getFlist();
         i = f.begin();
         while(i != f.end())
 		{

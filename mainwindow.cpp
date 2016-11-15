@@ -121,6 +121,14 @@ MainWindow::MainWindow(QWidget *parent) :
 }
 
 
+void MainWindow::initvar()
+{
+    this->currentgref = 0;
+    this->currentgqref = 0;
+    this->iterationmax = 2147483640;
+    this->iterationmin = 1;
+}
+
 //Sql maintain connexion;
 
 void MainWindow::checksqlconexion()
@@ -225,7 +233,7 @@ void MainWindow::checkprojectname()
 	}
 }
 
-void MainWindow::addproject() // empecher charactere speciaux
+void MainWindow::addproject()
 {
 	labeltmp = new QLabel("Le nom du nouveau projet ne peux pas contenir d'espace, de ; de ', et ne peut pas être vide");
 	QWidget *win = new QWidget();
@@ -274,6 +282,7 @@ void MainWindow::addproject2()
 {
 	QSqlQuery qry;
 
+    this->initvar();
 	QRegExp regex("^[^,;' ]+$");
 	QString name = nametmp->text();
 
@@ -282,7 +291,7 @@ void MainWindow::addproject2()
 		if (timertmp)
 		{
 			delete timertmp;
-			timertmp == NULL;
+            timertmp = NULL;
 		}
 		error = 1;
 		addproject();
@@ -393,7 +402,7 @@ void MainWindow::addproject2()
 	if (timertmp)
 	{
 		delete timertmp;
-		timertmp == NULL;
+        timertmp = NULL;
 	}
 	this->configproject();
 }
@@ -434,9 +443,8 @@ void MainWindow::openproject2(QListWidgetItem *item)
 {
 	QSqlQuery qry;
 
+    this->initvar();
 	//this->current.initoroject(item->text().toStdString());
-	this->currentgref = 0;
-	this->currentgqref = 0;
 //	this->current->projectshow(this, this->table, this->currentgref);
 	this->namecurrent = item->text();
 	this->updateproject();
@@ -504,6 +512,8 @@ void MainWindow::addock()
 //	if (showmod == 2)
 //		this->groupboxtmp = new grouptree(this, this->current->listqgroup); // a virer
 //	this->groupboxtmp();
+    if (alltreetmp)
+        delete alltreetmp;
 	this->alltreetmp = new Alltree(this, &(this->current));
 	groupdock->setWidget(this->alltreetmp);
 	groupdock->show();
@@ -588,8 +598,6 @@ void MainWindow::addperson2()
 	}
 }
 
-
-
 MainWindow::~MainWindow()
 {
 	delete ui;
@@ -604,7 +612,6 @@ MainWindow::~MainWindow()
 //           "<p>This is your daily DMI LEAD CHANGE Timeesheet reminder</p>"
 //           "<p>Thank you for taking a few minutes at the end of your day to complete the timesheet:</p>"
 //           "<a href=\"http://etudemurano.alwaysdata.net/" + str;
-
 
 //    QList<person>::iterator i = listp.begin();
 //    while (i != listp.end())
@@ -727,7 +734,7 @@ void MainWindow::updateproject()
 
 void MainWindow::convert_to_xlsx()
 {
-	tableshow * tmp;
+    tableshow * tmp = NULL;
 	if (this->cw->currentWidget() == this->table)
 		tmp = table;
 	else if (this->cw->currentWidget() == this->tableg)
@@ -907,6 +914,20 @@ void	MainWindow::screenshootcurrent()
 		//						 .arg(QDir::toNativeSeparators(fileName)));
 			qDebug() << tr("The image could not be saved to \"%1\".").arg(QDir::toNativeSeparators(fileName));
 		}
+}
+
+void    MainWindow::maxiterationchange(int max)
+{
+    this->iterationmax = max;
+    this->current.iterationmax = max;
+    emit maxiterationchanged(max);
+}
+
+void    MainWindow::miniterationchange(int min)
+{
+    this->iterationmin = min;
+    this->current.iterationmin = min;
+    emit miniterationchanged(min);
 }
 
 void	MainWindow::Backroundchange()

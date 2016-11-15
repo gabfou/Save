@@ -97,7 +97,7 @@ void    group::changeperson(int id, person & p)
     }
 }
 
-group::group(QString name, int parentid, int id, vector<group> & listgroup, int type, QString description, bool gquestion) : type(type)
+group::group(QString name, int parentid, int id, vector<group> & listgroup, int type, QString description, bool gquestion, project *p) : type(type), p(p)
 {
     this->init = 1;
 	this->name = name;
@@ -152,17 +152,17 @@ QList<int> group::getListfils() const
 }
 
 
-t_groupref group::groupnamerep(const vector<question> &questionlist, int ref, QList<int> listqchild)
+t_groupref group::groupnamerep(const vector<question> &questionlist, QList<int> listqchild, int iterationmin, int iterationmax)
 {
 	t_groupref ret;
 
     ret.name = this->name;
-    ret.list = this->grouprep(questionlist, ref, listqchild);
+    ret.list = this->grouprep(questionlist, listqchild, iterationmin, iterationmax);
 
 	return ret;
 }
 
-QString group::grouprepvaltype2(question tmp2, int ref)
+QString group::grouprepvaltype2(question tmp2, int iterationmin, int iterationmax)
 {
     QList<person>::iterator tmp;
     QVector<int> nb(tmp2.liststr.size() + 1);
@@ -173,7 +173,7 @@ QString group::grouprepvaltype2(question tmp2, int ref)
     tmp = this->listp.begin();
     while (tmp != this->listp.end())
     {
-        if (((*tmp).personshowcasevaltype2(tmp2, ref, &nb)) > -0.1)
+        if (((*tmp).personshowcasevaltype2(tmp2, &nb, iterationmin, iterationmax)) > -0.1)
             l++;
         tmp++;
     }
@@ -189,7 +189,7 @@ QString group::grouprepvaltype2(question tmp2, int ref)
     return (ret);
 }
 
-QString group::grouprepval(question tmp2, int ref)
+QString group::grouprepval(question tmp2, int iterationmin, int iterationmax)
 {
     QList<person>::iterator tmp;
     float nb;
@@ -197,14 +197,14 @@ QString group::grouprepval(question tmp2, int ref)
     float inttmp;
 
     if (tmp2.type == 2)
-        return (grouprepvaltype2(tmp2, ref));
+        return (grouprepvaltype2(tmp2, iterationmin, iterationmax));
     // int
     nb = 0;
     l = 0;
     tmp = this->listp.begin();
     while (tmp != this->listp.end())
     {
-        if ((inttmp = (*tmp).personshowcaseval(tmp2, ref)) > -0.1)
+        if ((inttmp = (*tmp).personshowcaseval(tmp2, iterationmin, iterationmax)) > -0.1)
         {
             l++;
             nb += inttmp;
@@ -217,7 +217,7 @@ QString group::grouprepval(question tmp2, int ref)
         return ("NA");
 }
 
-QString group::grouprep(question tmp2, int ref)
+QString group::grouprep(question tmp2, int iterationmin, int iterationmax)
 {
     QList<person>::iterator tmp;
     float nb;
@@ -225,29 +225,18 @@ QString group::grouprep(question tmp2, int ref)
     float inttmp;
 
     if (tmp2.type == 2)
-        return (grouprepvaltype2(tmp2, ref));
+        return (grouprepvaltype2(tmp2, iterationmin, iterationmax));
     nb = 0;
     l = 0;
     tmp = this->listp.begin();
 	while (tmp != this->listp.end())
-	{
-		if (ref == 0)
-		{
-            if ((inttmp = (*tmp).personshowcase(tmp2)) > -0.1)
-            {
-				l++;
-                nb += inttmp;
-            }
-		}
-		else
+    {
+        if ((inttmp = (*tmp).personshowcase(tmp2, iterationmin, iterationmax)) > -0.1)
         {
-            if ((inttmp = (*tmp).personrefshowcase(tmp2)) > -0.1)
-            {
-                l++;
-                nb += inttmp;
-            }
+            l++;
+            nb += inttmp;
         }
-		tmp++;
+        tmp++;
 	}
 	if (l != 0)
         return(QString::number(nb / l));
@@ -255,7 +244,7 @@ QString group::grouprep(question tmp2, int ref)
         return ("NA");
 }
 
-QString group::grouprep(group & groupp, QString tmp3, int ref, question *ret)
+QString group::grouprep(group & groupp, QString tmp3, question *ret, int iterationmin, int iterationmax)
 {
     QList<question>::iterator tmp = listq.begin();
 
@@ -265,29 +254,29 @@ QString group::grouprep(group & groupp, QString tmp3, int ref, question *ret)
         {
             if (ret != NULL)
                 *ret = *tmp;
-            return (groupp.grouprep(*tmp, ref));
+            return (groupp.grouprep(*tmp, iterationmin, iterationmax));
         }
         tmp++;
     }
     return ("NA");
 }
 
-float group::grouprepall(question tmp2, vector<group> &g) // opti qstring neccessaire
+float group::grouprepall(question tmp2, vector<group> &g, int iterationmin, int iterationmax) // opti qstring neccessaire
 {
     QList<int>::iterator tmp = listfils.begin();
     float val = 0;
 
-    val += grouprep(tmp2, 0).toInt();
+    val += grouprep(tmp2, iterationmin, iterationmax).toInt();
     while(tmp != listfils.end())
     {
-        val += g[*tmp].grouprepall(tmp2, g);
+        val += g[*tmp].grouprepall(tmp2, g, iterationmin, iterationmax);
         tmp++;
     }
     return (val);
 }
 
 
-QList<float> group::grouprep(const vector<question> & questionlist, int ref, QList<int> listqchild)
+QList<float> group::grouprep(const vector<question> & questionlist, QList<int> listqchild, int iterationmin, int iterationmax)
 {
     QList<int>::iterator tmp2;
     QList<float> ret;
@@ -296,7 +285,7 @@ QList<float> group::grouprep(const vector<question> & questionlist, int ref, QLi
     tmp2 = listqchild.begin();
     while (tmp2 != listqchild.end())
     {
-        ret << grouprep(questionlist[*tmp2], ref).toFloat();
+        ret << grouprep(questionlist[*tmp2], iterationmin, iterationmax).toFloat();
 		tmp2++;
 	}
 	return ret;

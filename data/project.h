@@ -32,6 +32,8 @@ public:
     int gref = 0;
     int gqref = 0;
     int default_table = 0;
+    int iterationmax = 0;
+    int iterationmin = 0;
     void addquestion(QString name, int group, unsigned int id, int qgroupid, QString sujet, QString unit, int type, QString splitchar, int value, bool ref_only, bool global);
     QString name;
     vector<person> listp;
@@ -55,8 +57,7 @@ public:
     void addgroup(QString name, int parentid, unsigned int id, int type, QString description, bool gquestion);
 	vector<group> getListgroup() const;
 	void setListgroup(const vector<group> &value);
-    QList<t_groupref> getgrouplist(int id, int qid = 0, bool ref = 1);
-    QList<t_groupref> getgrouplistref(int id, int qid = 0, bool ref = 1);
+    QList<t_groupref> getgrouplist(int id, int qid = 0, int iterationmin = 1, int iterationmax = 2147483640);
 	vector<question> getListquestion() const;
     QList<int> getlistallfils(int gid);
     vector<person> getListp() const;
