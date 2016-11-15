@@ -1,0 +1,4 @@
+SELECT project_DMI_LEAD_CHANGE_SURVEY_reponse.id, firstname, lastname, iteration, date_info
+FROM  `project_DMI_LEAD_CHANGE_SURVEY_reponse` ,  `project_DMI_LEAD_CHANGE_SURVEY_project` ,  `project_DMI_LEAD_CHANGE_SURVEY_question` 
+WHERE project_DMI_LEAD_CHANGE_SURVEY_reponse.idperson = project_DMI_LEAD_CHANGE_SURVEY_project.id
+AND project_DMI_LEAD_CHANGE_SURVEY_reponse.idquestion = project_DMI_LEAD_CHANGE_SURVEY_question.id
