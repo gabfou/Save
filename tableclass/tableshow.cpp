@@ -38,7 +38,9 @@ void tableshow::preinit()
 	connect(m, SIGNAL(grefchange(int)), this, SLOT(selectp(int)));
 	connect(m, SIGNAL(valchanged(bool)), this, SLOT(updateall()));
 	connect(m, SIGNAL(refchanged(bool)), this, SLOT(updateall()));
-	if (showmode == 2)
+    connect(m, SIGNAL(miniterationchanged(int)), this, SLOT(updateall()));
+    connect(m, SIGNAL(maxiterationchanged(int)), this, SLOT(updateall()));
+    if (showmode == 2)
 	{
 		connect(m, SIGNAL(grefchange(int)), this, SLOT(updateall()));
 	}

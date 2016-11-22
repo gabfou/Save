@@ -49,6 +49,8 @@ public slots:
     void Backroundchange();
     void miniterationchange(int min);
     void maxiterationchange(int max);
+    void extractor();
+    void Excellinfo();
 private slots:
     //void showproject();
 	void sendproject();
@@ -79,6 +81,7 @@ private slots:
     void checkprojectname();
     void baserep(bool checked);
     void graphiquecrd(bool checked);
+    void formcreator();
 private:
 	Ui::MainWindow *ui;
 	QWindow *addprojectwindow;

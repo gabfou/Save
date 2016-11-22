@@ -25,7 +25,12 @@ void tab_to_xlsx(const QTableWidget *table, Document & xlsx)
 	int x = -1;
 	int y = -2;
     int y2 = -2;
-	QTableWidgetItem *item;
+    QTableWidgetItem *item;
+    Format format;
+
+    format.setHorizontalAlignment(Format::AlignHCenter);
+    format.setVerticalAlignment(Format::AlignVCenter);
+    format.setTextWarp(1);
 
 	while (++y < table->rowCount())
 	{
@@ -44,11 +49,12 @@ void tab_to_xlsx(const QTableWidget *table, Document & xlsx)
 			else
 				item = table->item(y, x);
 			if (item && (x == -1 || y == -1))
-                xlsx.write(y2 + 2, x + 2, item->text());
+                xlsx.write(y2 + 2, x + 2, item->text(), format);
 			else if (item)
-                xlsx.write(y2 + 2, x + 2, item->text());
+                xlsx.write(y2 + 2, x + 2, item->text(), format);
         }
 	}
+    xlsx.setColumnWidth(xlsx.dimension(), 30);
 	qDebug() << "tab xlsx fin";
 }
 

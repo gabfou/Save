@@ -165,7 +165,8 @@ void project::addreponse(int id, string name, int time, int note, string date, i
 		nbfactnref++;
 	else
 		nbfactref++;
-    listp[id].add_fact(name, time, note, date, iteration, idquestion, timestr);
+    if (id < listp.size() && listp[id].id != -1)
+        listp[id].add_fact(name, time, note, date, iteration, idquestion, timestr);
 }
 
 inline void project::addgroup(QString name, int parentid, unsigned int id, int type, QString description, bool gquestion)

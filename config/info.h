@@ -30,7 +30,7 @@ private slots:
     void settargetchildquestion2(int id);
 private:
     QLineEdit   *name;
-    QLineEdit   *descriptiong;
+    QTextEdit   *descriptiong;
     QPushButton *b_update;
     QHBoxLayout *gquestionbox;
     group       *current;

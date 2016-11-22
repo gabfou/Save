@@ -5,7 +5,7 @@
 #include "tableshow.h"
 #include "data/project.h"
 
-itemtable::itemtable(QString placeholder, project *p, QString form) : placeholder(placeholder), form(form), p(p)
+itemtable::itemtable(QString placeholder, project *p, QString form, int itmin, int itmax) : placeholder(placeholder), form(form), p(p), itminprep(itmax), itmaxprep(itmax)
 {
     //this->setText(placeholder);
     //this->update();
@@ -27,7 +27,7 @@ void itemtable::update()
 
     int itmax;
     int itmin;
-    if (p->ref == 0)
+    if (p->ref == 1)
     {
         itmax = 0;
         itmin = 0;
@@ -37,8 +37,11 @@ void itemtable::update()
         itmax = p->iterationmax;
         itmin = p->iterationmin;
     }
-
-	if (!head || !arg)
+    if (this->itmaxprep != -1)
+        itmax = this->itmaxprep;
+    if (this->itminprep != -1)
+        itmin = this->itminprep;
+    if (!head || !arg)
 	{
         //qDebug() << "fail dynamic cast tab col=" << this->column() << " tab row =" << this->row();
         //this->setText(this->placeholder);

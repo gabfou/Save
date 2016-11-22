@@ -1,4 +1,6 @@
 #include "question.h"
+#include "project.h"
+#include "group.h"
 
 
 question::question()
@@ -39,6 +41,20 @@ question::question(const question &q)
 
 question::~question()
 {
+}
+
+QString question::getnamereal(project *p)
+{
+    QString rep;
+    int gtmp = qgroupid;
+
+    while (p->listqgroup[gtmp].gquestion)
+    {
+        rep += p->listqgroup[gtmp].name + ": ";
+        gtmp = p->listqgroup[gtmp].parentid;
+    }
+    rep += name;
+    return (rep);
 }
 
 ostream & operator<<(ostream & o, question const & rhs)

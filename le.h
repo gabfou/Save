@@ -69,6 +69,8 @@
 #include <QPainter>
 #include <vector>
 #include "sql/sqloperation.h"
+#include <QTextBrowser>
+#include <QWebView>
 
 # define BUFF_SIZE 4096
 # define PATH "../../server/server/TextFile1.txt"

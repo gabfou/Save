@@ -2,6 +2,7 @@
 #include "group.h"
 #include "fact.h"
 #include "question.h"
+#include "project.h"
 
 int person::getId() const{return id;}
 void person::setId(int value){id = value;}
@@ -28,7 +29,9 @@ inline fact newfact(string name, int time, int note, string date, int idquestion
 
 void person::add_fact(string name, int time, int note, string date, int iteration, int idquestion, QString timestr)
 {
-        (this->flist).push_back(newfact(name, time, note, date, idquestion, timestr, iteration));
+    if (iteration > this->iteration)
+        this->iteration = iteration;
+    (this->flist).push_back(newfact(name, time, note, date, idquestion, timestr, iteration));
 }
 
 
@@ -200,4 +203,32 @@ int person::compare(int id)
 	if (this->id == id)
 		return 0;
 	return 1;
+}
+
+QString person::getrep(QVector<int> questionid, int iteration, project *p)
+{
+    QVector<int>::iterator it;
+
+    it = questionid.begin();
+    while (it != questionid.end())
+    {
+        QList<fact>::iterator tmp;
+        float j = 0;
+        int l = 0;
+
+        tmp = this->flist.begin();
+        while (tmp != flist.end())
+        {
+            if (tmp->idquestion == *it && tmp->iteration == iteration)
+            {
+                if (p->listquestion[*it].type == 2)
+                    return (tmp->timestr);
+                else
+                    return (QString::number(tmp->time));
+            }
+            tmp++;
+        }
+        it++;
+    }
+    return ("NA");
 }

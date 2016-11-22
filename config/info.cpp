@@ -19,7 +19,7 @@ info::info(MainWindow *m) : m(m), p(&(m->current))
     infog = new QVBoxLayout();
     infolabel = new QLabel("");
     name = new QLineEdit();
-    descriptiong = new QLineEdit();
+    descriptiong = new QTextEdit();
     gquestion = new QComboBox(this);
     gsettarget = new QPushButton("Changer le groupe cible des decendants");
     b_update = new QPushButton("Enregistrer");
@@ -94,7 +94,7 @@ void info::updatebddg()
         warning->show();
         return ;
     }
-    sqlo::addgroup(p, p->name, name->text(), current->parentid , current->type, descriptiong->text(), gquestion->currentIndex(), ((init) ? current->id : -1));
+    sqlo::addgroup(p, p->name, name->text(), current->parentid , current->type, descriptiong->toPlainText(), gquestion->currentIndex(), ((init) ? current->id : -1));
 }
 
 void info::settargetchildquestion()

@@ -123,7 +123,7 @@ function prepperson($groupid, $project_name, $bdd, $ref, $body)
 		else
 			$req_pre = $bdd->prepare('UPDATE project_'.$project_name.'_project SET questionbool = questionbool + 1 WHERE id = '.$valuep['id'].';');
 		$req_pre->execute();
-		mailmieux($valuep['email'], "PPD_DMI LEAD CHANGE_Time Sheet Survey_part2_day".($valuep['questionbool'] + 1), str_replace("__%p__", $valuep['firstname'], (str_replace("__%l__", "?p=".$valuep['id']."&s=".$project_name, $body))));
+		mailmieux($valuep['email'], (($ref == 1) ? "PPD_DMI LEAD CHANGE_Time Sheet Survey_part1" : "PPD_DMI LEAD CHANGE_Time Sheet Survey_part2_day".($valuep['questionbool'] + 1)), str_replace("__%p__", $valuep['firstname'], (str_replace("__%l__", "?p=".$valuep['id']."&s=".$project_name, $body))));
 	}
 }
 

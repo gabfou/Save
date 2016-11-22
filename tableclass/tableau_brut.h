@@ -11,8 +11,10 @@ class tableau_brut : public QTableWidget
 public:
     tableau_brut(project *p);
 private:
+    QStringList checklist;
+    QVector<QVector<int>> checklistreal;
     void populate(project *p);
-    void setrow(person &pe, fact &f, project *p, int k);
+    void setrow(person &pe, project *p, int k, int it);
     void setheader(project *p);
 };
 

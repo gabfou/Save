@@ -6,7 +6,7 @@
 
 QT       += core gui
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets sql network
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets sql network webkit webkitwidgets
 QMAKE_MAC_SDK = macosx10.12
 CONFIG += c++11
 

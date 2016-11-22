@@ -5,14 +5,14 @@ typedef struct tm t_tm;
 class fact
 {
 private:
-	int		time = -1;
-	QString timestr;
 	int		note = -1;
 	QString notestr;
 	string	date;
 	time_t	datesys = -1;
 public:
-	string	factname;
+    int		time = -1;
+    QString timestr;
+    string	factname;
     int idquestion = -1;
     int iteration;
 

@@ -17,6 +17,7 @@ public:
     QString lastname;
     QString firstname;
     QString email;
+    int iteration = -1;
     int groupid = -1;
     int	id = -1;
 	person();
@@ -47,4 +48,5 @@ public:
     QString personshowcasestr(question &qname, int iterationmin = 0, int iterationmax = 2147483640);
     QString personshowcasevalstr(question &qname, int iterationmin = 0, int iterationmax = 2147483640);
     float personshowcase(question &qname, int iterationmin = 0, int iterationmax = 2147483640);
+    QString getrep(QVector<int> questionid, int iteration, project *p);
 };

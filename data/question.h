@@ -26,6 +26,7 @@ public:
     int val = -1;
     bool global;
     bool ref_only;
+    QString getnamereal(project *p);
 };
 
 ostream & operator<<(ostream &o, question const & rhs);

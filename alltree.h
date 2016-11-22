@@ -17,6 +17,11 @@ private slots:
 private:
     project *p;
     grouptree *groupboxtmp;
+    QSlider *slidemax;
+    QLabel *labelslidemax;
+    QSlider *slidemin;
+    QLabel *labelslidemin;
+    void prephide();
 signals:
      void grouppmodechanged(bool gref);
 };

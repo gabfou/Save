@@ -1,4 +1,215 @@
-SELECT project_DMI_LEAD_CHANGE_SURVEY_reponse.id, firstname, lastname, iteration, date_info
-FROM  `project_DMI_LEAD_CHANGE_SURVEY_reponse` ,  `project_DMI_LEAD_CHANGE_SURVEY_project` ,  `project_DMI_LEAD_CHANGE_SURVEY_question` 
-WHERE project_DMI_LEAD_CHANGE_SURVEY_reponse.idperson = project_DMI_LEAD_CHANGE_SURVEY_project.id
-AND project_DMI_LEAD_CHANGE_SURVEY_reponse.idquestion = project_DMI_LEAD_CHANGE_SURVEY_question.id
+SELECT groupe.groupname, firstname, lastname, iteration, date_info, qgroupe.groupname, question, time, str
+FROM `project_DMI_LEAD_CHANGE_SURVEY_reponse` AS reponse, `project_DMI_LEAD_CHANGE_SURVEY_project` AS person, `project_DMI_LEAD_CHANGE_SURVEY_question` AS question, `project_DMI_LEAD_CHANGE_SURVEY_groupe` AS qgroupe,
+`project_DMI_LEAD_CHANGE_SURVEY_groupe` AS groupe
+WHERE reponse.idperson = person.id
+AND reponse.idquestion = question.id
+AND question.qgroupid = qgroupe.id
+AND person.groupid = groupe.id
+
+
+LP
+
+SELECT groupe.groupname, firstname, lastname, iteration, date_info, qgroupe.groupname, question, time, str
+FROM `project_DMI_LEAD_CHANGE_SURVEY_LP_reponse` AS reponse, `project_DMI_LEAD_CHANGE_SURVEY_LP_project` AS person, `project_DMI_LEAD_CHANGE_SURVEY_LP_question` AS question, `project_DMI_LEAD_CHANGE_SURVEY_LP_groupe` AS qgroupe,
+`project_DMI_LEAD_CHANGE_SURVEY_LP_groupe` AS groupe
+WHERE reponse.idperson = person.id
+AND reponse.idquestion = question.id
+AND question.qgroupid = qgroupe.id
+AND person.groupid = groupe.id
+
+<html><p>Dear __%p__,</p><p>It appears that you did not take the opportunity to fill the  DMI LEAD CHANGE Survey yet.</p><p>You are certainly busy, however this is really important. We would be very much obliged if you could dedicate a few minutes of your time to complete this survey: </p><a href="http://etudemurano.alwaysdata.net/directlogin.php__%l__"><u>Online Survey</u></a></p><p>If you did not receive your Daily Timesheet each day please inform us at:<ul><li>anais.deframond@muranoconseil.com</li><li>+33 770734938</li></ul></p><p>Thank you,<Br />Regards,</p><p>Anaïs for the MURANO Team</p><Br/><p><b>MURANO Conseil</b><Br/>www.muranoconseil.com<Br/>21, rue Vauthier<Br/>92100 Boulogne-Billancourt<Br/></html>
+PPD_DMI LEAD CHANGE_Timesheet_Reminder
+
+
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel4', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel5', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel6', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel7', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel8', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel9', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel10', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel11', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel12', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel13', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel14', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel15', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel16', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel17', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel18', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel19', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel20', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel21', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel22', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel23', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel24', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel25', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel26', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel27', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel28', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel29', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel30', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel31', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel32', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel33', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel34', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel35', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel36', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel37', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel38', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel39', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel40', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel41', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel42', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel43', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel44', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel45', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel46', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel47', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel48', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel49', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel50', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel51', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel52', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel53', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel54', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel55', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel56', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel57', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel58', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel59', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel60', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel61', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel62', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel63', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel64', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel65', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel66', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel67', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel68', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel69', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel70', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel71', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel72', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel73', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel74', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel75', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel76', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel77', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel78', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel79', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel80', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel81', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel82', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel83', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel84', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel85', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel86', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel87', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel88', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel89', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel90', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel91', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel92', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel93', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel94', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel95', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel96', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel97', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel98', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);
+INSERT INTO `etudemurano_project`.`project_testmailstupide_project` (`id` , `firstname` , `lastname` , `email` , `groupid` , `password` , `refbool` , `questionbool` ,`jour` ,`Sugestion`)
+VALUES (NULL , 'gabriel99', 'fournier', 'gabriel.fournier@muranoconseil.com', '0', NULL , '0', '0', '0', NULL);

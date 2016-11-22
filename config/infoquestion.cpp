@@ -64,7 +64,7 @@ infoquestion::infoquestion(project *p, MainWindow *m, int con) : info(m)
     type->addItem("Option avec valeur");
     type->setCurrentIndex(1);
 	name = new QLineEdit();
-	description = new QLineEdit();
+    description = new QTextEdit();
 	unit = new QLineEdit();
 	value = new QSpinBox();
     value->setValue(1);
@@ -249,7 +249,7 @@ question infoquestion::getquestioncopy()
         splitchar = min->text() + "\n" + ((maxenabled->isChecked()) ? max->text() : "");
 
     question ret = question(name->text(), dynamic_cast<grouptreeitem*>(groupbox->currentItem())->getId(), -1,
-                              qgroupid, description->text(), unit->text(), type->currentIndex(),
+                              qgroupid, description->toPlainText(), unit->text(), type->currentIndex(),
                               splitchar, value->text().toInt(), ref_only->currentIndex(), 0);
     return (ret);
 }
@@ -271,7 +271,7 @@ void infoquestion::updatebdd()
 		return ;
 	}
     sqlo::addquestion(p, name->text(), dynamic_cast<grouptreeitem*>(groupbox->currentItem())->getId(),
-                unit->text(), 0, description->text(), qgroupid, type->currentIndex(), ref_only->currentIndex(),
+                unit->text(), 0, description->toPlainText(), qgroupid, type->currentIndex(), ref_only->currentIndex(),
                 splitchar, value->text().toInt(), 0, ((init) ? q->id : -1));
 
 }

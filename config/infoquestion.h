@@ -32,7 +32,7 @@ private:
 	QMetaObject::Connection cotmp;
 	QLineEdit *name;
 	grouptree *target;
-	QLineEdit *description;
+    QTextEdit *description;
 	QLineEdit *unit;
 	QComboBox *type;
     QSpinBox *value;

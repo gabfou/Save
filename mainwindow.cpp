@@ -12,6 +12,7 @@
 #include "graph/comparrefdo.h"
 #include "misc/menusondage.h"
 #include "misc/emailvalidator.h"
+#include "tableclass/tableau_brut.h"
 
 MainWindow::MainWindow(QWidget *parent) :
 	QMainWindow(parent),
@@ -67,8 +68,10 @@ MainWindow::MainWindow(QWidget *parent) :
 	menu_outil = menuBar()->addMenu("&Outils");
 	QAction *xlsx_convert = menu_outil->addAction("&Convertir en xlsx");
 	QObject::connect(xlsx_convert, SIGNAL(triggered()), this, SLOT(convert_to_xlsx()));
-    QAction *preview = menu_outil->addAction("&Preview");
-    QObject::connect(preview, SIGNAL(triggered()), this, SLOT(affichepreview()));
+    QAction *brute = menu_outil->addAction("&Extraire les donnée brute en xlsx");
+    QObject::connect(brute, SIGNAL(triggered()), this, SLOT(extractor()));
+    QAction *afficheform = menu_outil->addAction("&form creator");
+    QObject::connect(afficheform, SIGNAL(triggered()), this, SLOT(formcreator()));
 //	QAction *barchartref = menu_outil->addAction("&Graphique comparaison reference-donnée");
 //	QObject::connect(barchartref, SIGNAL(triggered()), this, SLOT(showbarchartref()));
 
@@ -111,6 +114,8 @@ MainWindow::MainWindow(QWidget *parent) :
 	QToolBar *toolBarFichier = addToolBar("Fichier");
 	QAction *screenshoot = toolBarFichier->addAction("&Imprimer écran");
 	QObject::connect(screenshoot, SIGNAL(triggered()), this, SLOT(screenshootcurrent()));
+    QAction *infoperson = menu_serveur->addAction("&Excell Info");
+    QObject::connect(infoperson, SIGNAL(triggered()), this, SLOT(Excellinfo()));
 
 	menu_projet->actions().at(3)->setEnabled(0);
 	menu_projet->actions().at(4)->setEnabled(0);
@@ -375,7 +380,7 @@ void MainWindow::addproject2()
 
 	qry.prepare(" CREATE TABLE IF NOT EXISTS all_etude ("
 				" id INTEGER UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT,"
-				" begin datetime NOT NULL DEFAULT NOW(),"
+                " begin datetime NOT NULL DEFAULT NOW(),"
 				" iteration INTEGER,"
 				" groupid INTEGER NOT NULL DEFAULT 0,"
 				" project_name VARCHAR(3000),"
@@ -507,13 +512,8 @@ void MainWindow::addock()
 	if (groupdock)
 		delete groupdock;
 	groupdock = new QDockWidget(this);
-//	if (showmod == 0)
-//		this->groupboxtmp = new grouptree(this, this->current->listgroup); // a virer
-//	if (showmod == 2)
-//		this->groupboxtmp = new grouptree(this, this->current->listqgroup); // a virer
-//	this->groupboxtmp();
-    if (alltreetmp)
-        delete alltreetmp;
+//    if (alltreetmp)  //sa fait planter je sais pas pk
+//        delete alltreetmp;
 	this->alltreetmp = new Alltree(this, &(this->current));
 	groupdock->setWidget(this->alltreetmp);
 	groupdock->show();
@@ -948,4 +948,48 @@ void	MainWindow::Backroundchange()
 //		//... copy one file
 //	}
 //	progress.setValue(numFiles);
+}
+
+
+void MainWindow::extractor()
+{
+    tableau_brut *extract = new tableau_brut(&(this->current));
+    tab_to_fichier("Save_donne_brute_2.0_18nov.xlsx", extract);
+}
+
+void MainWindow::formcreator()
+{
+    QWebView *form = new QWebView();
+
+    form->load(*new QUrl("http://etudemurano.alwaysdata.net/formtest.php?iteration=1&refbool=0&questionbool=1&groupid=2&project=" + namecurrent));
+    form->show();
+}
+QTXLSX_USE_NAMESPACE
+void MainWindow::Excellinfo()
+{
+    vector<person>::iterator it = this->current.listp.begin();
+    Document xlsx;
+    int y = 0;
+
+    xlsx.write(++y, 1, "firstname");
+    xlsx.write(y, 2, "lastname");
+    xlsx.write(y, 3, "email");
+    xlsx.write(y, 4, "id");
+    xlsx.write(y, 5, "project");
+
+    while (it != this->current.listp.end())
+    {
+        if (it->id == -1)
+        {
+            it++;
+            continue ;
+        }
+        xlsx.write(++y, 1, it->firstname);
+        xlsx.write(y, 2, it->lastname);
+        xlsx.write(y, 3, it->email);
+        xlsx.write(y, 4, it->id);
+        xlsx.write(y, 5, namecurrent);
+        it++;
+    }
+    xlsx.saveAs("infoperson.xlsx");
 }
