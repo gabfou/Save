@@ -271,7 +271,7 @@ void infoquestion::updatebdd()
 		return ;
 	}
     sqlo::addquestion(p, name->text(), dynamic_cast<grouptreeitem*>(groupbox->currentItem())->getId(),
-                unit->text(), 0, description->toPlainText(), qgroupid, type->currentIndex(), ref_only->currentIndex(),
+                unit->text(), 0, description->toHtml(), qgroupid, type->currentIndex(), ref_only->currentIndex(),
                 splitchar, value->text().toInt(), 0, ((init) ? q->id : -1));
 
 }

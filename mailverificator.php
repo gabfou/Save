@@ -2,21 +2,27 @@
 	include("www/function.php");
 	require 'phpMailer/PHPMailerAutoload.php';
 
-function mailmieux($to, $subject, $body)
+function initmail()
 {
+	$mail = new PHPMailer;
+	$mail->SMTPDebug = 3;
+	//$mail->isSMTP();
+	$mail->Host = 'SSL0.OVH.NET';
+	$mail->SMTPSecure = 'ssl';
+	$mail->SMTPAuth = true;
+	$mail->Username = 'etudes@muranoconseil.com';
+	$mail->Password = 'etudes564';
+	$mail->Port = 465;
+	$mail->setFrom('etudes@muranoconseil.com', 'leadchangesurvey');
+	return ($mail);
+}
 
+function mailmieux($to, $subject, $body, $mail)
+{
+	$mail->ClearAddresses();
+	$mail->ClearAttachments();
 	try
 	{
-		$mail = new PHPMailer;
-		$mail->SMTPDebug = 3;
-		//$mail->isSMTP();
-		$mail->Host = 'SSL0.OVH.NET';
-		$mail->SMTPSecure = 'ssl';
-		$mail->SMTPAuth = true;
-		$mail->Username = 'etudes@muranoconseil.com';
-		$mail->Password = 'etudes564';
-		$mail->Port = 465;
-		$mail->setFrom('etudes@muranoconseil.com', 'leadchangesurvey');
 		$mail->addAddress($to/*, 'Joe User'*/);
 		$mail->isHTML(true);
 		$mail->CharSet = 'UTF-8';
@@ -78,6 +84,7 @@ function maildebase($to, $subject, $body)
 
 function prepperson($groupid, $project_name, $bdd, $ref, $body)
 {
+	$mail = initmail();
 	if (!isset($body) && $ref == 1)
 	{
 		$body = "<html style=\"font-family: \"century gothic\", Arial;\"><p>Dear __%p__,</p>";
@@ -123,7 +130,7 @@ function prepperson($groupid, $project_name, $bdd, $ref, $body)
 		else
 			$req_pre = $bdd->prepare('UPDATE project_'.$project_name.'_project SET questionbool = questionbool + 1 WHERE id = '.$valuep['id'].';');
 		$req_pre->execute();
-		mailmieux($valuep['email'], (($ref == 1) ? "PPD_DMI LEAD CHANGE_Time Sheet Survey_part1" : "PPD_DMI LEAD CHANGE_Time Sheet Survey_part2_day".($valuep['questionbool'] + 1)), str_replace("__%p__", $valuep['firstname'], (str_replace("__%l__", "?p=".$valuep['id']."&s=".$project_name, $body))));
+		mailmieux($valuep['email'], (($ref == 1) ? "PPD_DMI LEAD CHANGE_Time Sheet Survey_part1" : "PPD_DMI LEAD CHANGE_Time Sheet Survey_part2_day".($valuep['questionbool'] + 1)), str_replace("__%p__", $valuep['firstname'], (str_replace("__%l__", "?p=".$valuep['id']."&s=".$project_name, $body, $mail))));
 	}
 }
 

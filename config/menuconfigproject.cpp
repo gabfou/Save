@@ -7,6 +7,7 @@
 #include "data/question.h"
 #include "data/person.h"
 #include "tableclass/tableau_brut.h"
+#include "previewconfig.h"
 
 menuconfigproject::menuconfigproject(QString name, project *p, MainWindow *m) : name(name), p(p), m(m)
 {
@@ -23,6 +24,7 @@ menuconfigproject::menuconfigproject(QString name, project *p, MainWindow *m) : 
 	this->configeneral();
     this->addTab(new menuconfigperson(p, m), "Personne");
     this->addTab(new menuconfigquestion(p, m), "Question");
+    this->addTab(new previewconfig(p), "preview");
 	this->show();
 }
 

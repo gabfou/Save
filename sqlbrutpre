@@ -17,6 +17,26 @@ AND reponse.idquestion = question.id
 AND question.qgroupid = qgroupe.id
 AND person.groupid = groupe.id
 
+MATRIX
+
+SELECT groupe.groupname, firstname, lastname, iteration, date_info, qgroupe.groupname, question, time, str
+FROM `project_DMI_LEAD_CHANGE_SURVEY_MATRIX_reponse` AS reponse, `project_DMI_LEAD_CHANGE_SURVEY_MATRIX_project` AS person, `project_DMI_LEAD_CHANGE_SURVEY_MATRIX_question` AS question, `project_DMI_LEAD_CHANGE_SURVEY_MATRIX_groupe` AS qgroupe,
+`project_DMI_LEAD_CHANGE_SURVEY_MATRIX_groupe` AS groupe
+WHERE reponse.idperson = person.id
+AND reponse.idquestion = question.id
+AND question.qgroupid = qgroupe.id
+AND person.groupid = groupe.id
+
+REDKEN
+
+SELECT groupe.groupname, firstname, lastname, iteration, date_info, qgroupe.groupname, question, time, str
+FROM `project_DMI_LEAD_CHANGE_SURVEY_REDKEN_reponse` AS reponse, `project_DMI_LEAD_CHANGE_SURVEY_REDKEN_project` AS person, `project_DMI_LEAD_CHANGE_SURVEY_REDKEN_question` AS question, `project_DMI_LEAD_CHANGE_SURVEY_REDKEN_groupe` AS qgroupe,
+`project_DMI_LEAD_CHANGE_SURVEY_REDKEN_groupe` AS groupe
+WHERE reponse.idperson = person.id
+AND reponse.idquestion = question.id
+AND question.qgroupid = qgroupe.id
+AND person.groupid = groupe.id
+
 <html><p>Dear __%p__,</p><p>It appears that you did not take the opportunity to fill the  DMI LEAD CHANGE Survey yet.</p><p>You are certainly busy, however this is really important. We would be very much obliged if you could dedicate a few minutes of your time to complete this survey: </p><a href="http://etudemurano.alwaysdata.net/directlogin.php__%l__"><u>Online Survey</u></a></p><p>If you did not receive your Daily Timesheet each day please inform us at:<ul><li>anais.deframond@muranoconseil.com</li><li>+33 770734938</li></ul></p><p>Thank you,<Br />Regards,</p><p>Anaïs for the MURANO Team</p><Br/><p><b>MURANO Conseil</b><Br/>www.muranoconseil.com<Br/>21, rue Vauthier<Br/>92100 Boulogne-Billancourt<Br/></html>
 PPD_DMI LEAD CHANGE_Timesheet_Reminder
 

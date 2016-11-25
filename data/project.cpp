@@ -245,6 +245,7 @@ void project::initvar()
     default_table = 0;
     iterationmax = 0;
     iterationmin = 0;
+    sugestion = 1;
 }
 
 void project::initoroject(QString fproject)
@@ -803,3 +804,35 @@ void	sqlo::sqlupdate(QString tablename, QString colname, QString str, int id)
     if (!(query.exec()))
         qDebug() << query.lastError();
 }
+
+void sqlo::sqlupdateintroindex(QString tablename, QString s)
+{
+    QSqlQuery query;
+    query.prepare("UPDATE all_config Set introindex=? WHERE project_name=?;");
+    query.addBindValue(s);
+    query.addBindValue(tablename);
+    if (!(query.exec()))
+        qDebug() << query.lastError();
+}
+
+void sqlo::sqlupdateintroref(QString tablename, QString s)
+{
+    QSqlQuery query;
+    query.prepare("UPDATE all_config Set introref=? WHERE project_name=?;");
+    query.addBindValue(s);
+    query.addBindValue(tablename);
+    if (!(query.exec()))
+        qDebug() << query.lastError();
+}
+
+
+void sqlo::sqlupdateintroreel(QString tablename, QString s)
+{
+    QSqlQuery query;
+    query.prepare("UPDATE all_config Set introreel=? WHERE project_name=?;");
+    query.addBindValue(s);
+    query.addBindValue(tablename);
+    if (!(query.exec()))
+        qDebug() << query.lastError();
+}
+

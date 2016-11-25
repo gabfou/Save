@@ -119,6 +119,10 @@ namespace sqlo
     void    sqlupdate(QString tablename, QString colname, QString str, int id);
     void	supperson(project *p, QString nameproject, int id);
     int     addperson(project *p, QString firstname, QString lastname, QString email, int groupid, int id = -1);
+    void    sqlupdateintroindex(QString tablename, QString s);
+    void    sqlupdateintroref(QString tablename, QString s);
+    void    sqlupdateintroreel(QString tablename, QString s);
+
 }
 
 //global

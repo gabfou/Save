@@ -94,7 +94,7 @@ void info::updatebddg()
         warning->show();
         return ;
     }
-    sqlo::addgroup(p, p->name, name->text(), current->parentid , current->type, descriptiong->toPlainText(), gquestion->currentIndex(), ((init) ? current->id : -1));
+    sqlo::addgroup(p, p->name, name->text(), current->parentid , current->type, descriptiong->toHtml(), gquestion->currentIndex(), ((init) ? current->id : -1));
 }
 
 void info::settargetchildquestion()
