@@ -27,6 +27,9 @@ public:
 
     QString mtypeq[4];
 
+    QString introref;
+    QString introindex;
+    QString introreel;
     int val = 0;
     int ref = 0;
     int gref = 0;

@@ -12,11 +12,7 @@ class previewconfig : public QWidget
 
     QWidget *indexinit();
     QTextEdit *introindex;
-    QTextEdit *introref;
-    QTextEdit *introreel;
     QTabWidget *preview;
-    formloadator *refpreview;
-    formloadator *reelpreview;
     project *p;
     QScrollArea *initform(bool ref);
     grouptree *groupboxtmp;
@@ -24,8 +20,7 @@ public:
     previewconfig(MainWindow *m);
 private slots:
     void updateiindex();
-    void updateireel();
-    void updateiref();
+    void changescope(QTreeWidgetItem *item);
 };
 
 #endif // PREVIEWCONFIG_H

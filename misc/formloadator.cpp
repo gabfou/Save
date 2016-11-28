@@ -1,15 +1,26 @@
 #include "formloadator.h"
+#include "data/project.h"
+#include "data/group.h"
+#include "data/question.h"
 
-formloadator::formloadator(bool ref)
+formloadator::formloadator(bool ref, int gid, project *p): QScrollArea(), p(p)
 {
     QWidget *ret = new QWidget();
     QVBoxLayout *layout = new QVBoxLayout();
+    if (ref == 1)
+        introref = new QTextEdit(p->introref);
+    else
+        introreel = new QTextEdit(p->introreel);
 
-    layout->addWidget((ref == 1) ? introref : introreel);
+    layout->addWidget((ref == 1) ? new QTextEdit(p->introref) : new QTextEdit(p->introreel));
 
-    formcreator(ref, &(p->listqgroup[0]), layout);
+    formcreator(ref, &(p->listqgroup[0]), layout, gid);
     ret->setLayout(layout);
     this->setWidget(ret);
+    if (ref == 1)
+        connect(introref, SIGNAL(textChanged()), this, SLOT(updateiref()));
+    else
+        connect(introreel, SIGNAL(textChanged()), this, SLOT(updateireel()));
 }
 
 int formloadator::formcreator(bool ref, group *g, QVBoxLayout *layout, int gid, QVBoxLayout *layoutgquestion)
@@ -58,4 +69,14 @@ int formloadator::formcreator(bool ref, group *g, QVBoxLayout *layout, int gid, 
     else
         w->hide();
     return (i);
+}
+
+void formloadator::updateireel()
+{
+    sqlo::sqlupdateintroindex(p->name, introref->toHtml());
+}
+
+void formloadator::updateiref()
+{
+    sqlo::sqlupdateintroindex(p->name, introreel->toHtml());
 }

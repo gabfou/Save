@@ -3,6 +3,7 @@
 #include "data/group.h"
 #include "data/question.h"
 #include "grouptree.h"
+#include "grouptreeitem.h"
 #include "mainwindow.h"
 #include "misc/formloadator.h"
 
@@ -11,31 +12,20 @@ previewconfig::previewconfig(MainWindow *m) : p(&(m->current))
     QHBoxLayout *layout = new QHBoxLayout();
     preview = new QTabWidget();
     introindex = new QTextEdit();
-    introref = new QTextEdit();
-    introreel = new QTextEdit();
-    refpreview = new formcreator(0);
-    reelpreview = new formcreator(1);
 
     preview->addTab(this->indexinit(), "index");
-    preview->addTab(formcreator(0), "reel");
-    preview->addTab(formcreator(1), "ref");
+    preview->addTab(new formloadator(0, 0, p), "reel");
+    preview->addTab(new formloadator(1, 0, p), "ref");
 
-    grouptree *groupboxtmp = new grouptree(m, p->listgroup, 1);
-    groupboxtmp->setVisiblenongroup(0);
-    groupboxtmp->resizeColumnToContents(0);
-    layout->addWidget(groupboxtmp, 1);
     groupboxtmp = new grouptree(m, p->listgroup, 1);
     groupboxtmp->setVisiblenongroup(0);
     groupboxtmp->resizeColumnToContents(0);
+    layout->addWidget(groupboxtmp, 1);
     layout->addWidget(preview, 3);
     this->setLayout(layout);
     connect(introindex, SIGNAL(textChanged()), this, SLOT(updateiindex()));
-    connect(introref, SIGNAL(textChanged()), this, SLOT(updateiref()));
-    connect(introreel, SIGNAL(textChanged()), this, SLOT(updateireel()));
-    connect(this->groupboxtmp, SIGNAL(itemClicked(QTreeWidgetItem *, int )), this, SLOT(changescope(QTreeWidgetItem *)));
+    connect(groupboxtmp, SIGNAL(itemClicked(QTreeWidgetItem *, int )), this, SLOT(changescope(QTreeWidgetItem *)));
 }
-
-
 
 QWidget *previewconfig::indexinit()
 {
@@ -53,19 +43,22 @@ QWidget *previewconfig::indexinit()
     return (ret);
 }
 
+void previewconfig::changescope(QTreeWidgetItem *item)
+{
+    grouptreeitem *tmp;
 
+    qDebug() << "jksdgffs -1";
+    if ((tmp = dynamic_cast<grouptreeitem*>(item)) != NULL)
+    {
+        qDebug() << "jksdgffs";
+        preview->removeTab(2);
+        preview->removeTab(1);
+        preview->addTab(new formloadator(0, tmp->getId(), p), "reel");
+        preview->addTab(new formloadator(1, tmp->getId(), p), "ref");
+    }
+}
 
 void previewconfig::updateiindex()
 {
     sqlo::sqlupdateintroindex(p->name, introindex->toHtml());
-}
-
-void previewconfig::updateireel()
-{
-    sqlo::sqlupdateintroindex(p->name, introref->toHtml());
-}
-
-void previewconfig::updateiref()
-{
-    sqlo::sqlupdateintroindex(p->name, introreel->toHtml());
 }

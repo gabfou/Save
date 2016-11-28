@@ -246,6 +246,9 @@ void project::initvar()
     iterationmax = 0;
     iterationmin = 0;
     sugestion = 1;
+    introindex.clear();
+    introref.clear();
+    introreel.clear();
 }
 
 void project::initoroject(QString fproject)
@@ -258,11 +261,14 @@ void project::initoroject(QString fproject)
 	this->addgroup("ALL", -1, 0, 0, "", 0);
 	this->addgroup("ALL", -1, 0, 1, "", 0);
 
-    if (query.exec("SELECT default_table FROM all_config WHERE project_name=" + fproject))
+    if (query.exec("SELECT default_table, introindex, introref, introreel FROM all_config WHERE project_name=" + fproject))
     {
         while(query.next())
         {
             default_table = (query.value(0).toInt());
+            introindex = (query.value(1).toString());
+            introref = (query.value(2).toString());
+            introreel = (query.value(3).toString());
         }
     }
     else
