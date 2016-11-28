@@ -35,7 +35,7 @@ public:
     int iterationmax = 0;
     int iterationmin = 0;
     bool sugestion = 1;
-    void addquestion(QString name, int group, unsigned int id, int qgroupid, QString sujet, QString unit, int type, QString splitchar, int value, bool ref_only, bool global);
+    void addquestion(QString name, int group, unsigned int id, int qgroupid, QString sujet, QString unit, int type, QString splitchar, int value, int ref_only, bool global);
     QString name;
     vector<person> listp;
 	vector<question> listquestion;

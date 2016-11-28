@@ -143,7 +143,7 @@ int project::getNbqgeneration() const
 }
 
 inline void project::addquestion(QString name, int group, unsigned int id, int qgroupid, QString sujet,
-								 QString unit, int type, QString splitchar, int value, bool ref_only,
+                                 QString unit, int type, QString splitchar, int value, int ref_only,
 								 bool global)
 {
     if (id == -1)
@@ -293,12 +293,12 @@ void project::initoroject(QString fproject)
 							  query.value(1).toInt(),
 							  query.value(2).toInt(),
 							  query.value(3).toInt(),
-							  query.value(4).toString(),
+                              query.value(4).toString(),
 							  query.value(5).toString(),
 							  query.value(6).toInt(),
 							  query.value(7).toString(),
 							  query.value(8).toInt(),
-							  query.value(9).toBool(),
+                              query.value(9).toInt(),
 							  0);
 		}
 	}

@@ -3,6 +3,9 @@
 
 #include "le.h"
 
+class grouptree;
+class formloadator;
+
 class previewconfig : public QWidget
 {
     Q_OBJECT
@@ -11,15 +14,18 @@ class previewconfig : public QWidget
     QTextEdit *introindex;
     QTextEdit *introref;
     QTextEdit *introreel;
+    QTabWidget *preview;
+    formloadator *refpreview;
+    formloadator *reelpreview;
     project *p;
-    QWidget *initform(bool ref);
-    void formloadator(bool ref, group *g, QVBoxLayout *layout, QVBoxLayout *layoutgquestion = NULL);
+    QScrollArea *initform(bool ref);
+    grouptree *groupboxtmp;
 public:
-    previewconfig(project *p);
+    previewconfig(MainWindow *m);
 private slots:
-    void *updateiindex();
-    void *updateireel();
-    void *updateiref();
+    void updateiindex();
+    void updateireel();
+    void updateiref();
 };
 
 #endif // PREVIEWCONFIG_H

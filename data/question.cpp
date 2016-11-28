@@ -8,7 +8,7 @@ question::question()
 }
 
 
-question::question(QString name, int groupcible, int id, int qgroupid, QString sujet, QString unit, int type, QString splitchar, int value, bool ref_only, bool global)
+question::question(QString name, int groupcible, int id, int qgroupid, QString sujet, QString unit, int type, QString splitchar, int value, int ref_only, bool global)
 {
     this->name = name;
     this->group = groupcible;

@@ -56,7 +56,8 @@ SOURCES += main.cpp\
     graph/comparrefdo.cpp \
     misc/menusondage.cpp \
     misc/emailvalidator.cpp \
-    config/previewconfig.cpp
+    config/previewconfig.cpp \
+    misc/formloadator.cpp
 
 HEADERS  += mainwindow.h \
     data/fact.h \
@@ -94,7 +95,8 @@ HEADERS  += mainwindow.h \
     graph/comparrefdo.h \
     misc/menusondage.h \
     misc/emailvalidator.h \
-    config/previewconfig.h
+    config/previewconfig.h \
+    misc/formloadator.h
 
 FORMS    += mainwindow.ui
 

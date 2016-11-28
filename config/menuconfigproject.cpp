@@ -24,7 +24,7 @@ menuconfigproject::menuconfigproject(QString name, project *p, MainWindow *m) : 
 	this->configeneral();
     this->addTab(new menuconfigperson(p, m), "Personne");
     this->addTab(new menuconfigquestion(p, m), "Question");
-    this->addTab(new previewconfig(p), "preview");
+    this->addTab(new previewconfig(m), "preview");
 	this->show();
 }
 

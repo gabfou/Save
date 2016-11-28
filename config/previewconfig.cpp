@@ -2,27 +2,40 @@
 #include "data/project.h"
 #include "data/group.h"
 #include "data/question.h"
+#include "grouptree.h"
+#include "mainwindow.h"
+#include "misc/formloadator.h"
 
-previewconfig::previewconfig(project *p) : p(p)
+previewconfig::previewconfig(MainWindow *m) : p(&(m->current))
 {
     QHBoxLayout *layout = new QHBoxLayout();
-    QTabWidget *preview = new QTabWidget();
+    preview = new QTabWidget();
     introindex = new QTextEdit();
     introref = new QTextEdit();
     introreel = new QTextEdit();
+    refpreview = new formcreator(0);
+    reelpreview = new formcreator(1);
 
     preview->addTab(this->indexinit(), "index");
-    preview->addTab(this->initform(0), "reel");
-    preview->addTab(this->initform(1), "ref");
-    //preview->addWidget(ref, "ref");
-    //preview->addWidget(reel, "reel");
-//    introref->
-    layout->addWidget(preview);
+    preview->addTab(formcreator(0), "reel");
+    preview->addTab(formcreator(1), "ref");
+
+    grouptree *groupboxtmp = new grouptree(m, p->listgroup, 1);
+    groupboxtmp->setVisiblenongroup(0);
+    groupboxtmp->resizeColumnToContents(0);
+    layout->addWidget(groupboxtmp, 1);
+    groupboxtmp = new grouptree(m, p->listgroup, 1);
+    groupboxtmp->setVisiblenongroup(0);
+    groupboxtmp->resizeColumnToContents(0);
+    layout->addWidget(preview, 3);
     this->setLayout(layout);
     connect(introindex, SIGNAL(textChanged()), this, SLOT(updateiindex()));
     connect(introref, SIGNAL(textChanged()), this, SLOT(updateiref()));
     connect(introreel, SIGNAL(textChanged()), this, SLOT(updateireel()));
+    connect(this->groupboxtmp, SIGNAL(itemClicked(QTreeWidgetItem *, int )), this, SLOT(changescope(QTreeWidgetItem *)));
 }
+
+
 
 QWidget *previewconfig::indexinit()
 {
@@ -41,63 +54,18 @@ QWidget *previewconfig::indexinit()
 }
 
 
-void previewconfig::formloadator(bool ref, group *g, QVBoxLayout *layout, QVBoxLayout *layoutgquestion)
-{
-    QWidget *w =  new QWidget();
-    QVBoxLayout *layoutperso = new QVBoxLayout();
-    QList<int> lg = g->getListfils();
-    QList<question> lq = g->getListq();
-    QList<int>::iterator      listg = lg.begin();
-    QList<question>::iterator listq = lq.begin();
-    QVBoxLayout *layoutq;
 
-    if (layoutgquestion == NULL)
-        layout->addWidget(w);
-    else
-        layoutgquestion->addWidget(w);
-    while (listg != lg.end())
-    {
-        if (p->listqgroup[*listg].gquestion)
-            formloadator(ref, &(p->listqgroup[*listg]), layout, layoutperso);
-        else
-            formloadator(ref, &(p->listqgroup[*listg]), layout, NULL);
-        listg++;
-    }
-    while (listq != lq.end())
-    {
-        layoutq = new QVBoxLayout();
-        layoutq->addWidget(new QLabel(listq->sujet));
-        layoutperso->addLayout(layoutq);
-        listq++;
-    }
-    w->setLayout(layoutperso);
-    w->show();
-}
-
-QWidget *previewconfig::initform(bool ref)
-{
-    QWidget *ret = new QWidget();
-    QVBoxLayout *layout = new QVBoxLayout();
-
-    layout->addWidget((ref == 1) ? introref : introreel);
-
-    formloadator(ref, &(p->listqgroup[0]), layout);
-    ret->setLayout(layout);
-    return (ret);
-}
-
-
-void *previewconfig::updateiindex()
+void previewconfig::updateiindex()
 {
     sqlo::sqlupdateintroindex(p->name, introindex->toHtml());
 }
 
-void *previewconfig::updateireel()
+void previewconfig::updateireel()
 {
     sqlo::sqlupdateintroindex(p->name, introref->toHtml());
 }
 
-void *previewconfig::updateiref()
+void previewconfig::updateiref()
 {
     sqlo::sqlupdateintroindex(p->name, introreel->toHtml());
 }
