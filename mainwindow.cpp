@@ -959,10 +959,7 @@ void MainWindow::extractor()
 
 void MainWindow::formcreator()
 {
-    QWebView *form = new QWebView();
 
-    form->load(*new QUrl("http://etudemurano.alwaysdata.net/formtest.php?iteration=1&refbool=0&questionbool=1&groupid=2&project=" + namecurrent));
-    form->show();
 }
 QTXLSX_USE_NAMESPACE
 void MainWindow::Excellinfo()
