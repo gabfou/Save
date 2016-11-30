@@ -167,54 +167,36 @@ void infoquestion::setquestionmod(int qgroupid)
     this->qgroupid = qgroupid;
 }
 
-void infoquestion::updateib(QTreeWidgetItem * item)
+void infoquestion::updatequestion(int id)
 {
-	questiontreeitem *tmp = dynamic_cast<questiontreeitem*>(item);
+    questiontreeitem *tmp = dynamic_cast<questiontreeitem*>(item);
 
     this->updateibg(-1, -1);
     infolabel->setText("");
     this->prephide();
-	disconnect(cotmp);
-	if (tmp == NULL)
-	{
-        qDebug() << "infoquestion updateib dynamic cast fail";
-        grouptreeitem *tmp2 = dynamic_cast<grouptreeitem*>(item);
-        if (tmp2)
-        {
-            contq->hide();
-            this->updateibg(tmp2->getId(), 1);
-            qgroupid = tmp2->getId();
-        }
-        else
-        {
-            infolabel->setText("Erreur: selection ilisible");
-            qDebug() << "infoquestion updateib dynamic cast 2 fail";
-        }
-		return ;
-    }
+    disconnect(cotmp);
     cotmp = connect(b_update, SIGNAL(clicked(bool)), this, SLOT(updatebdd()));
     contg->hide();
     contq->show();
-    grouptreeitem *tmp2 = dynamic_cast<grouptreeitem*>(item->parent());
-    qgroupid = tmp2->getId();
     infolabel->setText("Question");
-	if (tmp->id == -1)
-	{
-		init = 0;
-		return ;
-	}
-	else
-	{
-		init = 1;
+    if (tmp->id == -1)
+    {
+        init = 0;
+        return ;
+    }
+    else
+    {
+        init = 1;
         if (q)
             delete q;
-		this->q = new question(p->getquestion(tmp->id));
+        this->q = new question(p->getquestion(tmp->id));
     }
+    qgroupid = q->qgroupid;
     type->setCurrentIndex(q->type);
     typeshow(q->type);
     name->setText(q->name);
-	description->setText(q->sujet);
-	unit->setText(q->unit);
+    description->setText(q->sujet);
+    unit->setText(q->unit);
     groupbox->setcurrentgroup(q->group);
     ref_only->setCurrentIndex(q->ref_only);
     selectlist->update(q->liststr);
@@ -236,6 +218,34 @@ void infoquestion::updateib(QTreeWidgetItem * item)
             maxenabled->setChecked(0);
         }
     }
+}
+
+{
+contq->hide();
+this->updateibg(tmp2->getId(), 1);
+qgroupid = tmp2->getId();
+}
+
+void infoquestion::updateib(QTreeWidgetItem * item)
+{
+	questiontreeitem *tmp = dynamic_cast<questiontreeitem*>(item);
+
+	if (tmp == NULL)
+	{
+        qDebug() << "infoquestion updateib dynamic cast fail";
+        grouptreeitem *tmp2 = dynamic_cast<grouptreeitem*>(item);
+        if (tmp2)
+        {
+
+        }
+        else
+        {
+            infolabel->setText("Erreur: selection ilisible");
+            qDebug() << "infoquestion updateib dynamic cast 2 fail";
+        }
+		return ;
+    }
+    updatequestion(tmp->getId())
 }
 
 question infoquestion::getquestioncopy()

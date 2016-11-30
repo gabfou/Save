@@ -57,6 +57,21 @@ QString question::getnamereal(project *p)
     return (rep);
 }
 
+bool question::is_in(int groupid, project *p)
+{
+    int groupparrentid;
+    if (groupid == group)
+        return (1);
+    groupparrentid = p->listgroup[groupid].parentid;
+    while (groupparrentid >= 0)
+    {
+        if (group == groupparrentid)
+            return (1);
+        groupparrentid = p->listgroup[groupparrentid].parentid;
+    }
+    return (0);
+}
+
 ostream & operator<<(ostream & o, question const & rhs)
 {
     (void)rhs;

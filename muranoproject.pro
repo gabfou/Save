@@ -57,7 +57,8 @@ SOURCES += main.cpp\
     misc/menusondage.cpp \
     misc/emailvalidator.cpp \
     config/previewconfig.cpp \
-    misc/formloadator.cpp
+    misc/formloadator.cpp \
+    misc/formgroupbox.cpp
 
 HEADERS  += mainwindow.h \
     data/fact.h \
@@ -96,7 +97,8 @@ HEADERS  += mainwindow.h \
     misc/menusondage.h \
     misc/emailvalidator.h \
     config/previewconfig.h \
-    misc/formloadator.h
+    misc/formloadator.h \
+    misc/formgroupbox.h
 
 FORMS    += mainwindow.ui
 

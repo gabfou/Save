@@ -6,6 +6,7 @@
 #include "grouptreeitem.h"
 #include "mainwindow.h"
 #include "misc/formloadator.h"
+#include "infoquestion.h"
 
 previewconfig::previewconfig(MainWindow *m) : p(&(m->current))
 {
@@ -13,18 +14,23 @@ previewconfig::previewconfig(MainWindow *m) : p(&(m->current))
     preview = new QTabWidget();
     introindex = new QTextEdit();
 
-    preview->addTab(this->indexinit(), "index");
-    preview->addTab(new formloadator(0, 0, p), "reel");
-    preview->addTab(new formloadator(1, 0, p), "ref");
+    formreel = new formloadator(0, 0, p);
+    formref = new formloadator(1, 0, p);
 
-    groupboxtmp = new grouptree(m, p->listgroup, 1);
-    groupboxtmp->setVisiblenongroup(0);
-    groupboxtmp->resizeColumnToContents(0);
-    layout->addWidget(groupboxtmp, 1);
-    layout->addWidget(preview, 3);
+    preview->addTab(this->indexinit(), "index");
+    preview->addTab(formreel, "reel");
+    preview->addTab(formref, "ref");
+
+    groupboxtmp = new infoquestion(p, m);
+    groupboxtmp->setquestionmod(0);
+    layout->addWidget(groupboxtmp, 2);
+    layout->addWidget(preview, 5);
     this->setLayout(layout);
     connect(introindex, SIGNAL(textChanged()), this, SLOT(updateiindex()));
-    connect(groupboxtmp, SIGNAL(itemClicked(QTreeWidgetItem *, int )), this, SLOT(changescope(QTreeWidgetItem *)));
+    connect(groupboxtmp->groupbox, SIGNAL(itemClicked(QTreeWidgetItem *, int )), this, SLOT(changescope(QTreeWidgetItem *)));
+    connect(formreel, SIGNAL(emitquestionclicked(int)), groupboxtmp, SLOT(updatequestion(id)));
+    connect(formref, SIGNAL(emitquestionclicked(int)), groupboxtmp, SLOT(updatequestion(id)));
+    connect(formreel, SIGNAL(emitgroupclicked(int)), groupboxtmp, SLOT(updategroup(id)));
 }
 
 QWidget *previewconfig::indexinit()
@@ -47,14 +53,10 @@ void previewconfig::changescope(QTreeWidgetItem *item)
 {
     grouptreeitem *tmp;
 
-    qDebug() << "jksdgffs -1";
     if ((tmp = dynamic_cast<grouptreeitem*>(item)) != NULL)
     {
-        qDebug() << "jksdgffs";
-        preview->removeTab(2);
-        preview->removeTab(1);
-        preview->addTab(new formloadator(0, tmp->getId(), p), "reel");
-        preview->addTab(new formloadator(1, tmp->getId(), p), "ref");
+        formreel->gidupdate(tmp->getId());
+        formref->gidupdate(tmp->getId());
     }
 }
 

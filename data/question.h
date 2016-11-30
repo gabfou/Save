@@ -27,6 +27,7 @@ public:
     bool global;
     int ref_only;
     QString getnamereal(project *p);
+    bool is_in(int groupid, project *p);
 };
 
 ostream & operator<<(ostream &o, question const & rhs);

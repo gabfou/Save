@@ -5,6 +5,7 @@
 
 class grouptree;
 class formloadator;
+class infoquestion;
 
 class previewconfig : public QWidget
 {
@@ -15,7 +16,9 @@ class previewconfig : public QWidget
     QTabWidget *preview;
     project *p;
     QScrollArea *initform(bool ref);
-    grouptree *groupboxtmp;
+    infoquestion *groupboxtmp;
+    formloadator *formref;
+    formloadator *formreel;
 public:
     previewconfig(MainWindow *m);
 private slots:

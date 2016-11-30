@@ -5,7 +5,7 @@
 
 class listedit;
 class listeditwval;
-#include "grouptree.h"
+class grouptree;
 #include "info.h"
 
 class infoquestion : public info
@@ -17,6 +17,7 @@ public:
 
     question getquestioncopy();
     void setquestionmod(int qgroupid);
+    grouptree *groupbox;
 public slots:
 	void updateib(QTreeWidgetItem *item);
 
@@ -28,7 +29,6 @@ private slots:
 private:
     QWidget *contq;
     QHBoxLayout *hbox;
-    grouptree *groupbox;
 	QMetaObject::Connection cotmp;
 	QLineEdit *name;
 	grouptree *target;
