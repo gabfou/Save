@@ -169,7 +169,6 @@ void infoquestion::setquestionmod(int qgroupid)
 
 void infoquestion::updatequestion(int id)
 {
-    questiontreeitem *tmp = dynamic_cast<questiontreeitem*>(item);
 
     this->updateibg(-1, -1);
     infolabel->setText("");
@@ -179,7 +178,7 @@ void infoquestion::updatequestion(int id)
     contg->hide();
     contq->show();
     infolabel->setText("Question");
-    if (tmp->id == -1)
+    if (id == -1)
     {
         init = 0;
         return ;
@@ -189,7 +188,7 @@ void infoquestion::updatequestion(int id)
         init = 1;
         if (q)
             delete q;
-        this->q = new question(p->getquestion(tmp->id));
+        this->q = new question(p->getquestion(id));
     }
     qgroupid = q->qgroupid;
     type->setCurrentIndex(q->type);
@@ -220,10 +219,12 @@ void infoquestion::updatequestion(int id)
     }
 }
 
+
+void infoquestion::updategroup(int id)
 {
-contq->hide();
-this->updateibg(tmp2->getId(), 1);
-qgroupid = tmp2->getId();
+    contq->hide();
+    this->updateibg(id, 1);
+    qgroupid = id;
 }
 
 void infoquestion::updateib(QTreeWidgetItem * item)
@@ -236,7 +237,7 @@ void infoquestion::updateib(QTreeWidgetItem * item)
         grouptreeitem *tmp2 = dynamic_cast<grouptreeitem*>(item);
         if (tmp2)
         {
-
+            updategroup(tmp2->getId());
         }
         else
         {
@@ -245,7 +246,7 @@ void infoquestion::updateib(QTreeWidgetItem * item)
         }
 		return ;
     }
-    updatequestion(tmp->getId())
+    updatequestion(tmp->id);
 }
 
 question infoquestion::getquestioncopy()

@@ -28,9 +28,10 @@ previewconfig::previewconfig(MainWindow *m) : p(&(m->current))
     this->setLayout(layout);
     connect(introindex, SIGNAL(textChanged()), this, SLOT(updateiindex()));
     connect(groupboxtmp->groupbox, SIGNAL(itemClicked(QTreeWidgetItem *, int )), this, SLOT(changescope(QTreeWidgetItem *)));
-    connect(formreel, SIGNAL(emitquestionclicked(int)), groupboxtmp, SLOT(updatequestion(id)));
-    connect(formref, SIGNAL(emitquestionclicked(int)), groupboxtmp, SLOT(updatequestion(id)));
-    connect(formreel, SIGNAL(emitgroupclicked(int)), groupboxtmp, SLOT(updategroup(id)));
+    connect(formreel, SIGNAL(questionclicked(int)), groupboxtmp, SLOT(updatequestion(id)));
+    connect(formref, SIGNAL(questionclicked(int)), groupboxtmp, SLOT(updatequestion(id)));
+    connect(formreel, SIGNAL(groupclicked(int)), groupboxtmp, SLOT(updategroup(id)));
+    connect(formref, SIGNAL(groupclicked(int)), groupboxtmp, SLOT(updategroup(id)));
 }
 
 QWidget *previewconfig::indexinit()

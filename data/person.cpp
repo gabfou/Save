@@ -21,13 +21,13 @@ person::~person()
 {
 }
 
-inline fact newfact(string name, int time, int note, string date, int idquestion, QString timestr, int iteration)
+inline fact newfact(string name, int time, int note, QString date, int idquestion, QString timestr, int iteration)
 {
     fact ret(name, time, note, date, idquestion, timestr, iteration);
 	return(ret);
 }
 
-void person::add_fact(string name, int time, int note, string date, int iteration, int idquestion, QString timestr)
+void person::add_fact(string name, int time, int note, QString date, int iteration, int idquestion, QString timestr)
 {
     if (iteration > this->iteration)
         this->iteration = iteration;
@@ -163,13 +163,8 @@ person::person(QString name, vector<question> *question)
 	this->questionlist = question;
 }
 
-person::person(QString name, QString lastname, QString email)
-{
-	this->name = name + " " + lastname;
-	this->email = email;
-}
 
-person::person(QString name, QString lastname, QString email, int id, vector<question> *listquestion, int groupid)
+person::person(QString name, QString lastname, QString email, int id, vector<question> *listquestion, int groupid, int questionbool, int refbool)
 {
 	this->name = name + " " + lastname;
 	this->firstname = name;
@@ -178,6 +173,8 @@ person::person(QString name, QString lastname, QString email, int id, vector<que
 	this->email = email;
 	this->questionlist = listquestion;
 	this->groupid = groupid;
+    this->questionbool = questionbool;
+    this->refbool = refbool;
 }
 
 person::person(const person & person)
@@ -190,6 +187,8 @@ person::person(const person & person)
 	this->flist = person.getFlist();
 	this->firstname = person.firstname;
 	this->lastname = person.lastname;
+    this->questionbool = person.questionbool;
+    this->refbool = person.refbool;
 }
 
 
@@ -213,8 +212,6 @@ QString person::getrep(QVector<int> questionid, int iteration, project *p)
     while (it != questionid.end())
     {
         QList<fact>::iterator tmp;
-        float j = 0;
-        int l = 0;
 
         tmp = this->flist.begin();
         while (tmp != flist.end())
@@ -231,4 +228,23 @@ QString person::getrep(QVector<int> questionid, int iteration, project *p)
         it++;
     }
     return ("NA");
+}
+
+
+QString person::time_rep_at_iteration(int it)
+{
+    QList<fact>::iterator tmp;
+
+    if (this->questionbool < it)
+        return("non demandé");
+    tmp = this->flist.begin();
+    while (tmp != flist.end())
+    {
+        if (tmp->iteration == it)
+        {
+            return (tmp->getDate());
+        }
+        tmp++;
+    }
+    return("non rempli");
 }

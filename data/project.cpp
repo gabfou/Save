@@ -71,19 +71,12 @@ project::project(QString fproject)
 	this->initoroject(fproject);
 }
 
-void project::addperson(QString name, QString lastname, QString email)
-{
-	this->nbperson++;
-	person ret(name, lastname, email);
-	this->listp.push_back(ret);
-}
-
-inline void project::addperson(QString name, QString lastname, QString email, int id, vector<question> *listquestion, int groupid)
+inline void project::addperson(QString name, QString lastname, QString email, int id, vector<question> *listquestion, int groupid, int questionbool, int refbool)
 {
     if (id == -1)
         sqlo::addperson(this, name, lastname, email, groupid);
 	this->nbperson++;
-	person ret(name, lastname, email, id, listquestion, groupid);
+    person ret(name, lastname, email, id, listquestion, groupid, questionbool, refbool);
 	while ((int)(this->listp.size()) < id)
 		this->listp.push_back(person());
 	this->listp.push_back(ret);
@@ -157,7 +150,7 @@ inline void project::addquestion(QString name, int group, unsigned int id, int q
 	this->listquestion.push_back(ret);
 }
 
-void project::addreponse(int id, string name, int time, int note, string date, int iteration, int idquestion, QString timestr)
+void project::addreponse(int id, string name, int time, int note, QString date, int iteration, int idquestion, QString timestr)
 {
     if (iteration > iterationmax)
         iterationmax = iteration;
@@ -313,7 +306,7 @@ void project::initoroject(QString fproject)
 	qDebug() << "init question time" << timerdebug.elapsed() << "milliseconds";
 
 	qDebug() << "init persone";timerdebug.start();
-    if(query.exec("SELECT id, firstname,lastname,email,groupid FROM project_" + fproject + "_project"))
+    if(query.exec("SELECT id, firstname,lastname,email,groupid,questionbool,refbool FROM project_" + fproject + "_project"))
 	{
 		while(query.next())
 		{
@@ -322,7 +315,9 @@ void project::initoroject(QString fproject)
 							query.value(3).toString(),
 							query.value(0).toInt(),
 							&listquestion,
-							query.value(4).toInt());
+                            query.value(4).toInt(),
+                            query.value(5).toInt(),
+                            query.value(6).toInt());
 		}
 	}
 	else
@@ -339,7 +334,7 @@ void project::initoroject(QString fproject)
 							 query.value(1).toString().toStdString(),
 							 query.value(2).toInt(),
 							 query.value(3).toInt(),
-							 query.value(4).toString().toStdString(),
+                             query.value(4).toDateTime().toString("dd/MM/yy hh:mm:ss"),
 							 query.value(5).toInt(),
                              query.value(6).toInt(),
                              query.value(7).toString());
@@ -768,7 +763,7 @@ int     sqlo::addperson(project *p, QString firstname, QString lastname,
         qDebug() << "person insert success!";
     if (id == -1)
     {
-        p->addperson(firstname, lastname, email, qry.lastInsertId().toInt(), &(p->listquestion), groupid);
+        p->addperson(firstname, lastname, email, qry.lastInsertId().toInt(), &(p->listquestion), groupid, 0, 0);
         p->listgroup[groupid].addperson(p->listp[qry.lastInsertId().toInt()]);
     }
     else

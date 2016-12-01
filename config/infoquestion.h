@@ -20,7 +20,8 @@ public:
     grouptree *groupbox;
 public slots:
 	void updateib(QTreeWidgetItem *item);
-
+    void updategroup(int id);
+    void updatequestion(int id);
 private slots:
     void updatebdd();
     void typeshow(int type);

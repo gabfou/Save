@@ -25,8 +25,8 @@ private:
     QVBoxLayout *layout;
     QWidget *ret;
 signals:
-    void emitgroupclicked(int);
-    void emitquestionclicked(int);
+    void groupclicked(int);
+    void questionclicked(int);
 };
 
 #endif // FORMLOADATOR_H

@@ -128,7 +128,7 @@ QList<int> recupallgroupfils(int groupid, QString project_name)
     QList<int> ret;
 
     ret += groupid;
-    qry.prepare('SELECT id FROM project_' + project_name + '_groupe WHERE groupparent = '+ QString::number(groupid) + ";");
+    qry.prepare("SELECT id FROM project_" + project_name + '_groupe WHERE groupparent = '+ QString::number(groupid) + ";");
     qry.exec();
     while (qry.next())
         ret << recupallgroupfils(qry.value(0).toInt(), project_name);

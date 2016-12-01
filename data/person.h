@@ -20,18 +20,18 @@ public:
     int iteration = -1;
     int groupid = -1;
     int	id = -1;
+    int questionbool;
+    int refbool;
 	person();
 	virtual ~person();
-	void add_fact(string line);
     person(QString name, vector<question> *question);
-    person(QString name, QString lastname, QString email);
-    person(QString name, QString lastname, QString email, int id, vector<question> *listquestion, int groupid);
+    person(QString name, QString lastname, QString email, int id, vector<question> *listquestion, int groupid, int questionbool, int refbool);
     int compare(QString name2);
 //	person(string name);
 	int getId() const;
 	void setId(int value);
 	int compare(int id);
-    void add_fact(string name, int time, int note, string date, int iteration, int idquestion, QString timestr);
+    void add_fact(string name, int time, int note, QString date, int iteration, int idquestion, QString timestr);
     QString personsend(Smtp *smtp, QString post);
 	int getGroupid() const;
 	person(const person &person);
@@ -49,4 +49,5 @@ public:
     QString personshowcasevalstr(question &qname, int iterationmin = 0, int iterationmax = 2147483640);
     float personshowcase(question &qname, int iterationmin = 0, int iterationmax = 2147483640);
     QString getrep(QVector<int> questionid, int iteration, project *p);
+    QString time_rep_at_iteration(int it);
 };

@@ -54,7 +54,7 @@ void tab_to_xlsx(const QTableWidget *table, Document & xlsx)
                 xlsx.write(y2 + 2, x + 2, item->text(), format);
         }
 	}
-    xlsx.setColumnWidth(xlsx.dimension(), 30);
+   // xlsx.setColumnWidth(xlsx.dimension(), 30);
 	qDebug() << "tab xlsx fin";
 }
 

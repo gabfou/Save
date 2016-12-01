@@ -7,7 +7,7 @@ class fact
 private:
 	int		note = -1;
 	QString notestr;
-	string	date;
+    QString	date;
 	time_t	datesys = -1;
 public:
     int		time = -1;
@@ -26,11 +26,11 @@ public:
 	void setNote(int value);
 	int getTime() const;
 	void setTime(int value);
-	string getDate() const;
-	void setDate(const string &value);
+    QString getDate() const;
+    void setDate(const QString &value);
 	string getFactname() const;
 	void setFactname(const string &value);
-    fact(string name, int time, int note, string date, int idquestion, QString timestr, int iteration);
+    fact(string name, int time, int note, QString date, int idquestion, QString timestr, int iteration);
     void checkfactstr(int idquestion, int &counter, QStringList &list, QVector<int> *nb, QVector<int> *nbl, int iterationmin = -1, int iterationmax = 2147483640) const;
 };
 

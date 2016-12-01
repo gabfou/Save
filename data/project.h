@@ -52,10 +52,10 @@ public:
 	~project();
 //public slots:
     void addperson(QString name, QString lastname, QString email);
-    void addperson(QString name, QString lastname, QString email, int id, vector<question>* listquestion, int groupid);
+    void addperson(QString name, QString lastname, QString email, int id, vector<question>* listquestion, int groupid, int questionbool, int refbool);
 	QString postquestion(QString group);
 	void addquestion(string name, string group);
-    void addreponse(int id, string name, int time, int note, string date, int iteration, int idquestion, QString timestr);
+    void addreponse(int id, string name, int time, int note, QString date, int iteration, int idquestion, QString timestr);
     QStringList sendproject(int group);
 	void convert_to_xlsx();
     void addgroup(QString name, int parentid, unsigned int id, int type, QString description, bool gquestion);

@@ -9,8 +9,8 @@ int fact::getNote() const{return note;}
 void fact::setNote(int value){note = value;}
 int fact::getTime() const{return time;}
 void fact::setTime(int value){time = value;}
-string fact::getDate() const{return date;}
-void fact::setDate(const string &value){date = value;}
+QString fact::getDate() const{return date;}
+void fact::setDate(const QString &value){date = value;}
 string fact::getFactname() const{return factname;}
 void fact::setFactname(const string &value){factname = value;}
 
@@ -18,7 +18,7 @@ fact::fact()
 {
 }
 
-fact::fact(string name, int time, int note, string date, int idquestion, QString timestr, int iteration)
+fact::fact(string name, int time, int note, QString date, int idquestion, QString timestr, int iteration)
 {
 	this->factname = name;
 	this->note = note;

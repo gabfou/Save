@@ -57,8 +57,6 @@ private slots:
 	void addquestion();
 	void addproject();
 	void addproject2();
-	void addperson();
-	void addperson2();
 	void addquestion2();
 	void checksqlconexion();
 	void openproject();
@@ -82,6 +80,9 @@ private slots:
     void baserep(bool checked);
     void graphiquecrd(bool checked);
     void formcreator();
+    void extract_brutesimple2();
+    void extract_brutesimple();
+    void suivirep();
 private:
 	Ui::MainWindow *ui;
 	QWindow *addprojectwindow;
@@ -91,6 +92,7 @@ private:
     QTimer *timertmp;
     QLabel *labeltmp;
     QPushButton *buttontmp;
+    QListWidget *listWidgettmp;
 
     Alltree *alltreetmp = NULL;
     grouptree *groupboxtmp;

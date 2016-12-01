@@ -174,6 +174,6 @@ void recuppersonnetemplate(QString name, project *p)
 		QString firstname = xlsx.read(indextocase(++x, y)).toString();
 		QString lastname = xlsx.read(indextocase(++x, y)).toString();
 		QString email = xlsx.read(indextocase(++x, y)).toString();
-		p->addperson(firstname, lastname, email, -1, &(p->listquestion), lastgid);
+        p->addperson(firstname, lastname, email, -1, &(p->listquestion), lastgid, 0, 0);
 	}
 }
