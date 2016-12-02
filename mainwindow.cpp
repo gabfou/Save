@@ -963,7 +963,7 @@ void	MainWindow::Backroundchange()
 
 //		if (progress.wasCanceled())
 //			break;
-//		//... copy one file
+//		... copy one file
 //	}
 //	progress.setValue(numFiles);
 }
@@ -982,13 +982,19 @@ void MainWindow::formcreator()
 
 void MainWindow::suivirep()
 {
-    QTableWidget *w = new QTableWidget(current.getNbperson(), current.iterationmax + 1);
+    QTableWidget *w = new QTableWidget(current.getNbperson() + 1, current.iterationmax + 2);
     vector<person>::iterator itp = current.listp.begin();
     int y = -1;
     int i = -1;
+    int *counter2 = new int[current.iterationmax + 2];
+    int counter;
+    float tmp;
+    float counter3 = 0;
+    memset(counter2, 0, sizeof(int) * current.iterationmax + 2);
 
     while (++i < current.iterationmax + 1)
         w->setHorizontalHeaderItem(i, new QTableWidgetItem("jour " + QString::number(i)));
+    w->setHorizontalHeaderItem(i, new QTableWidgetItem("Taux de réponse"));
     while (itp != current.listp.end())
     {
         if (itp->id == -1)
@@ -998,17 +1004,26 @@ void MainWindow::suivirep()
         }
         w->setVerticalHeaderItem(++y, new QTableWidgetItem(itp->name));
         i = -1;
+        counter = 0;
         while (++i < current.iterationmax + 1)
-        {
-            qDebug() << y << i << itp->time_rep_at_iteration(i);
-            w->setItem(y, i, new QTableWidgetItem(itp->time_rep_at_iteration(i)));
-        }
+            w->setItem(y, i, new QTableWidgetItem(itp->time_rep_at_iteration(i, &counter, &(counter2[i]))));
+        tmp = (float)counter / (float)(itp->questionbool + 1);
+        counter3 += tmp;
+        w->setItem(y, i, new QTableWidgetItem(QString::number(tmp * 100) + "%"));
         itp++;
     }
+
+    w->setVerticalHeaderItem(++y, new QTableWidgetItem("taux de réponse"));
+    i = -1;
+    while (++i < current.iterationmax + 1)
+        w->setItem(y, i, new QTableWidgetItem(QString::number((float)counter2[i] / (float)current.getNbperson() * 100) + "%"));
+    w->setItem(y, i, new QTableWidgetItem(QString::number(counter3 / (float)current.getNbperson() * 100) + "%"));
+
     w->resizeColumnsToContents();
     w->resizeRowsToContents();
 //    w->setSortingEnabled(true);
     w->show();
+    delete[] counter2;
 }
 
 QTXLSX_USE_NAMESPACE

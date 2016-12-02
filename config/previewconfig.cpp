@@ -12,7 +12,7 @@ previewconfig::previewconfig(MainWindow *m) : p(&(m->current))
 {
     QHBoxLayout *layout = new QHBoxLayout();
     preview = new QTabWidget();
-    introindex = new QTextEdit();
+    introindex = new QTextEdit(p->introindex);
 
     formreel = new formloadator(0, 0, p);
     formref = new formloadator(1, 0, p);
@@ -28,10 +28,10 @@ previewconfig::previewconfig(MainWindow *m) : p(&(m->current))
     this->setLayout(layout);
     connect(introindex, SIGNAL(textChanged()), this, SLOT(updateiindex()));
     connect(groupboxtmp->groupbox, SIGNAL(itemClicked(QTreeWidgetItem *, int )), this, SLOT(changescope(QTreeWidgetItem *)));
-    connect(formreel, SIGNAL(questionclicked(int)), groupboxtmp, SLOT(updatequestion(id)));
-    connect(formref, SIGNAL(questionclicked(int)), groupboxtmp, SLOT(updatequestion(id)));
-    connect(formreel, SIGNAL(groupclicked(int)), groupboxtmp, SLOT(updategroup(id)));
-    connect(formref, SIGNAL(groupclicked(int)), groupboxtmp, SLOT(updategroup(id)));
+    connect(formreel, SIGNAL(questionclicked(int)), groupboxtmp, SLOT(updatequestion(int)));
+    connect(formref, SIGNAL(questionclicked(int)), groupboxtmp, SLOT(updatequestion(int)));
+    connect(formreel, SIGNAL(groupclicked(int)), groupboxtmp, SLOT(updategroup(int)));
+    connect(formref, SIGNAL(groupclicked(int)), groupboxtmp, SLOT(updategroup(int)));
 }
 
 QWidget *previewconfig::indexinit()

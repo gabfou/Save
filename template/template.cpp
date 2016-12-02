@@ -14,7 +14,6 @@ void createquestiontemplate(MainWindow *m, project *p)
 	int j = -1;
 	const int nbg = p->getNbqgeneration();
 
-	qDebug() <<"dsf";
 	while(++j < nbg + 1)
 		xlsx.write(indextocase(++x, y), "groupe");
 	xlsx.write(indextocase(++x, y), "question");
@@ -22,7 +21,8 @@ void createquestiontemplate(MainWindow *m, project *p)
 	xlsx.write(indextocase(++x, y), "type");
 	xlsx.write(indextocase(++x, y), "option");
 	xlsx.write(indextocase(++x, y), "val");
-	xlsx.write(indextocase(++x, y), "reference");
+    xlsx.write(indextocase(++x, y), "reference");
+    xlsx.write(indextocase(++x, y), "unite");
 
 	vector<question> ql = p->listquestion;
 	vector<question>::iterator qli = ql.begin();
@@ -48,8 +48,9 @@ void createquestiontemplate(MainWindow *m, project *p)
 		xlsx.write(indextocase(++x, y), qli->sujet);
 		xlsx.write(indextocase(++x, y), p->mtypeq[qli->type]);
 		xlsx.write(indextocase(++x, y), qli->liststr.join("\n"));
-		xlsx.write(indextocase(++x, y), QString::number(qli->val));
-		xlsx.write(indextocase(++x, y), QString::number(qli->ref_only));
+        xlsx.write(indextocase(++x, y), qli->val);
+        xlsx.write(indextocase(++x, y), qli->ref_only);
+        xlsx.write(indextocase(++x, y), qli->unit);
 		qli++;
 	}
 	QString fichier = QFileDialog::getSaveFileName(0, "Créer template", "~", "Excell files (*.xlsx)");
@@ -91,10 +92,10 @@ void recupquestiontemplate(QString name, project *p)
 		QString sujet = xlsx.read(indextocase(++x, y)).toString();
 		int type = p->mytypqinv(xlsx.read(indextocase(++x, y)).toString());
 		QString splitchar = xlsx.read(indextocase(++x, y)).toString();
-		int value = xlsx.read(indextocase(++x, y)).toString().toInt();
-		bool ref_only = xlsx.read(indextocase(++x, y)).toString().toInt();
-		p->addquestion(name, 0, -1, lastgid, sujet, "",
-					   type, splitchar, value, ref_only, 0);
+        int value = xlsx.read(indextocase(++x, y)).toInt();
+        bool ref_only = xlsx.read(indextocase(++x, y)).toInt();
+        QString unit = xlsx.read(indextocase(++x, y)).toString();
+        sqlo::addquestion(p, name, 0, unit, -1, sujet, lastgid, type, ref_only, splitchar, value, 0);
 	}
 }
 

@@ -49,5 +49,6 @@ public:
     QString personshowcasevalstr(question &qname, int iterationmin = 0, int iterationmax = 2147483640);
     float personshowcase(question &qname, int iterationmin = 0, int iterationmax = 2147483640);
     QString getrep(QVector<int> questionid, int iteration, project *p);
+    QString time_rep_at_iteration(int it, int *counter, int *counter2);
     QString time_rep_at_iteration(int it);
 };

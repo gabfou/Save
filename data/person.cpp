@@ -231,6 +231,29 @@ QString person::getrep(QVector<int> questionid, int iteration, project *p)
 }
 
 
+
+QString person::time_rep_at_iteration(int it, int *counter, int *counter2)
+{
+    QList<fact>::iterator tmp;
+
+    if (this->questionbool < it)
+        return("non demandé");
+    tmp = this->flist.begin();
+    while (tmp != flist.end())
+    {
+        if (tmp->iteration == it)
+        {
+            if (counter)
+                (*counter)++;
+            if (counter2)
+                (*counter2)++;
+            return (tmp->getDate());
+        }
+        tmp++;
+    }
+    return("non rempli");
+}
+
 QString person::time_rep_at_iteration(int it)
 {
     QList<fact>::iterator tmp;

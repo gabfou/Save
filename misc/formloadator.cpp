@@ -29,9 +29,10 @@ int formloadator::formcreator(bool ref, group *g, QVBoxLayout *layout, int gid, 
     formgroupbox *w;
 
     if (wgquestion)
-         w =  new formgroupbox(NULL, wgquestion);
+         w =  new formgroupbox(g, wgquestion);
     else
-         w =  new formgroupbox(NULL, NULL);
+         w =  new formgroupbox(g, NULL);
+    connect(w, SIGNAL(clicked(int)), this, SLOT(emitgroupclicked(int)));
 
     QVBoxLayout *layoutperso = new QVBoxLayout();
     QList<int> lg = g->getListfils();

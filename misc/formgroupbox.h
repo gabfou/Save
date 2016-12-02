@@ -9,7 +9,9 @@ class formgroupbox : public QGroupBox
     void mousePressEvent(QMouseEvent *event);
 public:
     formgroupbox(question *q, formgroupbox *parrent);
-    question *argq;
+    formgroupbox(group *g, formgroupbox *parrent);
+    question *argq = NULL;
+    group *argg = NULL;
     int checkgid(int id, project *p);
     void addchild(formgroupbox *child);
     QList<formgroupbox*> listchild;

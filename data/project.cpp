@@ -254,7 +254,7 @@ void project::initoroject(QString fproject)
 	this->addgroup("ALL", -1, 0, 0, "", 0);
 	this->addgroup("ALL", -1, 0, 1, "", 0);
 
-    if (query.exec("SELECT default_table, introindex, introref, introreel FROM all_config WHERE project_name=" + fproject))
+    if (query.exec("SELECT default_table, introindex, introref, introreel FROM all_config WHERE project_name='" + fproject +"'"))
     {
         while(query.next())
         {

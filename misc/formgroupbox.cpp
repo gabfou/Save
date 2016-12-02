@@ -1,8 +1,15 @@
 #include "formgroupbox.h"
 #include "data/question.h"
+#include "data/group.h"
 #include "data/project.h"
 
 formgroupbox::formgroupbox(question *q, formgroupbox *parrent) : argq(q)
+{
+    if (parrent)
+        parrent->addchild(this);
+}
+
+formgroupbox::formgroupbox(group *g, formgroupbox *parrent) : argg(g)
 {
     if (parrent)
         parrent->addchild(this);
@@ -15,7 +22,10 @@ void formgroupbox::addchild(formgroupbox *child)
 
 void formgroupbox::mousePressEvent ( QMouseEvent * event )
 {
-    emit clicked(argq->id);
+    if (argq)
+        emit clicked(argq->id);
+    else if (argg)
+        emit clicked(argg->id);
 }
 
 int formgroupbox::checkgid(int id, project *p)
