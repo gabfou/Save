@@ -37,8 +37,6 @@ void bargraph::paintEvent(QPaintEvent *event)
 	this->drawgraph(&qp);
 }
 
-//	t_groupref listg = syntheselistgroup(p->getgrouplist("ALL"), p->getListquestion());
-
 void bargraph::drawgraph(QPainter *qp)
 {
 
@@ -49,14 +47,13 @@ void bargraph::drawgraph(QPainter *qp)
     float h120 = this->height() / 140;
     float tmp37 = 40;
     float start = 30;
-
+qDebug() << "d =" << d;
 	if (d == 0 || h120 == 0)
 	{
-        qDebug() << "drawgraph nop d =" << d << " h120=" << d;
+        qDebug() << "drawgraph nop d =" << d << " h120=" << h120;
 		return ;
 	}
-	d /= 100;
-//	qDebug() << "debut" << x <<  10 * h120 << incr << 100 * h120 << this->width() << this->height();
+    d /= 100;
     qp->drawText(0, 0, this->width(), 10 * h120, Qt::AlignCenter, this->name);
 	qp->setBrush(QBrush(Qt::cyan));
 	qp->drawRect(x, tmp37 * h120 , width, 100 * h120);
@@ -74,14 +71,7 @@ void bargraph::drawgraph(QPainter *qp)
 	tmp3 = listq.begin();
 	while (tmp3 != listq.end() && tmp != g.list.end())
 	{
-        if ((tmp3->ref_only) == 1)
-		{
-			tmp3++;
-			tmp++;
-			continue ;
-        }
         x +=  incr + incr;
-//		qDebug() << "boucle" << x <<  tmp37 << (*tmp).toFloat() / d;
         qp->drawRect(x, tmp37 * h120, width, ((*tmp) / d) * h120);
         qp->drawText(x, tmp37 * h120, width, ((*tmp) / d) * h120, Qt::AlignCenter | Qt::TextWrapAnywhere, QString::number((int)((*tmp) / d)) + "%");
         qp->translate(x, start * h120);

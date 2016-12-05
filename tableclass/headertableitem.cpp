@@ -9,6 +9,11 @@
 QString headertableitem::getFormule() const{return formule;}
 void headertableitem::setFormule(const QString &value){formule = value;}
 
+headertableitem::~headertableitem()
+{
+    if (arglistq)
+        delete arglistq;
+}
 
 headertableitem::headertableitem(project *p, QString str, QString form, int id)
     : QTableWidgetItem(str), p(p), type(-1), id(id), formule(form)
@@ -32,6 +37,11 @@ headertableitem::headertableitem(project *p, QString str, question arg, QString 
 
 headertableitem::headertableitem(project *p, QString str, QString arg, QString form)
     : QTableWidgetItem(str), p(p), type(4), argstr(arg), id(-1), formule(form)
+{
+}
+
+headertableitem::headertableitem(project *p, QString str, QList<question> * arg, QString form)
+    : QTableWidgetItem(str), p(p), type(5), arglistq(arg), id(-1), formule(form)
 {
 }
 
@@ -66,7 +76,7 @@ void headertableitem::changearg(QTreeWidgetItem *item)
     dynamic_cast<tableshow*>(this->tableWidget())->updateall(); // opti
 }
 
-bool headertableitem::is_in(vector<group> &g, vector<group> &gq, QList<int> listint, QList<int> listqint)
+bool headertableitem::is_in(vector<group> &g, vector<group> &gq, QList<int> listint, QList<int> listqint, int itmin, int itmax)
 {
     QList<int>::iterator tmp;
 
@@ -74,7 +84,7 @@ bool headertableitem::is_in(vector<group> &g, vector<group> &gq, QList<int> list
     {
         return (1);
     }
-    if (type == 1)
+    else if (type == 1)
     {
 //        qDebug() << "is_in" << argg.type << argg.getListp().empty() << argg.getListq().empty();
         if ((argg.type == 0 && argg.getListp().empty()) || (argg.type == 1 && argg.getListq().empty()))
@@ -83,7 +93,7 @@ bool headertableitem::is_in(vector<group> &g, vector<group> &gq, QList<int> list
             return (1);
         return (0);
     }
-    if (type == 3)
+    else if (type == 3)
     {
         if (g[0].type != 0)
             return (1);
@@ -99,13 +109,13 @@ bool headertableitem::is_in(vector<group> &g, vector<group> &gq, QList<int> list
             return (0);
         }
     }
-    if (type == 2)
+    else if (type == 2)
     {
         if (gq[0].type != 1)
         {
             return (1);
         }
-        else if (p->ref == 0 && argq.ref_only)
+        else if (p->ref == 0 && argq.ref_only && !(!(itmax == 0 && this->argq.ref_only == 2) && !(itmin > 0 && this->argq.ref_only == 1)))
             return (0);
         else
         {
@@ -119,6 +129,18 @@ bool headertableitem::is_in(vector<group> &g, vector<group> &gq, QList<int> list
             }
             return (0);
         }
+    }
+    else if (type == 5)
+    {
+        QList<question>::iterator tmp2;
+        tmp2 = arglistq->begin();
+        while (tmp2 != arglistq->end())
+        {
+            if (listqint.contains(tmp2->qgroupid) && !(itmax == 0 && tmp2->ref_only == 2) && !(itmin > 0 && tmp2->ref_only == 1))
+                return (1);
+            tmp2++;
+        }
+
     }
     return (false);
 }

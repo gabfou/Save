@@ -38,6 +38,8 @@ void tableshow::preinit()
 	connect(m, SIGNAL(grefchange(int)), this, SLOT(selectp(int)));
 	connect(m, SIGNAL(valchanged(bool)), this, SLOT(updateall()));
 	connect(m, SIGNAL(refchanged(bool)), this, SLOT(updateall()));
+    connect(m, SIGNAL(miniterationchanged(int)), this, SLOT(reselectm()));
+    connect(m, SIGNAL(maxiterationchanged(int)), this, SLOT(reselectm()));
     connect(m, SIGNAL(miniterationchanged(int)), this, SLOT(updateall()));
     connect(m, SIGNAL(maxiterationchanged(int)), this, SLOT(updateall()));
     if (showmode == 2)
@@ -107,8 +109,6 @@ tableshow::tableshow(MainWindow *m, QList<headertableitem*> &listv, QList<header
 
 void tableshow::reinit()
 {
-
-	qDebug() << "new tableshow 1";
 	if (p->listp.empty() || p->listquestion.empty())
 	{
 		qDebug() << "listp ou lisquestion vide dans reinit 1";
@@ -129,7 +129,6 @@ void tableshow::reinit(QList<headertableitem*> &listv, QList<headertableitem*> &
 	else
 		k+= p->getNbpgeneration();
 
-	qDebug() << "new tableshow 2";
 	if (p->listp.empty() || p->listquestion.empty())
 	{
 		qDebug() << "listp ou lisquestion vide dans reinit 2";
@@ -144,8 +143,6 @@ void tableshow::reinit(QList<headertableitem*> &listv, QList<headertableitem*> &
 	this->updateall();
 }
 
-//void tableshow::reinit
-
 void tableshow::reinit(project *p, MainWindow *mainp)
 {
 	QElapsedTimer timerdebug;
@@ -158,7 +155,6 @@ void tableshow::reinit(project *p, MainWindow *mainp)
 	else
 		k+= p->getNbpgeneration();
 
-	qDebug() << "new tableshow 3";
 	if (p->listp.empty() || p->listquestion.empty())
 	{
 		qDebug() << "listp ou lisquestion vide dans reinit 3";
@@ -262,15 +258,37 @@ void	tableshow::sethorizontalheader(MainWindow *mainp)
 		tmp3 = p->listquestion.begin();
 		while (--k > -1)
 			this->setHorizontalHeaderItem(k, new headertableitem(p, "Sous groupes"));
+        QVector<QList<question>*> listquestion;
 		k = i;
 		QStringList checklist;
+        QStringList::iterator checklistit;
 		while (tmp3 != p->listquestion.end())
 		{
-			if (tmp3->id > -1 && checklist.contains(tmp3->name) == 0)
+            if (tmp3->id == -1)
+            {
+                tmp3++;
+                continue ;
+            }
+            checklistit = checklist.begin();
+            int i2 = 0;
+            while (checklistit != checklist.end())
+            {
+                if (checklistit->compare(tmp3->name) == 0)
+                {
+                    listquestion[i2]->push_back(*tmp3);
+                    break ;
+                }
+                i2++;
+                checklistit++;
+            }
+            if (checklistit == checklist.end())
 			{
 				checklist << tmp3->name;
-				this->setHorizontalHeaderItem(i++, new headertableitem(p, (tmp3->name), tmp3->name, "%"));
-			}
+                QList<question> *tmp4 = new QList<question>();
+                tmp4->push_back(*tmp3);
+                listquestion.push_back(tmp4);
+                this->setHorizontalHeaderItem(i++, new headertableitem(p, (tmp3->name), tmp4, "%"));
+            }
 			tmp3++;
 		}
 	}
@@ -339,14 +357,12 @@ void	tableshow::setverticalheader(vector<group> &g, int id)
 	}
 	listpg = listint.begin();
 	while (listpg != listint.end())
-	{
-		//qDebug() << "listpg" << *listpg << listint.size();
+    {
 		group * gtmp = &(g[(*listpg)]);
 
 		while (gtmp->getGeneration() > 0)
 		{
-			this->setItem(i, gtmp->getGeneration() - 1, new QTableWidgetItem(gtmp->getName()));
-			//gbox->item(*i, gtmp->getGeneration() - 1)->setBackgroundColor(Qt::red);
+            this->setItem(i, gtmp->getGeneration() - 1, new QTableWidgetItem(gtmp->getName()));
 			gtmp = &(g[gtmp->getParentid()]);
 		}
 		this->setVerticalHeaderItem(i++, new headertableitem(p, gtmp->getName(), (g[*listpg])));
@@ -412,18 +428,22 @@ void	tableshow::populate()
 			this->setItem(h, w, new itemtable("test h:" + QString::number(h) + " w:" + QString::number(w), p));
 	}
 }
+void	tableshow::reselectm()
+{
+    select(m->currentgref, m->currentgqref, m->iterationmin, m->iterationmax);
+}
 
 void	tableshow::selectq(int gqref)
 {
-	select(m->currentgref, gqref);
+    select(m->currentgref, gqref, m->iterationmin, m->iterationmax);
 }
 
 void	tableshow::selectp(int gref)
 {
-	select(gref, m->currentgqref);
+    select(gref, m->currentgqref, m->iterationmin, m->iterationmax);
 }
 
-void	tableshow::select(int gref, int gqref)
+void	tableshow::select(int gref, int gqref, int itmin, int itmax)
 {
 	QList<int> listint;
 	QList<int> listqint;
@@ -439,7 +459,7 @@ void	tableshow::select(int gref, int gqref)
 	while (++h < this->rowCount())
 	{
 		tmp = (dynamic_cast<headertableitem*>(this->verticalHeaderItem(h)));
-		if (tmp && tmp->is_in(this->p->listgroup , this->p->listqgroup, listint, listqint))
+        if (tmp && tmp->is_in(this->p->listgroup , this->p->listqgroup, listint, listqint, itmin, itmax))
 			this->showRow(h);
 		else
 			this->hideRow(h);
@@ -450,7 +470,7 @@ void	tableshow::select(int gref, int gqref)
 	while (++h < this->columnCount())
 	{
 		tmp = (dynamic_cast<headertableitem*>(this->horizontalHeaderItem(h)));
-		if (tmp && tmp->is_in(this->p->listgroup, this->p->listqgroup, listint, listqint))
+        if (tmp && tmp->is_in(this->p->listgroup, this->p->listqgroup, listint, listqint, itmin, itmax))
 			this->showColumn(h);
 		else
 			this->hideColumn(h);
@@ -471,9 +491,9 @@ void	tableshow::clearheader()
 		delete (this->horizontalHeaderItem(h));
 }
 
-void	tableshow::showtable(int id, int qid)
+void	tableshow::showtable(int id, int qid, int itmin, int itmax)
 {
-	this->select(id, qid);
+    this->select(id, qid, itmin, itmax);
 	qDebug() << "showtableshow";
 }
 

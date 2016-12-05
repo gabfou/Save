@@ -21,7 +21,7 @@ overview::overview(MainWindow *m, project *p, int group, int *showmod) : p(p), s
     table->sethorizontalheader(headertable, p->getNbpgeneration());
     //table->showtable(0, 0);
     table->updateall();
-    table->select(0, 0);
+    //table->select(0, 0);
     QHBoxLayout *hb = new QHBoxLayout(this);
     QGridLayout *gl = new QGridLayout(this);
     gl->addWidget(barref, 1, 0);

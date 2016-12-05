@@ -43,6 +43,16 @@ question::~question()
 {
 }
 
+//float question::total(project *p, int ref)
+//{
+//    if ((ref == 0 && this->ref_only == 1) || (ref == 1 && this->ref_only == 2))
+//        return (this->time)
+//    QList<int> listq;
+//    p->groupqchild(this->qgroupid, listq);
+
+//    this->qgr
+//}
+
 QString question::getnamereal(project *p)
 {
     QString rep;

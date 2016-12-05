@@ -37,6 +37,7 @@ public:
     int default_table = 0;
     int iterationmax = 0;
     int iterationmin = 0;
+    int questionboolmax = 0;
     bool sugestion = 1;
     void addquestion(QString name, int group, unsigned int id, int qgroupid, QString sujet, QString unit, int type, QString splitchar, int value, int ref_only, bool global);
     QString name;
@@ -87,6 +88,8 @@ public:
     int mytypqinv(QString type);
     int addpgroup(QString name, QString parrent);
     QList<person> getListallpfils(int group);
+    t_groupref getgroupalllist(int id, int qid, int iterationmin, int iterationmax);
+    void groupchild(unsigned int id, vector<group> &ret) const;
 };
 
 #endif

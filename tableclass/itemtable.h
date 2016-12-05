@@ -28,6 +28,7 @@ private:
     void updateall(group *arg, question *head, int itmin, int itmax, QString form = "");
     void update(group *arg, QString *head, int itmin, int itmax, QString form = "");
     void update(person *arg, question *head, int itmin, int itmax, QString form = "");
+    void update(group *arg, QList<question> *head, int itmin, int itmax, QString form = "");
 };
 
 #endif // ITEMTABLE_H

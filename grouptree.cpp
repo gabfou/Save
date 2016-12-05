@@ -291,7 +291,7 @@ void	grouptree::supgroupintree()
 	if (m->table)
 	{
 		m->table->reinit(&(m->current), m);
-		m->table->showtable( m->currentgref, m->currentgqref);
+        m->table->showtable( m->currentgref, m->currentgqref, m->iterationmin, m->iterationmax);
 	}
 }
 

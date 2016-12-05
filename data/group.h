@@ -63,6 +63,8 @@ public:
     void changegroupidallqchild(project *p, int groupid);
     void changequestion(int id, question &q);
     void changeperson(int id, person &p);
+    t_groupref groupnameallrep(const vector<question> &questionlist, QList<int> listqchild, int iterationmin, int iterationmax);
+    QList<float> grouprepall(const vector<question> &questionlist, QList<int> listqchild, int iterationmin, int iterationmax);
 };
 
 #endif // GROUP_H

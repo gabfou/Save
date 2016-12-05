@@ -5,8 +5,9 @@
 Comparrefdo::Comparrefdo(MainWindow *m, int group) : m(m), group(group)
 {
     QGridLayout *gl = new QGridLayout(this);
-    bar = new bargraph(syntheselistgroup(m->current.getgrouplist(group, m->currentgqref)),&(m->current));
-    barref = new bargraph(syntheselistgroup(m->current.getgrouplist(group, m->currentgqref, 0, 0)), &(m->current));
+
+    bar = new bargraph(m->current.getgroupalllist(group, m->currentgqref, 1, 1000000000),&(m->current));
+    barref = new bargraph(m->current.getgroupalllist(group, m->currentgqref, 0, 0), &(m->current));
     bar->setName("Réel");
     barref->setName("Escompté");
     gl->addWidget(barref, 1, 0);

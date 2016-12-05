@@ -16,10 +16,10 @@ class tableshow : public QTableWidget
 public:
 	tableshow(project * p, MainWindow *mainp, int showmode);
 
-	void showtable(int id, int qid);
+    void showtable(int id, int qid, int itmin, int itmax);
 	void sethorizontalheader(MainWindow *mainp);
 	void clearheader();
-	void select(int gref, int gqref);
+    void select(int gref, int gqref, int itmin, int itmax);
 	void setverticalheader(vector<question> &q, int id);
 	void setverticalheader(vector<group> &g, int id);
 	void reinit(project *p, MainWindow *mainp);
@@ -35,7 +35,7 @@ public slots:
 	void selectp(int gref);
 	void selectq(int gqref);
 	void updateall();
-
+    void reselectm();
 private slots:
 	void saveqpoint(QPoint qpoint);
 	void suphheader();

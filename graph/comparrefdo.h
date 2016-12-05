@@ -20,6 +20,8 @@ private:
     MainWindow *m;
     bargraph *bar;
     bargraph *barref;
+    t_groupref g;
+    t_groupref gref;
     int group;
 };
 

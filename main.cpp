@@ -49,13 +49,9 @@ void createConnection()
     db.setUserName("127008_johann");
     db.setPassword("t4x5akda");
 	if (!db.open())
-	{
         qDebug() << db.lastError().text() << "pb conection";
-	}
 	else
-	{
 		qDebug("conection sql set");
-	}
 }
 //#endif
 

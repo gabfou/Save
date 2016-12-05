@@ -38,10 +38,9 @@ Alltree::Alltree(MainWindow *m, project *current) : p(current)
 	slidemin->setMaximum(m->current.iterationmax);
 	slidemax->setMaximum(m->current.iterationmax);
 	slidemax->setTracking(true);
-	slidemin->setTracking(true);
-	qDebug() << m->current.iterationmax;
-	//slidemin->setValue(0);
-	//slidemax->setValue(m->current.iterationmax);
+    slidemin->setTracking(true);
+    slidemin->setValue(0);
+    slidemax->setValue(m->current.iterationmax);
 
 	this->setLayout(layout);
 

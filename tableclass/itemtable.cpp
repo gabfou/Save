@@ -55,9 +55,9 @@ void itemtable::update()
     else if (arg->type == 3 && head->type == 2)
         update(&(arg->argp), &(head->argq), itmin, itmax);
     else if (arg->type == 1  && head->type == 4)
-    {
         update(&(arg->argg), &(head->argstr), itmin, itmax);
-    }
+    else if (arg->type == 1  && head->type == 5)
+        update(&(arg->argg), (head->arglistq), itmin, itmax);
 	else
 	{
 //		this->setText(this->placeholder);
@@ -101,6 +101,26 @@ void itemtable::update(person *arg, question *head, int itmin, int itmax, QStrin
         //this->setBackgroundColor(arg->getColor()); //remettre les couleur
     }
     this->eval(val, *q);
+}
+
+void itemtable::update(group *arg, QList<question> *head, int itmin, int itmax, QString form) // opti passer question en vector
+{
+    if (arg->type != 1)
+    {
+        qDebug("dafuq itemtable::updateall 0.5");
+        return ;
+    }
+    float valf = 0;
+    QList<question>::iterator i  = head->begin();
+
+    while (i != head->end())
+    {
+        qDebug() << arg->name << arg->id;
+        if (i->qgroupid == arg->id)
+            valf += p->listgroup[0].grouprepall(*i, p->listgroup, itmin, itmax);
+        i++;
+    }
+    this->eval(QString::number(valf));
 }
 
 void itemtable::update(group *arg, QString *head, int itmin, int itmax, QString form)

@@ -162,6 +162,22 @@ t_groupref group::groupnamerep(const vector<question> &questionlist, QList<int> 
 	return ret;
 }
 
+t_groupref group::groupnameallrep(const vector<question> &questionlist, QList<int> listqchild, int iterationmin, int iterationmax)
+{
+    t_groupref ret;
+
+    ret.name = this->name;
+    ret.list = this->grouprepall(questionlist, listqchild, iterationmin, iterationmax);
+
+    QList<float>::iterator it = ret.list.begin();
+    while (it != ret.list.end())
+    {
+        ret.total += *it;
+        it++;
+    }
+    return ret;
+}
+
 QString group::grouprepvaltype2(question tmp2, int iterationmin, int iterationmax)
 {
     QList<person>::iterator tmp;
@@ -266,7 +282,7 @@ float group::grouprepall(question tmp2, vector<group> &g, int iterationmin, int 
     QList<int>::iterator tmp = listfils.begin();
     float val = 0;
 
-    val += grouprep(tmp2, iterationmin, iterationmax).toInt();
+    val += grouprep(tmp2, iterationmin, iterationmax).toFloat();
     while(tmp != listfils.end())
     {
         val += g[*tmp].grouprepall(tmp2, g, iterationmin, iterationmax);
@@ -275,12 +291,25 @@ float group::grouprepall(question tmp2, vector<group> &g, int iterationmin, int 
     return (val);
 }
 
+QList<float> group::grouprepall(const vector<question> & questionlist, QList<int> listqchild, int iterationmin, int iterationmax)
+{
+    QList<int>::iterator tmp2;
+    QList<float> ret;
+    vector<group> g;
+
+    tmp2 = listqchild.begin();
+    while (tmp2 != listqchild.end())
+    {
+        ret << grouprepall(questionlist[*tmp2], p->listgroup, iterationmin, iterationmax);
+        tmp2++;
+    }
+    return ret;
+}
 
 QList<float> group::grouprep(const vector<question> & questionlist, QList<int> listqchild, int iterationmin, int iterationmax)
 {
     QList<int>::iterator tmp2;
     QList<float> ret;
-	//afficher reponse au question
 
     tmp2 = listqchild.begin();
     while (tmp2 != listqchild.end())

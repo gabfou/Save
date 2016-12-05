@@ -698,7 +698,7 @@ void MainWindow::extract_brutesimple2()
     int i = -1;
     int y = 0;
 
-    while (item = listWidgettmp->item(++i))
+    while ((item = listWidgettmp->item(++i)))
     {
         qDebug() << item->text();
         qDebug() << "dsd";
@@ -781,7 +781,7 @@ void	MainWindow::refmodechange(bool checked)
     current.ref = ref;
     //this->table->updateall();
     emit refchanged(checked);
-    this->table->showtable(currentgref, currentgqref);
+    this->table->showtable(currentgref, currentgqref, iterationmin, iterationmax);
 }
 
 void	MainWindow::valmodechange(bool checked)
@@ -797,7 +797,7 @@ void	MainWindow::baserep(bool checked)
     if (checked)
     {
         this->table = new tableshow(&(this->current), this, 0);
-        this->table->showtable(this->currentgref, this->currentgqref);
+        this->table->showtable(this->currentgref, this->currentgqref, iterationmin, iterationmax);
         this->cw->addTab(table, "tableaux");
     }
     else if (table)
@@ -813,7 +813,7 @@ void	MainWindow::globalrep(bool checked)
     if (checked)
     {
         tableg = new tableshow(&(this->current), this, 2);
-        tableg->select(currentgref, currentgqref);
+        tableg->select(currentgref, currentgqref, iterationmin, this->iterationmax);
         cw->addTab(tableg, "Tableau global");
     }
     else if (tableg)
@@ -828,7 +828,7 @@ void	MainWindow::personrep(bool checked)
     if (checked)
     {
         tablep = new tableshow(&(this->current), this, 1);
-        tablep->select(currentgref, currentgqref);
+        tablep->select(currentgref, currentgqref, iterationmin, iterationmax);
         cw->addTab(tablep, "Tableau individuel");
     }
     else if (tablep)
@@ -889,7 +889,7 @@ void MainWindow::updatetable()
     if (table)
     {
         table->reinit(&(current), this);
-        table->showtable(currentgref, currentgqref);
+        table->showtable(currentgref, currentgqref, iterationmin, iterationmax);
     }
 }
 
@@ -986,7 +986,7 @@ void MainWindow::suivirep()
     vector<person>::iterator itp = current.listp.begin();
     int y = -1;
     int i = -1;
-    int *counter2 = new int[current.iterationmax + 2];
+    int *counter2 = new int[current.questionboolmax + 2];
     int counter;
     float tmp;
     float counter3 = 0;

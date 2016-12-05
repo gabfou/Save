@@ -18,6 +18,7 @@ public:
 	void setFormule(const QString &value);
 
     headertableitem(project *p, QString str, QString form = "", int id = -1);
+    virtual ~headertableitem();
     project *p;
     int type = -1;
 	int groupe = 0;
@@ -26,13 +27,15 @@ public:
     person argp;
     question argq;
     QString argstr;
+    QList<question> *arglistq = NULL;
     int id = -1;
     QString formule = "";
     headertableitem(project *p, QString str, group arg, QString form = "");
     headertableitem(project *p, QString str, person arg, QString form = "");
     headertableitem(project *p, QString str, question arg, QString form = "");
-    bool is_in(vector<group> &g, vector<group> &gq, QList<int> listint, QList<int> listqint);
+    bool is_in(vector<group> &g, vector<group> &gq, QList<int> listint, QList<int> listqint, int itmin, int itmax);
     headertableitem(project *p, QString str, QString arg, QString form);
+    headertableitem(project *p, QString str, QList<question> *arg, QString form);
 public slots:
     void changearg(QTreeWidgetItem *item);
 };
