@@ -6,6 +6,7 @@
 class listedit;
 class listeditwval;
 class grouptree;
+class textedit;
 #include "info.h"
 
 class infoquestion : public info
@@ -33,7 +34,7 @@ private:
 	QMetaObject::Connection cotmp;
 	QLineEdit *name;
 	grouptree *target;
-    QTextEdit *description;
+    textedit *description;
 	QLineEdit *unit;
 	QComboBox *type;
     QSpinBox *value;

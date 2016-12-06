@@ -20,6 +20,7 @@ private slots:
     void addtemplateq();
     void newtemplatep();
     void addtemplatep();
+    void afficheindex(bool checked);
 private:
     MainWindow *m;
 	QTabWidget *tab;

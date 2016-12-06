@@ -4,7 +4,7 @@
 #include "data/question.h"
 #include "misc/formgroupbox.h"
 
-formloadator::formloadator(bool ref, int gid, project *p): QScrollArea(), p(p)
+formloadator::formloadator(bool ref, int gid, project *p): QScrollArea(), p(p), ref(ref), gid(gid)
 {
     ret = new QWidget();
     layout = new QVBoxLayout();
@@ -24,15 +24,23 @@ formloadator::formloadator(bool ref, int gid, project *p): QScrollArea(), p(p)
         connect(introreel, SIGNAL(textChanged()), this, SLOT(updateireel()));
 }
 
+int formloadator::reformcreator()
+{
+    delete layout;
+    layout = new QVBoxLayout();
+    formcreator(ref, &(p->listqgroup[0]), layout, gid);
+}
+
 int formloadator::formcreator(bool ref, group *g, QVBoxLayout *layout, int gid, QVBoxLayout *layoutgquestion, formgroupbox *wgquestion)
 {
     formgroupbox *w;
 
     if (wgquestion)
-         w =  new formgroupbox(g, wgquestion);
+         w =  new formgroupbox(g, wgquestion, p);
     else
-         w =  new formgroupbox(g, NULL);
+         w =  new formgroupbox(g, NULL, p);
     connect(w, SIGNAL(clicked(int)), this, SLOT(emitgroupclicked(int)));
+    connect(w, SIGNAL(updateneeded()), this, SLOT(reformcreator()));
 
     QVBoxLayout *layoutperso = new QVBoxLayout();
     QList<int> lg = g->getListfils();
@@ -66,8 +74,9 @@ int formloadator::formcreator(bool ref, group *g, QVBoxLayout *layout, int gid, 
             listq++;
             continue ;
         }
-        formgroupbox *tmp = new formgroupbox(&(p->listquestion[(*listq).id]), w);
+        formgroupbox *tmp = new formgroupbox(&(p->listquestion[(*listq).id]), w, p);
         connect(tmp, SIGNAL(clicked(int)), this, SLOT(emitquestionclicked(int)));
+        connect(tmp, SIGNAL(updateneeded()), this, SLOT(reformcreator()));
         layoutq = new QVBoxLayout();
         layoutq->addWidget(new QLabel(listq->sujet));
         tmp->setLayout(layoutq);
@@ -96,6 +105,7 @@ void formloadator::emitgroupclicked(int id)
 
 void formloadator::gidupdate(int gid)
 {
+    this->gid = gid;
     QList<formgroupbox*>::iterator i = checklistparrent.begin();
 
     while (i != checklistparrent.end())

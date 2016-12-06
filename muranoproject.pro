@@ -58,7 +58,8 @@ SOURCES += main.cpp\
     misc/emailvalidator.cpp \
     config/previewconfig.cpp \
     misc/formloadator.cpp \
-    misc/formgroupbox.cpp
+    misc/formgroupbox.cpp \
+    misc/textedit.cpp
 
 HEADERS  += mainwindow.h \
     data/fact.h \
@@ -98,7 +99,8 @@ HEADERS  += mainwindow.h \
     misc/emailvalidator.h \
     config/previewconfig.h \
     misc/formloadator.h \
-    misc/formgroupbox.h
+    misc/formgroupbox.h \
+    misc/textedit.h
 
 FORMS    += mainwindow.ui
 

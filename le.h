@@ -44,6 +44,8 @@
 #include <QColor>
 #include <QProgressDialog>
 #include <QSpinBox>
+#include <QDrag>
+#include <QMimeData>
 //#include <qwt_plot_renderer.h>
 //#include <qwt_plot_canvas.h>
 //#include <qwt_plot_multi_barchart.h>
@@ -84,7 +86,6 @@ typedef struct  s_groupref
     QList<float>  list;
     float			 total = 0;
 }			   t_groupref;
-
 
 using namespace std;
 

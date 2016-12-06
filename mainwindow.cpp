@@ -568,7 +568,7 @@ void MainWindow::sendprojectauxi(QString str, QList<person> listp, int type)
                 "<li>assessment of the time spent and perception of added-value on each task</li>"
                 "<li>the actual time you spend on each task (daily basis-minutes)</li></ol></p>"
                 "<p>Before filling in the timesheets, you will have to complete the -Estimation- part (items 1&2). The link below will drive you to the survey where you will find the -Estimation- form:</p>"
-                "<a href=\"http://etudemurano.alwaysdata.net/" + str;
+                "<a href=\"http://muranoconseil.com/survey/" + str;
         bodyend = "\"><u>PPD_DMI LEAD CHANGE_Online Survey</u></a>"
                           "<p>If you encounter any difficulty or have for any question, you can contact me directly on:<ul><li>anais.deframond@muranoconseil.com</li><li>+33 770734938</li></ul></p>"
                           "<p>Thank you in advance for your time and involvement! <p/><p> Best regards,"

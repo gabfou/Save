@@ -24,9 +24,9 @@ catch (PDOException $e)
 	echo 'Error';
 	die();
 }
-($tab = $req_pre->fetch());
+($person = $req_pre->fetch());
 
-// if ($tab['refbool'] < 1 && $tab['questionbool'] < 1 && $tab['jour'] < 1)
+// if ($person['refbool'] < 1 && $person['questionbool'] < 1 && $person['jour'] < 1)
 // {
 // 	header("Location: error_no_question.php");
 // 	echo "<html></html>";
@@ -34,21 +34,33 @@ catch (PDOException $e)
 // 	ob_flush();
 // 	die();
 // }
-$firstname = $tab['firstname'];
-$lastname = $tab['lastname'];
-$sugestion = $tab['sugestion'];
-if ($tab['refbool'] < 1 && $tab['questionbool'] > 0 && $tab['jour'] < 1)
-	$tab['jour'] = 0;
+$firstname = $person['firstname'];
+$lastname = $person['lastname'];
+$sugestion = $person['sugestion'];
+if ($person['refbool'] < 1 && $person['questionbool'] > 0 && $person['jour'] < 1)
+	$person['jour'] = 0;
 $debut = -1;
-if ($tab['refbool'] > 0)
+if ($person['refbool'] > 0)
 	$debut = 0;
-if ($tab['questionbool'] > 0 || ($tab['refbool'] < 1 && $tab['jour'] > 0))
-	$debut = $tab['jour'];
-if ($tab['jour'] > 0)
-	$debut = $tab['jour'];
+if ($person['questionbool'] > 0 || ($person['refbool'] < 1 && $person['jour'] > 0))
+	$debut = $person['jour'];
+if ($person['jour'] > 0)
+	$debut = $person['jour'];
 
-$_SESSION['max'] = ($tab['questionbool'] > $tab['jour']) ? $tab['jour'] + 1 : $tab['jour'];
-
+$_SESSION['max'] = ($person['questionbool'] > $person['jour']) ? $person['jour'] + 1 : $person['jour'];
+$req_pre = $bdd->prepare('SELECT introindex, indexbool FROM all_config WHERE project_name = "'.htmlspecialchars($_SESSION['project']).'";');
+$req_pre->execute();
+($config = $req_pre->fetch());
+if ($config['indexbool'] == 0)
+{
+	if ($person['refbool'])
+		header("Location: form.php?it=0");
+	else
+		header("Location: form.php?it=".($person['jour'] + 1));
+	echo "<html></html>";
+	flush();
+	ob_flush();
+}
 ?>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <head>
@@ -68,29 +80,26 @@ $_SESSION['max'] = ($tab['questionbool'] > $tab['jour']) ? $tab['jour'] + 1 : $t
 	<div class="index">
 
 <?php
-$req_pre = $bdd->prepare('SELECT introindex FROM all_config WHERE project_name = "'.htmlspecialchars($_SESSION['project']).'";');
-$req_pre->execute();
-($tab2 = $req_pre->fetch());
-$intro = $tab2['introindex'];
+$intro = $config['introindex'];
 $intro = str_replace("__%nb__", $questionbool + $refbool, $intro);
 $intro = str_replace("__%p__", $firstname, $intro);
 $intro = str_replace("__%n__", $lastname, $intro);
 echo $intro;
 $i = -1;
-while (++$i <= $tab['jour'])
+while (++$i <= $person['jour'])
 {
 	if ($i > 0)
 		echo '<h5>Time Sheet Day '.$i.' <img src="Symbol_OK.svg" alt="ok" height="12px" width="12px"/></h5>';
-	else if ($tab['refbool'] > 0 && $i == 0)
+	else if ($person['refbool'] > 0 && $i == 0)
 		echo '<h5><a href="form.php?it='.$i.'">Estimation </a></h5>';
 }
 $j = 0;
 $i--;
-while (++$i <= $tab['questionbool'])
+while (++$i <= $person['questionbool'])
 {
 	if ($i > 0)
 	{
-		if ($j == 0 && $tab['refbool'] == 0)
+		if ($j == 0 && $person['refbool'] == 0)
 			echo '<h5><a href="form.php?it='.$i.'">Time Sheet Day '.$i.' </a></h5>';
 		else
 			echo '<h5>Time Sheet Day '.$i.'</h5>';
@@ -98,7 +107,6 @@ while (++$i <= $tab['questionbool'])
 	$j++;
 }
 ?>
-
 		<Br/>If you have some suggestions, ideas or best practices to share with us, please feel free to complete to the space provided below:
 		<form method="post" action="index.php" id="formid">
 			<textarea name="sugestionp" rows="5" cols="40" form="formid"><?php echo(htmlspecialchars($sugestion));?></textarea>

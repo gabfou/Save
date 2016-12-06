@@ -12,12 +12,16 @@ public:
     formloadator(bool ref, int gid, project *p);
     int formcreator(bool ref, group *g, QVBoxLayout *layout, int gid = 0, QVBoxLayout *layoutgquestion = NULL, formgroupbox *wgquestion = NULL);
     void gidupdate(int gid);
+public slots:
+    int reformcreator();
 private slots:
     void updateireel();
     void updateiref();
     void emitquestionclicked(int id);
     void emitgroupclicked(int id);
 private:
+    int gid;
+    int ref;
     project *p;
     QTextEdit *introref;
     QTextEdit *introreel;

@@ -11,12 +11,6 @@
 
 menuconfigproject::menuconfigproject(QString name, project *p, MainWindow *m) : name(name), p(p), m(m)
 {
-	//QLabel *Labelgroup = new QLabel("group :");
-	//this->groupboxtmp = new grouptree(this->current);
-	//Labelgroup->setAlignment(Qt::AlignTop);
-
-	//Boutons
-	//this->tab = new QTabWidget(this);
     this->setWindowModality(Qt::ApplicationModal);
 	if (name.isEmpty())
 		return ;
@@ -32,30 +26,25 @@ menuconfigproject::menuconfigproject(QString name, project *p, MainWindow *m) : 
 
 void menuconfigproject::configeneral()
 {
-	QWidget *win = new QWidget;
-	QPushButton *b_valider = new QPushButton("Valider");
-	QPushButton *b_actualiser = new QPushButton("Actualiser");
-	QPushButton *b_annuler = new QPushButton("Fermer");
-    QPushButton *tablesql = new QPushButton("table sql");
-    QPushButton *sup_retour_chariot = new QPushButton("suprimer retour chariot dans base de donnée");
-    QPushButton *noms_to_description = new QPushButton("copier les noms vers les descriptions pour les questions");
-    QPushButton *showtableau_brut = new QPushButton("generer tableaux brut");
+    QWidget *win = new QWidget;
+    QPushButton *tablesql = new QPushButton("Table sql");
     QPushButton *newtq = new QPushButton("Sauvegarder un template de question");
-    QPushButton *addtq = new QPushButton("ajouter des question a partir d'un template");
+    QPushButton *addtq = new QPushButton("Ajouter des question a partir d'un template");
     QPushButton *newtp = new QPushButton("Sauvegarder un template de personne");
-    QPushButton *addtp = new QPushButton("ajouter des personne a partir d'un template");
+    QPushButton *addtp = new QPushButton("Ajouter des personne a partir d'un template");
+    QCheckBox *afficheindex = new QCheckBox("Afficher l'index");
+    afficheindex->setChecked(p->indexbool);
+//    QCheckBox *affichesugges = new QCheckBox("Afficher les suggestion");
+//    afficheindex->setChecked(p->indexbool);
 
-	//Connexions aux slots
-	//connect(b_valider, SIGNAL(clicked()), this, SLOT(changescope2()));
-	connect(b_annuler, SIGNAL(clicked()), this, SLOT(close()));
+
+    //Connexions aux slots
     connect(tablesql, SIGNAL(clicked(bool)), this, SLOT(showsql()));
-    connect(sup_retour_chariot, SIGNAL(clicked(bool)), this, SLOT(sup_retour_chariot()));
-    connect(noms_to_description, SIGNAL(clicked(bool)), this, SLOT(noms_to_description()));
-    connect(showtableau_brut, SIGNAL(clicked(bool)), this, SLOT(showtableau_brut()));
     connect(newtq, SIGNAL(clicked(bool)), this, SLOT(newtemplateq()));
     connect(addtq, SIGNAL(clicked(bool)), this, SLOT(addtemplateq()));
     connect(newtp, SIGNAL(clicked(bool)), this, SLOT(newtemplatep()));
     connect(addtp, SIGNAL(clicked(bool)), this, SLOT(addtemplatep()));
+    connect(afficheindex, SIGNAL(clicked(bool)), this, SLOT(afficheindex(bool)));
 
 	//Layout
 	QGroupBox *groupbox = new QGroupBox("");
@@ -67,16 +56,13 @@ void menuconfigproject::configeneral()
 	groupbox->setLayout(layoutFormulaire);
 
     QVBoxLayout *layout = new QVBoxLayout();
-	layout->setAlignment(Qt::AlignTop);
-    //layout->addWidget(groupbox);
+    layout->setAlignment(Qt::AlignTop);
     layout->addWidget(tablesql);
-    layout->addWidget(sup_retour_chariot);
-    layout->addWidget(noms_to_description);
-    layout->addWidget(showtableau_brut);
     layout->addWidget(newtq);
     layout->addWidget(addtq);
     layout->addWidget(newtp);
     layout->addWidget(addtp);
+    layout->addWidget(afficheindex);
     win->setLayout(layout);
 	this->addTab(win, "general");
 }
@@ -169,4 +155,13 @@ void menuconfigproject::addtemplatep()
 {
     QString fichier = QFileDialog::getOpenFileName(0, "Open a file", "~", "Excell files (*.xlsx)");
     recuppersonnetemplate(fichier, p);
+}
+
+void menuconfigproject::afficheindex(bool checked)
+{
+    QSqlQuery qry;
+
+    qry.prepare( "UPDATE all_config SET indexbool = " + QString::number(checked) + " WHERE project_name='" + p->name + "';");
+    if(!qry.exec())
+        qDebug() << "menuconfigproject::afficheindex fail" << qry.lastError();
 }

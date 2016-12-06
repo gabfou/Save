@@ -7,6 +7,7 @@
 #include "misc/listedit.h"
 #include "misc/listeditwval.h"
 #include "grouptree.h"
+#include "misc/textedit.h"
 
 void infoquestion::prephide()
 {
@@ -64,7 +65,7 @@ infoquestion::infoquestion(project *p, MainWindow *m, int con) : info(m)
     type->addItem("Option avec valeur");
     type->setCurrentIndex(1);
 	name = new QLineEdit();
-    description = new QTextEdit();
+    description = new textedit();
 	unit = new QLineEdit();
 	value = new QSpinBox();
     value->setValue(1);

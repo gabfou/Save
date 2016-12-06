@@ -39,6 +39,7 @@ public:
     int iterationmin = 0;
     int questionboolmax = 0;
     bool sugestion = 1;
+    bool indexbool = 1;
     void addquestion(QString name, int group, unsigned int id, int qgroupid, QString sujet, QString unit, int type, QString splitchar, int value, int ref_only, bool global);
     QString name;
     vector<person> listp;
