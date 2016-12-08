@@ -25,12 +25,12 @@ public:
 	group();
 	virtual ~group();
 
-    group(QString name, int parentid, int id, vector<group> &listgroup, int type, QString description, bool gquestion, project *p);
+    group(QString name, int parentid, int id, vector<group> &listgroup, int type, QString description, int gquestion, project *p);
 	void addperson(person p);
     QString getName() const;
 	void addqfils(int id);
 	bool visible = true;
-    QList<person> getListp();
+    QList<person> getListp() const;
     void debug();
 	void addfils(int id);
 	int getGeneration() const;
@@ -46,7 +46,7 @@ public:
 	int id;
     QString name;
     QString description;
-    bool gquestion;
+    int gquestion;
 	int type = -1;
     QList<int> getListqfils() const;
 	void addquestion(question q);
@@ -65,6 +65,7 @@ public:
     void changeperson(int id, person &p);
     t_groupref groupnameallrep(const vector<question> &questionlist, QList<int> listqchild, int iterationmin, int iterationmax);
     QList<float> grouprepall(const vector<question> &questionlist, QList<int> listqchild, int iterationmin, int iterationmax);
+    group(const group &g);
 };
 
 #endif // GROUP_H

@@ -60,6 +60,7 @@ if ($config['indexbool'] == 0)
 	echo "<html></html>";
 	flush();
 	ob_flush();
+	die();
 }
 ?>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />

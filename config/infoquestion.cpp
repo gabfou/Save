@@ -8,6 +8,7 @@
 #include "misc/listeditwval.h"
 #include "grouptree.h"
 #include "misc/textedit.h"
+#include "MRichTextEditor/MRichTextEdit.h"
 
 void infoquestion::prephide()
 {
@@ -63,9 +64,10 @@ infoquestion::infoquestion(project *p, MainWindow *m, int con) : info(m)
     type->addItem("Oui/non");
     type->addItem("Option");
     type->addItem("Option avec valeur");
+    type->addItem("suggestion");
     type->setCurrentIndex(1);
 	name = new QLineEdit();
-    description = new textedit();
+    description = new MRichTextEdit();
 	unit = new QLineEdit();
 	value = new QSpinBox();
     value->setValue(1);

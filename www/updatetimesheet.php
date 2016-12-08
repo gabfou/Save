@@ -3,15 +3,6 @@ include("function.php");
 include("testconect.php");
 try
 {
-	new PDO('mysql:host=mysql1.paris1.alwaysdata.com;dbname=etudemurano_project;charset=utf8', '127008_johann', 't4x5akda');
-	// $bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
-}
-catch(Exception $e)
-{
-	die('Erreur : '.$e->getMessage());
-}
-try
-{
 	$req_pre = $bdd->prepare('SELECT questionbool, refbool, jour FROM project_'.htmlspecialchars($_SESSION['project']).'_project WHERE id = '.htmlspecialchars($_SESSION['id_client']).";"); // changer user		  
 	$req_pre->execute();
 }

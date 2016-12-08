@@ -59,7 +59,9 @@ SOURCES += main.cpp\
     config/previewconfig.cpp \
     misc/formloadator.cpp \
     misc/formgroupbox.cpp \
-    misc/textedit.cpp
+    misc/textedit.cpp \
+    MRichTextEditor/mrichtextedit.cpp \
+    MRichTextEditor/mtextedit.cpp
 
 HEADERS  += mainwindow.h \
     data/fact.h \
@@ -73,7 +75,6 @@ HEADERS  += mainwindow.h \
     tableclass/headertableitem.h \
     tableclass/itemtable.h \
     tableclass/tableshow.h \
-    define.h \
     grouptree.h \
     grouptreeitem.h \
     le.h \
@@ -100,9 +101,12 @@ HEADERS  += mainwindow.h \
     config/previewconfig.h \
     misc/formloadator.h \
     misc/formgroupbox.h \
-    misc/textedit.h
+    misc/textedit.h \
+    MRichTextEditor/mrichtextedit.h \
+    MRichTextEditor/mtextedit.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    MRichTextEditor/mrichtextedit.ui
 
 DISTFILES += \
     libmysql.lib \
@@ -117,4 +121,10 @@ DISTFILES += \
     qsqlmysql.dll \
     qsqlmysqld.dll \
     template/test \
-    misc/ssh.py
+    misc/ssh.py \
+    MRichTextEditor/LGPL_EXCEPTION.txt \
+    MRichTextEditor/LICENSE.LGPL \
+    MRichTextEditor/README.md
+
+SUBDIRS += \
+    MRichTextEditor/MRichTextEditor.pro

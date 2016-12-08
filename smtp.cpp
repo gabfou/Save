@@ -48,7 +48,7 @@ void Smtp::sendMail(const QString &from, const QString &to, const QString &subje
     this->from = from;
     rcpt = to;
     state = Init;
-    socket->connectToHostEncrypted(host, port); //"smtp.gmail.com" and 465 for gmail TLS
+    socket->connectToHostEncrypted(host, port);
     if (!socket->waitForConnected(timeout))
     {
          qDebug() << socket->errorString();

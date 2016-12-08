@@ -439,10 +439,10 @@ bool Worksheet::write(int row, int column, const QVariant &value, const Format &
         QString token = value.toString();
         bool ok;
 
-        if (token.startsWith(QLatin1String("="))) {
+        /*if (token.startsWith(QLatin1String("="))) {
             //convert to formula
             ret = writeFormula(row, column, CellFormula(token), format);
-        } else if (d->workbook->isStringsToHyperlinksEnabled() && token.contains(d->urlPattern)) {
+        }*/ if (d->workbook->isStringsToHyperlinksEnabled() && token.contains(d->urlPattern)) {
             //convert to url
             ret = writeHyperlink(row, column, QUrl(token));
         } else if (d->workbook->isStringsToNumbersEnabled() && (value.toDouble(&ok), ok)) {

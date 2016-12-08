@@ -4,6 +4,9 @@
 #include "le.h"
 
 class mainwindow;
+class MRichTextEdit;
+
+// cette classe represente la partie permetant de configurer un groupe
 
 class info : public QWidget
 {
@@ -30,7 +33,7 @@ private slots:
     void settargetchildquestion2(int id);
 private:
     QLineEdit   *name;
-    QTextEdit   *descriptiong;
+    MRichTextEdit *descriptiong;
     QPushButton *b_update;
     QHBoxLayout *gquestionbox;
     group       *current;

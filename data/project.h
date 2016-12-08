@@ -4,6 +4,8 @@
 #include "le.h"
 class person;
 
+// cette classe compile les donnée relatif a tout un sondage;
+
 class MainWindow;
 
 class project
@@ -40,7 +42,7 @@ public:
     int questionboolmax = 0;
     bool sugestion = 1;
     bool indexbool = 1;
-    void addquestion(QString name, int group, unsigned int id, int qgroupid, QString sujet, QString unit, int type, QString splitchar, int value, int ref_only, bool global);
+    void addquestion(QString name, int group, int id, int qgroupid, QString sujet, QString unit, int type, QString splitchar, int value, int ref_only, bool global);
     QString name;
     vector<person> listp;
 	vector<question> listquestion;
@@ -60,7 +62,7 @@ public:
     void addreponse(int id, string name, int time, int note, QString date, int iteration, int idquestion, QString timestr);
     QStringList sendproject(int group);
 	void convert_to_xlsx();
-    void addgroup(QString name, int parentid, unsigned int id, int type, QString description, bool gquestion);
+    void addgroup(QString name, int parentid, unsigned int id, int type, QString description, int gquestion);
 	vector<group> getListgroup() const;
 	void setListgroup(const vector<group> &value);
     QList<t_groupref> getgrouplist(int id, int qid = 0, int iterationmin = 1, int iterationmax = 2147483640);

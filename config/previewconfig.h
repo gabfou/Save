@@ -6,13 +6,16 @@
 class grouptree;
 class formloadator;
 class infoquestion;
+class MRichTextEdit;
+
+// cette classe represente l'onglet "preview" dans le menu configuration
 
 class previewconfig : public QWidget
 {
     Q_OBJECT
 
     QWidget *indexinit();
-    QTextEdit *introindex;
+    MRichTextEdit *introindex;
     QTabWidget *preview;
     project *p;
     QScrollArea *initform(bool ref);

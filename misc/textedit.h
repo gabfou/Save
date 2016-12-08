@@ -3,6 +3,8 @@
 
 #include "le.h"
 
+// cette classe est un editeur de texte utiliser pour ecrire les description;
+
 class textedit : public QWidget
 {
     Q_OBJECT

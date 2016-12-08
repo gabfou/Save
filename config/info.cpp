@@ -3,6 +3,7 @@
 #include "data/group.h"
 #include "grouptree.h"
 #include "mainwindow.h"
+#include "MRichTextEditor/mrichtextedit.h"
 
 void info::prephide()
 {
@@ -19,7 +20,7 @@ info::info(MainWindow *m) : m(m), p(&(m->current))
     infog = new QVBoxLayout();
     infolabel = new QLabel("");
     name = new QLineEdit();
-    descriptiong = new QTextEdit();
+    descriptiong = new MRichTextEdit();
     gquestion = new QComboBox(this);
     gsettarget = new QPushButton("Changer le groupe cible des decendants");
     b_update = new QPushButton("Enregistrer");
@@ -108,6 +109,5 @@ void info::settargetchildquestion()
 
 void info::settargetchildquestion2(int id)
 {
-    qDebug() << id;
     m->current.listqgroup[current->id].changegroupidallqchild(p, id);
 }

@@ -27,7 +27,6 @@ sqldatatable::sqldatatable(QString column , QString table, int nbcolumn)
 		{
 			tmpv = query.value(col + 1);
 			tmpv.convert(QVariant::String);
-	  //	  qDebug() << "niark" << tmpv.toString() << table << this->tabcolumn[col].toString() << id;
 			tmpItem = new sqltableitem((tmpv.toString()), table, this->tabcolumn[col].toString(), id);
 			this->setItem(row, col, tmpItem);
 		}
@@ -50,7 +49,7 @@ void sqldatatable::sqlupdateitem(QTableWidgetItem* item)
 	sqltableitem *tmp = dynamic_cast<sqltableitem *>(item);
 	if (!tmp)
 	{
-		qDebug() << "dinamic cast fail sqlupdateitem";
+		qDebug() << "dynamic cast fail sqlupdateitem";
 		return ;
 	}
     sqlo::sqlupdate(tmp->getTablename(), tmp->getColname(), tmp->text(), tmp->getId().toInt());

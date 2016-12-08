@@ -3,15 +3,22 @@
 #include "data/group.h"
 #include "data/question.h"
 #include "misc/formgroupbox.h"
+#include "MRichTextEditor/mrichtextedit.h"
 
 formloadator::formloadator(bool ref, int gid, project *p): QScrollArea(), p(p), ref(ref), gid(gid)
 {
     ret = new QWidget();
     layout = new QVBoxLayout();
     if (ref == 1)
-        introref = new QTextEdit(p->introref);
+    {
+        introref = new MRichTextEdit();
+        introref->setText(p->introref);
+    }
     else
-        introreel = new QTextEdit(p->introreel);
+    {
+        introreel = new MRichTextEdit();
+        //introreel->setText(p->introreel);
+    }
 
     layout->addWidget((ref == 1) ? new QTextEdit(p->introref) : new QTextEdit(p->introreel));
 
@@ -26,47 +33,42 @@ formloadator::formloadator(bool ref, int gid, project *p): QScrollArea(), p(p), 
 
 int formloadator::reformcreator()
 {
-    delete layout;
-    layout = new QVBoxLayout();
     formcreator(ref, &(p->listqgroup[0]), layout, gid);
 }
 
-int formloadator::formcreator(bool ref, group *g, QVBoxLayout *layout, int gid, QVBoxLayout *layoutgquestion, formgroupbox *wgquestion)
+int formloadator::formcreator(bool ref, group *g, QVBoxLayout *layout, int gid, formgroupbox *wgquestion)
 {
     formgroupbox *w;
 
     if (wgquestion)
-         w =  new formgroupbox(g, wgquestion, p);
+         w =  new formgroupbox(g, wgquestion, p, g->description);
     else
-         w =  new formgroupbox(g, NULL, p);
+         w =  new formgroupbox(g, NULL, p, g->description);
     connect(w, SIGNAL(clicked(int)), this, SLOT(emitgroupclicked(int)));
-    connect(w, SIGNAL(updateneeded()), this, SLOT(reformcreator()));
 
-    QVBoxLayout *layoutperso = new QVBoxLayout();
     QList<int> lg = g->getListfils();
     QList<question> lq = g->getListq();
     QList<int>::iterator      listg = lg.begin();
     QList<question>::iterator listq = lq.begin();
-    QVBoxLayout *layoutq;
     int i = 0;
 
-    layoutperso->addWidget(new QLabel(g->description), Qt::AlignCenter);
-    if (layoutgquestion == NULL)
+//    w->layout->addWidget(new QLabel(g->description), Qt::AlignCenter);
+    if (wgquestion == NULL)
     {
         layout->addWidget(w);
         checklistparrent << w;
     }
     else
-        layoutgquestion->addWidget(w);
+        wgquestion->layout->addWidget(w);
     while (listg != lg.end())
     {
         if (p->listqgroup[*listg].gquestion)
-            i += formcreator(ref, &(p->listqgroup[*listg]), layout, gid, layoutperso, w);
+            i += formcreator(ref, &(p->listqgroup[*listg]), layout, gid, w);
         else
-            i += formcreator(ref, &(p->listqgroup[*listg]), layout, gid, NULL, NULL);
+            i += formcreator(ref, &(p->listqgroup[*listg]), layout, gid, w);
         listg++;
     }
-    w->setLayout(layoutperso);
+//    w->setLayout(w->layout);
     while (listq != lq.end())
     {
         if (!((ref && listq->ref_only != 2) || (ref == 0 && listq->ref_only != 1)))
@@ -74,21 +76,15 @@ int formloadator::formcreator(bool ref, group *g, QVBoxLayout *layout, int gid, 
             listq++;
             continue ;
         }
-        formgroupbox *tmp = new formgroupbox(&(p->listquestion[(*listq).id]), w, p);
+        formgroupbox *tmp = new formgroupbox(&(p->listquestion[(*listq).id]), w, p, listq->sujet);
         connect(tmp, SIGNAL(clicked(int)), this, SLOT(emitquestionclicked(int)));
-        connect(tmp, SIGNAL(updateneeded()), this, SLOT(reformcreator()));
-        layoutq = new QVBoxLayout();
-        layoutq->addWidget(new QLabel(listq->sujet));
-        tmp->setLayout(layoutq);
-        layoutperso->addWidget(tmp);
-        tmp->show();
+        //layoutq = new QVBoxLayout();
+        //layoutq->addWidget(new QLabel(listq->sujet));
+        //tmp->setLayout(layoutq);
+        w->layout->addWidget(tmp);
         listq++;
         i++;
     }
-    if (i != 0)
-        w->show();
-    else
-        w->hide();
     return (i);
 }
 

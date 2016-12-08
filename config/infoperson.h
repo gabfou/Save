@@ -6,6 +6,8 @@
 class listedit;
 class person;
 
+// cette classe represente la partie permetant de configurer une personne
+
 #include "info.h"
 #include "grouptree.h"
 

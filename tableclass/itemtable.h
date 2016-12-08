@@ -2,6 +2,9 @@
 #define ITEMTABLE_H
 
 #include "le.h"
+
+// cette clase repredente une cellule d'un des 3 tableaux principaux
+
 template<typename T>
 class argtableitem;
 class group;

@@ -24,11 +24,6 @@ void bargraph::updateg(t_groupref g, int qgroup)
     //this->g.total = total(g, listqchild);
 }
 
-void bargraph::selectq(int gqref)
-{
-//    qDebug() << "trucyhgsadjfhgsafdghasfd";
-//    listqchild = p->questiongroupqchildnotopti(gqref);
-}
 
 void bargraph::paintEvent(QPaintEvent *event)
 {
@@ -47,7 +42,6 @@ void bargraph::drawgraph(QPainter *qp)
     float h120 = this->height() / 140;
     float tmp37 = 40;
     float start = 30;
-qDebug() << "d =" << d;
 	if (d == 0 || h120 == 0)
 	{
         qDebug() << "drawgraph nop d =" << d << " h120=" << h120;

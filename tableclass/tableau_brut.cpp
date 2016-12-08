@@ -71,12 +71,10 @@ void tableau_brut::setrow(person &pe, project *p, int k, int it)
         this->setItem(k, ++i, new QTableWidgetItem(pe.getrep(*tmp, it, p)));
         tmp++;
     }
-//	this->setItem(k, ++i, new QTableWidgetItem(f.getDate().c_str()));
 }
 
 void tableau_brut::populate(project *p)
 {
-    qDebug() << "populate";
 	vector<person>::iterator ip = p->listp.begin();
     int it;
 	int k = -1;
@@ -93,5 +91,4 @@ void tableau_brut::populate(project *p)
             setrow(*ip, p, ++k, it);
 		ip++;
 	}
-    qDebug() << "finpopulate";
 }

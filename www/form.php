@@ -50,10 +50,6 @@
 	<div class="topbar">
 		<a href="index.php"><img src="logonew.png" alt="logo murano" class = logo></a>
 		<h1 class = titre><?php echo str_replace("_", " ", htmlspecialchars($_SESSION['project'])); ?></h1>
-		<img src="Kérastase_logo.png" alt="logo murano" class = "logopetit logop1">
-		<img src="L’Oréal-Logos-HD.jpg" alt="logo murano" class = "logopetit logop2">
-		<img src="matrix_logo.png" alt="logo murano" class = "logopetit logop3">
-		<img src="Redken-Logo.jpg" alt="logo murano" class = "logopetit logop4">
 	</div>
 <?php
 	$error = 1;
@@ -140,11 +136,13 @@
 						}
 						$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'</select>';
 					}
+					else if ($value['typef'] == 4)
+					{
+						$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'<label class="label lab'.$value['id'].'" for "'.$value['id'].'_time" style="width: 100%;"> '.$value['sujet'].': </label><Br/><textarea  rows="5" cols="40" class = "reponse required rep" style="width: 100%;" required '.$value['id'].'" name="'.$value['id'].'_time" >';
+						$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'</textarea>';
+					}
 					if ($_SESSION['iteration'] == 0 && $value['note'])
 					 	$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'<label for "'.$value['id'].'#note" >interet : </label><select name="'.$value['id'].'#note" /><option value = "1" name="'.$value['id'].'#note">faible</option><option value = "3" name="'.$value['id'].'#note">moyen</option><option value = "5" name="'.$value['id'].'#note">fort</option><br><br><br></select>';
-					// else
-					// 	continue ;
-					//$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'<label id="resum'.$value['id'].'" class = "reponse">NA</label><br>';
 					if ($tabg['gquestion'] == 0)
 						$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'</fieldset>';
 					$echopargroupe[$value['qgroupid']] = $echopargroupe[$value['qgroupid']].'</div>';

@@ -54,21 +54,16 @@ public slots:
 private slots:
     //void showproject();
 	void sendproject();
-	void addquestion();
 	void addproject();
 	void addproject2();
-	void addquestion2();
 	void checksqlconexion();
 	void openproject();
 	void openproject2(QListWidgetItem *);
 	void convert_to_xlsx();
-//	void addgroupe();
-//	void addgroupe2();
 	void modechange(bool checked);
     void sendproject_ref();
 	void refmodechange(bool checked);
     void changescope2(QTreeWidgetItem *item);
-	void showbarchartref();
     void configproject();
     void valmodechange(bool checked);
     void globalrep(bool checked);

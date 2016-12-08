@@ -6,6 +6,8 @@ class fact;
 class question;
 class Smtp;
 
+// cette classe compile les donnée relatif a une personne;
+
 class person
 {
 private:

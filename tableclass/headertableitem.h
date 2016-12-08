@@ -8,6 +8,8 @@
 #include "data/person.h"
 #include "data/question.h"
 
+// cette clase repredente un header d'un des 3 tableaux principaux
+
 class headertableitem : public QObject, public QTableWidgetItem
 {
     Q_OBJECT

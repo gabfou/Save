@@ -3,6 +3,8 @@
 
 #include "le.h"
 
+// cette classe represente le menu a gauche de la fenetre principale;
+
 class grouptree;
 
 class MainWindow;

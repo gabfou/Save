@@ -137,7 +137,7 @@ int project::getNbqgeneration() const
 	return nbqgeneration;
 }
 
-inline void project::addquestion(QString name, int group, unsigned int id, int qgroupid, QString sujet,
+inline void project::addquestion(QString name, int group, int id, int qgroupid, QString sujet,
 								 QString unit, int type, QString splitchar, int value, int ref_only,
 								 bool global)
 {
@@ -147,7 +147,7 @@ inline void project::addquestion(QString name, int group, unsigned int id, int q
 	}
 	this->nbquestion++;
 	question ret(name, group, id, qgroupid, sujet, unit, type, splitchar, value, ref_only, global);
-	while (this->listquestion.size() < id)
+    while ((int)this->listquestion.size() < id)
 		this->listquestion.push_back(question());
 	this->listquestion.push_back(ret);
 }
@@ -160,11 +160,11 @@ void project::addreponse(int id, string name, int time, int note, QString date, 
 		nbfactnref++;
 	else
 		nbfactref++;
-	if (id < listp.size() && listp[id].id != -1)
+    if (id < (int)listp.size() && listp[id].id != -1)
 		listp[id].add_fact(name, time, note, date, iteration, idquestion, timestr);
 }
 
-inline void project::addgroup(QString name, int parentid, unsigned int id, int type, QString description, bool gquestion)
+inline void project::addgroup(QString name, int parentid, unsigned int id, int type, QString description, int gquestion)
 {
 	if (type == 0)
 	{
@@ -186,18 +186,6 @@ inline void project::addgroup(QString name, int parentid, unsigned int id, int t
 			this->listqgroup.push_back(group());
 		this->listqgroup.push_back(ret);
 	}
-}
-
-static int checkvalide(string line)
-{
-	int i = -1;
-
-	while (line[++i])
-	{
-		if (line[i] == ' ' && i != 0 && isalnum(line[i - 1]) && isalnum(line[i + 1]))
-			return (1);
-	}
-	return (0);
 }
 
 inline question newquestion(string line)
@@ -281,7 +269,7 @@ void project::initoroject(QString fproject)
 						   query.value(2).toInt(),
 						   query.value(3).toInt(),
 						   query.value(4).toString(),
-						   query.value(5).toBool());
+                           query.value(5).toInt());
 		}
 	}
 	else
@@ -365,7 +353,7 @@ void project::initoroject(QString fproject)
 	tmp2 = this->listquestion.begin();
 	while (tmp2 != this->listquestion.end())
 	{
-		if (tmp2->qgroupid > -1 && tmp2->qgroupid < listqgroup.size())
+        if (tmp2->qgroupid > -1 && tmp2->qgroupid < (int)listqgroup.size())
 			this->listqgroup[tmp2->qgroupid].addquestion(*tmp2);
 		tmp2++;
 	}
@@ -392,8 +380,7 @@ void	project::groupchild(unsigned int id, QList<int> & ret) const
 	listpg = listint.begin();
 	while (listpg != listint.end())
 	{
-//		qDebug() << "number : " <<QString::number(*listpg);
-			this->groupchild(*listpg, ret);
+		this->groupchild(*listpg, ret);
 		listpg++;
 	}
 }
@@ -416,20 +403,16 @@ void	project::groupchild(unsigned int id, vector<group> & ret) const
 void	project::groupchild(unsigned int id, QList<int> & ret, vector<group> &g) const
 {
 	QList<int>::iterator listpg;
-	QList<int> listint;// = listgroup[id].getListfils();
+	QList<int> listint;
 
 	ret << id;
 	if (g[id].type == -1)
-	{
-		qDebug() << "groupchild bug id =" << id;
 		return ;
-	}
 	listint = g[id].getListfils();
 	listpg = listint.begin();
 	while (listpg != listint.end())
 	{
-//		qDebug() << "number : " <<QString::number(*listpg);
-			this->groupchild(*listpg, ret, g);
+		this->groupchild(*listpg, ret, g);
 		listpg++;
 	}
 }
@@ -444,7 +427,6 @@ void	project::groupqchild(int id, QList<int> & ret, int gref) const
 	listpg = listint.begin();
 	while (listpg != listint.end())
 	{
-		//qDebug() << "groupqchild number group: " << QString::number(*listpg);
 		this->groupqchild(*listpg, ret, gref);
 		listpg++;
 	}
@@ -479,7 +461,6 @@ void	project::questiongroupqchild(int id, QList<int> & ret, bool ref) const
 	listqi = listq.begin();
 	while (listqi != listq.end())
 	{
-		//qDebug() << "questiongroupchild : " << listqi->id;
 		if (ref == 1 || listqi->ref_only == 0)
 			ret << listqi->id;
 		listqi++;
@@ -488,7 +469,6 @@ void	project::questiongroupqchild(int id, QList<int> & ret, bool ref) const
 	listpg = listint.begin();
 	while (listpg != listint.end())
 	{
-		//qDebug() << "questiongroupchild number group: " << QString::number(*listpg);
 		this->questiongroupqchild(*listpg, ret, ref);
 		listpg++;
 	}
@@ -612,15 +592,6 @@ QStringList	project::sendproject(int group)
 	vector<int>::iterator tmp;
 	QList<person> listp = this->getListallpfils(group);
 	QStringList listmail;
-
-//	qDebug() << listtmp.size();
-//	tmp = listp.begin();
-//	while (tmp != listp.end())
-//	{
-//		listmail.push_back((*tmp).email);
-//		listmail.push_back(QString::number((*tmp).id));
-//		tmp++;
-//	}
 	return (listmail);
 }
 
@@ -702,12 +673,7 @@ int	sqlo::addquestion(project *p, QString name, int groupid, QString type, int n
 	if (id != -1)
 		qry.prepare(("UPDATE project_" + p->name + "_question Set question=?, groupid=?, type=?, note=?, sujet=?, typef=?, qgroupid=?, ref_only=?, splitchar=?, value=? WHERE id=?;"));
 	else
-	{
-//		qry.prepare( ("CREATE TABLE IF NOT EXISTS project_" + p->name + "_question (id INTEGER UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT, question VARCHAR(30), groupid INTEGER, type VARCHAR(30), note BOOLEAN DEFAULT 1, sujet VARCHAR(300), qgroupid INT DEFAULT 0, typef INT DEFAULT 0)") );
-//		if( !qry.exec() )
-//			qDebug() << qry.lastError();
 		qry.prepare( ("INSERT INTO project_" + p->name + "_question (question , groupid , type , note , sujet , typef, qgroupid, ref_only, splitchar, value ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ? );") );
-	}
 	qry.addBindValue(name);
 	qry.addBindValue(groupid);
 	qry.addBindValue(type);
@@ -718,7 +684,6 @@ int	sqlo::addquestion(project *p, QString name, int groupid, QString type, int n
 	qry.addBindValue(ref_only);
 	qry.addBindValue(splitchar + " ");
 	qry.addBindValue(val);
-	//qry.addBindValue(global);
 	if (id != -1)
 		qry.addBindValue(id);
 	if (!qry.exec())

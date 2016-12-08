@@ -16,7 +16,6 @@ QString indextocase(int x, int y)
 		xstr.push_front(tab[x % 26]);
         x = x / 26;
     }
-    //qDebug() << (xstr + QString::number(y + 1));
 	return (xstr + QString::number(y + 1));
 }
 
@@ -48,14 +47,23 @@ void tab_to_xlsx(const QTableWidget *table, Document & xlsx)
 				item = table->horizontalHeaderItem(x);
 			else
 				item = table->item(y, x);
-			if (item && (x == -1 || y == -1))
-                xlsx.write(y2 + 2, x + 2, item->text(), format);
-			else if (item)
-                xlsx.write(y2 + 2, x + 2, item->text(), format);
+            if (item)
+            {
+                QVariant tmp = QVariant(item->text());
+                if (tmp.convert(QMetaType::QDateTime) == 0)
+                {
+                    tmp = QVariant(item->text());
+                    if (tmp.convert(QMetaType::Int) == 0)
+                        tmp = QVariant(item->text());
+                }
+                if (x == -1 || y == -1)
+                    xlsx.write(y2 + 2, x + 2, tmp, format);
+                else
+                    xlsx.write(y2 + 2, x + 2, tmp, format);
+            }
         }
 	}
-   // xlsx.setColumnWidth(xlsx.dimension(), 30);
-	qDebug() << "tab xlsx fin";
+    xlsx.setColumnWidth(xlsx.dimension(), 20);
 }
 
 void tab_to_fichier(const QString name, const QTableWidget *table)
@@ -64,5 +72,4 @@ void tab_to_fichier(const QString name, const QTableWidget *table)
 	tab_to_xlsx(table, xlsx);
 
 	xlsx.saveAs(name);
-	qDebug() << "xlsx fin";
 }

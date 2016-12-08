@@ -46,15 +46,6 @@
 #include <QSpinBox>
 #include <QDrag>
 #include <QMimeData>
-//#include <qwt_plot_renderer.h>
-//#include <qwt_plot_canvas.h>
-//#include <qwt_plot_multi_barchart.h>
-//#include <qwt_column_symbol.h>
-//#include <qwt_plot_histogram.h>
-//#include <qwt_plot_layout.h>
-//#include <qwt_legend.h>
-//#include <qwt_scale_draw.h>
-//#include <qwt_plot.h>
 #include <qtoolbar.h>
 #include <qtoolbutton.h>
 #include <QFileDialog>
@@ -71,9 +62,6 @@
 #include <QPainter>
 #include <vector>
 #include "sql/sqloperation.h"
-
-# define BUFF_SIZE 4096
-# define PATH "../../server/server/TextFile1.txt"
 
 class question;
 class group;
@@ -123,9 +111,5 @@ namespace sqlo
     void    sqlupdateintroreel(QString tablename, QString s);
 
 }
-
-//global
-extern bool g_ref;
-
 
 #endif // LE_H

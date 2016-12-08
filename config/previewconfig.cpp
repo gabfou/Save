@@ -7,12 +7,14 @@
 #include "mainwindow.h"
 #include "misc/formloadator.h"
 #include "infoquestion.h"
+#include "MRichTextEditor/mrichtextedit.h"
 
 previewconfig::previewconfig(MainWindow *m) : p(&(m->current))
 {
 	QHBoxLayout *layout = new QHBoxLayout();
 	preview = new QTabWidget();
-	introindex = new QTextEdit(p->introindex);
+    introindex = new MRichTextEdit();
+    introindex->setText(p->introindex);
 
 	formreel = new formloadator(0, 0, p);
 	formref = new formloadator(1, 0, p);
@@ -23,7 +25,8 @@ previewconfig::previewconfig(MainWindow *m) : p(&(m->current))
 
 	groupboxtmp = new infoquestion(p, m);
 	groupboxtmp->setquestionmod(0);
-	layout->addWidget(groupboxtmp, 2);
+    changescope(groupboxtmp->groupbox->topLevelItem(0));
+    layout->addWidget(groupboxtmp, 2);
 	layout->addWidget(preview, 5);
 	this->setLayout(layout);
 	connect(introindex, SIGNAL(textChanged()), this, SLOT(updateiindex()));

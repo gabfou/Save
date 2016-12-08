@@ -192,14 +192,11 @@ void	grouptree::addgroupintree()
 void	grouptree::addgroupintree2(QTreeWidgetItem *item)
 {
 	disconnect(cotmp);
-	qDebug() << item->text(0);
     int niark = sqlo::addgroup(&(m->current), m->namecurrent, item->text(0), tmpid, g[tmpid].type, item->text(0), 0);
 	item->parent()->addChild(new grouptreeitem(QStringList(QString(g[niark].getName())), &(m->current), niark, g[niark].type, i, (QTreeWidget*)0));
 	delete item;
 	item = NULL;
-	qDebug() << "upadte ?";
 	m->updatetable();
-	qDebug() << "upadte";
 }
 
 void	grouptree::addquestintree()
@@ -222,8 +219,6 @@ void	grouptree::addquestintree()
 
 void	grouptree::addquestintree2(QTreeWidgetItem *item, int column)
 {
-	Q_UNUSED(column);
-	//qDebug() << item->text(0);
 	disconnect(cotmp);
     int id = sqlo::addquestion(&(m->current), item->text(0), 0, "", 0, item->text(0), dynamic_cast<grouptreeitem*>(item->parent())->getId(), 0, 0, "", 1, 0, -1);
 	item->parent()->addChild(new questiontreeitem(QStringList(item->text(0)) , id, (QTreeWidget*)0));
@@ -252,20 +247,12 @@ void	grouptree::addquestglobintree2()
 
 void	grouptree::addpersonintree()
 {
-	//QWidget *win = new QWidget();
 	this->tmp = new QTreeWidgetItem((QTreeWidget*)0);
 	this->currentItem()->addChild(this->tmp);
 	this->openPersistentEditor(this->tmp);
 	this->tmpid = dynamic_cast<grouptreeitem*>(this->currentItem())->getId();
 	this->setCurrentItem(this->tmp);
 	cotmp = connect(this, SIGNAL(itemChanged(QTreeWidgetItem *, int)), this, SLOT(addpersonintree2(QTreeWidgetItem *, int)), Qt::UniqueConnection);
-	/*if (this->nametmp != NULL)
-		delete this->nametmp;
-	this->nametmp = new QLineEdit();
-
-	connect(this->nametmp, SIGNAL(returnPressed()), this, SLOT(addgroupintree2()));
-	connect(this->nametmp, SIGNAL(returnPressed()),  this->nametmp, SLOT(close()));
-	this->nametmp->show();*/
 }
 
 void	grouptree::addpersonintree2(QTreeWidgetItem *item, int column)
@@ -389,7 +376,7 @@ void    grouptree::pastintree()
     }
     else if (copietype == 2)
     {
-        int id = sqlo::addquestion(&(m->current), copieq.name, copieq.group, copieq.unit, copieq.note, copieq.sujet, tmp->getId(), copieq.type, copieq.ref_only, copieq.liststr.join("\n"), copieq.val, copieq.global);
+        sqlo::addquestion(&(m->current), copieq.name, copieq.group, copieq.unit, copieq.note, copieq.sujet, tmp->getId(), copieq.type, copieq.ref_only, copieq.liststr.join("\n"), copieq.val, copieq.global);
         this->currentItem()->addChild(new questiontreeitem(QStringList(copieq.name) , tmp->getId(), (QTreeWidget*)0));
         m->updatetable();
     }

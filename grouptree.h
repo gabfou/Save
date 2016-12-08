@@ -7,6 +7,8 @@
 #include "data/question.h"
 #include "data/fact.h"
 
+// cette classe represente une aborecense coté question ou person
+
 class project;
 class MainWindow;
 class grouptreeitem;

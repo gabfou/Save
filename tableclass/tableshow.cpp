@@ -110,10 +110,7 @@ tableshow::tableshow(MainWindow *m, QList<headertableitem*> &listv, QList<header
 void tableshow::reinit()
 {
 	if (p->listp.empty() || p->listquestion.empty())
-	{
-		qDebug() << "listp ou lisquestion vide dans reinit 1";
 		return ;
-	}
 	this->clear();
 	this->setRowCount(p->getNbperson() + 2 + p->getNbgroup());
 	this->setColumnCount(p->getNbquestion() + 2 /* 2*/);
@@ -130,10 +127,7 @@ void tableshow::reinit(QList<headertableitem*> &listv, QList<headertableitem*> &
 		k+= p->getNbpgeneration();
 
 	if (p->listp.empty() || p->listquestion.empty())
-	{
-		qDebug() << "listp ou lisquestion vide dans reinit 2";
 		return ;
-	}
 	this->clear();
 	this->setRowCount(listh.size() + 3);
 	this->setColumnCount(listv.size() + 3);
@@ -147,7 +141,6 @@ void tableshow::reinit(project *p, MainWindow *mainp)
 {
 	QElapsedTimer timerdebug;
 	this->p = p;
-	int i;
 
     k = (showmode == 1) ? 1 : 0;
 	if (showmode == 2)
@@ -178,7 +171,6 @@ void tableshow::reinit(project *p, MainWindow *mainp)
 		this->setColumnCount(p->getNbquestion() + k/* 2*/);
 	}
 	qDebug() << "set size time " << timerdebug.elapsed() <<"ms";
-	i = 0;
 	timerdebug.start();
 	this->populate();
 	qDebug() << "populate time " << timerdebug.elapsed() <<"ms";
@@ -339,7 +331,6 @@ void	tableshow::setverticalheader(vector<question> &q, int id)
 
 void	tableshow::setverticalheader(vector<group> &g, int id)
 {
-	//qDebug() << "ok ";
 	int i = 0;
 	QList<int>::const_iterator listpg;
 	QList<int> listint;
@@ -352,7 +343,7 @@ void	tableshow::setverticalheader(vector<group> &g, int id)
 		p->groupqchild(id, listint);
 	if (p->listp.empty() == true)
 	{
-		qDebug() << "aucune personne erreur";
+		qDebug() << "setverticalheader aucune personne erreur";
 		return ;
 	}
 	listpg = listint.begin();
@@ -376,7 +367,6 @@ void	tableshow::setverticalheader(vector<person> &p)
 {
 	int i = 0;
 	vector<person>::const_iterator listpg;
-//	QList<int> listint;
 	QElapsedTimer timerdebug;
 
 	timerdebug.start();
@@ -388,7 +378,6 @@ void	tableshow::setverticalheader(vector<person> &p)
 	listpg = p.begin();
 	while (listpg != p.end())
 	{
-//		qDebug() << "listpg" << *listpg << listint.size();
 		if (listpg->id == -1)
 		{
 			listpg++;
@@ -410,7 +399,6 @@ void	tableshow::setverticalheader(vector<person> &p)
 		}
 		this->setVerticalHeaderItem(i++, new headertableitem(this->p, gtmp->getName(), (*listpg)));
 		listpg++;
-		//gbox->verticalHeaderItem(i)->setBackgroundColor(gtmp->getColor());
 	}
 	qDebug() << "vertical header 3 time " << timerdebug.elapsed() << "ms";
 }
@@ -494,7 +482,6 @@ void	tableshow::clearheader()
 void	tableshow::showtable(int id, int qid, int itmin, int itmax)
 {
     this->select(id, qid, itmin, itmax);
-	qDebug() << "showtableshow";
 }
 
 void	tableshow::saveqpoint()
@@ -504,7 +491,6 @@ void	tableshow::saveqpoint()
 
 void	tableshow::saveqpoint(QPoint qpoint)
 {
-	qDebug() << "dsad";
 	lastqpoint = qpoint;
 	menuhead->popup(qpoint);
 }

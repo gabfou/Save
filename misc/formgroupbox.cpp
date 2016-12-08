@@ -4,15 +4,23 @@
 #include "data/person.h"
 #include "data/project.h"
 
-formgroupbox::formgroupbox(question *q, formgroupbox *parrent, project *p) : argq(q), p(p)
+formgroupbox::formgroupbox(question *q, formgroupbox *parrent, project *p, QString text) : argq(q), p(p)
 {
+    layout = new QVBoxLayout();
+    label = new QLabel(text);
+    layout->addWidget(label);
+    this->setLayout(layout);
     if (parrent)
         parrent->addchild(this);
     this->setAcceptDrops(1);
 }
 
-formgroupbox::formgroupbox(group *g, formgroupbox *parrent, project *p) : argg(g), p(p)
+formgroupbox::formgroupbox(group *g, formgroupbox *parrent, project *p, QString text) : argg(g), p(p)
 {
+    layout = new QVBoxLayout();
+    label = new QLabel(text);
+    layout->addWidget(label);
+    this->setLayout(layout);
     if (parrent)
         parrent->addchild(this);
     this->setAcceptDrops(1);
@@ -44,44 +52,53 @@ void formgroupbox::mousePressEvent ( QMouseEvent * event )
 
 void formgroupbox::dragEnterEvent(QDragEnterEvent *event)
 {
-    qDebug() << "dsafdsfs 2";
+    event->acceptProposedAction();
 }
 
 void formgroupbox::dropEvent(QDropEvent *event)
 {
-    QStringList list = event->mimeData()->text().split(" ");
+    formgroupbox *src = dynamic_cast<formgroupbox*>(event->source());
+    if (src == NULL)
+        return ;
     group grouptmp;
     question questiontmp;
+    int id;
 
-    qDebug() << "dsafdsfs";
-    if (list.size() != 3)
-        return ;
-    int id = list.at(2).toInt();
-    if (list.at(1).compare("1"))
+    if (src->argg)
     {
-        grouptmp = p->listqgroup[id];
+        id = src->argg->id;
+        grouptmp = group(p->listqgroup[id]);
         if (argg)
         {
+            qDebug() << "dropEvent 1";
             sqlo::addgroup(p, p->name, argg->name, argg->parentid, argg->type, argg->description, argg->gquestion, id);
             sqlo::addgroup(p, p->name, grouptmp.name, grouptmp.parentid, grouptmp.type, grouptmp.description, grouptmp.gquestion, argg->id);
-            emit updateneeded();
+            this->label->setText(argg->description);
+            src->label->setText(src->argg->description);
         }
         else if (argq)
+        {
+            qDebug() << "dropEvent 2";
             return ;
+        }
     }
-    if (list.at(1).compare("2"))
+    if (src->argq)
     {
-        questiontmp = p->listquestion[id];
+        id = src->argq->id;
+        questiontmp = question(p->listquestion[id]);
         if (argg)
         {
-            sqlo::addquestion(p, questiontmp.name, questiontmp.group, questiontmp.unit, -1, questiontmp.sujet, argg->id, questiontmp.type, questiontmp.ref_only, questiontmp.liststr.join(" "), questiontmp.val, questiontmp.global,questiontmp.id);
-            emit updateneeded();
+//            qDebug() << "dropEvent 3"; // il manque la mise a jour
+//            sqlo::addquestion(p, questiontmp.name, questiontmp.group, questiontmp.unit, -1, questiontmp.sujet, argg->id, questiontmp.type, questiontmp.ref_only, questiontmp.liststr.join(" "), questiontmp.val, questiontmp.global,questiontmp.id);
+//            emit updateneeded();
         }
         else if (argq)
         {
-            sqlo::addquestion(p, argq->name, argq->group, argq->unit, -1, argq->sujet, argg->id, argq->type, argq->ref_only, argq->liststr.join(" "), argq->val, argq->global, questiontmp.id);
-            sqlo::addquestion(p, questiontmp.name, questiontmp.group, questiontmp.unit, -1, argq->sujet, argg->id, questiontmp.type, questiontmp.ref_only, questiontmp.liststr.join(" "), questiontmp.val, questiontmp.global, argq->id);
-            emit updateneeded();
+            qDebug() << "dropEvent 4";
+            sqlo::addquestion(p, argq->name, argq->group, argq->unit, -1, argq->sujet, argq->qgroupid, argq->type, argq->ref_only, argq->liststr.join(" "), argq->val, argq->global, questiontmp.id);
+            sqlo::addquestion(p, questiontmp.name, questiontmp.group, questiontmp.unit, -1, questiontmp.sujet, questiontmp.qgroupid, questiontmp.type, questiontmp.ref_only, questiontmp.liststr.join(" "), questiontmp.val, questiontmp.global, argq->id);
+            this->label->setText(argq->sujet);
+            src->label->setText(src->argq->sujet);
         }
     }
 }

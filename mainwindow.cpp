@@ -40,10 +40,6 @@ MainWindow::MainWindow(QWidget *parent) :
     //menu
 
     menu_projet = menuBar()->addMenu("&Projet");
-//	QAction *show = menu_projet->addAction("&Triage par individu");
-//	show->setCheckable(true);
-//	show->setChecked(false);
-//	QObject::connect(show, SIGNAL(toggled(bool)), this, SLOT(modechange(bool)));
     QAction *new_projet = menu_projet->addAction("&Nouveaux");
     QObject::connect(new_projet, SIGNAL(triggered()), this, SLOT(addproject()));
     QAction *open_projet = menu_projet->addAction("Ouvrir");
@@ -54,16 +50,6 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(update, SIGNAL(triggered()), this, SLOT(updateproject()));
     QAction *configp = menu_projet->addAction("&Configuration projet");
     QObject::connect(configp, SIGNAL(triggered()), this, SLOT(configproject()));
-
-//	QMenu *menu_nouveaux = menuBar()->addMenu("&Ajouter");
-//	QAction *new_collaborateur = menu_nouveaux->addAction("&Ajouter un collaborateur");
-//	QObject::connect(new_collaborateur, SIGNAL(triggered()), this, SLOT(addperson()));
-//	QAction *new_question = menu_nouveaux->addAction("&Ajouter une question");
-//	QObject::connect(new_question, SIGNAL(triggered()), this, SLOT(addquestion()));
-//	QAction *new_groupe = menu_nouveaux->addAction("&Ajouter un groupe");
-//	QObject::connect(new_groupe, SIGNAL(triggered()), this, SLOT(addgroupe()));
-
-    //QMenu *menu_selection = menuBar()->addMenu("&selection");
 
     menu_outil = menuBar()->addMenu("&Outils");
     QAction *xlsx_convert = menu_outil->addAction("&Convertir en xlsx");
@@ -144,81 +130,6 @@ void MainWindow::checksqlconexion()
 
     if(!qry.exec("SELECT 1"))
         createConnection();
-}
-
-// ajout de question
-
-void MainWindow::addquestion()
-{
-    QWidget *win = new QWidget();
-    QLabel *Labeljeu = new QLabel("Name :");
-    this->nametmp = new QLineEdit;
-    Labeljeu->setAlignment(Qt::AlignTop);
-    QLabel *Labelsujet = new QLabel("Description :");
-    this->emailtmp = new QLineEdit;
-    Labelsujet->setAlignment(Qt::AlignTop);
-    QLabel *Labelgroup = new QLabel("Groupe :");
-    this->groupboxtmp = new grouptree(this, this->current.listgroup);
-    Labelgroup->setAlignment(Qt::AlignTop);
-    QLabel *Labeltype = new QLabel("Unitée :");
-    this->prenametmp = new QLineEdit;
-    Labeltype->setAlignment(Qt::AlignTop);
-    QLabel *Labelnote = new QLabel("Note :");
-    this->radiobuttontmp = new QRadioButton("", this);
-    Labelnote->setAlignment(Qt::AlignTop);
-
-    //Boutons
-    QPushButton *b_valider = new QPushButton("Valider");
-    QPushButton *b_annuler = new QPushButton("Fermer");
-
-    //Connexions aux slots
-    connect(b_valider, SIGNAL(clicked()), this, SLOT(addquestion2()));
-    connect(b_annuler, SIGNAL(clicked()), win, SLOT(close()));
-
-    //Layout
-    QGroupBox *groupbox = new QGroupBox("");
-
-    QGridLayout *layoutFormulaire = new QGridLayout();
-    layoutFormulaire->addWidget(Labeljeu, 0, 0);
-    layoutFormulaire->addWidget(this->nametmp, 0, 1);
-    layoutFormulaire->addWidget(Labelsujet, 1, 0);
-    layoutFormulaire->addWidget(this->emailtmp, 1, 1);
-    layoutFormulaire->addWidget(Labelgroup, 2, 0);
-    layoutFormulaire->addWidget(this->groupboxtmp, 2, 1);
-    layoutFormulaire->addWidget(Labeltype, 3, 0);
-    layoutFormulaire->addWidget(this->prenametmp, 3, 1);
-    layoutFormulaire->addWidget(Labelnote, 4, 0);
-    layoutFormulaire->addWidget(this->radiobuttontmp, 4, 1);
-
-    groupbox->setLayout(layoutFormulaire);
-
-    QGridLayout *layout = new QGridLayout();
-    layout->setAlignment(Qt::AlignTop);
-    layout->addWidget(groupbox, 0, 0, 1, 2, Qt::AlignTop);
-    layout->addWidget(b_annuler, 1, 0, Qt::AlignLeft);
-    layout->addWidget(b_valider, 1, 1, Qt::AlignRight);
-    //setLayout(layout);
-    win->setLayout(layout);
-    win->show();
-}
-
-void MainWindow::addquestion2()
-{
-    QSqlQuery qry;
-
-    qry.prepare( "CREATE TABLE IF NOT EXISTS project_" + this->namecurrent + "_question (id INTEGER UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT, question VARCHAR(30), groupid INTEGER, type VARCHAR(30), note BOOLEAN DEFAULT 1, sujet VARCHAR(300), qgroupid INT DEFAULT 0, typef INT DEFAULT 0)" );
-    if( !qry.exec() )
-        qDebug() << qry.lastError();
-    qry.prepare("INSERT INTO project_" + this->namecurrent + "_question (question , groupid , type , note , sujet ) VALUES ( ? , ? , ? , ? , ? );");
-    qry.addBindValue(this->nametmp->text());
-    qry.addBindValue(QString::number(dynamic_cast<grouptreeitem*>(this->groupboxtmp->currentItem())->getId()));
-    qry.addBindValue(this->prenametmp->text());
-    qry.addBindValue(((this->radiobuttontmp->isChecked()) ? "1" : "0"));
-    qry.addBindValue((this->emailtmp->text()));
-    if( !qry.exec() )
-        qDebug() << qry.lastError();
-    else
-        qDebug() << "question insert success!";
 }
 
 //ajout de projet
@@ -451,8 +362,6 @@ void MainWindow::openproject2(QListWidgetItem *item)
     QSqlQuery qry;
 
     this->initvar();
-    //this->current.initoroject(item->text().toStdString());
-//	this->current->projectshow(this, this->table, this->currentgref);
     this->namecurrent = item->text();
     this->updateproject();
     menu_projet->actions().at(3)->setEnabled(1);
@@ -514,16 +423,10 @@ void MainWindow::addock()
     if (groupdock)
         delete groupdock;
     groupdock = new QDockWidget(this);
-//    if (alltreetmp)  //sa fait planter je sais pas pk
-//        delete alltreetmp;
     this->alltreetmp = new Alltree(this, &(this->current));
     groupdock->setWidget(this->alltreetmp);
     groupdock->show();
     addDockWidget(Qt::LeftDockWidgetArea, groupdock);
-//	if (showmod == 0)
-//		connect(this->groupboxtmp, SIGNAL(itemClicked(QTreeWidgetItem *, int )), this, SLOT(changescope2()));
-//	if (showmod == 2)
-//		connect(this->groupboxtmp, SIGNAL(itemClicked(QTreeWidgetItem *, int )), this, SLOT(changescopeq2()));
 }
 
 
@@ -532,24 +435,6 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
-
-//void MainWindow::mailperso()
-//{
-//    QList<person> listp =  this->current.getListallpfils(group);
-//    QString body;
-//    QSqlQuery qry;
-//    body = "<html><p>Dear __%p__,</p>"
-//           "<p>This is your daily DMI LEAD CHANGE Timeesheet reminder</p>"
-//           "<p>Thank you for taking a few minutes at the end of your day to complete the timesheet:</p>"
-//           "<a href=\"http://etudemurano.alwaysdata.net/" + str;
-
-//    QList<person>::iterator i = listp.begin();
-//    while (i != listp.end())
-//    {
-//        sendmail(i->email, body.replace("__%p__", i->firstname), type, qry.value('jour').toInt()) ; // OPTI
-//        i++;
-//    }
-//}
 
 // envoi des mail
 
@@ -587,16 +472,6 @@ void MainWindow::sendprojectauxi(QString str, QList<person> listp, int type)
                            "<p>Anaïs for the MURANO Team</p>";
 
     }
-//    QString body = "<p>Bonjour,</p><Br/>"
-//                   "<p>Nous effectuons actuellement une mission pour le compte de votre société.</p>"
-//                   "<p>Dans ce cadre, le cabinet Murano vous donne la parole !</p>"
-//                   "<p>Merci de prendre quelques minutes de votre temps pour répondre à notre questionnaire :</p>"
-//                   "<a href=\"etudemurano.alwaysdata.net/" + str;
-//    QString bodyend = "\"><u>ACCEDER AU QUESTIONNAIRE</u></a></p>"
-//                      "<p>Si vous avez des questions ou des difficultés avec le lien, n’hésitez pas à nous contacter.</p><Br/>"
-//                      "<p>Nous vous remercions de votre participation !</p>"
-//                      "<p>L’équipe MURAnO</p>";
-
     QList<person>::iterator i = listp.begin();
     while (i != listp.end())
     {
@@ -616,8 +491,6 @@ void MainWindow::mailSent(QString status)
 {
     (void)status;
 }
-
-//recuperation des donnee en ligne
 
 void MainWindow::select_first_table()
 {
@@ -656,19 +529,13 @@ void MainWindow::updateproject()
         this->menu_affifchage->actions().at(0)->setVisible(1);
 }
 
-//void MainWindow::messageErreur(QNetworkReply::NetworkError)
-//{
-//	QNetworkReply *r = qobject_cast<QNetworkReply*>(sender());
-//	QMessageBox::critical(this, "Erreur", "Erreur lors du chargement. Vérifiez votre connexion internet ou réessayez plus tard <br /><br /> Code de l'erreur : <br /><em>" + r->errorString() + "</em>");
-//}
-
 void MainWindow::extract_brutesimple()
 {
     QSqlQuery qry;
     QWidget *w = new QWidget();
     QVBoxLayout *layout = new QVBoxLayout();
     listWidgettmp = new QListWidget();
-    QPushButton *valider = new QPushButton();
+    QPushButton *valider = new QPushButton("Valider");
 
     listWidgettmp->setWindowModality(Qt::ApplicationModal);
     if(qry.exec("SELECT table_name FROM INFORMATION_SCHEMA.TABLES WHERE table_name LIKE 'project_%_project'"))
@@ -686,7 +553,6 @@ void MainWindow::extract_brutesimple()
     layout->addWidget(valider);
     w->setLayout(layout);
     w->show();
-    qDebug() << "sqjhd";
 }
 
 void MainWindow::extract_brutesimple2()
@@ -700,11 +566,8 @@ void MainWindow::extract_brutesimple2()
 
     while ((item = listWidgettmp->item(++i)))
     {
-        qDebug() << item->text();
-        qDebug() << "dsd";
         if (item->checkState())
         {
-            qDebug() << "dsd 2";
             if (y)
                 qry_prep += "UNION ";
             qry_prep += "SELECT groupe.groupname, firstname, lastname, iteration, date_info, qgroupe.groupname, question, time, str "
@@ -720,7 +583,6 @@ void MainWindow::extract_brutesimple2()
             y++;
         }
     }
-    qDebug() << qry_prep;
     if ( !qry.exec(qry_prep) )
         qDebug() << "qry table_brut_simple fail" << qry.lastError();
     else
@@ -728,7 +590,15 @@ void MainWindow::extract_brutesimple2()
     tmp->setRowCount(qry.numRowsAffected() + 2);
     tmp->setColumnCount(10);
 
-
+    tmp->setItem(++y, 0, new QTableWidgetItem("groupe"));
+    tmp->setItem(y, 1, new QTableWidgetItem("firstname"));
+    tmp->setItem(y, 2, new QTableWidgetItem("lastname"));
+    tmp->setItem(y, 3, new QTableWidgetItem("iteration"));
+    tmp->setItem(y, 4, new QTableWidgetItem("date_info"));
+    tmp->setItem(y, 5, new QTableWidgetItem("groupe question"));
+    tmp->setItem(y, 6, new QTableWidgetItem("question"));
+    tmp->setItem(y, 7, new QTableWidgetItem("reponse nombre"));
+    tmp->setItem(y, 8, new QTableWidgetItem("reponse texte"));
     y = -1;
     while (qry.next())
     {
@@ -741,9 +611,7 @@ void MainWindow::extract_brutesimple2()
         tmp->setItem(y, 6, new QTableWidgetItem(qry.value(6).toString()));
         tmp->setItem(y, 7, new QTableWidgetItem(qry.value(7).toString()));
         tmp->setItem(y, 8, new QTableWidgetItem(qry.value(8).toString()));
-//        tmp->setItem(y, 10, new QTableWidgetItem(qry.value(9).toInt()));
     }
-    //tmp->show();
     QString fichier = QFileDialog::getSaveFileName(this, "Destination", "Save", "Excell files (*.xlsx)");
     tab_to_fichier(fichier, tmp);
     delete listWidgettmp;
@@ -765,8 +633,7 @@ void MainWindow::convert_to_xlsx()
     if (tmp)
         tab_to_fichier(fichier, tmp);
     else
-        //QMessageBox::Warning(this, tr("warning"), tr("aucun projet selectioné"));
-        qDebug() << "no project selected";
+        warning("aucun projet selectioné");
 }
 
 void	MainWindow::modechange(bool checked)
@@ -779,7 +646,6 @@ void	MainWindow::refmodechange(bool checked)
 {
     ref = (checked) ? 1 : 0;
     current.ref = ref;
-    //this->table->updateall();
     emit refchanged(checked);
     this->table->showtable(currentgref, currentgqref, iterationmin, iterationmax);
 }
@@ -861,7 +727,6 @@ void	MainWindow::changescope2(QTreeWidgetItem *item)
         this->currentgref = tmp->getId();
         this->current.gref = this->currentgref;
         emit grefchange(currentgref);
-//		this->showproject();
     }
 }
 
@@ -874,15 +739,9 @@ void	MainWindow::changescopeq2(QTreeWidgetItem *item)
         this->currentgqref = tmp->getId();
         this->current.gqref = this->currentgqref;
         emit gqrefchange(currentgqref);
-//		this->showproject();
     }
 }
 
-void	MainWindow::showbarchartref()
-{
-//	d_chart = new barref(NULL, this->current);
-//	d_chart->show();
-}
 
 void MainWindow::updatetable()
 {
@@ -927,11 +786,7 @@ void	MainWindow::screenshootcurrent()
             return;
         const QString fileName = fileDialog.selectedFiles().first();
         if (!pixmap.save(fileName))
-        {
-        //	QMessageBox::warning(this, tr("Save Error"), tr("The image could not be saved to \"%1\".")
-        //						 .arg(QDir::toNativeSeparators(fileName)));
-            qDebug() << tr("The image could not be saved to \"%1\".").arg(QDir::toNativeSeparators(fileName));
-        }
+            warning(tr("The image could not be saved to \"%1\".").arg(QDir::toNativeSeparators(fileName)));
 }
 
 void    MainWindow::maxiterationchange(int max)
@@ -1009,19 +864,18 @@ void MainWindow::suivirep()
             w->setItem(y, i, new QTableWidgetItem(itp->time_rep_at_iteration(i, &counter, &(counter2[i]))));
         tmp = (float)counter / (float)(itp->questionbool + 1);
         counter3 += tmp;
-        w->setItem(y, i, new QTableWidgetItem(QString::number(tmp * 100) + "%"));
+        w->setItem(y, i, new QTableWidgetItem(QString::number(tmp * 100, 'g',  4) + "%"));
         itp++;
     }
 
     w->setVerticalHeaderItem(++y, new QTableWidgetItem("taux de réponse"));
     i = -1;
     while (++i < current.iterationmax + 1)
-        w->setItem(y, i, new QTableWidgetItem(QString::number((float)counter2[i] / (float)current.getNbperson() * 100) + "%"));
-    w->setItem(y, i, new QTableWidgetItem(QString::number(counter3 / (float)current.getNbperson() * 100) + "%"));
+        w->setItem(y, i, new QTableWidgetItem(QString::number((float)counter2[i] / (float)current.getNbperson() * 100, 'g', 4) + "%"));
+    w->setItem(y, i, new QTableWidgetItem(QString::number(counter3 / (float)current.getNbperson() * 100) + "%", 4));
 
     w->resizeColumnsToContents();
     w->resizeRowsToContents();
-//    w->setSortingEnabled(true);
     w->show();
     delete[] counter2;
 }

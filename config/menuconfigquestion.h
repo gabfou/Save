@@ -3,6 +3,8 @@
 
 #include "le.h"
 
+// cette classe represente l'onglet "question" dans le menu configuration
+
 class project;
 class grouptree;
 class MainWindow;

@@ -7,6 +7,9 @@ class listedit;
 class listeditwval;
 class grouptree;
 class textedit;
+
+// cette classe represente la partie permetant de configurer une question
+
 #include "info.h"
 
 class infoquestion : public info
@@ -34,7 +37,7 @@ private:
 	QMetaObject::Connection cotmp;
 	QLineEdit *name;
 	grouptree *target;
-    textedit *description;
+    MRichTextEdit *description;
 	QLineEdit *unit;
 	QComboBox *type;
     QSpinBox *value;

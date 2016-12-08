@@ -87,7 +87,6 @@ void recupquestiontemplate(QString name, project *p)
 			continue ;
 		}
 		x = nbg - 1;
-		qDebug() << x;
 		QString name = xlsx.read(indextocase(++x, y)).toString();
 		QString sujet = xlsx.read(indextocase(++x, y)).toString();
 		int type = p->mytypqinv(xlsx.read(indextocase(++x, y)).toString());

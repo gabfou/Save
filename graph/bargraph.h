@@ -17,8 +17,6 @@ public:
 	void redraw();
 	QString getName() const;
 	void setName(const QString &value);
-public slots:
-    void selectq(int gqref);
 protected:
 	void paintEvent(QPaintEvent *event);
 	void  drawgraph(QPainter *qp);

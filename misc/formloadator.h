@@ -4,13 +4,16 @@
 #include "le.h"
 
 #include "formgroupbox.h"
+class MRichTextEdit;
+
+// cette classe represente une preview d'un formulaire;
 
 class formloadator : public QScrollArea
 {
     Q_OBJECT
 public:
     formloadator(bool ref, int gid, project *p);
-    int formcreator(bool ref, group *g, QVBoxLayout *layout, int gid = 0, QVBoxLayout *layoutgquestion = NULL, formgroupbox *wgquestion = NULL);
+    int formcreator(bool ref, group *g, QVBoxLayout *layout, int gid = 0, formgroupbox *wgquestion = NULL);
     void gidupdate(int gid);
 public slots:
     int reformcreator();
@@ -23,8 +26,8 @@ private:
     int gid;
     int ref;
     project *p;
-    QTextEdit *introref;
-    QTextEdit *introreel;
+    MRichTextEdit *introref;
+    MRichTextEdit *introreel;
     QList<formgroupbox*> checklistparrent;
     QVBoxLayout *layout;
     QWidget *ret;

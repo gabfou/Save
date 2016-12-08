@@ -34,9 +34,6 @@ overview::overview(MainWindow *m, project *p, int group, int *showmod) : p(p), s
 
 void overview::updateov(int group, int qgroup)
 {
-//    if (*showmod == 2) // provisoire la meme au dessus
-//        group = 0;
-    qDebug() << "updateov";
     bar->updateg(syntheselistgroup(p->getgrouplist(group, qgroup)), qgroup);
     barref->updateg(syntheselistgroup(p->getgrouplist(group, qgroup, 0, 0)), qgroup);
     table->updateall();

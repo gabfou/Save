@@ -8,15 +8,11 @@ t_groupref syntheselistgroup(QList<t_groupref> listg)
 	t_groupref ret;
 
     if (listg.empty())
-    {
-        qDebug() << "listempty in syntheselistgroup";
         return (ret);
-    }
 
 	QList<t_groupref>::iterator  tmp;
     float tabi[listg.begin()->list.size() + 1];
     float tabl[listg.begin()->list.size() + 1];
-    //qDebug() << "dsfsdfdsfdsgdg " << listg.begin()->list.size();
     QList<float>::iterator tmp4;
     int i;
     int m = 0;
@@ -49,7 +45,6 @@ t_groupref syntheselistgroup(QList<t_groupref> listg)
 		if (tabl[i] != 0)
 		{
             float tmp37 = tabi[i] / tabl[i];
-            //qDebug() << "test test test" << tmp37;
 			ret.total += tmp37;
             ret.list += tmp37;
 		}
@@ -59,19 +54,9 @@ t_groupref syntheselistgroup(QList<t_groupref> listg)
 	return ret;
 }
 
-/*float total(t_groupref g)
-{
-    int total = 0;
-    i = -1;
-    while(++i < listg.size() + 1)
-        total += tmp37;
-    return total;
-}*/
-
 void ft_error(string error)
 {
 	cout << error;
-//	Sleep(10000);
 	exit(-1);
 }
 

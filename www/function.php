@@ -1,7 +1,7 @@
 <?php
 try
 {
-	$bdd = new PDO('mysql:host=mysql1.paris1.alwaysdata.com;dbname=etudemurano_project;charset=utf8', '127008_johann', 't4x5akda');
+	$bdd = new PDO('mysql:host=mysql51-37.perso;dbname=muranocobdd;charset=utf8', 'muranocobdd', 'Gabriel63');
 	//$bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
 }
 catch(Exception $e)

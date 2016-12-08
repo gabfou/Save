@@ -6,6 +6,8 @@
 
 class MainWindow;
 
+// cette classe represente le menu de planification de sondage
+
 class menuconfigsondage : public QWidget
 {
     Q_OBJECT

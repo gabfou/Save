@@ -1,6 +1,8 @@
 #pragma once
 #include "le.h"
 
+// cette classe compile les donnée relatif a une question;
+
 class question
 {
 public:

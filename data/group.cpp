@@ -15,7 +15,7 @@ group::group()
 QColor panelgcolor[5] = {Qt::cyan, Qt::magenta, Qt::yellow, Qt::blue, Qt::darkGreen};
 
 QString group::getName() const{return this->name;}
-QList<person> group::getListp(){return this->listp;}
+QList<person> group::getListp() const {return this->listp;}
 int group::getGeneration() const{return generation;}
 int group::getParentid() const{return parentid;}
 QColor group::getColor() const{return color;}
@@ -24,11 +24,7 @@ void group::setColor(const QColor &value){color = value;}
 
 void	group::addfils(int id)
 {
-    //qDebug() << this->name << " addfils: " << QString::number(id) << QString::number((long int)this);
-    int dafuq = id;
-//	if (this->listfils.empty())
-//		qDebug() << "emptyfils";
-	this->listfils.push_back(dafuq);
+    this->listfils.push_back(id);
 }
 
 void    group::supquestion(int id)
@@ -97,7 +93,7 @@ void    group::changeperson(int id, person & p)
     }
 }
 
-group::group(QString name, int parentid, int id, vector<group> & listgroup, int type, QString description, bool gquestion, project *p) : type(type), p(p)
+group::group(QString name, int parentid, int id, vector<group> & listgroup, int type, QString description, int gquestion, project *p) : type(type), p(p)
 {
     this->init = 1;
 	this->name = name;
@@ -120,18 +116,34 @@ group::group(QString name, int parentid, int id, vector<group> & listgroup, int 
 	}
 }
 
+group::group(const group &g)
+{
+    this->init = g.init;
+    this->name = g.name;
+    this->parentid = g.parentid;
+    this->id = g.id;
+    this->description = g.description;
+    this->gquestion = g.gquestion;
+    this->generation = g.getGeneration();
+    this->listfils = g.getListfils();
+    this->listp = g.getListp();
+    this->listq = g.getListq();
+    this->p = g.p;
+    this->type = g.type;
+    this->color = g.getColor();
+    this->visible = g.visible;
+}
+
 void group::addperson(person p)
 {
 	person p2(p);
     listp.push_back(p2);
-    //qDebug() << p2.getName();
 }
 
 void group::addquestion(question q)
 {
 	question q2(q);
     listq.push_back(q2);
-    qDebug() << q2.name << id << listq.size();
 }
 
 void group::debug()
@@ -140,7 +152,6 @@ void group::debug()
 	tmp = this->listp.begin();
 	while (tmp != this->listp.end())
 	{
-		//this->listgroup[tmp->getGroupid()].addperson(*tmp);
         qDebug() << tmp->getName();
 		tmp++;
 	}
@@ -360,12 +371,8 @@ void group::changegroupidallqchild(project *p, int groupid)
 {
     QList<question>::iterator tmp = listq.begin();
 
-    if (type == 0)
-        qDebug() << "group::changegroupidallqchild fail 1";
-    qDebug() << "sjagd 1" << listq.size() << listp.size();
     while (tmp != listq.end())
     {
-        qDebug() << "sjagd 2" << tmp->id;
         sqlo::addquestion(p, tmp->name, groupid, tmp->unit, tmp->note, tmp->sujet, tmp->qgroupid,
                           tmp->type, tmp->ref_only,tmp->liststr.join("\n"), tmp->val, tmp->global, tmp->id);
         tmp++;
@@ -374,7 +381,6 @@ void group::changegroupidallqchild(project *p, int groupid)
     QList<int>::iterator tmp2 = listfils.begin();
     while (tmp2 != listfils.end())
     {
-        qDebug() << "sjagd 3" << *tmp2;
         p->listgroup[*tmp2].changegroupidallqchild(p, groupid);
         tmp2++;
     }
