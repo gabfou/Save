@@ -29,7 +29,6 @@ previewconfig::previewconfig(MainWindow *m) : p(&(m->current))
     layout->addWidget(groupboxtmp, 2);
 	layout->addWidget(preview, 5);
 	this->setLayout(layout);
-	connect(introindex, SIGNAL(textChanged()), this, SLOT(updateiindex()));
 	connect(groupboxtmp->groupbox, SIGNAL(itemClicked(QTreeWidgetItem *, int )), this, SLOT(changescope(QTreeWidgetItem *)));
 	connect(formreel, SIGNAL(questionclicked(int)), groupboxtmp, SLOT(updatequestion(int)));
 	connect(formref, SIGNAL(questionclicked(int)), groupboxtmp, SLOT(updatequestion(int)));
@@ -41,16 +40,19 @@ QWidget *previewconfig::indexinit()
 {
 	QWidget *ret = new QWidget();
 	QVBoxLayout *layout = new QVBoxLayout();
+    QPushButton *pb = new QPushButton("Enregistrer", this);
 
 	layout->addWidget(introindex);
-	layout->addWidget(new QLabel("estimate\nDay 1\n...\n"), 0,  Qt::AlignHCenter);
+    layout->addWidget(pb);
+    layout->addWidget(new QLabel("estimate\nDay 1\n...\n"), 0,  Qt::AlignHCenter);
 	if (p->sugestion)
 	{
 		layout->addWidget(new QLabel("your personal sugestion:\n"), 0,  Qt::AlignHCenter);
 		layout->addWidget(new QTextEdit());
 	}
 	ret->setLayout(layout);
-	return (ret);
+    connect(pb, SIGNAL(clicked(bool)), this, SLOT(updateiindex()));
+    return (ret);
 }
 
 void previewconfig::changescope(QTreeWidgetItem *item)

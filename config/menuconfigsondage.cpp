@@ -1,7 +1,10 @@
 #include "menuconfigsondage.h"
 #include "mainwindow.h"
+#include "grouptree.h"
+#include "grouptreeitem.h"
+#include "MRichTextEditor/mrichtextedit.h"
 
-menuconfigsondage::menuconfigsondage(MainWindow *m) : m(m)  // opti list a la place de vector pour listid ?
+menuconfigsondage::menuconfigsondage(MainWindow *m, grouptree *gt) : m(m), gt(gt)
 {
     QSqlQuery qry;
     listWidget = new QListWidget();
@@ -81,6 +84,18 @@ menuconfigsondage::menuconfigsondage(MainWindow *m) : m(m)  // opti list a la pl
     layoutcalendar->addWidget(calendar);
     hbox->addWidget(calendarbox);
 
+    QGroupBox *mail = new QGroupBox("Mail", this);
+    QVBoxLayout *layoutmail = new QVBoxLayout();
+    objectmail = new QLineEdit(this);
+    textmail = new MRichTextEdit(this);
+    textmail->setText("");
+    layoutmail->addWidget(new QLabel("Objet:"));
+    layoutmail->addWidget(objectmail);
+    layoutmail->addWidget(new QLabel("Texte:"));
+    layoutmail->addWidget(textmail);
+    mail->setLayout(layoutmail);
+    hbox->addWidget(mail);
+
     this->setLayout(hbox);
 
     connect(timecalendar, SIGNAL(dateChanged(QDate)), calendar, SLOT(setSelectedDate(QDate)));
@@ -94,14 +109,17 @@ void menuconfigsondage::updatecurrent()
 {
     QSqlQuery qry;
 
-    if (!(qry.exec("SELECT begin, ref FROM all_etude WHERE id='" + QString::number(listid[listWidget->currentRow()]) + "';")))
+    if (!(qry.exec("SELECT begin, ref, mail, mailobject FROM all_etude WHERE id='" + QString::number(listid[listWidget->currentRow()]) + "';")))
     {
         qDebug() << "updatecurrent menuconfigsondage fail" << qry.lastError();
         return ;
     }
+    qry.next();
     timecalendar->setDateTime(qry.value(0).toDateTime());
     refcheck->setChecked(qry.value(1).toBool());
     nbiteration->setValue(1);
+    textmail->setText(qry.value(2).toString());
+    objectmail->setText(qry.value(3).toString());
 }
 
 void menuconfigsondage::supsondage()
@@ -149,11 +167,18 @@ void menuconfigsondage::newsondage()
     {
         while (notgoodday(time, listday))
             time.addDays(1);
-        (qry.prepare("INSERT INTO all_etude (iteration , project_name , ref , begin) VALUES ( ?, ?, ?, ? );"));
+        (qry.prepare("INSERT INTO all_etude (iteration , project_name , ref , begin, groupid, mail, mailobject) VALUES ( ?, ?, ?, ?, ?, ?, ? );"));
         qry.addBindValue(nbiteration->text());
         qry.addBindValue(m->namecurrent);
         qry.addBindValue(refcheck->isChecked());
         qry.addBindValue(time);
+        grouptreeitem *tmp = dynamic_cast<grouptreeitem*>(gt->currentItem());
+        if (tmp)
+            qry.addBindValue(tmp->getId());
+        else
+            qry.addBindValue(QVariant(QVariant::Int));
+        qry.addBindValue(textmail->toHtml());
+        qry.addBindValue(objectmail->text());
         if (!(qry.exec()))
             qDebug() << "menu config sondage 3" << qry.lastError();
         listid << qry.lastInsertId().toInt();

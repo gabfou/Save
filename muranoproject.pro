@@ -61,7 +61,8 @@ SOURCES += main.cpp\
     misc/formgroupbox.cpp \
     misc/textedit.cpp \
     MRichTextEditor/mrichtextedit.cpp \
-    MRichTextEditor/mtextedit.cpp
+    MRichTextEditor/mtextedit.cpp \
+    misc/menugestionjour.cpp
 
 HEADERS  += mainwindow.h \
     data/fact.h \
@@ -103,7 +104,8 @@ HEADERS  += mainwindow.h \
     misc/formgroupbox.h \
     misc/textedit.h \
     MRichTextEditor/mrichtextedit.h \
-    MRichTextEditor/mtextedit.h
+    MRichTextEditor/mtextedit.h \
+    misc/menugestionjour.h
 
 FORMS    += mainwindow.ui \
     MRichTextEditor/mrichtextedit.ui

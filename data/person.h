@@ -19,6 +19,7 @@ public:
     QString lastname;
     QString firstname;
     QString email;
+    int jour;
     int iteration = -1;
     int groupid = -1;
     int	id = -1;
@@ -27,7 +28,7 @@ public:
 	person();
 	virtual ~person();
     person(QString name, vector<question> *question);
-    person(QString name, QString lastname, QString email, int id, vector<question> *listquestion, int groupid, int questionbool, int refbool);
+    person(QString name, QString lastname, QString email, int id, vector<question> *listquestion, int groupid, int questionbool, int refbool, int jour);
     int compare(QString name2);
 //	person(string name);
 	int getId() const;

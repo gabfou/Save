@@ -56,7 +56,7 @@ public:
 	~project();
 //public slots:
     void addperson(QString name, QString lastname, QString email);
-    void addperson(QString name, QString lastname, QString email, int id, vector<question>* listquestion, int groupid, int questionbool, int refbool);
+    void addperson(QString name, QString lastname, QString email, int id, vector<question>* listquestion, int groupid, int questionbool, int refbool, int jour);
 	QString postquestion(QString group);
 	void addquestion(string name, string group);
     void addreponse(int id, string name, int time, int note, QString date, int iteration, int idquestion, QString timestr);

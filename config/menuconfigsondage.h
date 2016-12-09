@@ -5,6 +5,7 @@
 #include "grouptree.h"
 
 class MainWindow;
+class MRichTextEdit;
 
 // cette classe represente le menu de planification de sondage
 
@@ -20,12 +21,14 @@ class menuconfigsondage : public QWidget
     QCalendarWidget *calendar;
     QDateTimeEdit *timecalendar;
     grouptree *gt;
+    MRichTextEdit *textmail;
+    QLineEdit *objectmail;
     QRadioButton *listday[7] = {new QRadioButton("Lundi"), new QRadioButton("Mardi"),
                              new QRadioButton("Mercredi"), new QRadioButton("Jeudi"),
                              new QRadioButton("Vendredi"), new QRadioButton("Samedi"),
                              new QRadioButton("Dimanche")};
 public:
-    menuconfigsondage(MainWindow *m);
+    menuconfigsondage(MainWindow *m, grouptree *gt);
 private slots:
     void supsondage();
     void newsondage();

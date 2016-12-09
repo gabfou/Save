@@ -78,6 +78,7 @@ private slots:
     void extract_brutesimple2();
     void extract_brutesimple();
     void suivirep();
+    void gestionjour();
 private:
 	Ui::MainWindow *ui;
 	QWindow *addprojectwindow;

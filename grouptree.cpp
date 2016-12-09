@@ -260,7 +260,7 @@ void	grouptree::addpersonintree2(QTreeWidgetItem *item, int column)
 	qDebug() << item->text(0);
 
 	disconnect(cotmp);
-	int id = sqlo::addperson(&(m->current), item->text(0).section(" ", 0, 0), item->text(0).section(" ", 1, 1), "not defined", dynamic_cast<grouptreeitem*>(item->parent())->getId());
+    int id = sqlo::addperson(&(m->current), item->text(0).section(" ", 0, 0), item->text(0).section(" ", 1, 1), "not defined", dynamic_cast<grouptreeitem*>(item->parent())->getId(), 0, 0, 0);
 	item->parent()->addChild(new persontreeitem(QStringList(item->text(0)) , id, (QTreeWidget*)0));
 	m->updatetable();
 	delete item;
@@ -364,7 +364,7 @@ void    grouptree::pastintree()
         return ;
     if (copietype == 1)
     {
-        int id = sqlo::addperson(&(m->current), copiep.firstname, copiep.lastname, copiep.email, tmp->getId());
+        int id = sqlo::addperson(&(m->current), copiep.firstname, copiep.lastname, copiep.email, copiep.groupid, copiep.refbool, copiep.questionbool, copiep.jour, tmp->getId());
         this->currentItem()->addChild(new persontreeitem(QStringList(copiep.firstname + " " + copiep.lastname) , id, (QTreeWidget*)0));
         m->updatetable();
     }

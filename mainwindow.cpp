@@ -13,25 +13,24 @@
 #include "misc/menusondage.h"
 #include "misc/emailvalidator.h"
 #include "tableclass/tableau_brut.h"
+#include "misc/emailvalidator.h"
+#include "misc/menugestionjour.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
-    string comande;
 
     ui->setupUi(this);
+    createConnection();
     this->cw = new QTabWidget();
     this->setCentralWidget(cw);
-    this->setWindowTitle("Outils sondage (WIP)");
-//	this->setWindowModality(Qt::ApplicationModal);
-//	this->current = new project;
-//	this->table = new QTableWidget(this);
+    this->setWindowTitle("Outils sondage");
     // default display
 
     this->resize(1000, 600);
 
-    // timer
+    // timer check connection
 
     QTimer *sqlco = new QTimer(this);
     connect(sqlco, SIGNAL(timeout()), this, SLOT(checksqlconexion()));
@@ -46,8 +45,6 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(open_projet, SIGNAL(triggered()), this, SLOT(openproject()));
     QAction *sup_projet = menu_projet->addAction("Supprimer projet");
     QObject::connect(sup_projet, SIGNAL(triggered()), this, SLOT(supproject()));
-    QAction *update = menu_projet->addAction("&Actualiser");
-    QObject::connect(update, SIGNAL(triggered()), this, SLOT(updateproject()));
     QAction *configp = menu_projet->addAction("&Configuration projet");
     QObject::connect(configp, SIGNAL(triggered()), this, SLOT(configproject()));
 
@@ -56,8 +53,8 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(xlsx_convert, SIGNAL(triggered()), this, SLOT(convert_to_xlsx()));
     QAction *brute = menu_outil->addAction("&Extraire les donnée brute en xlsx");
     QObject::connect(brute, SIGNAL(triggered()), this, SLOT(extract_brutesimple()));
-    QAction *afficheform = menu_outil->addAction("&form creator");
-    QObject::connect(afficheform, SIGNAL(triggered()), this, SLOT(formcreator()));
+//  QAction *afficheform = menu_outil->addAction("&form creator");
+//  QObject::connect(afficheform, SIGNAL(triggered()), this, SLOT(formcreator()));
 //	QAction *barchartref = menu_outil->addAction("&Graphique comparaison reference-donnée");
 //	QObject::connect(barchartref, SIGNAL(triggered()), this, SLOT(showbarchartref()));
 
@@ -83,21 +80,23 @@ MainWindow::MainWindow(QWidget *parent) :
     afficherglobalrep->setChecked(false);
     QObject::connect(afficherglobalrep, SIGNAL(toggled(bool)), this, SLOT(globalrep(bool)));
 
-    menu_graphique = menuBar()->addMenu("&Graphique");
-    affichergraphiquecompare = menu_graphique->addAction("&generer un graphique de comparaison référence-données");
-    affichergraphiquecompare->setCheckable(true);
-    affichergraphiquecompare->setChecked(false);
-    QObject::connect(affichergraphiquecompare, SIGNAL(toggled(bool)), this, SLOT(graphiquecrd(bool)));
+//    menu_graphique = menuBar()->addMenu("&Graphique");
+//    affichergraphiquecompare = menu_graphique->addAction("&generer un graphique de comparaison référence-données");
+//    affichergraphiquecompare->setCheckable(true);
+//    affichergraphiquecompare->setChecked(false);
+//    QObject::connect(affichergraphiquecompare, SIGNAL(toggled(bool)), this, SLOT(graphiquecrd(bool)));
 
-    menu_serveur = menuBar()->addMenu("&Serveur");
-    QAction *config_sondage = menu_serveur->addAction("&programer une serie de sondage");
+    menu_serveur = menuBar()->addMenu("&Serveur et mail");
+    QAction *config_sondage = menu_serveur->addAction("&Programer une série de sondage");
     QObject::connect(config_sondage, SIGNAL(triggered()), this, SLOT(configsondage()));
-    QAction *new_sondage = menu_serveur->addAction("&lancer un sondage");
-    QObject::connect(new_sondage, SIGNAL(triggered()), this, SLOT(sendproject()));
-    QAction *new_sondage_ref = menu_serveur->addAction("&lancer un sondage de reference");
-    QObject::connect(new_sondage_ref, SIGNAL(triggered()), this, SLOT(sendproject_ref()));
+//    QAction *new_sondage = menu_serveur->addAction("&lancer un sondage");
+//    QObject::connect(new_sondage, SIGNAL(triggered()), this, SLOT(sendproject()));
+//    QAction *new_sondage_ref = menu_serveur->addAction("&lancer un sondage de reference");
+//    QObject::connect(new_sondage_ref, SIGNAL(triggered()), this, SLOT(sendproject_ref()));
     QAction *suivirepa = menu_serveur->addAction("&suivi des réponse");
     QObject::connect(suivirepa, SIGNAL(triggered()), this, SLOT(suivirep()));
+    QAction *Gestionjour = menu_serveur->addAction("&Gestion des jour");
+    QObject::connect(Gestionjour, SIGNAL(triggered()), this, SLOT(gestionjour()));
 
     QToolBar *toolBarFichier = addToolBar("Fichier");
     QAction *screenshoot = toolBarFichier->addAction("&Imprimer écran");
@@ -106,11 +105,10 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(infoperson, SIGNAL(triggered()), this, SLOT(Excellinfo()));
 
     menu_projet->actions().at(3)->setEnabled(0);
-    menu_projet->actions().at(4)->setEnabled(0);
     menu_outil->setEnabled(0);
     menu_affifchage->setEnabled(0);
     menu_serveur->setEnabled(0);
-    menu_graphique->setEnabled(0);
+    //menu_graphique->setEnabled(0);
 }
 
 
@@ -312,11 +310,10 @@ void MainWindow::addproject2()
     //this->current->projectshow(this, this->table, this->currentgref);
     this->namecurrent = this->nametmp->text();
     menu_projet->actions().at(3)->setEnabled(1);
-    menu_projet->actions().at(4)->setEnabled(1);
     menu_outil->setEnabled(1);
     menu_affifchage->setEnabled(1);
     menu_serveur->setEnabled(1);
-    menu_graphique->setEnabled(1);
+    //menu_graphique->setEnabled(1);
     if (timertmp)
     {
         delete timertmp;
@@ -325,9 +322,7 @@ void MainWindow::addproject2()
     this->configproject();
 }
 
-
 // open project
-
 
 QString name_recuperator(QString str)
 {
@@ -365,11 +360,10 @@ void MainWindow::openproject2(QListWidgetItem *item)
     this->namecurrent = item->text();
     this->updateproject();
     menu_projet->actions().at(3)->setEnabled(1);
-    menu_projet->actions().at(4)->setEnabled(1);
     menu_outil->setEnabled(1);
     menu_affifchage->setEnabled(1);
     menu_serveur->setEnabled(1);
-    menu_graphique->setEnabled(1);
+    //menu_graphique->setEnabled(1);
     //this->addock();
 }
 
@@ -481,6 +475,13 @@ void MainWindow::sendprojectauxi(QString str, QList<person> listp, int type)
         sendmail(i->email, bodytmp.replace("__%p__", i->firstname), type, qry.value(0).toInt()) ; // OPTI
         i++;
     }
+}
+
+void MainWindow::gestionjour()
+{
+    menugestionjour *tmp = new menugestionjour(this);
+    tmp->setWindowModality(Qt::ApplicationModal);
+    tmp->show();
 }
 
 void MainWindow::sendproject(){emailvalidator *emailv = new emailvalidator(this, 0);emailv->show();}
@@ -907,5 +908,6 @@ void MainWindow::Excellinfo()
         xlsx.write(y, 5, namecurrent);
         it++;
     }
-    xlsx.saveAs("infoperson.xlsx");
+    QString fichier = QFileDialog::getSaveFileName(this, "Destination", "Save", "Excell files (*.xlsx)");
+    xlsx.saveAs(fichier);
 }

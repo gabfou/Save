@@ -71,14 +71,14 @@ project::project(QString fproject)
 	this->initoroject(fproject);
 }
 
-inline void project::addperson(QString name, QString lastname, QString email, int id, vector<question> *listquestion, int groupid, int questionbool, int refbool)
+inline void project::addperson(QString name, QString lastname, QString email, int id, vector<question> *listquestion, int groupid, int questionbool, int refbool, int jour)
 {
 	if (id == -1)
-		sqlo::addperson(this, name, lastname, email, groupid);
+        sqlo::addperson(this, name, lastname, email, groupid, refbool, questionbool, jour);
 	if (questionbool > questionboolmax)
 		questionboolmax = questionbool;
 	this->nbperson++;
-	person ret(name, lastname, email, id, listquestion, groupid, questionbool, refbool);
+    person ret(name, lastname, email, id, listquestion, groupid, questionbool, refbool, jour);
 	while ((int)(this->listp.size()) < id)
 		this->listp.push_back(person());
 	this->listp.push_back(ret);
@@ -299,7 +299,7 @@ void project::initoroject(QString fproject)
 	qDebug() << "init question time" << timerdebug.elapsed() << "milliseconds";
 
 	qDebug() << "init persone";timerdebug.start();
-	if(query.exec("SELECT id, firstname,lastname,email,groupid,questionbool,refbool FROM project_" + fproject + "_project"))
+    if(query.exec("SELECT id, firstname,lastname,email,groupid,questionbool,refbool,jour FROM project_" + fproject + "_project"))
 	{
 		while(query.next())
 		{
@@ -310,7 +310,8 @@ void project::initoroject(QString fproject)
 							&listquestion,
 							query.value(4).toInt(),
 							query.value(5).toInt(),
-							query.value(6).toInt());
+                            query.value(6).toInt(),
+                            query.value(7).toInt());
 		}
 	}
 	else
@@ -729,23 +730,21 @@ void	sqlo::supquest(project *p, QString nameproject, int id)
 }
 
 int	 sqlo::addperson(project *p, QString firstname, QString lastname,
-			  QString email, int groupid, int id)
+              QString email, int groupid, int refbool, int questionbool, int jour, int id)
 {
 	QSqlQuery qry;
 
 	if (id != -1)
-		qry.prepare(("UPDATE project_" + p->name + "_project Set firstname=?, lastname=?, email=?, groupid=? WHERE id=?;"));
+        qry.prepare(("UPDATE project_" + p->name + "_project Set firstname=?, lastname=?, email=?, groupid=?, refbool=?, questionbool=?, jour=? WHERE id=?;"));
 	else
-	{
-//		qry.prepare( ("CREATE TABLE IF NOT EXISTS project_" + p->name + "_project (id INTEGER UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT, person VARCHAR(30), groupid INTEGER, type VARCHAR(30), note BOOLEAN DEFAULT 1, sujet VARCHAR(300), qgroupid INT DEFAULT 0, typef INT DEFAULT 0)").c_str() );
-//		if( !qry.exec() )
-//			qDebug() << qry.lastError();
-		qry.prepare( ("INSERT INTO project_" + p->name + "_project (firstname, lastname, email, groupid ) VALUES ( ? , ? , ? , ? );") );
-	}
+        qry.prepare( ("INSERT INTO project_" + p->name + "_project (firstname, lastname, email, groupid, refbool, questionbool, jour) VALUES ( ? , ? , ? , ? , ?, ?, ? );"));
 	qry.addBindValue(firstname);
 	qry.addBindValue(lastname);
 	qry.addBindValue(email);
-	qry.addBindValue(groupid);
+    qry.addBindValue(groupid);
+    qry.addBindValue(refbool);
+    qry.addBindValue(questionbool);
+    qry.addBindValue(jour);
 	if (id != -1)
 	{
 		qry.addBindValue(id);
@@ -756,7 +755,7 @@ int	 sqlo::addperson(project *p, QString firstname, QString lastname,
 		qDebug() << "person insert success!";
 	if (id == -1)
 	{
-		p->addperson(firstname, lastname, email, qry.lastInsertId().toInt(), &(p->listquestion), groupid, 0, 0);
+        p->addperson(firstname, lastname, email, qry.lastInsertId().toInt(), &(p->listquestion), groupid, 0, 0, 0);
 		p->listgroup[groupid].addperson(p->listp[qry.lastInsertId().toInt()]);
 	}
 	else

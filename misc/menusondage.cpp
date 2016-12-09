@@ -12,7 +12,7 @@ menusondage::menusondage(MainWindow *m)
     QHBoxLayout *hbox = new QHBoxLayout();
 
     grouptree *gt = new grouptree(m, m->current.listgroup, 2);
-    menuconfigsondage *mcs = new menuconfigsondage(m);
+    menuconfigsondage *mcs = new menuconfigsondage(m, gt);
 
     hbox->addWidget(gt, 1);
     hbox->addWidget(mcs, 3);

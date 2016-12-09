@@ -9,6 +9,7 @@ formloadator::formloadator(bool ref, int gid, project *p): QScrollArea(), p(p), 
 {
     ret = new QWidget();
     layout = new QVBoxLayout();
+    QPushButton *pb = new QPushButton("Enregistrer", this);
     if (ref == 1)
     {
         introref = new MRichTextEdit();
@@ -17,18 +18,19 @@ formloadator::formloadator(bool ref, int gid, project *p): QScrollArea(), p(p), 
     else
     {
         introreel = new MRichTextEdit();
-        //introreel->setText(p->introreel);
+        introreel->setText(p->introreel);
     }
 
-    layout->addWidget((ref == 1) ? new QTextEdit(p->introref) : new QTextEdit(p->introreel));
+    layout->addWidget((ref == 1) ? introref : introreel);
+    layout->addWidget(pb);
 
     formcreator(ref, &(p->listqgroup[0]), layout, gid);
     ret->setLayout(layout);
     this->setWidget(ret);
     if (ref == 1)
-        connect(introref, SIGNAL(textChanged()), this, SLOT(updateiref()));
+        connect(pb, SIGNAL(clicked(bool)), this, SLOT(updateiref()));
     else
-        connect(introreel, SIGNAL(textChanged()), this, SLOT(updateireel()));
+        connect(pb, SIGNAL(clicked(bool)), this, SLOT(updateireel()));
 }
 
 int formloadator::reformcreator()
@@ -114,10 +116,10 @@ void formloadator::gidupdate(int gid)
 
 void formloadator::updateireel()
 {
-    sqlo::sqlupdateintroindex(p->name, introref->toHtml());
+    sqlo::sqlupdateintroindex(p->name, introreel->toHtml());
 }
 
 void formloadator::updateiref()
 {
-    sqlo::sqlupdateintroindex(p->name, introreel->toHtml());
+    sqlo::sqlupdateintroindex(p->name, introref->toHtml());
 }

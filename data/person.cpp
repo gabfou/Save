@@ -164,7 +164,7 @@ person::person(QString name, vector<question> *question)
 }
 
 
-person::person(QString name, QString lastname, QString email, int id, vector<question> *listquestion, int groupid, int questionbool, int refbool)
+person::person(QString name, QString lastname, QString email, int id, vector<question> *listquestion, int groupid, int questionbool, int refbool, int jour)
 {
 	this->name = name + " " + lastname;
 	this->firstname = name;
@@ -175,6 +175,7 @@ person::person(QString name, QString lastname, QString email, int id, vector<que
 	this->groupid = groupid;
     this->questionbool = questionbool;
     this->refbool = refbool;
+    this->jour = jour;
 }
 
 person::person(const person & person)
@@ -189,6 +190,7 @@ person::person(const person & person)
 	this->lastname = person.lastname;
     this->questionbool = person.questionbool;
     this->refbool = person.refbool;
+    this->jour = person.jour;
 }
 
 

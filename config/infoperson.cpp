@@ -52,7 +52,7 @@ void infoperson::changegroupparent2(QTreeWidgetItem *item)
 
     if (tmp)
     {
-        sqlo::addperson(p, pe->firstname, pe->lastname, pe->email, tmp->getId(), pe->id);
+        sqlo::addperson(p, pe->firstname, pe->lastname, pe->email, tmp->getId(),pe->refbool, pe->refbool, pe->jour, pe->id);
         p->listp[pe->id].groupid = tmp->getId();
         int i = pe->id;
         delete pe;
@@ -117,5 +117,5 @@ void infoperson::updatebdd()
 		warning->show();
 		return ;
 	}
-    sqlo::addperson(p, name->text(), lastname->text(), email->text(), groupid, ((init) ? pe->id : -1));
+    sqlo::addperson(p, name->text(), lastname->text(), email->text(), groupid, pe->refbool, pe->questionbool, pe->jour, ((init) ? pe->id : -1));
 }
