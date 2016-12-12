@@ -34,7 +34,7 @@ grouptree::grouptree(MainWindow *m, vector<group> & g, int i) : g(g), m(m), i(i)
 	connect(supg, SIGNAL(triggered()), this, SLOT(supgroupintree()));
 
 	modifdg = new QAction(QString("Modifier description"), this);
-	this->addAction(modifdg);
+//	this->addAction(modifdg);
 	connect(modifdg, SIGNAL(triggered()), this, SLOT(modifdgroupintree()));
 
 	newq = new QAction(QString("Nouvelle question"), this);
@@ -54,7 +54,7 @@ grouptree::grouptree(MainWindow *m, vector<group> & g, int i) : g(g), m(m), i(i)
 	connect(supp, SIGNAL(triggered()), this, SLOT(suppersonintree()));
 
 	persinit = new QAction(QString("initialiser personne"), this);
-	this->addAction(persinit);
+//	this->addAction(persinit);
 	connect(persinit, SIGNAL(triggered()), this, SLOT(initpersonintree()));
 
     copie = new QAction(QString("copier"), this);

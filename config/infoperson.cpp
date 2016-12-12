@@ -17,9 +17,9 @@ infoperson::infoperson(MainWindow *m, project *p) : info(m)
     b_update = new QPushButton("Enregistrer");
     changegroup = new QPushButton("Modifier le groupe parrent");
     
-    vbox->addWidget(new QLabel("Noms"));
+    vbox->addWidget(new QLabel("Prenoms"));
 	vbox->addWidget(name);
-	vbox->addWidget(new QLabel("Noms de fammille"));
+    vbox->addWidget(new QLabel("Noms de famille"));
 	vbox->addWidget(lastname);
 	vbox->addWidget(new QLabel("Email"));
     vbox->addWidget(email);

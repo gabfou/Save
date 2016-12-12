@@ -546,7 +546,7 @@ QString MRichTextEdit::toHtml() const {
     // convert links
     s = s.replace(QRegExp("(<[^a][^>]+>(?:<span[^>]+>)?|\\s)((?:https?|ftp|file)://[^\\s'\"<>]+)"), "\\1<a href=\"\\2\">\\2</a>");
     // see also: Utils::linkify()
-    return s;
+    return s.replace("<p", "<span").replace("</p>", "</span>");
 }
 
 void MRichTextEdit::increaseIndentation() {

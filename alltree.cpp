@@ -24,13 +24,10 @@ Alltree::Alltree(MainWindow *m, project *current) : p(current)
 {
 	QTabWidget *tabgroup = new QTabWidget();
 	QCheckBox *affichenongroup = new QCheckBox("Voir les non group");
-	QCheckBox *afficheestim = new QCheckBox("afficher les estimation");
-	if (p->ref)
-		afficheestim->setChecked(1);
 	QHBoxLayout *hbox = new QHBoxLayout();
 	QVBoxLayout *layout = new QVBoxLayout();
 	slidemax = new QSlider(Qt::Horizontal);
-	labelslidemax = new QLabel("jour maximum");
+    labelslidemax = new QLabel("jour maximum");
 	slidemin = new QSlider(Qt::Horizontal);
 	labelslidemin = new QLabel("jour minimum");
     slidemin->setMinimum(0);
@@ -45,7 +42,6 @@ Alltree::Alltree(MainWindow *m, project *current) : p(current)
 	this->setLayout(layout);
 
 	hbox->addWidget(affichenongroup);
-	hbox->addWidget(afficheestim);
 	layout->addLayout(hbox);
 	layout->addWidget(labelslidemax);
 	layout->addWidget(slidemax);
@@ -64,7 +60,7 @@ Alltree::Alltree(MainWindow *m, project *current) : p(current)
 	groupboxtmp->setVisiblenongroup(0);
 	groupboxtmp->resizeColumnToContents(0);
 	tabgroup->addTab(groupboxtmp, "Questionnaires");
-	connect(this->groupboxtmp, SIGNAL(itemClicked(QTreeWidgetItem *, int )), m, SLOT(changescopeq2(QTreeWidgetItem *)));
+    connect(this->groupboxtmp, SIGNAL(itemClicked(QTreeWidgetItem*, int)), m, SLOT(changescopeq2(QTreeWidgetItem *)));
 	connect(affichenongroup, SIGNAL(toggled(bool)), groupboxtmp, SLOT(setVisiblenongroup(bool)));
 	connect(slidemax, SIGNAL(valueChanged(int)), m, SLOT(maxiterationchange(int)));
 	connect(slidemin, SIGNAL(valueChanged(int)), m, SLOT(miniterationchange(int)));

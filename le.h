@@ -70,7 +70,7 @@ class MainWindow;
 
 typedef struct  s_groupref
 {
-	QString		 name;
+    QString       name;
     QList<float>  list;
     float			 total = 0;
 }			   t_groupref;
@@ -99,7 +99,7 @@ QList<int> recupallgroupfils(int groupid, QString project_name);
 
 namespace sqlo
 {
-    int     addgroup(project *p, QString nameproject, QString name, int groupparent, int type, QString description, bool gquestion, int id = -1);
+    int     addgroup(project *p, QString nameproject, QString name, int groupparent, int type, QString description, int gquestion, int id = -1);
     void	supgroup(QString nameproject, int id, vector<group> &g);
     void	supquest(project *p, QString nameproject, int id);
     int     addquestion(project *p, QString name, int groupid, QString type, int note, QString description, int qgroupid, int typef, int ref_only, QString splitchar, int val, bool global, int id = -1);

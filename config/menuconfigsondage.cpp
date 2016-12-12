@@ -88,7 +88,7 @@ menuconfigsondage::menuconfigsondage(MainWindow *m, grouptree *gt) : m(m), gt(gt
     QVBoxLayout *layoutmail = new QVBoxLayout();
     objectmail = new QLineEdit(this);
     textmail = new MRichTextEdit(this);
-    textmail->setText("");
+    textmail->setText("<a href=\"http://etudemurano.alwaysdata.net/directlogin.php__%l__\"><u>PPD_DMI LEAD CHANGE_Online Survey</u></a>");
     layoutmail->addWidget(new QLabel("Objet:"));
     layoutmail->addWidget(objectmail);
     layoutmail->addWidget(new QLabel("Texte:"));

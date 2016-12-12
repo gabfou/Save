@@ -620,7 +620,7 @@ project::~project()
 
 }
 
-int	sqlo::addgroup(project *p, QString nameproject, QString name, int groupparent, int type, QString description, bool gquestion, int id)
+int	sqlo::addgroup(project *p, QString nameproject, QString name, int groupparent, int type, QString description, int gquestion, int id)
 {
 	QSqlQuery qry;
 

@@ -59,10 +59,6 @@ MainWindow::MainWindow(QWidget *parent) :
 //	QObject::connect(barchartref, SIGNAL(triggered()), this, SLOT(showbarchartref()));
 
     menu_affifchage = menuBar()->addMenu("&Affichage");
-    afficherref = menu_affifchage->addAction("&Données de références");
-    afficherref->setCheckable(true);
-    afficherref->setChecked(false);
-    QObject::connect(afficherref, SIGNAL(toggled(bool)), this, SLOT(refmodechange(bool)));
     QAction *afficherval = menu_affifchage->addAction("&Ponderation");
     afficherval->setCheckable(true);
     afficherval->setChecked(false);
@@ -520,14 +516,6 @@ void MainWindow::updateproject()
 
     select_first_table();
     this->addock();
-
-    if (this->current.getNbfactnref() == 0)
-    {
-        this->menu_affifchage->actions().at(0)->setVisible(0);
-        afficherref->trigger();
-    }
-    else
-        this->menu_affifchage->actions().at(0)->setVisible(1);
 }
 
 void MainWindow::extract_brutesimple()
@@ -641,14 +629,6 @@ void	MainWindow::modechange(bool checked)
 {
     this->showmod = (checked) ? 1 : 0;
     this->updateproject();
-}
-
-void	MainWindow::refmodechange(bool checked)
-{
-    ref = (checked) ? 1 : 0;
-    current.ref = ref;
-    emit refchanged(checked);
-    this->table->showtable(currentgref, currentgqref, iterationmin, iterationmax);
 }
 
 void	MainWindow::valmodechange(bool checked)

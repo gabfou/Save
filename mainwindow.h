@@ -31,7 +31,7 @@ public:
 	QDockWidget *groupdock = NULL;
 	QTabWidget *cw;
     project current;
-    int ref = 0;
+    //int ref = 0;
     int val = 0;
 	tableshow *table = NULL;
     tableshow *tableg = NULL;
@@ -62,7 +62,6 @@ private slots:
 	void convert_to_xlsx();
 	void modechange(bool checked);
     void sendproject_ref();
-	void refmodechange(bool checked);
     void changescope2(QTreeWidgetItem *item);
     void configproject();
     void valmodechange(bool checked);
@@ -106,7 +105,7 @@ private:
     QAction *afficherpers;
     QAction *afficherbasetable;
     QAction *affichergraphiquecompare;
-    QAction *afficherref;
+    //QAction *afficherref;
 	void addock();
 
     void select_first_table();
@@ -115,7 +114,6 @@ signals:
      void grefchange(int gref);
      void gqrefchange(int gqref);
      void valchanged(bool val);
-     void refchanged(bool ref);
      void maxiterationchanged(int max);
      void miniterationchanged(int min);
 };

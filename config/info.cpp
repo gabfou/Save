@@ -27,13 +27,13 @@ info::info(MainWindow *m) : m(m), p(&(m->current))
 
     vboxinfo->addWidget(infolabel);
 
-    infog->addWidget(new QLabel("name"));
+    infog->addWidget(new QLabel("Noms"));
     infog->addWidget(name);
-    infog->addWidget(new QLabel("description"));
+    infog->addWidget(new QLabel("Description"));
     infog->addWidget(descriptiong);
 
     gquestionbox = new QHBoxLayout();
-    gquestionlabel = new QLabel("type :");
+    gquestionlabel = new QLabel("Type :");
     gquestion->addItem("Etape");
     gquestion->addItem("Groupe de question");
     gquestion->addItem("Question tiroir (nécessite une question oui/non)");
