@@ -1,0 +1,33 @@
+<h2>Creation de questionaire<br /><br /></h2>
+<p>La premi&egrave;re chose &agrave; faire et de creer un nouveaux projet (Projet-&gt;Nouveau)</p>
+<p>une fois cr&eacute;er le projet est accesible par depuis Projet-&gt;Ouvrir et suprimable depuis Projet-&gt;Suprimer</p>
+<h3>Remplissage et configuration du questionaire</h3>
+<p>&nbsp;Une fois le projet cr&eacute;er le menu configuration devrais s'ouvrir automatiquement sinon il est accecible depuis Project-&gt;Configuration sur Windows et muranoproject-&gt;preference sur Mac</p>
+<p>Depuis l'onglet general vous pouver d&eacute;cocher l'option Afficher l'index afin que l'utilisateur arrive directement sur le questionaire (pas de page jour 1, jour 2 etc..)</p>
+<h3>Creation de la pool de personne</h3>
+<p>Depuis l'onglet Personne vous pouvez creer des groupes (click droit puis nouveaux) et des personnes (click droit puis nouvelle personne) que vous pouvez ensuite configurer a l'aide de la fen&ecirc;tre a droite apr&egrave;s avoir click&eacute; de&ccedil;u (n'oubliez pas d'appuyer sur enregistrer)</p>
+<p>Les groupe poss&eacute;dent 2 parametre</p>
+<ol>
+<li><strong>Noms: </strong>c'est le noms qui apparaitera dans la sortie</li>
+<li><strong>Description:</strong>&nbsp;c'est le noms qui apparaitera&nbsp;sur le formulaire</li>
+</ol>
+<p>Les personne poss&eacute;de 3 parametre</p>
+<ol>
+<li><strong>Noms</strong></li>
+<li><strong>Prenoms</strong></li>
+<li><strong>Email</strong></li>
+</ol>
+<h3>Creation de la pool de question</h3>
+<p>Depuis l'onglet question&nbsp;vous pouvez cr&eacute;er des groupes (click droit puis nouveaux) et des questions&nbsp;(click droit puis nouvelle question) que vous pouvez ensuite configurer a l'aide de la fen&ecirc;tre a droite apr&egrave;s avoir click&eacute; de&ccedil;u (n'oubliez pas d'appuyer sur enregistrer)</p>
+<p>Les groupe poss&eacute;dent 3 parametre</p>
+<ol>
+<li><strong>Noms: </strong>c'est le noms qui apparaitera dans la sortie</li>
+<li><strong>Description:</strong>&nbsp;c'est le noms qui apparaitera&nbsp;sur le formulaire</li>
+<li></li>
+</ol>
+<p>Les personne poss&eacute;de 3 parametre</p>
+<ol>
+<li><strong>Noms<strong>: </strong></strong>c'est le noms qui apparaitera dans la sortie</li>
+<li><strong>Description:</strong>&nbsp;c'est le noms qui apparaitera&nbsp;sur le formulaire</li>
+<li><strong>Email</strong></li>
+</ol>
