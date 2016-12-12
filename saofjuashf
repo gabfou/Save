@@ -1,4 +1,4 @@
-<h2>Creation de questionaire<br /><br /></h2>
+<h2>epyCreation de questionaire<br /><br /></h2>
 <p>La premi&egrave;re chose &agrave; faire et de creer un nouveaux projet (Projet-&gt;Nouveau)</p>
 <p>une fois cr&eacute;er le projet est accesible par depuis Projet-&gt;Ouvrir et suprimable depuis Projet-&gt;Suprimer</p>
 <h3>Remplissage et configuration du questionaire</h3>
@@ -21,13 +21,36 @@
 <p>Depuis l'onglet question&nbsp;vous pouvez cr&eacute;er des groupes (click droit puis nouveaux) et des questions&nbsp;(click droit puis nouvelle question) que vous pouvez ensuite configurer a l'aide de la fen&ecirc;tre a droite apr&egrave;s avoir click&eacute; de&ccedil;u (n'oubliez pas d'appuyer sur enregistrer)</p>
 <p>Les groupe poss&eacute;dent 3 parametre</p>
 <ol>
-<li><strong>Noms: </strong>c'est le noms qui apparaitera dans la sortie</li>
-<li><strong>Description:</strong>&nbsp;c'est le noms qui apparaitera&nbsp;sur le formulaire</li>
+<li><strong>Noms: </strong>c'est le noms qui apparaitera dans la sortie.</li>
+<li><strong>Description:</strong>&nbsp;c'est le noms qui apparaitera&nbsp;sur le formulaire.</li>
 <li></li>
 </ol>
-<p>Les personne poss&eacute;de 3 parametre</p>
+<p>Les question&nbsp;poss&eacute;dent plusieurs param&eacute;tre</p>
 <ol>
-<li><strong>Noms<strong>: </strong></strong>c'est le noms qui apparaitera dans la sortie</li>
-<li><strong>Description:</strong>&nbsp;c'est le noms qui apparaitera&nbsp;sur le formulaire</li>
-<li><strong>Email</strong></li>
+<li><strong>Type</strong>: Cest le type de question :
+<ol style="list-style-type: lower-alpha;">
+<li><strong>nombre</strong>: Une question dont la r&eacute;ponse est un nombre.</li>
+<li><strong>Oui/non</strong>: Une question dont la r&eacute;ponse est oui ou non.</li>
+<li><strong>option</strong>: une question dont la r&eacute;ponse peut etre plusieurs option s&eacute;lectioner a l'avance.</li>
+<li><strong>option avec valeur</strong>: une question dont la r&eacute;ponse peut etre plusieurs option s&eacute;lectioner a l'avance corespondant chaqu'une &agrave; un chiffre.</li>
+<li><strong>suggestion</strong>: une question dont la reponse et un text libre.</li>
 </ol>
+</li>
+<li><strong>Noms<strong>: </strong></strong>c'est le noms qui apparaitera dans la sortie.</li>
+<li><strong>Description:</strong>&nbsp;c'est le noms qui apparaitera&nbsp;sur le formulaire.</li>
+<li><strong>Min Max</strong>: les chiffres maximum et minimum autoris&eacute; pour les question de type nombre.</li>
+<li><strong>Option:&nbsp;</strong>les option pour les questions de type option ou option avec valeur.</li>
+</ol>
+<h1>Mail et suivi</h1>
+<h2>Mail automatique</h2>
+<p>Depuis Serveur et mail-&gt;Programmer une serie de sondage vous pouvez programer des mail automatique</p>
+<p>les dates valide sont tout les quarts d'heures (XXh00, XXh15, XXh30 ou XXh45)</p>
+<p>Vous pouvez s&eacute;lectioner un groupe de personne vis&eacute; particulier gr&acirc;ce &agrave; l'arbre de gauche</p>
+<p>Le mail envoyer corespond a celui &eacute;crit &agrave; droite un lien est pre&eacute;crit a chaque fois que cette fenetre et ouverte&nbsp;(vous pouvez changer)</p>
+<p>L'option ref permet d'envoyer l'estimation</p>
+<p>L'option iteration permet de pr&eacute;parer plusieurs sondage d'un seul coup les sondages seront rajout&eacute; &agrave; la m&ecirc;me heure que le premier suivant les jours selection&eacute;s, si l'option ref est cocher seul la premi&egrave;re iteration sera impact&eacute;</p>
+<h2>Mail a la mano</h2>
+<p>Le lien est&nbsp;http://etudemurano.alwaysdata.net/directlogin.php?p="id&nbsp;de la personne"&amp;s="noms&nbsp;du sondage"</p>
+<p>Les donn&eacute;es n&eacute;cessaire &agrave; l'&eacute;criture peuvent &ecirc;tre extrait en excell en clickant sur Serveur et mail-&gt;Excell info depuis la page principale</p>
+<p>Vous pouvez&nbsp;gerez qui doit remplir quoi depuis Serveur et mail-&gt;Gestion des jours</p>
+<p>&nbsp;</p>
