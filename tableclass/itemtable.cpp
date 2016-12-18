@@ -104,14 +104,23 @@ void itemtable::update(group *arg, QList<question> *head, int itmin, int itmax, 
     if (arg->type != 1)
         return ;
     float valf = 0;
+    int l;
+    int lq = 0;
     QList<question>::iterator i  = head->begin();
 
     while (i != head->end())
     {
         if (i->qgroupid == arg->id)
-            valf += p->listgroup[0].grouprepall(*i, p->listgroup, itmin, itmax);
+        {
+            l = 0;
+            valf += p->listgroup[0].grouprepall(*i, p->listgroup, itmin, itmax, &l) / ((l != 0) ? (float)l : 1);
+            qDebug() << l;
+            lq++;
+        }
         i++;
     }
+    if (lq != 0)
+        valf = valf / (float)lq;
     this->eval(QString::number(valf));
 }
 
@@ -127,11 +136,13 @@ void itemtable::update(group *arg, QString *head, int itmin, int itmax, QString 
 void itemtable::updateall(group *arg, question *head, int itmin, int itmax, QString form)
 {
     (void)form;
+    int l = 0;
     if (arg->type != 0)
         return ;
     QString val;
     question *q = &(p->listquestion[head->id]);
-    val = QString::number(arg->grouprepall(*q, p->listgroup, itmin, itmax));
+    int valtmp = arg->grouprepall(*q, p->listgroup, itmin, itmax, &l);
+    val = QString::number(valtmp  / (float)l);
     this->eval(val, *head);
 }
 

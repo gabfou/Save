@@ -244,7 +244,7 @@ QString group::grouprepval(question tmp2, int iterationmin, int iterationmax)
         return ("NA");
 }
 
-QString group::grouprep(question tmp2, int iterationmin, int iterationmax)
+QString group::grouprep(question tmp2, int iterationmin, int iterationmax, int *nbp)
 {
     QList<person>::iterator tmp;
     float nb;
@@ -265,8 +265,13 @@ QString group::grouprep(question tmp2, int iterationmin, int iterationmax)
         }
         tmp++;
 	}
-	if (l != 0)
+    if (l != 0 && nbp == NULL)
         return(QString::number(nb / l));
+    else if (l != 0)
+    {
+        *nbp = l;
+        return QString::number(nb);
+    }
 	else
         return ("NA");
 }
@@ -288,15 +293,20 @@ QString group::grouprep(group & groupp, QString tmp3, question *ret, int iterati
     return ("NA");
 }
 
-float group::grouprepall(question tmp2, vector<group> &g, int iterationmin, int iterationmax) // opti qstring neccessaire
+float group::grouprepall(question tmp2, vector<group> &g, int iterationmin, int iterationmax, int *nbp) // opti qstring neccessaire
 {
     QList<int>::iterator tmp = listfils.begin();
     float val = 0;
+    int ltmp = 0;
 
-    val += grouprep(tmp2, iterationmin, iterationmax).toFloat();
+    val += grouprep(tmp2, iterationmin, iterationmax, &ltmp).toFloat();
+    if (nbp)
+        *nbp += ltmp;
+    else
+        nbp = &ltmp;
     while(tmp != listfils.end())
     {
-        val += g[*tmp].grouprepall(tmp2, g, iterationmin, iterationmax);
+        val += g[*tmp].grouprepall(tmp2, g, iterationmin, iterationmax, nbp);
         tmp++;
     }
     return (val);

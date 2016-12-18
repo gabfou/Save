@@ -42,7 +42,7 @@ public:
     QList<float> grouprep(const vector<question> & questionlist, QList<int> listqchild, int iterationmin = 0, int iterationmax = 2147483640);
 
     t_groupref groupnamerep(const vector<question> & questionlist, QList<int> listqchild, int iterationmin = 0, int iterationmax = 2147483640);
-    QString grouprep(question tmp2, int iterationmin = 0, int iterationmax = 2147483640);
+    QString grouprep(question tmp2, int iterationmin = 0, int iterationmax = 2147483640, int *nbp = NULL);
 	int id;
     QString name;
     QString description;
@@ -53,7 +53,7 @@ public:
     QList<question> getListq() const;
     bool contain(person &p);
     bool contain(question &q);
-    float grouprepall(question tmp2, vector<group> &g, int iterationmin = 0, int iterationmax = 2147483640);
+    float grouprepall(question tmp2, vector<group> &g, int iterationmin = 0, int iterationmax = 2147483640, int *nbp = NULL);
     int init = 0;
     void supquestion(int id);
     void supperson(int id);
