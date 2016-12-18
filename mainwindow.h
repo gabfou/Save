@@ -78,6 +78,7 @@ private slots:
     void extract_brutesimple();
     void suivirep();
     void gestionjour();
+    void supproject3();
 private:
 	Ui::MainWindow *ui;
 	QWindow *addprojectwindow;
@@ -105,6 +106,7 @@ private:
     QAction *afficherpers;
     QAction *afficherbasetable;
     QAction *affichergraphiquecompare;
+    QString strtmp;
     //QAction *afficherref;
 	void addock();
 

@@ -385,25 +385,42 @@ void MainWindow::supproject()
 
 void MainWindow::supproject2(QListWidgetItem *item)
 {
+    strtmp = item->text();
+    QWidget *win = new QWidget();
+    QGridLayout *layout = new QGridLayout(win);
+    QPushButton *oui = new QPushButton("Oui", win);
+    QPushButton *non = new QPushButton("Non", win);
+
+    layout->addWidget(new QLabel("Voulez vous supprimer définitivement le projet " + strtmp + "?"), 0, 0, 1, 2);
+    layout->addWidget(oui, 1, 0, 1, 1);
+    layout->addWidget(non, 1, 1, 1, 1);
+    connect(oui, SIGNAL(clicked(bool)), this, SLOT(supproject3()));
+    connect(oui, SIGNAL(clicked(bool)), win, SLOT(close()));
+    connect(non, SIGNAL(clicked(bool)), win, SLOT(close()));
+    win->show();
+}
+
+void MainWindow::supproject3()
+{
     QSqlQuery qry;
 
-    if (item->text().compare(namecurrent) == 0)
+    if (strtmp.compare(namecurrent) == 0)
     {
         return ;
     }
-    qry.prepare( "DROP TABLE project_" + item->text() + "_project;" );
+    qry.prepare( "DROP TABLE project_" + strtmp + "_project;" );
     if( !qry.exec() )
         qDebug() << qry.lastError();
-    qry.prepare( "DROP TABLE project_" + item->text() + "_question;" );
+    qry.prepare( "DROP TABLE project_" + strtmp + "_question;" );
     if( !qry.exec() )
         qDebug() << qry.lastError();
-    qry.prepare( "DROP TABLE project_" + item->text() + "_reponse;" );
+    qry.prepare( "DROP TABLE project_" + strtmp + "_reponse;" );
     if( !qry.exec() )
         qDebug() << qry.lastError();
-    qry.prepare( "DROP TABLE project_" + item->text() + "_groupe;" );
+    qry.prepare( "DROP TABLE project_" + strtmp + "_groupe;" );
     if( !qry.exec() )
         qDebug() << qry.lastError();
-    qry.prepare( "DROP TABLE project_" + item->text() + "_etude;" );
+    qry.prepare( "DROP TABLE project_" + strtmp + "_etude;" );
     if( !qry.exec() )
         qDebug() << qry.lastError();
 }

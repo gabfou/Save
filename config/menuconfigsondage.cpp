@@ -34,7 +34,7 @@ menuconfigsondage::menuconfigsondage(MainWindow *m, grouptree *gt) : m(m), gt(gt
 
     if(qry.exec("SELECT begin, id FROM all_etude WHERE project_name='" + m->namecurrent + "';"))
     {
-        while(qry.next())
+        while (qry.next())
         {
             listWidget->addItem(qry.value(0).toString());
             listid << qry.value(1).toInt();

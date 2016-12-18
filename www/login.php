@@ -26,8 +26,8 @@ else
 		{
 			$req_pre = $bdd->prepare('SELECT idperson, email, name_table FROM project_all_user WHERE password ="'.htmlspecialchars($hash).'" AND email="'.htmlspecialchars($login).'";'); // changer user
 			if ($req_pre === false)
-				echo "mysql probleme";// a virer
-			//$req_pre->bindValue(1, htmlspecialchars($login), PDO::PARAM_STR);
+				echo "mysql probleme"; // a virer
+			// $req_pre->bindValue(1, htmlspecialchars($login), PDO::PARAM_STR);
 			//$req_pre->bindValue(2, htmlspecialchars($hash), PDO::PARAM_STR);
 			$req_pre->execute();
 			$tab = $req_pre->fetchall();
@@ -37,11 +37,10 @@ else
 			echo 'Error : '.$e->getMessage();
 			die();
 		}
-		foreach ($tab as $key => $value)
-		{
-			$_SESSION['id_client'] = $value['idperson'];
-			$_SESSION['email'] = $value['email'];
-			$_SESSION['project'] = $value['name_table'];
+		foreach ($tab as $key => $value) {
+			 $_SESSION['id_client'] = $value['idperson'];
+			 $_SESSION['email'] = $value['email'];
+			 $_SESSION['project'] = $value['name_table'];
 		}
 		if (!$_SESSION['id_client'])
 			$tag = "refused";
@@ -78,7 +77,7 @@ else
 				?>
 				<h2 class = "text_form">Connexion</h2>
 				<?php
-					echo '<form class = "formulaire" action="login.php" method="post">'
+				 echo '<form class = "formulaire" action="login.php" method="post">'
 				?>
 					<input class = "field2" name = "login" type = "text" placeholder = "e-mail">
 					<input class = "field2" name = "password" type = "password" placeholder = "mot de passe">
