@@ -116,10 +116,10 @@ void formloadator::gidupdate(int gid)
 
 void formloadator::updateireel()
 {
-    sqlo::sqlupdateintroindex(p->name, introreel->toHtml());
+    sqlo::sqlupdateintroreel(p->name, introreel->toHtml());
 }
 
 void formloadator::updateiref()
 {
-    sqlo::sqlupdateintroindex(p->name, introref->toHtml());
+    sqlo::sqlupdateintroref(p->name, introref->toHtml());
 }

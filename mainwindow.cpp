@@ -227,7 +227,7 @@ void MainWindow::addproject2()
 
     qry.prepare(" CREATE TABLE IF NOT EXISTS project_" +  this->nametmp->text() + "_question ("
                 " id INTEGER UNIQUE PRIMARY KEY NOT NULL AUTO_INCREMENT,"
-                " question VARCHAR(30),"
+                " question VARCHAR(100),"
                 " groupid INTEGER,"
                 " type VARCHAR(30),"
                 " note BOOLEAN DEFAULT 1,"
@@ -297,8 +297,7 @@ void MainWindow::addproject2()
                 " mail TEXT);" );
     if (!qry.exec())
         qDebug() << "create etude" << qry.lastError();
-    qry.prepare(" INSERT INTO all_config ("
-                " project_name=?);" );
+    qry.prepare(" INSERT INTO all_config (project_name) VALUES ( ? );" );
     if (!qry.exec(this->nametmp->text()))
         qDebug() << "insert all config" << qry.lastError();
 
