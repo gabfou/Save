@@ -298,7 +298,8 @@ void MainWindow::addproject2()
     if (!qry.exec())
         qDebug() << "create etude" << qry.lastError();
     qry.prepare(" INSERT INTO all_config (project_name) VALUES ( ? );" );
-    if (!qry.exec(this->nametmp->text()))
+    qry.addBindValue(this->nametmp->text());
+    if (!qry.exec())
         qDebug() << "insert all config" << qry.lastError();
 
     this->current.initoroject(this->nametmp->text());
