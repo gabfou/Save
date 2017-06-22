@@ -23,7 +23,7 @@ string	replacespace(string name)
 void createConnection()
 {
     QSqlDatabase db = QSqlDatabase::addDatabase("QMYSQL");
-    db.setHostName("mysql1.paris1.alwaysdata.com");
+    db.setHostName("mysql-etudemurano.alwaysdata.net");
     db.setDatabaseName("etudemurano_project");
     db.setUserName("127008_johann");
     db.setPassword("t4x5akda");
