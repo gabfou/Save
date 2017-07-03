@@ -2,6 +2,8 @@
 #include "bargraph.h"
 #include "mainwindow.h"
 
+// pas utilise tentative de graphique
+
 Comparrefdo::Comparrefdo(MainWindow *m, int group) : m(m), group(group)
 {
     QGridLayout *gl = new QGridLayout(this);

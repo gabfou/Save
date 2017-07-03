@@ -3,6 +3,8 @@
 
 #include "le.h"
 
+// liste afficher dans le menu de config question pour les question avec option
+
 class listedit : public QWidget
 {
     Q_OBJECT

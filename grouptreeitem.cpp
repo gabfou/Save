@@ -11,6 +11,8 @@ grouptreeitem::grouptreeitem()
 
 }
 
+// afficher ou pas les personne/ question (et pas juste les groupe de personne/question)
+
 void grouptreeitem::setVisiblenongroup(bool v)
 {
     int i = -1;
@@ -28,6 +30,8 @@ void grouptreeitem::setVisiblenongroup(bool v)
             tmpp->setHidden((v) ? false : true);
     }
 }
+
+// initialistation
 
 grouptreeitem::grouptreeitem(QStringList str, project * p, int id, int type, int mod, QTreeWidget *parent) : QTreeWidgetItem(parent, str), typeg(type), p(p)
 {
@@ -73,6 +77,8 @@ grouptreeitem::grouptreeitem(QStringList str, project * p, int id, int type, int
 			qDebug() << "groupitem group type =" << g[id].type;
 	}
 }
+
+// ajout de question globale voir grouptree::addquestglobintree2()
 
 void    grouptreeitem::addquestglobinttree(const question &q)
 {

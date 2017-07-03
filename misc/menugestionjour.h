@@ -3,6 +3,8 @@
 
 #include "le.h"
 
+// menu de gestion des jour
+
 class menugestionjour : public QTableWidget
 {
     Q_OBJECT

@@ -4,6 +4,8 @@
 #include "le.h"
 #include "data/question.h"
 
+// pas utilise tentative de graphique
+
 class project;
 class question;
 class MainWindow;

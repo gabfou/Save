@@ -19,7 +19,6 @@ public:
 	fact();
 	fact(string line);
 	virtual ~fact();
-	int showfact(QGridLayout *gbox, int i, int j);
     int checkfacttime(int idquestion, int &counter, int iterationmin = -1, int iterationmax = 2147483640) const;
 	QString getTimestr() const;
 	int getNote() const;

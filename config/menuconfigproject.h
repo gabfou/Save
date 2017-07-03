@@ -3,6 +3,8 @@
 
 #include "le.h"
 
+// onglet general du menu de config
+
 class project;
 class MainWindow;
 

@@ -10,6 +10,8 @@
 #include "misc/textedit.h"
 #include "MRichTextEditor/MRichTextEdit.h"
 
+// cacher toute les option optionel
+
 void infoquestion::prephide()
 {
     unit->hide();
@@ -23,6 +25,8 @@ void infoquestion::prephide()
     max->hide();
     maxenabled->hide();
 }
+
+// afficher toute les question qui s aplique au type de question
 
 void infoquestion::typeshow(int type)
 {
@@ -53,6 +57,8 @@ void infoquestion::typeshow(int type)
         selectlistval->show();
     }
 }
+
+// initialisation
 
 infoquestion::infoquestion(project *p, MainWindow *m, int con) : info(m)
 {
@@ -137,6 +143,8 @@ infoquestion::infoquestion(project *p, MainWindow *m, int con) : info(m)
     connect(changegroup, SIGNAL(clicked(bool)), this, SLOT(changegroupparent()));
 }
 
+// changement du groupe parent de la question courante menu
+
 void infoquestion::changegroupparent()
 {
     grouptree *gt = new grouptree(m, p->listqgroup, 0);
@@ -146,6 +154,8 @@ void infoquestion::changegroupparent()
     connect(gt, SIGNAL(itemClicked(QTreeWidgetItem*,int)), gt, SLOT(close()));
     gt->show();
 }
+
+// changement du groupe parent de la question courante
 
 void infoquestion::changegroupparent2(QTreeWidgetItem *item)
 {
@@ -163,12 +173,16 @@ void infoquestion::changegroupparent2(QTreeWidgetItem *item)
     }
 }
 
+// passer du mode groupe au mode question (le mode groupe et gerer dans info)
+
 void infoquestion::setquestionmod(int qgroupid)
 {
     contg->hide();
     contq->show();
     this->qgroupid = qgroupid;
 }
+
+// mise a jour visible de question
 
 void infoquestion::updatequestion(int id)
 {
@@ -222,6 +236,8 @@ void infoquestion::updatequestion(int id)
     }
 }
 
+// mise a jour visible du groupe parrent
+
 
 void infoquestion::updategroup(int id)
 {
@@ -229,6 +245,8 @@ void infoquestion::updategroup(int id)
     this->updateibg(id, 1);
     qgroupid = id;
 }
+
+// mise a jour en function de si c'est bien une question ou si on s'interesse a un groupe (si c est un groupe on appelle la classe parente qui represente un groupe)
 
 void infoquestion::updateib(QTreeWidgetItem * item)
 {
@@ -252,6 +270,8 @@ void infoquestion::updateib(QTreeWidgetItem * item)
     updatequestion(tmp->id);
 }
 
+// recuperer une copie de la question courante
+
 question infoquestion::getquestioncopy()
 {
     QString splitchar;
@@ -268,6 +288,7 @@ question infoquestion::getquestioncopy()
     return (ret);
 }
 
+// mise a jour de la base de la donnée
 void infoquestion::updatebdd()
 {
     QString splitchar;

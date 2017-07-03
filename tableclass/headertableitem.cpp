@@ -45,6 +45,8 @@ headertableitem::headertableitem(project *p, QString str, QList<question> * arg,
 {
 }
 
+// function appelé si l'argument de l header change (a tester)
+
 void headertableitem::changearg(QTreeWidgetItem *item)
 {
     grouptreeitem *gcast = dynamic_cast<grouptreeitem*>(item);
@@ -75,6 +77,8 @@ void headertableitem::changearg(QTreeWidgetItem *item)
     }
     dynamic_cast<tableshow*>(this->tableWidget())->updateall(); // opti
 }
+
+// verifi si cette colone doit etre afficher
 
 bool headertableitem::is_in(vector<group> &g, vector<group> &gq, QList<int> listint, QList<int> listqint, int itmin, int itmax)
 {

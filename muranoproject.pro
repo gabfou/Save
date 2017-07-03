@@ -46,7 +46,6 @@ SOURCES += main.cpp\
     config/menuconfigperson.cpp \
     config/infoperson.cpp \
     config/info.cpp \
-    misc/tablistedit.cpp \
     misc/listeditwval.cpp \
     config/menuconfigsondage.cpp \
     sql/sqloperation.cpp \
@@ -91,7 +90,6 @@ HEADERS  += mainwindow.h \
     config/menuconfigperson.h \
     config/infoperson.h \
     config/info.h \
-    misc/tablistedit.h \
     misc/listeditwval.h \
     config/menuconfigsondage.h \
     tableclass/tableau_brut.h \

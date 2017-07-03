@@ -5,6 +5,8 @@
 #include "listedit.h"
 #include "data/person.h"
 
+// menu d'envoi d'email pas fonctionel
+
 class emailvalidator : public QWidget
 {
     Q_OBJECT

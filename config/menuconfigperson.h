@@ -3,6 +3,8 @@
 
 #include "le.h"
 
+// onglet personne du menu de config
+
 class project;
 class grouptree;
 class MainWindow;

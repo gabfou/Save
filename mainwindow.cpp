@@ -18,25 +18,26 @@
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::MainWindow)
+    ui(new Ui::MainWindow) // initialization
 {
-
     ui->setupUi(this);
-    createConnection();
     this->cw = new QTabWidget();
     this->setCentralWidget(cw);
     this->setWindowTitle("Outils sondage");
-    // default display
 
     this->resize(1000, 600);
 
-    // timer check connection
+    // on creer la premiere conection
+
+    createConnection();
+
+    // mise en place du timer qui verifie qu'on est encore connecté
 
     QTimer *sqlco = new QTimer(this);
     connect(sqlco, SIGNAL(timeout()), this, SLOT(checksqlconexion()));
     sqlco->start(10000);
 
-    //menu
+    // initialisation des menu
 
     menu_projet = menuBar()->addMenu("&Projet");
     QAction *new_projet = menu_projet->addAction("&Nouveaux");
@@ -53,10 +54,6 @@ MainWindow::MainWindow(QWidget *parent) :
     QObject::connect(xlsx_convert, SIGNAL(triggered()), this, SLOT(convert_to_xlsx()));
     QAction *brute = menu_outil->addAction("&Extraire les donnée brute en xlsx");
     QObject::connect(brute, SIGNAL(triggered()), this, SLOT(extract_brutesimple()));
-//  QAction *afficheform = menu_outil->addAction("&form creator");
-//  QObject::connect(afficheform, SIGNAL(triggered()), this, SLOT(formcreator()));
-//	QAction *barchartref = menu_outil->addAction("&Graphique comparaison reference-donnée");
-//	QObject::connect(barchartref, SIGNAL(triggered()), this, SLOT(showbarchartref()));
 
     menu_affifchage = menuBar()->addMenu("&Affichage");
     QAction *afficherval = menu_affifchage->addAction("&Ponderation");
@@ -76,19 +73,9 @@ MainWindow::MainWindow(QWidget *parent) :
     afficherglobalrep->setChecked(false);
     QObject::connect(afficherglobalrep, SIGNAL(toggled(bool)), this, SLOT(globalrep(bool)));
 
-//    menu_graphique = menuBar()->addMenu("&Graphique");
-//    affichergraphiquecompare = menu_graphique->addAction("&generer un graphique de comparaison référence-données");
-//    affichergraphiquecompare->setCheckable(true);
-//    affichergraphiquecompare->setChecked(false);
-//    QObject::connect(affichergraphiquecompare, SIGNAL(toggled(bool)), this, SLOT(graphiquecrd(bool)));
-
     menu_serveur = menuBar()->addMenu("&Serveur et mail");
     QAction *config_sondage = menu_serveur->addAction("&Programer une série de sondage");
     QObject::connect(config_sondage, SIGNAL(triggered()), this, SLOT(configsondage()));
-//    QAction *new_sondage = menu_serveur->addAction("&lancer un sondage");
-//    QObject::connect(new_sondage, SIGNAL(triggered()), this, SLOT(sendproject()));
-//    QAction *new_sondage_ref = menu_serveur->addAction("&lancer un sondage de reference");
-//    QObject::connect(new_sondage_ref, SIGNAL(triggered()), this, SLOT(sendproject_ref()));
     QAction *suivirepa = menu_serveur->addAction("&suivi des réponse");
     QObject::connect(suivirepa, SIGNAL(triggered()), this, SLOT(suivirep()));
     QAction *Gestionjour = menu_serveur->addAction("&Gestion des jour");
@@ -100,11 +87,12 @@ MainWindow::MainWindow(QWidget *parent) :
     QAction *infoperson = menu_serveur->addAction("&Excell Info");
     QObject::connect(infoperson, SIGNAL(triggered()), this, SLOT(Excellinfo()));
 
+    //on grise les menu au quelle on doit pas acceder en attendant d'ouvrir un projet
+
     menu_projet->actions().at(3)->setEnabled(0);
     menu_outil->setEnabled(0);
     menu_affifchage->setEnabled(0);
     menu_serveur->setEnabled(0);
-    //menu_graphique->setEnabled(0);
 }
 
 
@@ -126,8 +114,6 @@ void MainWindow::checksqlconexion()
         createConnection();
 }
 
-//ajout de projet
-
 void MainWindow::checkprojectname()
 {
     QRegExp regex("^[^,;' ]+$");
@@ -144,6 +130,8 @@ void MainWindow::checkprojectname()
         labeltmp->setText("<font color='black'>Le nom du nouveau projet ne peux pas contenir d'espace, de ; de ', et ne peut pas être vide</font>");
     }
 }
+
+//menu d'ajout de projet
 
 void MainWindow::addproject()
 {
@@ -189,6 +177,8 @@ void MainWindow::addproject()
     win->show();
     error = 0;
 }
+
+//menu d'ajout de projet phase 2
 
 void MainWindow::addproject2()
 {
@@ -318,14 +308,14 @@ void MainWindow::addproject2()
     this->configproject();
 }
 
-// open project
-
 QString name_recuperator(QString str)
 {
     QString ret = str.mid(8, str.size() - 16);
 
     return ret;
 }
+
+// menu d'ouverture de project
 
 void MainWindow::openproject()
 {
@@ -348,6 +338,8 @@ void MainWindow::openproject()
 
 }
 
+// menu d'ouverture de project phase 2
+
 void MainWindow::openproject2(QListWidgetItem *item)
 {
     QSqlQuery qry;
@@ -362,6 +354,7 @@ void MainWindow::openproject2(QListWidgetItem *item)
     //menu_graphique->setEnabled(1);
     //this->addock();
 }
+// menu de supression de project
 
 void MainWindow::supproject()
 {
@@ -383,6 +376,8 @@ void MainWindow::supproject()
     listWidget->show();
 }
 
+// menu de supression de project phase 2
+
 void MainWindow::supproject2(QListWidgetItem *item)
 {
     strtmp = item->text();
@@ -399,6 +394,8 @@ void MainWindow::supproject2(QListWidgetItem *item)
     connect(non, SIGNAL(clicked(bool)), win, SLOT(close()));
     win->show();
 }
+
+// menu de supression de project phase 3
 
 void MainWindow::supproject3()
 {
@@ -425,6 +422,8 @@ void MainWindow::supproject3()
         qDebug() << qry.lastError();
 }
 
+// ajout du menu de gauche (groupe personne iteration)
+
 void MainWindow::addock()
 {
     if (groupdock)
@@ -435,8 +434,6 @@ void MainWindow::addock()
     groupdock->show();
     addDockWidget(Qt::LeftDockWidgetArea, groupdock);
 }
-
-
 
 MainWindow::~MainWindow()
 {
@@ -516,6 +513,8 @@ void MainWindow::select_first_table()
         afficherpers->trigger();
 }
 
+//demande de mise a jour de l'affichage (valeur a l'interieur des tableaux)
+
 void MainWindow::updateproject()
 {
     if (this->ov)
@@ -534,6 +533,8 @@ void MainWindow::updateproject()
     select_first_table();
     this->addock();
 }
+
+// menu d'extraction des données sql brute
 
 void MainWindow::extract_brutesimple()
 {
@@ -561,6 +562,8 @@ void MainWindow::extract_brutesimple()
     w->show();
 }
 
+// menu d'extraction des données sql brute phase 2
+
 void MainWindow::extract_brutesimple2()
 {
     QTableWidget *tmp = new QTableWidget();
@@ -569,6 +572,8 @@ void MainWindow::extract_brutesimple2()
     QListWidgetItem * item;
     int i = -1;
     int y = 0;
+
+    // creation du tableaux
 
     while ((item = listWidgettmp->item(++i)))
     {
@@ -592,7 +597,7 @@ void MainWindow::extract_brutesimple2()
     if ( !qry.exec(qry_prep) )
         qDebug() << "qry table_brut_simple fail" << qry.lastError();
     else
-        qDebug() << "qry table_brut_simple createf!";
+        qDebug() << "qry table_brut_simple created!";
     tmp->setRowCount(qry.numRowsAffected() + 2);
     tmp->setColumnCount(10);
 
@@ -619,10 +624,15 @@ void MainWindow::extract_brutesimple2()
         tmp->setItem(y, 8, new QTableWidgetItem(qry.value(8).toString()));
     }
     QString fichier = QFileDialog::getSaveFileName(this, "Destination", "Save", "Excell files (*.xlsx)");
+
+    // conversion du tableau em xlsx
+
     tab_to_fichier(fichier, tmp);
     delete listWidgettmp;
     delete tmp;
 }
+
+// conversion du tableaux actuel en xlsx
 
 void MainWindow::convert_to_xlsx()
 {
@@ -672,6 +682,8 @@ void	MainWindow::baserep(bool checked)
 }
 
 
+// ajout des different tableaux de donner a la fenetre principale
+
 void	MainWindow::globalrep(bool checked)
 {
     if (checked)
@@ -702,6 +714,8 @@ void	MainWindow::personrep(bool checked)
     }
 }
 
+// ajout du graphique (pas utilisé)
+
 void MainWindow::graphiquecrd(bool checked)
 {
     if (checked)
@@ -716,6 +730,8 @@ void MainWindow::graphiquecrd(bool checked)
     }
 }
 
+// changement du groupe de personne pris en compte
+
 void	MainWindow::changescope2(QTreeWidgetItem *item)
 {
     grouptreeitem *tmp;
@@ -728,7 +744,9 @@ void	MainWindow::changescope2(QTreeWidgetItem *item)
     }
 }
 
-void	MainWindow::changescopeq2(QTreeWidgetItem *item)
+// changement du groupe de question pris en compte
+
+void	MainWindow::changescopeq2(QTreeWidgetItem *it`em)
 {
     grouptreeitem *tmp;
 
@@ -740,6 +758,7 @@ void	MainWindow::changescopeq2(QTreeWidgetItem *item)
     }
 }
 
+// anci
 
 void MainWindow::updatetable()
 {
@@ -750,9 +769,15 @@ void MainWindow::updatetable()
     }
 }
 
+// ouvre le menu de config general
+
 void	MainWindow::configproject(){menuconfigproject *m = new menuconfigproject(this->namecurrent, &(this->current), this);m->show();}
 
+// ouvre le menu de configuration des sondage
+
 void	MainWindow::configsondage(){menusondage *m = new menusondage(this);m->show();}
+
+// prend une capture d ecran de la fenetre courante
 
 void	MainWindow::screenshootcurrent()
 {
@@ -787,12 +812,16 @@ void	MainWindow::screenshootcurrent()
             warning(tr("The image could not be saved to \"%1\".").arg(QDir::toNativeSeparators(fileName)));
 }
 
+// change le l'iteration max pris en compte
+
 void    MainWindow::maxiterationchange(int max)
 {
     this->iterationmax = max;
     this->current.iterationmax = max;
     emit maxiterationchanged(max);
 }
+
+// change le l'iteration min pris en compte
 
 void    MainWindow::miniterationchange(int min)
 {
@@ -801,26 +830,27 @@ void    MainWindow::miniterationchange(int min)
     emit miniterationchanged(min);
 }
 
-void	MainWindow::Backroundchange()
-{
-    QString file = QFileDialog::getSaveFileName(this, "Choisiser une nouvelle image", "~", "Image (*.png)");
-    Uploader u;
+// void	MainWindow::Backroundchange()
+// {
+//     QString file = QFileDialog::getSaveFileName(this, "Choisiser une nouvelle image", "~", "Image (*.png)");
+//     Uploader u;
 
-    u.start(file);
-//	QProgressDialog progress("Copying files...", "Abort Copy", 0, u., this);
-//	progress.setWindowModality(Qt::WindowModal);
+//     u.start(file);
+// //	QProgressDialog progress("Copying files...", "Abort Copy", 0, u., this);
+// //	progress.setWindowModality(Qt::WindowModal);
 
-//	for (int i = 0; i < numFiles; i++)
-//	{
-//		progress.setValue(i);
+// //	for (int i = 0; i < numFiles; i++)
+// //	{
+// //		progress.setValue(i);
 
-//		if (progress.wasCanceled())
-//			break;
-//		... copy one file
-//	}
-//	progress.setValue(numFiles);
-}
+// //		if (progress.wasCanceled())
+// //			break;
+// //		... copy one file
+// //	}
+// //	progress.setValue(numFiles);
+// }
 
+// extraction brut
 
 void MainWindow::extractor()
 {
@@ -832,6 +862,8 @@ void MainWindow::formcreator()
 {
 
 }
+
+// ouvre le menu du suivi des reponses
 
 void MainWindow::suivirep()
 {

@@ -5,6 +5,8 @@
 #include "misc/formgroupbox.h"
 #include "MRichTextEditor/mrichtextedit.h"
 
+// cette classe represente une preview d'un formulaire (2eme page du site web);
+
 formloadator::formloadator(bool ref, int gid, project *p): QScrollArea(), p(p), ref(ref), gid(gid)
 {
     ret = new QWidget();
@@ -100,6 +102,7 @@ void formloadator::emitgroupclicked(int id)
     emit groupclicked(id);
 }
 
+// mise a jour du groupe de personne pris en compte
 
 void formloadator::gidupdate(int gid)
 {
@@ -113,6 +116,8 @@ void formloadator::gidupdate(int gid)
     }
     ret->adjustSize();
 }
+
+// mise a jour de la base de donnée
 
 void formloadator::updateireel()
 {

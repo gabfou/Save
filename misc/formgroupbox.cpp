@@ -4,6 +4,8 @@
 #include "data/person.h"
 #include "data/project.h"
 
+// cette classe est un "QGroupBox" contenant une question ou un group elle essaye de simuler comment celle ci sera traiter coté web
+
 formgroupbox::formgroupbox(question *q, formgroupbox *parrent, project *p, QString text) : argq(q), p(p)
 {
     layout = new QVBoxLayout();
@@ -30,6 +32,43 @@ void formgroupbox::addchild(formgroupbox *child)
 {
     listchild << child;
 }
+
+// verifie si elle est visible en function de l'id du group de personne id
+
+int formgroupbox::checkgid(int id, project *p)
+{
+    int ret = 0;
+    QList<formgroupbox*>::iterator i = listchild.begin();
+
+    while (i != listchild.end())
+    {
+        ret += (*i)->checkgid(id, p);
+        i++;
+    }
+    if (argq && argq->is_in(id, p))
+        ret++;
+    if (ret)
+        this->sishow();
+    else
+        this->sihide();
+    this->updateGeometry();
+    this->adjustSize();
+    return (ret);
+}
+
+void formgroupbox::sihide()
+{
+    this->hide();
+    emit visibilychanged(0);
+}
+
+void formgroupbox::sishow()
+{
+    this->show();
+    emit visibilychanged(1);
+}
+
+// la fin du fichier essaye de gerer le drag and drop pour pouvoir intervertir des question antre les groupe
 
 void formgroupbox::mousePressEvent ( QMouseEvent * event )
 {
@@ -101,37 +140,4 @@ void formgroupbox::dropEvent(QDropEvent *event)
             src->label->setText(src->argq->sujet);
         }
     }
-}
-
-int formgroupbox::checkgid(int id, project *p)
-{
-    int ret = 0;
-    QList<formgroupbox*>::iterator i = listchild.begin();
-
-    while (i != listchild.end())
-    {
-        ret += (*i)->checkgid(id, p);
-        i++;
-    }
-    if (argq && argq->is_in(id, p))
-        ret++;
-    if (ret)
-        this->sishow();
-    else
-        this->sihide();
-    this->updateGeometry();
-    this->adjustSize();
-    return (ret);
-}
-
-void formgroupbox::sihide()
-{
-    this->hide();
-    emit visibilychanged(0);
-}
-
-void formgroupbox::sishow()
-{
-    this->show();
-    emit visibilychanged(1);
 }

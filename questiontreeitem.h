@@ -1,6 +1,8 @@
 #ifndef QUESTIONTREEITEM_H
 #define QUESTIONTREEITEM_H
 
+// represente une question dans un groupetree
+
 #include "le.h"
 
 class questiontreeitem : public QTreeWidgetItem

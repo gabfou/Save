@@ -10,6 +10,8 @@
 #include "tableclass/tableshow.h"
 #include "config/infoquestion.h"
 
+// initialisation
+
 grouptree::grouptree(MainWindow *m, vector<group> & g, int i) : g(g), m(m), i(i)
 {
 	if (g.empty())
@@ -69,8 +71,8 @@ grouptree::grouptree(MainWindow *m, vector<group> & g, int i) : g(g), m(m), i(i)
 	contextmenuselect();
 }
 
-// void	grouptree::projectgroupshow(MainWindow *main, QTableWidget *gbox, int k, int id, int *i)
-// new grouptreeitem(QStringList(QString(listgroup[*listpg].getName().c_str())), listgroup, *listpg, (QTreeWidget*)0)
+
+// selection des action possible selon le type de l arbre (pas d'option copie de quesion sur un arbre de personne)
 
 void	grouptree::contextmenuselect()
 {
@@ -116,6 +118,8 @@ void	grouptree::contextmenuselect()
 	}
 }
 
+// remplissage de l arbre de personne
+
 void	grouptree::initpersonintree()
 {
 	char mdp[7];
@@ -151,6 +155,8 @@ void	grouptree::initpersonintree()
 	}
 }
 
+// selection du groupe current a id (appeler la fontion avec dontgiveit = NULL)
+
 void grouptree::setcurrentgroup(int id, QTreeWidgetItem *dontgiveit)
 {
 	grouptreeitem *tmp;
@@ -166,10 +172,14 @@ void grouptree::setcurrentgroup(int id, QTreeWidgetItem *dontgiveit)
 		setcurrentgroup(id, dontgiveit->child(i));
 }
 
+// afficher ou pas les personne/ question (et pas juste les groupe de personne/question)
+
 void	grouptree::setVisiblenongroup(bool v)
 {
 		dynamic_cast<grouptreeitem*>(this->topLevelItem(0))->setVisiblenongroup(v);
 }
+
+// ajouter un groupe dans l arbre menu
 
 void	grouptree::addgroupintree()
 {
@@ -180,14 +190,9 @@ void	grouptree::addgroupintree()
 	this->tmpid = dynamic_cast<grouptreeitem*>(this->currentItem())->getId();
 	this->setCurrentItem(this->tmp);
 	cotmp = connect(this, SIGNAL(itemChanged(QTreeWidgetItem *, int)), this, SLOT(addgroupintree2(QTreeWidgetItem *)), Qt::UniqueConnection);
-	/*if (this->nametmp != NULL)
-		delete this->nametmp;
-	this->nametmp = new QLineEdit();
-
-	connect(this->nametmp, SIGNAL(returnPressed()), this, SLOT(addgroupintree2()));
-	connect(this->nametmp, SIGNAL(returnPressed()),  this->nametmp, SLOT(close()));
-	this->nametmp->show();*/
 }
+
+// ajouter un groupe dans l arbre
 
 void	grouptree::addgroupintree2(QTreeWidgetItem *item)
 {
@@ -199,23 +204,19 @@ void	grouptree::addgroupintree2(QTreeWidgetItem *item)
 	m->updatetable();
 }
 
+// ajouter un question dans l arbre menu
+
 void	grouptree::addquestintree()
 {
-	//QWidget *win = new QWidget();
 	this->tmp = new QTreeWidgetItem((QTreeWidget*)0);
 	this->currentItem()->addChild(this->tmp);
 	this->openPersistentEditor(this->tmp);
 	this->tmpid = dynamic_cast<grouptreeitem*>(this->currentItem())->getId();
 	this->setCurrentItem(this->tmp);
 	cotmp = connect(this, SIGNAL(itemChanged(QTreeWidgetItem *, int)), this, SLOT(addquestintree2(QTreeWidgetItem *, int)), Qt::UniqueConnection);
-	/*if (this->nametmp != NULL)
-		delete this->nametmp;
-	this->nametmp = new QLineEdit();
-
-	connect(this->nametmp, SIGNAL(returnPressed()), this, SLOT(addgroupintree2()));
-	connect(this->nametmp, SIGNAL(returnPressed()),  this->nametmp, SLOT(close()));
-	this->nametmp->show();*/
 }
+
+// ajouter un question dans l arbre
 
 void	grouptree::addquestintree2(QTreeWidgetItem *item, int column)
 {
@@ -228,6 +229,8 @@ void	grouptree::addquestintree2(QTreeWidgetItem *item, int column)
 	item = NULL;
 }
 
+// ajouter un question global dans l arbre menu
+
 void	grouptree::addquestglobintree()
 {
     infoqtmp = new infoquestion(&(m->current), m, 0);
@@ -238,12 +241,16 @@ void	grouptree::addquestglobintree()
 	connect(infoqtmp->b_update, SIGNAL(clicked(bool)), this, SLOT(addquestglobintree2()));
 }
 
+// ajouter un question global dans l arbre
+
 void	grouptree::addquestglobintree2()
 {
 	dynamic_cast<grouptreeitem*>(this->currentItem())->addquestglobinttree(infoqtmp->getquestioncopy());
     delete infoqtmp;
 	m->updatetable();
 }
+
+// ajouter un personne dans l arbre menu
 
 void	grouptree::addpersonintree()
 {
@@ -254,6 +261,8 @@ void	grouptree::addpersonintree()
 	this->setCurrentItem(this->tmp);
 	cotmp = connect(this, SIGNAL(itemChanged(QTreeWidgetItem *, int)), this, SLOT(addpersonintree2(QTreeWidgetItem *, int)), Qt::UniqueConnection);
 }
+
+// ajouter un personne dans l arbre
 
 void	grouptree::addpersonintree2(QTreeWidgetItem *item, int column)
 {
@@ -266,6 +275,8 @@ void	grouptree::addpersonintree2(QTreeWidgetItem *item, int column)
 	delete item;
 	item = NULL;
 }
+
+// suprimer un groupe
 
 void	grouptree::supgroupintree()
 {
@@ -281,6 +292,8 @@ void	grouptree::supgroupintree()
         m->table->showtable( m->currentgref, m->currentgqref, m->iterationmin, m->iterationmax);
 	}
 }
+
+// modifier un groupe menu
 
 void	grouptree::modifdgroupintree()
 {
@@ -305,11 +318,15 @@ void	grouptree::modifdgroupintree()
 	win->show();
 }
 
+// modifier un groupe aplication des changement
+
 void	grouptree::modifdgroupintree2()
 {
 	sqlo::sqlupdate(("project_" + m->current.name + "_groupe"), "description", texttmp->toPlainText(), dynamic_cast<grouptreeitem*>(this->currentItem())->getId());
 	g[dynamic_cast<grouptreeitem*>(this->currentItem())->getId()].description = texttmp->toPlainText();
 }
+
+// suprimer une question
 
 void	grouptree::supquestintree()
 {
@@ -320,6 +337,8 @@ void	grouptree::supquestintree()
 	m->updatetable();
 }
 
+// suprimer une personne
+
 void	grouptree::suppersonintree()
 {
 	sqlo::supperson(&(m->current), m->namecurrent, dynamic_cast<persontreeitem*>(this->currentItem())->id);
@@ -328,6 +347,8 @@ void	grouptree::suppersonintree()
 	item = NULL;
 	m->updatetable();
 }
+
+// copier
 
 void    grouptree::copieintree()
 {
@@ -355,6 +376,8 @@ void    grouptree::copieintree()
         copiep = m->current.listp[tmp2->id];
     }
 }
+
+// coller
 
 void    grouptree::pastintree()
 {

@@ -4,6 +4,8 @@
 #include "data/group.h"
 #include "mainwindow.h"
 
+// pas utilise tentative de graphique
+
 bargraph::bargraph(t_groupref  g, project *p, QWidget *parent) : QWidget(parent), g(g), p(p)
 {
     //setMinimumWidth(300);

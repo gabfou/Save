@@ -1,4 +1,8 @@
 <?php
+
+
+// diverse tentative pour les mail
+
 	include("www/function.php");
 	require 'phpMailer/PHPMailerAutoload.php';
 

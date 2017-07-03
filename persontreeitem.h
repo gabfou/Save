@@ -3,6 +3,8 @@
 
 #include "le.h"
 
+// represente une personne dans un groupetree
+
 class persontreeitem : public QTreeWidgetItem
 {
 public:

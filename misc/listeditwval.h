@@ -5,6 +5,8 @@
 
 class listedit;
 
+// liste afficher dans le menu de config question pour les question avec option avec valeur
+
 class listeditwval : public QWidget
 {
     Q_OBJECT

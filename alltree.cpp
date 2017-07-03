@@ -4,6 +4,7 @@
 #include "grouptree.h"
 #include "mainwindow.h"
 
+
 void Alltree::prephide()
 {
 	slidemax->hide();

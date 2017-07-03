@@ -3,6 +3,8 @@
 #include "grouptree.h"
 #include "mainwindow.h"
 
+// menu d'envoi d'email
+
 void emailvalidator::init(int group)
 {
     QList<person>::iterator i;
@@ -46,19 +48,17 @@ emailvalidator::emailvalidator(MainWindow *m, int ref) : m(m), ref(ref) // opti 
     layout->addLayout(hbox);
     layout->addLayout(sendanulbox);
 
-//    listmail->addItems(m->current.sendproject(0));
-
     connect(gt, SIGNAL(selectgroupchange(int)), this, SLOT(init(int)));
 
     this->setLayout(layout);
 }
 
+// envoi des email a proprement parler pas fonctionel
 
 void emailvalidator::send()
 {
     QSqlQuery qry;
 
-    //m->current.getgrouplist(groupid);
     if (ref)
         qry.prepare("UPDATE project_" + m->namecurrent + "_project SET refbool = 1 WHERE 1");// + strallgroupfilsforsql(groupid, m->namecurrent) + ";");
     else

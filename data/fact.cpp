@@ -34,6 +34,8 @@ fact::~fact()
 }
 
 
+// verifie si le fait est valide selon ces parametres
+
 int fact::checkfacttime(int idquestion, int &counter, int iterationmin, int iterationmax) const
 {
     if (this->idquestion == idquestion && iterationmin <= iteration && iterationmax >= iteration)
@@ -43,6 +45,8 @@ int fact::checkfacttime(int idquestion, int &counter, int iterationmin, int iter
 	}
 	return (0);
 }
+
+// verifie si le fait est valide selon ces parametre
 
 void fact::checkfactstr(int idquestion, int &counter, QStringList &list, QVector<int> *nb, QVector<int> *nbl, int iterationmin, int iterationmax) const
 {
@@ -64,20 +68,6 @@ void fact::checkfactstr(int idquestion, int &counter, QStringList &list, QVector
             i++;
         }
     }
-}
-
-int fact::showfact(QGridLayout *gbox, int i, int j)
-{
-	QLabel *time = new QLabel();
-	time->setText(QString::number(this->time));
-	time->setStyleSheet("border: 2px solid grey");
-	gbox->addWidget(time, i, j++);
-	QLabel *note = new QLabel();
-	note->setText(QString::number(this->note));
-	note->setStyleSheet("border: 2px solid grey");
-	gbox->addWidget(note, i, j++);
-	cout << this->factname << " " << this->time << "min " << this->note << " / 5\n";
-	return (j);
 }
 
 ostream & operator<<(ostream & o, fact const & rhs)

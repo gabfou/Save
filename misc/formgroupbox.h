@@ -3,7 +3,7 @@
 
 #include "le.h"
 
-// cette classe est un "QGroupBox" contenant une question ou un group;
+// cette classe est un "QGroupBox" contenant une question ou un group elle essaye de simuler comment celle ci sera traiter coté web
 
 class formgroupbox : public QGroupBox
 {

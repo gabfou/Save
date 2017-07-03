@@ -1,4 +1,6 @@
 <?php
+// diverse tentative pour les mail ancienne version
+
 	include("www/function.php");
 
 

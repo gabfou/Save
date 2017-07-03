@@ -4,6 +4,8 @@
 #include "grouptreeitem.h"
 #include "MRichTextEditor/mrichtextedit.h"
 
+// cette classe represente le menu de planification de sondage
+
 menuconfigsondage::menuconfigsondage(MainWindow *m, grouptree *gt) : m(m), gt(gt)
 {
     QSqlQuery qry;
@@ -105,6 +107,8 @@ menuconfigsondage::menuconfigsondage(MainWindow *m, grouptree *gt) : m(m), gt(gt
     timecalendar->setDate(QDate::currentDate());
 }
 
+// mise a jour du menu
+
 void menuconfigsondage::updatecurrent()
 {
     QSqlQuery qry;
@@ -122,6 +126,8 @@ void menuconfigsondage::updatecurrent()
     objectmail->setText(qry.value(3).toString());
 }
 
+// supression du sondage
+
 void menuconfigsondage::supsondage()
 {
     QSqlQuery qry;
@@ -131,6 +137,8 @@ void menuconfigsondage::supsondage()
     listid.erase(listid.begin() + listWidget->currentRow());
     delete listWidget->currentItem();
 }
+
+// check si time corespond a un jour valide
 
 static bool notgoodday(QDateTime &time, QRadioButton **listday)
 {
@@ -155,6 +163,8 @@ static bool notgoodday(QDateTime &time, QRadioButton **listday)
         return (0);
     return (1);
 }
+
+// ajout d'un sondage
 
 void menuconfigsondage::newsondage()
 {

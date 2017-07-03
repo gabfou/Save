@@ -17,6 +17,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 #include <QByteArray>
 
 
+// envoi des mail methode direct (passe pas par le serveur)
 
 class Smtp : public QObject
 {

@@ -3,6 +3,8 @@
 #include "data/question.h"
 #include "smtp.h"
 
+// QList<t_groupref> to t_groupref
+
 t_groupref syntheselistgroup(QList<t_groupref> listg)
 {
 	t_groupref ret;

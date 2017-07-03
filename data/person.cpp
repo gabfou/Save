@@ -21,11 +21,15 @@ person::~person()
 {
 }
 
+// creer un nouveau fait et le return
+
 inline fact newfact(string name, int time, int note, QString date, int idquestion, QString timestr, int iteration)
 {
     fact ret(name, time, note, date, idquestion, timestr, iteration);
 	return(ret);
 }
+
+// ajout un nouveau fait sur la personne
 
 void person::add_fact(string name, int time, int note, QString date, int iteration, int idquestion, QString timestr)
 {
@@ -34,6 +38,7 @@ void person::add_fact(string name, int time, int note, QString date, int iterati
     (this->flist).push_back(newfact(name, time, note, date, idquestion, timestr, iteration));
 }
 
+// renvoit la valeur a afficher sur une case croisant qname et cette question (tj entre 0 et 1 et multiplier par la ponderation)
 
 float person::personshowcaseval(question & qname, int iterationmin, int iterationmax)
 {
@@ -55,7 +60,7 @@ float person::personshowcaseval(question & qname, int iterationmin, int iteratio
     return -1;
 }
 
-
+// renvoit la valeur a afficher sur une case croisant qname et cette question mais pour les question non numerique
 
 QString	person::personshowcasevalstr(question &qname, int iterationmin, int iterationmax)
 {
@@ -77,6 +82,7 @@ QString	person::personshowcasevalstr(question &qname, int iterationmin, int iter
     return ((tmp > -0.1) ? QString::number(tmp) : "NA");
 }
 
+// renvoit la valeur a afficher sur une case croisant qname et cette question mais pour les question non numerique partie 2
 
 float person::personshowcasevaltype2(question & qname, QVector<int> *nb, int iterationmin, int iterationmax)
 {
@@ -106,6 +112,7 @@ float person::personshowcasevaltype2(question & qname, QVector<int> *nb, int ite
     return -1;
 }
 
+// renvoit la valeur a afficher sur une case croisant qname et cette question (met en % quand il faut ne prend pas en compte la ponderation)
 
 float person::personshowcase(question & qname, int iterationmin, int iterationmax)
 {
@@ -129,6 +136,7 @@ float person::personshowcase(question & qname, int iterationmin, int iterationma
     return -1;
 }
 
+// revient au meme que personshowcaseval la ponderation n ayant aucun effet sur les question non chiffré je suis pas sur que la differenciation val/pas val a encore beaucoup de sens a voir
 
 QString	person::personshowcasestr(question &qname, int iterationmin, int iterationmax)
 {
@@ -149,13 +157,7 @@ QString	person::personshowcasestr(question &qname, int iterationmin, int iterati
     return ((tmp > -0.1) ? QString::number(tmp) : "NA");
 }
 
-
-QString	person::personsend(Smtp * smtp, QString post)
-{
-	(void)smtp;
-	(void)post;
-    return (this->email);
-}
+// init a partir de different parametre
 
 person::person(QString name, vector<question> *question)
 {
@@ -194,10 +196,14 @@ person::person(const person & person)
 }
 
 
+// comparaison par noms
+
 int person::compare(QString name2)
 {
 	return (name2.compare(this->name));
 }
+
+// comparaison par id
 
 int person::compare(int id)
 {
@@ -205,6 +211,8 @@ int person::compare(int id)
 		return 0;
 	return 1;
 }
+
+// recuperer une reponse a une question a une iteration particuliere
 
 QString person::getrep(QVector<int> questionid, int iteration, project *p)
 {
@@ -232,7 +240,7 @@ QString person::getrep(QVector<int> questionid, int iteration, project *p)
     return ("NA");
 }
 
-
+// recuperer quand cette personne a repondu a cette iteration avec incrementation de jusqu a 2 counter pour compter le nombre de reponse 
 
 QString person::time_rep_at_iteration(int it, int *counter, int *counter2)
 {
@@ -249,24 +257,6 @@ QString person::time_rep_at_iteration(int it, int *counter, int *counter2)
                 (*counter)++;
             if (counter2)
                 (*counter2)++;
-            return (tmp->getDate());
-        }
-        tmp++;
-    }
-    return("non rempli");
-}
-
-QString person::time_rep_at_iteration(int it)
-{
-    QList<fact>::iterator tmp;
-
-    if (this->questionbool < it)
-        return("non demandé");
-    tmp = this->flist.begin();
-    while (tmp != flist.end())
-    {
-        if (tmp->iteration == it)
-        {
             return (tmp->getDate());
         }
         tmp++;

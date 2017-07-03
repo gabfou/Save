@@ -35,9 +35,6 @@ void Smtp::sendMail(const QString &from, const QString &to, const QString &subje
     message = "To: " + to + "\n";
     message.append("From: " + from + "\n");
     message.append("Subject: " + subject + "\n");
-//    message.append("Reply-To: <" + to + ">" + "\n");
-//    message.append("Disposition-Notification-To: <"+ from + ">\n");
-//    message.append("Return-Receipt-To: <" + from + ">>\n");
     message.append(QString("Date: %1\n").arg(QDateTime::currentDateTime().toString(Qt::RFC2822Date)));
     message.append("MIME-Version: 1.0\n");
     message.append("Content-Type: text/html; charset=utf-8\n");

@@ -34,8 +34,6 @@ void menuconfigproject::configeneral()
     QPushButton *addtp = new QPushButton("Ajouter des personne a partir d'un template");
     QCheckBox *afficheindex = new QCheckBox("Afficher l'index");
     afficheindex->setChecked(p->indexbool);
-//    QCheckBox *affichesugges = new QCheckBox("Afficher les suggestion");
-//    afficheindex->setChecked(p->indexbool);
 
 
     //Connexions aux slots
@@ -50,8 +48,6 @@ void menuconfigproject::configeneral()
 	QGroupBox *groupbox = new QGroupBox("");
 
 	QGridLayout *layoutFormulaire = new QGridLayout();
-	//layoutFormulaire->addWidget(Labelgroup, 1, 0);
-	//layoutFormulaire->addWidget(this->groupboxtmp, 1, 1);
 
 	groupbox->setLayout(layoutFormulaire);
 
@@ -67,6 +63,8 @@ void menuconfigproject::configeneral()
 	this->addTab(win, "general");
 }
 
+// option montrer les table sql
+
 void menuconfigproject::showsql()
 {
     QTabWidget *win = new QTabWidget();
@@ -77,6 +75,8 @@ void menuconfigproject::showsql()
     win->setWindowModality(Qt::ApplicationModal);
     win->show();
 }
+
+// copier les noms des question dans les description (plus necessaire) 
 
 void menuconfigproject::noms_to_description()
 {
@@ -96,6 +96,8 @@ void menuconfigproject::noms_to_description()
     else
         qDebug() << "error menuconfigproject::noms_to_description :" << query.lastError();
 }
+
+// supression des retour chariot (plus necessaire)
 
 void menuconfigproject::sup_retour_chariot()
 {
@@ -129,16 +131,22 @@ void menuconfigproject::sup_retour_chariot()
     }
 }
 
+// montrer le tableaux de donnée brute
+
 void menuconfigproject::showtableau_brut()
 {
     tableau_brut *tabb = new tableau_brut(p);
     tabb->show();
 }
 
+// creation d'un template de question a partir du set courant de question (manque de test) 
+
 void menuconfigproject::newtemplateq()
 {
     createquestiontemplate(m, p);
 }
+
+// integration d'un template de question a partir du set courant de question (manque de test) 
 
 void menuconfigproject::addtemplateq()
 {
@@ -146,10 +154,14 @@ void menuconfigproject::addtemplateq()
     recupquestiontemplate(fichier, p);
 }
 
+// creation d'un template de personne a partir du set courant de personne (manque de test) 
+
 void menuconfigproject::newtemplatep()
 {
     createpersonnetemplate(m, p);
 }
+
+// integration d'un template de personne a partir du set courant de personne (manque de test) 
 
 void menuconfigproject::addtemplatep()
 {

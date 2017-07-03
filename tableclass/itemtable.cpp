@@ -10,6 +10,8 @@ itemtable::itemtable(QString placeholder, project *p, QString form, int itmin, i
     this->setTextAlignment(Qt::AlignHCenter);
 }
 
+// mise a jour de la case en fonction de la colone et la ligne representer par des headertableitem
+
 void itemtable::update()
 {
 	headertableitem *arg = dynamic_cast<headertableitem*>(this->tableWidget()->verticalHeaderItem(this->row()));
@@ -55,10 +57,11 @@ void itemtable::update()
         update(&(arg->argg), (head->arglistq), itmin, itmax);
 	else
 	{
-//		this->setText(this->placeholder);
 		this->setBackgroundColor(Qt::white);
 	}
 }
+
+// mise a jour questio
 
 void itemtable::update(group *arg, question *head, int itmin, int itmax, QString form) // opti passer question en vector
 {

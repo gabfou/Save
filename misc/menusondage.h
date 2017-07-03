@@ -5,6 +5,9 @@
 
 class menusondage : public QWidget
 {
+
+// menu de configuration de sondage
+	
 public:
     menusondage(MainWindow *m);
 };

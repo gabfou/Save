@@ -1,3 +1,5 @@
+
+
 SELECT groupe.groupname, firstname, lastname, iteration, date_info, qgroupe.groupname, question, time, str
 FROM `project_DMI_LEAD_CHANGE_SURVEY_reponse` AS reponse, `project_DMI_LEAD_CHANGE_SURVEY_project` AS person, `project_DMI_LEAD_CHANGE_SURVEY_question` AS question, `project_DMI_LEAD_CHANGE_SURVEY_groupe` AS qgroupe,
 `project_DMI_LEAD_CHANGE_SURVEY_groupe` AS groupe

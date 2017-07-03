@@ -7,6 +7,8 @@
 #include "misc/listedit.h"
 #include "grouptree.h"
 
+// initialisation
+
 infoperson::infoperson(MainWindow *m, project *p) : info(m)
 {
     vbox = new QVBoxLayout();
@@ -36,6 +38,8 @@ infoperson::infoperson(MainWindow *m, project *p) : info(m)
     connect(changegroup, SIGNAL(clicked(bool)), this, SLOT(changegroupparent()));
 }
 
+// changement du groupe parent de la person pointé menu
+
 void infoperson::changegroupparent()
 {
     grouptree *gt = new grouptree(m, p->listgroup, 0);
@@ -45,6 +49,8 @@ void infoperson::changegroupparent()
     connect(gt, SIGNAL(itemClicked(QTreeWidgetItem*,int)), gt, SLOT(close()));
     gt->show();
 }
+
+// changement du groupe parent de la person pointé
 
 void infoperson::changegroupparent2(QTreeWidgetItem *item)
 {
@@ -60,6 +66,8 @@ void infoperson::changegroupparent2(QTreeWidgetItem *item)
     }
 }
 
+// mise a jour du menu visible
+
 void infoperson::updateib(QTreeWidgetItem * item)
 {
 	persontreeitem *tmp = dynamic_cast<persontreeitem*>(item);
@@ -67,6 +75,9 @@ void infoperson::updateib(QTreeWidgetItem * item)
     this->updateibg(-1, -1);
     infolabel->setText("");
 	disconnect(cotmp);
+
+    // si c est un groupe on appelle la classe parente qui represente un groupe
+
 	if (tmp == NULL)
 	{
         grouptreeitem *tmp2 = dynamic_cast<grouptreeitem*>(item);
@@ -83,6 +94,9 @@ void infoperson::updateib(QTreeWidgetItem * item)
         }
 		return ;
     }
+
+    // sinon
+
     cotmp = connect(b_update, SIGNAL(clicked(bool)), this, SLOT(updatebdd()));
     contg->hide();
     contp->show();
@@ -105,6 +119,8 @@ void infoperson::updateib(QTreeWidgetItem * item)
     lastname->setText(pe->lastname);
     email->setText(pe->email);
 }
+
+// mise a jour de la base de donnée
 
 void infoperson::updatebdd()
 {

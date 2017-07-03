@@ -6,7 +6,7 @@
 #include "formgroupbox.h"
 class MRichTextEdit;
 
-// cette classe represente une preview d'un formulaire;
+// cette classe represente une preview d'un formulaire (2eme page du site web);
 
 class formloadator : public QScrollArea
 {

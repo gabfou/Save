@@ -57,6 +57,8 @@ info::info(MainWindow *m) : m(m), p(&(m->current))
     prephide();
 }
 
+// mise a jour de ce qu on doit voir
+
 void info::updateibg(int id, int type)
 {
     prephide();
@@ -84,6 +86,8 @@ void info::updateibg(int id, int type)
     contg->show();
 }
 
+// mise a jour de la base de donner
+
 void info::updatebddg()
 {
 //    char mdp[7];
@@ -98,6 +102,8 @@ void info::updatebddg()
     sqlo::addgroup(p, p->name, name->text(), current->parentid , current->type, descriptiong->toHtml(), gquestion->currentIndex(), ((init) ? current->id : -1));
 }
 
+// changer le groupe cible des descendants menu
+
 void info::settargetchildquestion()
 {
     grouptree *tmp = new grouptree(m, m->current.listgroup, 2);
@@ -106,6 +112,8 @@ void info::settargetchildquestion()
     connect(tmp, SIGNAL(selectgroupchange(int)), this, SLOT(settargetchildquestion2(int)));
     connect(tmp, SIGNAL(selectgroupchange(int)), tmp, SLOT(close()));
 }
+
+// changer le groupe cible des descendants
 
 void info::settargetchildquestion2(int id)
 {

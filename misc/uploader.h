@@ -6,6 +6,8 @@
 #include <QtNetwork>
 #include <QDebug>
 
+// upload des des fichier au serveur (pas finit) 
+
 class Uploader: public QObject
 {
     Q_OBJECT

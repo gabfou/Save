@@ -3,6 +3,8 @@
 
 #include "le.h"
 
+// pas utilise tentative de graphique
+
 class bargraph;
 
 class Comparrefdo : public QWidget

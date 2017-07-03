@@ -9,6 +9,8 @@
 #include "infoquestion.h"
 #include "MRichTextEditor/mrichtextedit.h"
 
+//initialiation
+
 previewconfig::previewconfig(MainWindow *m) : p(&(m->current))
 {
 	QHBoxLayout *layout = new QHBoxLayout();
@@ -36,6 +38,8 @@ previewconfig::previewconfig(MainWindow *m) : p(&(m->current))
 	connect(formref, SIGNAL(groupclicked(int)), groupboxtmp, SLOT(updategroup(int)));
 }
 
+//initialiation de l onglet index
+
 QWidget *previewconfig::indexinit()
 {
 	QWidget *ret = new QWidget();
@@ -55,6 +59,8 @@ QWidget *previewconfig::indexinit()
     return (ret);
 }
 
+// changement du groupe de personne concernée
+
 void previewconfig::changescope(QTreeWidgetItem *item)
 {
 	grouptreeitem *tmp;
@@ -65,6 +71,8 @@ void previewconfig::changescope(QTreeWidgetItem *item)
 		formref->gidupdate(tmp->getId());
 	}
 }
+
+// mise a jour de l intro coter base de donnée
 
 void previewconfig::updateiindex()
 {

@@ -5,6 +5,8 @@
 
 class project;
 
+// cette classe represente un groupe dans un grouptree
+
 class grouptreeitem : public QTreeWidgetItem
 {
 public:

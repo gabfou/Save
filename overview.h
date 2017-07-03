@@ -3,6 +3,8 @@
 
 #include "le.h"
 
+//obselete upadate avec comparefdo si util
+
 class project;
 class bargraph;
 class tableshow;
