@@ -38,6 +38,7 @@
 #include <QPlainTextEdit>
 #include <QMenu>
 #include <QDialog>
+#include "le.h"
 
 MRichTextEdit::MRichTextEdit(QWidget *parent) : QWidget(parent) {
     setupUi(this);
@@ -588,7 +589,10 @@ void MRichTextEdit::insertImage() {
                                     tr("Select an image"),
                                     attdir,
                                     tr("JPEG (*.jpg);; GIF (*.gif);; PNG (*.png);; BMP (*.bmp);; All (*)"));
-    QImage image = QImageReader(file).read();
+    QImageReader imagereader(file);
+    QImage image = imagereader.read();
+    if (image.isNull())
+        warning(imagereader.errorString());
 
     f_textedit->dropImage(image, QFileInfo(file).suffix().toUpper().toLocal8Bit().data() );
 

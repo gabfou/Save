@@ -746,7 +746,7 @@ void	MainWindow::changescope2(QTreeWidgetItem *item)
 
 // changement du groupe de question pris en compte
 
-void	MainWindow::changescopeq2(QTreeWidgetItem *it`em)
+void	MainWindow::changescopeq2(QTreeWidgetItem *item)
 {
     grouptreeitem *tmp;
 
@@ -830,25 +830,25 @@ void    MainWindow::miniterationchange(int min)
     emit miniterationchanged(min);
 }
 
-// void	MainWindow::Backroundchange()
-// {
-//     QString file = QFileDialog::getSaveFileName(this, "Choisiser une nouvelle image", "~", "Image (*.png)");
-//     Uploader u;
+ void	MainWindow::Backroundchange()
+ {
+     QString file = QFileDialog::getSaveFileName(this, "Choisiser une nouvelle image", "~", "Image (*.png)");
+     Uploader u;
 
-//     u.start(file);
-// //	QProgressDialog progress("Copying files...", "Abort Copy", 0, u., this);
-// //	progress.setWindowModality(Qt::WindowModal);
+     u.start(file);
+ //	QProgressDialog progress("Copying files...", "Abort Copy", 0, u., this);
+ //	progress.setWindowModality(Qt::WindowModal);
 
-// //	for (int i = 0; i < numFiles; i++)
-// //	{
-// //		progress.setValue(i);
+ //	for (int i = 0; i < numFiles; i++)
+ //	{
+ //		progress.setValue(i);
 
-// //		if (progress.wasCanceled())
-// //			break;
-// //		... copy one file
-// //	}
-// //	progress.setValue(numFiles);
-// }
+ //		if (progress.wasCanceled())
+ //			break;
+ //		... copy one file
+ //	}
+ //	progress.setValue(numFiles);
+ }
 
 // extraction brut
 

@@ -96,6 +96,7 @@ void createpersonnetemplate(MainWindow *m, project *p);
 void recuppersonnetemplate(QString name, project *p);
 QString strallgroupfilsforsql(int groupid, QString project_name);
 QList<int> recupallgroupfils(int groupid, QString project_name);
+void warning(QString error);
 
 namespace sqlo
 {
