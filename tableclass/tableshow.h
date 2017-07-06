@@ -12,6 +12,7 @@ class headertableitem;
 
 class tableshow : public QTableWidget
 {
+	// cette classe represente le tablaux afficher
 	Q_OBJECT
 public:
 	tableshow(project * p, MainWindow *mainp, int showmode);

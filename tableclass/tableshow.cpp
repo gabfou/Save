@@ -49,10 +49,16 @@ void tableshow::preinit()
 	//connect(this->horizontalHeader(), SIGNAL(sortIndicatorChanged(int,Qt::SortOrder)), this, SLOT(select()));
 }
 
+
+// desactive le triage a appeler avant de mettre a jour la table pour des raison d'optimisation
+
 void tableshow::prepostinit()
 {
 	this->setSortingEnabled(false);
 }
+
+// reactive le triage a appeler avant de mettre a jour la table pour des raison d'optimisation
+// remet aussi les colonnes et ligne a la bonne taille
 
 void tableshow::postinit()
 {
@@ -73,6 +79,9 @@ tableshow::tableshow(project *p, MainWindow *mainp, int showmode) : showmode(sho
 	reinit(p, mainp);
 }
 
+
+// met les header horizontal en place a parir d'une list d'header
+
 void tableshow::sethorizontalheader(QList<headertableitem*> &list, int nc)
 {
 	int i = 0;
@@ -88,6 +97,8 @@ void tableshow::sethorizontalheader(QList<headertableitem*> &list, int nc)
 	}
 }
 
+// met les header vertical en place a parir d'une list d'header
+
 void tableshow::setverticalheader(QList<headertableitem*> &listh, int nc)
 {
 	int i = nc;
@@ -101,11 +112,15 @@ void tableshow::setverticalheader(QList<headertableitem*> &listh, int nc)
 	}
 }
 
+// init a partir de 2 list d'header
+
 tableshow::tableshow(MainWindow *m, QList<headertableitem*> &listv, QList<headertableitem*> &listh) : m(m)
 {
 	this->preinit();
 	reinit(listv, listh);
 }
+
+// clear and reset (le tableaux est reset vide)
 
 void tableshow::reinit()
 {
@@ -117,6 +132,8 @@ void tableshow::reinit()
 	this->k = 0;
 	this->populate();
 }
+
+// clear and reset with 2 list d'header
 
 void tableshow::reinit(QList<headertableitem*> &listv, QList<headertableitem*> &listh)
 {
@@ -136,6 +153,8 @@ void tableshow::reinit(QList<headertableitem*> &listv, QList<headertableitem*> &
 	sethorizontalheader(listh, k);
 	this->updateall();
 }
+
+// initialisation standart selont
 
 void tableshow::reinit(project *p, MainWindow *mainp)
 {
@@ -495,15 +514,21 @@ void	tableshow::saveqpoint(QPoint qpoint)
 	menuhead->popup(qpoint);
 }
 
+// appeler quand on click sur l option supprimer sur un header horizontal (pas tester)
+
 void	tableshow::suphheader()
 {
 	this->removeColumn(this->columnAt(lastqpoint.x()));
 }
 
+// appeler quand on click sur l option supprimer sur un header vertical (pas tester)
+
 void	tableshow::supvheader()
 {
 	this->removeRow(this->rowAt(lastqpoint.y()));
 }
+
+// appeler quand on click sur l option modifier sur un header horizontal (pas tester)
 
 void	tableshow::modifhheader()
 {
@@ -530,6 +555,8 @@ void	tableshow::modifhheader()
 	provisoire->setLayout(lprovisoire);
 	provisoire->show();
 }
+
+// appeler quand on click sur l option modifier sur un header vertical (pas tester)
 
 void	tableshow::modifvheader()
 {
@@ -558,6 +585,8 @@ void	tableshow::modifvheader()
 	provisoire->show();
 }
 
+// met tout a jour
+
 void	tableshow::updateall()
 {
 	int h = -1;
@@ -577,6 +606,6 @@ void	tableshow::updateall()
 				tmp->update();
 		}
 	}
-	qDebug() << "updateall time " << timerdebug.elapsed() <<"ms";
+	qDebug() << "updateall time " << timerdebug.elapsed() << "ms";
     this->postinit();
 }
