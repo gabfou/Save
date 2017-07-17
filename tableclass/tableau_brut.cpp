@@ -5,6 +5,8 @@
 #include "data/question.h"
 #include "data/group.h"
 
+// sort un tableaux tout simple resumant tout les donnee serveur
+
 tableau_brut::tableau_brut(project *p)
 {
     this->setRowCount(p->getNbfactnref() + p->getNbfactref() + 3);

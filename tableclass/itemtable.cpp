@@ -39,7 +39,7 @@ void itemtable::update()
         itmax = this->itmaxprep;
     if (this->itminprep != -1)
         itmin = this->itminprep;
-    //le choix de la methode de calcul depent des header de la cellule
+    //le choix de la methode de calcul (update) depent des header de la cellule
     if (!head || !arg)
 	{
 		this->setBackgroundColor(Qt::white);
@@ -61,7 +61,7 @@ void itemtable::update()
 	}
 }
 
-// mise a jour questio
+// mise a jour question group
 
 void itemtable::update(group *arg, question *head, int itmin, int itmax, QString form) // opti passer question en vector
 {
@@ -84,6 +84,8 @@ void itemtable::update(group *arg, question *head, int itmin, int itmax, QString
     this->eval(val, *head);
 }
 
+// mise a jour question personne
+
 void itemtable::update(person *arg, question *head, int itmin, int itmax, QString form) // opti passer question en vector
 {
     (void)form;
@@ -100,6 +102,8 @@ void itemtable::update(person *arg, question *head, int itmin, int itmax, QStrin
     }
     this->eval(val, *q);
 }
+
+// mise a jour liste question group
 
 void itemtable::update(group *arg, QList<question> *head, int itmin, int itmax, QString form) // opti passer question en vector
 {
@@ -127,6 +131,8 @@ void itemtable::update(group *arg, QList<question> *head, int itmin, int itmax, 
     this->eval(QString::number(valf));
 }
 
+// mise a jour string group
+
 void itemtable::update(group *arg, QString *head, int itmin, int itmax, QString form)
 {
     (void)form;
@@ -135,6 +141,8 @@ void itemtable::update(group *arg, QString *head, int itmin, int itmax, QString 
     val = arg->grouprep(p->listgroup[p->gref], *head, &tmp, itmin, itmax);
    this->eval(val, tmp);
 }
+
+// mise a jour group question
 
 void itemtable::updateall(group *arg, question *head, int itmin, int itmax, QString form)
 {
@@ -149,10 +157,14 @@ void itemtable::updateall(group *arg, question *head, int itmin, int itmax, QStr
     this->eval(val, *head);
 }
 
+// eval qui affiche juste
+
 void itemtable::eval(QString val)
 {
     this->setText(val);
 }
+
+// eval qui formate un peu
 
 void itemtable::eval(QString val, question &q)
 {

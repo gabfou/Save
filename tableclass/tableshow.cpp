@@ -154,7 +154,7 @@ void tableshow::reinit(QList<headertableitem*> &listv, QList<headertableitem*> &
 	this->updateall();
 }
 
-// initialisation standart selont
+// initialisation standart
 
 void tableshow::reinit(project *p, MainWindow *mainp)
 {
@@ -212,6 +212,8 @@ void tableshow::reinit(project *p, MainWindow *mainp)
 	qDebug() << "set header total time " << timerdebug.elapsed() <<"ms";
 	this->updateall();
 }
+
+// set horizontal header en foncion de showmode (ancienne methode)
 
 void	tableshow::sethorizontalheader(MainWindow *mainp)
 {
@@ -306,6 +308,8 @@ void	tableshow::sethorizontalheader(MainWindow *mainp)
 	qDebug() << "horizontal header 1 time " << timerdebug.elapsed() << "ms";
 }
 
+// remplis les header vertical avec des questions
+
 void	tableshow::setverticalheader(vector<question> &q, int id)
 {
     QElapsedTimer timerdebug;
@@ -348,6 +352,8 @@ void	tableshow::setverticalheader(vector<question> &q, int id)
 	qDebug() << "vertical header 1 time " << timerdebug.elapsed() << "ms";
 }
 
+// remplis les header vertical avec des group
+
 void	tableshow::setverticalheader(vector<group> &g, int id)
 {
 	int i = 0;
@@ -381,6 +387,8 @@ void	tableshow::setverticalheader(vector<group> &g, int id)
 	}
 	qDebug() << "vertical header 2 time " << timerdebug.elapsed() << "ms";
 }
+
+// remplis les header vertical avec des personne
 
 void	tableshow::setverticalheader(vector<person> &p)
 {
@@ -422,6 +430,7 @@ void	tableshow::setverticalheader(vector<person> &p)
 	qDebug() << "vertical header 3 time " << timerdebug.elapsed() << "ms";
 }
 
+// remplis le tableaux
 
 void	tableshow::populate()
 {
@@ -435,20 +444,30 @@ void	tableshow::populate()
 			this->setItem(h, w, new itemtable("test h:" + QString::number(h) + " w:" + QString::number(w), p));
 	}
 }
+
+// relancer select avec toute les nouvelle donnée
+
 void	tableshow::reselectm()
 {
     select(m->currentgref, m->currentgqref, m->iterationmin, m->iterationmax);
 }
+
+// relancer select sans prendre en compte les personne
 
 void	tableshow::selectq(int gqref)
 {
     select(m->currentgref, gqref, m->iterationmin, m->iterationmax);
 }
 
+// relancer select sans prendre en compte les questions
+
 void	tableshow::selectp(int gref)
 {
     select(gref, m->currentgqref, m->iterationmin, m->iterationmax);
 }
+
+
+// select se qui doit etre afficher ou pas en function d groupe de personne (gref) et de question (gqref) étudié
 
 void	tableshow::select(int gref, int gqref, int itmin, int itmax)
 {
@@ -486,6 +505,8 @@ void	tableshow::select(int gref, int gqref, int itmin, int itmax)
 	qDebug() << "select time " << timerdebug.elapsed() << "ms";
 }
 
+// clear les header
+
 void	tableshow::clearheader()
 {
 	int h = -1;
@@ -498,10 +519,15 @@ void	tableshow::clearheader()
 		delete (this->horizontalHeaderItem(h));
 }
 
+// obsolete
+
 void	tableshow::showtable(int id, int qid, int itmin, int itmax)
 {
     this->select(id, qid, itmin, itmax);
 }
+
+
+// tentative de reperer sur quelle cellule la souris est
 
 void	tableshow::saveqpoint()
 {
